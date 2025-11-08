@@ -1,13 +1,5 @@
 [
   {
-    "number": 2,
-    "title": "Probando tarjeta 2",
-    "description": "Esta tarjeta me recuerda mi infancia.",
-    "price": 4,
-    "image": "2.png",
-    "uploadedAt": "2025-11-08T13:32:10.090Z"
-  },
-  {
     "number": 3,
     "title": "Prueba 3",
     "description": "Navidad en CR",

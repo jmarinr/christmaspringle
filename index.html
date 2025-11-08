@@ -61,23 +61,46 @@
   .tracker:before{content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px; box-shadow:0 2px 0 #922b21;}
 
   /* Header */
-  header{position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft)}
-  .header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto}
+  header{
+    position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95);
+    backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft);
+    transition:transform .25s ease; /* para auto-ocultar en móvil */
+  }
+  header.hide-on-mobile{ transform:translateY(-110%); }
+
+  .header-content{
+    max-width:1600px; margin:0 auto; padding:12px 20px;
+    display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto
+  }
   .logo-link{display:block; line-height:0}
   .logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
   .logo-link:hover .logo-img{transform:scale(1.04)}
 
-  /* Lema bastones */
-  .header-candy{
-    justify-self:center; text-align:center; line-height:1.02; letter-spacing:.5px;
-    font-family:'Mountains of Christmas',cursive; font-weight:700; font-size:3.2rem; padding:.2rem .7rem;
-    background:repeating-linear-gradient(45deg,#fff 0 10px,#d32f2f 10px 20px,#fff 20px 30px,#b71c1c 30px 40px);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    -webkit-text-stroke:1.4px #2e7d32; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
-    transform-style:preserve-3d; perspective:700px; transition:transform .15s ease-out;
+  /* Lema con misma tipografía + guirnalda */
+  .header-slogan{
+    justify-self:center; position:relative; display:inline-block; text-align:center;
+    font-family:'Mountains of Christmas',cursive; font-weight:700; line-height:1.02; letter-spacing:.5px;
+    font-size:3.1rem; color:#154406; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
   }
+  .header-slogan .stroke{
+    -webkit-text-stroke:1.4px #2e7d32; color:transparent;
+    background:repeating-linear-gradient(45deg,#fff 0 10px,#d32f2f 10px 20px,#fff 20px 30px,#b71c1c 30px 40px);
+    -webkit-background-clip:text; background-clip:text;
+  }
+  /* Guirnalda SVG sobre el texto */
+  .lights-wrap{position:absolute; left:50%; transform:translateX(-50%); top:-10px; width:105%; height:72px; pointer-events:none}
+  .lights-wrap svg{width:100%; height:100%}
+  .bulb{filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+  .bulb use{opacity:.9}
+  @keyframes hueShift{ 0%{filter:hue-rotate(0deg)} 50%{filter:hue-rotate(140deg)} 100%{filter:hue-rotate(0deg)} }
+  .bulb use:nth-child(odd){ animation:hueShift 3s linear infinite }
+  .bulb use:nth-child(even){ animation:hueShift 3.6s linear infinite }
+  .cable{stroke:#2d2d2d; stroke-width:4; fill:none; stroke-linecap:round}
+  /* Enchufe bajo el botón música (desktop) */
+  .music-plug{position:absolute; right:-24px; bottom:-28px; font-size:1.4rem; transform:rotate(12deg); filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+  .music-plug .cable-down{position:absolute; left:-110px; bottom:14px; width:120px; height:1px; border-top:3px solid #2d2d2d;}
 
-  nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+  nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end; position:relative}
   .chip-btn{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
     padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft); white-space:nowrap}
   .chip-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
@@ -107,7 +130,11 @@
       radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
       repeating-linear-gradient(45deg,#f7f7f7 0 8px,#f2f2f2 8px 16px);
     display:flex; align-items:center; justify-content:center; position:relative}
-  .card-photo{width:100%; height:100%; object-fit:contain; image-rendering:auto; transition:transform .5s ease}
+  .card-photo{
+    width:100%; height:100%;
+    object-fit:contain; /* 🔎 ahora se ve la imagen completa */
+    image-rendering:auto; transition:transform .5s ease; cursor:zoom-in;
+  }
   .card:hover .card-photo{transform:scale(1.03)}
   .card-content{padding:18px 18px 20px}
   .card h3{font-size:1.3rem; margin-bottom:.35rem}
@@ -118,6 +145,25 @@
   .wa-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
 
   .loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-light)}
+
+  /* Lightbox */
+  .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:12000}
+  .lightbox.open{display:flex}
+  .lb-inner{
+    width:min(92vw,1100px); max-height:92vh; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,.45); display:grid; grid-template-columns:1.2fr 1fr;
+  }
+  .lb-media{background:#000; display:flex; align-items:center; justify-content:center}
+  .lb-media img{max-width:100%; max-height:92vh; object-fit:contain}
+  .lb-info{padding:18px; display:flex; flex-direction:column; gap:10px}
+  .lb-title{font-weight:800; font-size:1.35rem}
+  .lb-desc{color:var(--text-light); line-height:1.6}
+  .lb-row{margin-top:auto; display:flex; align-items:center; gap:10px; justify-content:space-between}
+  .lb-close{position:absolute; top:14px; right:14px; background:#fff; border:0; border-radius:999px; width:40px; height:40px; display:grid; place-items:center; box-shadow:0 6px 18px rgba(0,0,0,.25); cursor:pointer}
+  .lb-close:hover{transform:translateY(-1px)}
+  @media (max-width:960px){
+    .lb-inner{grid-template-columns:1fr}
+    .lb-media{max-height:60vh}
+  }
 
   /* ARTE PRINGLE (marcos) */
   .art-wrap{margin-top:3rem}
@@ -147,12 +193,13 @@
   .site-version{margin-top:10px; opacity:.85; font-weight:700}
 
   /* Responsive */
-  @media (max-width:1200px){ .logo-img{height:150px} .header-candy{font-size:2.7rem} }
-  @media (max-width:992px){ .logo-img{height:128px} .header-candy{font-size:2.35rem} .wagon,.engine{font-size:4.2em} }
+  @media (max-width:1200px){ .logo-img{height:150px} .header-slogan{font-size:2.8rem} }
+  @media (max-width:992px){ .logo-img{height:128px} .header-slogan{font-size:2.35rem} .wagon,.engine{font-size:4.2em} }
   @media (max-width:800px){
     .header-content{grid-template-columns:1fr; text-align:center}
     nav{justify-content:center}
-    .header-candy{order:3}
+    .header-slogan{order:3; margin-top:4px}
+    .lights-wrap{top:-6px; height:60px}
   }
   @media (max-width:640px){
     .logo-img{height:96px}
@@ -206,14 +253,40 @@
   </div>
 
   <!-- Header -->
-  <header>
+  <header id="siteHeader">
     <div class="header-content">
       <a href="#inicio" class="logo-link" aria-label="Inicio">
         <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
       </a>
 
-      <div id="candyTitle" class="header-candy" aria-label="Lema navideño">
-        Diversión festiva para toda la familia
+      <!-- Slogan con guirnalda -->
+      <div class="header-slogan" aria-label="Lema navideño">
+        <span class="stroke">Diversión festiva para toda la familia</span>
+        <div class="lights-wrap" aria-hidden="true">
+          <!-- SVG de guirnalda con bombillos -->
+          <svg viewBox="0 0 1000 180" preserveAspectRatio="none">
+            <!-- cable -->
+            <path class="cable" d="M 10 60 C 150 10, 300 110, 450 50 S 750 120, 990 60" />
+            <!-- bombillos (repetidos) -->
+            <g class="bulb">
+              <use href="#bulb" x="80"  y="40"></use>
+              <use href="#bulb" x="200" y="90"></use>
+              <use href="#bulb" x="320" y="45"></use>
+              <use href="#bulb" x="440" y="95"></use>
+              <use href="#bulb" x="560" y="40"></use>
+              <use href="#bulb" x="680" y="100"></use>
+              <use href="#bulb" x="800" y="50"></use>
+              <use href="#bulb" x="920" y="90"></use>
+            </g>
+            <defs>
+              <g id="bulb">
+                <ellipse cx="0" cy="0" rx="14" ry="18" fill="rgba(255,255,255,.85)"></ellipse>
+                <ellipse cx="0" cy="0" rx="13" ry="17" fill="rgba(255,255,255,.65)" style="mix-blend-mode:screen"></ellipse>
+                <rect x="-6" y="-6" width="12" height="8" rx="2" fill="#2d2d2d"></rect>
+              </g>
+            </defs>
+          </svg>
+        </div>
       </div>
 
       <nav>
@@ -223,6 +296,10 @@
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
         <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
+          <!-- Enchufe y cable (desktop) -->
+          <span class="music-plug" aria-hidden="true">
+            <span class="cable-down"></span>🔌
+          </span>
         </button>
       </nav>
     </div>
@@ -273,7 +350,7 @@
             </div>
             <div class="art-meta">
               <div class="art-title">Barco Navideño</div>
-              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20 el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
             </div>
           </div>
         </article>
@@ -317,6 +394,24 @@
     <source src="Christmas Rap.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <div class="lb-inner">
+      <div class="lb-media">
+        <img id="lbImg" alt="">
+      </div>
+      <div class="lb-info">
+        <div class="lb-title" id="lbTitle"></div>
+        <div class="lb-desc" id="lbDesc"></div>
+        <div class="lb-row">
+          <span class="price-badge" id="lbPrice"></span>
+          <a class="wa-btn" id="lbWa" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     /* ===== Nieve ===== */
     function createSnowflake(){
@@ -343,25 +438,11 @@
       }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
     });
 
-    /* ===== Lema bastones tilt ===== */
-    const candy=document.getElementById('candyTitle');
-    function tilt(e){
-      const r=candy.getBoundingClientRect();
-      const cx=r.left+r.width/2, cy=r.top+r.height/2;
-      const x=(e.clientX||cx)-cx, y=(e.clientY||cy)-cy;
-      const rx=(y/r.height)*-6, ry=(x/r.width)*6;
-      candy.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
-    }
-    function resetTilt(){ candy.style.transform='rotateX(0) rotateY(0)'; }
-    window.addEventListener('mousemove', tilt);
-    window.addEventListener('mouseleave', resetTilt);
-    window.addEventListener('touchmove', (ev)=>{ if(ev.touches[0]) tilt(ev.touches[0]); }, {passive:true});
-    window.addEventListener('touchend', resetTilt);
-
     /* ===== CRC ===== */
     const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
 
     /* ===== Cargar tarjetas ===== */
+    let CARDS_CACHE = [];
     async function loadCards(){
       const grid=document.getElementById('cardsGrid');
       try{
@@ -369,12 +450,12 @@
         const res=await fetch(`./cards.json?t=${ts}`,{cache:'no-store'});
         if(!res.ok) throw new Error(`HTTP ${res.status}`);
         const cards=await res.json();
-        if(!Array.isArray(cards)||!cards.length){
+        CARDS_CACHE = Array.isArray(cards) ? cards.slice().sort((a,b)=>a.number-b.number) : [];
+        if(!CARDS_CACHE.length){
           grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`;
           return;
         }
-        cards.sort((a,b)=>a.number-b.number);
-        grid.innerHTML = cards.map(c=>{
+        grid.innerHTML = CARDS_CACHE.map(c=>{
           const img=`${encodeURI(c.image)}?t=${ts}`;
           const price=fmtCRC(c.price);
           const msg=`Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
@@ -383,7 +464,13 @@
             <article class="card">
               <div class="card-image">
                 <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
-                  onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
+                     tabindex="0" role="button" aria-label="Ampliar ${c.title}"
+                     data-title="${encodeURIComponent(c.title)}"
+                     data-desc="${encodeURIComponent(c.description)}"
+                     data-price="${encodeURIComponent(price)}"
+                     data-wa="${encodeURIComponent(wa)}"
+                     data-src="${encodeURIComponent(img)}"
+                     onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
               </div>
               <div class="card-content">
                 <h3>${c.title}</h3>
@@ -400,6 +487,63 @@
         console.error(e);
       }
     }
+
+    /* ===== Lightbox (visualizador) ===== */
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbTitle = document.getElementById('lbTitle');
+    const lbDesc = document.getElementById('lbDesc');
+    const lbPrice = document.getElementById('lbPrice');
+    const lbWa = document.getElementById('lbWa');
+    const lbClose = document.getElementById('lbClose');
+
+    function openLightbox({src,title,desc,price,wa}){
+      lbImg.src = decodeURIComponent(src);
+      lbImg.alt = decodeURIComponent(title);
+      lbTitle.textContent = decodeURIComponent(title);
+      lbDesc.textContent = decodeURIComponent(desc);
+      lbPrice.innerHTML = `<i class="fa-solid fa-tag"></i> ${decodeURIComponent(price)}`;
+      lbWa.href = decodeURIComponent(wa);
+
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      lbClose.focus();
+    }
+    function closeLightbox(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      lbImg.src = '';
+    }
+
+    document.getElementById('cardsGrid').addEventListener('click',(e)=>{
+      const img = e.target.closest('.card-photo');
+      if(!img) return;
+      openLightbox({
+        src: img.dataset.src,
+        title: img.dataset.title,
+        desc: img.dataset.desc,
+        price: img.dataset.price,
+        wa: img.dataset.wa
+      });
+    });
+    document.getElementById('cardsGrid').addEventListener('keydown',(e)=>{
+      if((e.key==='Enter' || e.key===' ') && e.target.classList.contains('card-photo')){
+        e.preventDefault();
+        const img = e.target;
+        openLightbox({
+          src: img.dataset.src,
+          title: img.dataset.title,
+          desc: img.dataset.desc,
+          price: img.dataset.price,
+          wa: img.dataset.wa
+        });
+      }
+    });
+    lb.addEventListener('click',(e)=>{ if(e.target===lb) closeLightbox(); });
+    lbClose.addEventListener('click', closeLightbox);
+    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLightbox(); });
 
     /* ===== Santa Tracker D/H/M/S ===== */
     function targetChristmas(){
@@ -440,6 +584,21 @@
         const t=document.querySelector(a.getAttribute('href'));
         if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
       });
+    });
+
+    /* ===== Header auto-ocultable en móvil ===== */
+    const header = document.getElementById('siteHeader');
+    let lastY = window.scrollY;
+    window.addEventListener('scroll', ()=>{
+      const isMobile = window.innerWidth <= 800;
+      if(!isMobile){ header.classList.remove('hide-on-mobile'); return; }
+      const y = window.scrollY;
+      if(y > lastY && y > 50){
+        header.classList.add('hide-on-mobile');  // ocultar al bajar
+      }else{
+        header.classList.remove('hide-on-mobile'); // mostrar al subir
+      }
+      lastY = y;
     });
 
     /* ===== Init ===== */

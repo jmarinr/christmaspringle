@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Pringle - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #E74C3C;
+            --primary-green: #00C853;
+            --primary-blue: #039BE5;
+            --primary-gold: #FFB300;
+            --text-dark: #263238;
+            --text-light: #546E7A;
+            --bg-light: #F5F9FC;
+        }
+
+        body {
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3em;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 1.2em;
+        }
+
+        .alert {
+            background: linear-gradient(135deg, #FFB300, #FDD835);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-red);
+        }
+
+        .alert h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert p {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .upload-section {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary-blue);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-red);
+            background: #FFF5F5;
+            transform: translateY(-4px);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary-green);
+            background: #F0FFF4;
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area h3 {
+            font-size: 1.5em;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .preview-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .preview-info {
+            padding: 1rem;
+        }
+
+        .preview-info h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.2em;
+        }
+
+        .preview-info p {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Google Sans', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-red), #C0392B);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--primary-green), #00E676);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .instructions {
+            background: #E3F2FD;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .instructions h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .instructions li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .instructions code {
+            background: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-red);
+        }
+
+        .status {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #C8E6C9;
+            color: #1B5E20;
+        }
+
+        .status.error {
+            background: #FFCDD2;
+            color: #B71C1C;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary-red);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al sitio principal
+        </a>
+
+        <div class="header">
+            <h1>🎨 Panel de Administración</h1>
+            <p>Carga y prepara las imágenes de tus tarjetas navideñas</p>
+        </div>
+
+        <div class="alert">
+            <h3><i class="fas fa-exclamation-circle"></i> Importante</h3>
+            <p>Esta herramienta preparará tus imágenes localmente. Después de procesarlas, las descargarás y subirás manualmente a GitHub. GitHub Pages no permite subir archivos automáticamente desde el navegador.</p>
+        </div>
+
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <h3>Arrastra 6 imágenes aquí</h3>
+                <p>o haz clic para seleccionar archivos</p>
+                <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.9em;">
+                    Formatos: PNG, JPG, JPEG | Máx: 5MB por imagen
+                </p>
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" multiple>
+            </div>
+
+            <div id="previewContainer" class="preview-grid"></div>
+
+            <div id="statusMessage"></div>
+
+            <div class="actions" id="actionButtons" style="display: none;">
+                <button class="btn btn-secondary" id="downloadBtn">
+                    <i class="fas fa-download"></i> Descargar Imágenes Preparadas
+                </button>
+                <button class="btn btn-primary" id="resetBtn">
+                    <i class="fas fa-redo"></i> Cargar Otras Imágenes
+                </button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> Instrucciones</h3>
+            <ol>
+                <li><strong>Selecciona 6 imágenes</strong> de tus tarjetas navideñas (arrastra o haz clic en el área de carga)</li>
+                <li>Las imágenes se <strong>renombrarán automáticamente</strong> a: <code>1.png</code>, <code>2.png</code>, <code>3.png</code>, <code>4.png</code>, <code>5.png</code>, <code>6.png</code></li>
+                <li>Haz clic en <strong>"Descargar Imágenes Preparadas"</strong> - se descargará un archivo ZIP</li>
+                <li>Extrae las imágenes del ZIP</li>
+                <li>Ve a tu repositorio de GitHub</li>
+                <li>Sube las 6 imágenes directamente a la <strong>raíz del repositorio</strong> (mismo lugar donde está <code>index.html</code>)</li>
+                <li>Espera 1-2 minutos y <strong>refresca tu sitio</strong> - ¡las imágenes aparecerán!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const actionButtons = document.getElementById('actionButtons');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const statusMessage = document.getElementById('statusMessage');
+
+        let selectedFiles = [];
+
+        // Click to upload
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length !== 6) {
+                showStatus('Por favor selecciona exactamente 6 imágenes', 'error');
+                return;
+            }
+
+            selectedFiles = Array.from(files);
+            
+            // Validate files
+            const validFiles = selectedFiles.every(file => {
+                const isValidType = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg';
+                const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB
+                return isValidType && isValidSize;
+            });
+
+            if (!validFiles) {
+                showStatus('Asegúrate que todas las imágenes sean PNG o JPG y menores a 5MB', 'error');
+                return;
+            }
+
+            displayPreviews();
+            showStatus('¡Imágenes cargadas correctamente! Ahora descárgalas para subirlas a GitHub.', 'success');
+            actionButtons.style.display = 'flex';
+        }
+
+        function displayPreviews() {
+            previewContainer.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    const card = document.createElement('div');
+                    card.className = 'preview-card';
+                    
+                    const cardNames = [
+                        'Árbol de Esperanza',
+                        'Santa Claus Alegre',
+                        'Estrella de Belén',
+                        'Velas de Paz',
+                        'Regalos de Amor',
+                        'Copos de Nieve'
+                    ];
+                    
+                    card.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview ${index + 1}" class="preview-image">
+                        <div class="preview-info">
+                            <h4>${index + 1}.png</h4>
+                            <p>${cardNames[index]}</p>
+                            <p style="font-size: 0.8em; margin-top: 0.5rem; opacity: 0.7;">
+                                ${(file.size / 1024).toFixed(0)} KB
+                            </p>
+                        </div>
+                    `;
+                    
+                    previewContainer.appendChild(card);
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function downloadImages() {
+            const zip = new JSZip();
+            
+            showStatus('Preparando imágenes...', 'success');
+            
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const file = selectedFiles[i];
+                const newName = `${i + 1}.png`;
+                
+                // Convert to PNG if needed
+                const imageData = await convertToPNG(file);
+                zip.file(newName, imageData);
+            }
+            
+            showStatus('Generando archivo ZIP...', 'success');
+            
+            const content = await zip.generateAsync({ type: 'blob' });
+            const url = URL.createObjectURL(content);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'christmas-pringle-cards.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showStatus('¡Imágenes descargadas! Ahora súbelas a GitHub siguiendo las instrucciones.', 'success');
+        }
+
+        function convertToPNG(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        
+                        canvas.toBlob((blob) => {
+                            resolve(blob);
+                        }, 'image/png');
+                    };
+                    
+                    img.src = e.target.result;
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function showStatus(message, type) {
+            statusMessage.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function resetUpload() {
+            selectedFiles = [];
+            previewContainer.innerHTML = '';
+            fileInput.value = '';
+            actionButtons.style.display = 'none';
+            statusMessage.innerHTML = '';
+        }
+
+        // Event listeners
+        downloadBtn.addEventListener('click', downloadImages);
+        resetBtn.addEventListener('click', resetUpload);
+    </script>
+</body>
+</html>

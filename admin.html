@@ -1,538 +1,462 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Pringle - Admin Panel Pro</title>
-    <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary-red: #E74C3C; --primary-green: #00C853; --primary-blue: #039BE5;
-            --primary-gold: #FFB300; --text-dark: #263238; --text-light: #546E7A; --bg-light: #F5F9FC;
-        }
-        body { font-family: 'Google Sans', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 2rem; }
-        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; padding: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .header { text-align: center; margin-bottom: 3rem; }
-        .header h1 { font-family: 'Mountains of Christmas', cursive; font-size: 3em; color: var(--primary-red); margin-bottom: 0.5rem; }
-        .header .badge { display: inline-block; background: linear-gradient(135deg, var(--primary-gold), #FDD835); color: var(--text-dark); padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.9em; }
-        .header p { color: var(--text-light); font-size: 1.2em; margin-top: 1rem; }
-        .cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-        .card-form { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--primary-blue); }
-        .card-form h3 { color: var(--text-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5em; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1em; font-family: 'Google Sans', sans-serif; transition: border-color 0.3s ease; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-blue); }
-        .form-group textarea { resize: vertical; min-height: 100px; }
-        .form-group small { display: block; color: var(--text-light); margin-top: 0.5rem; line-height: 1.5; }
-        .upload-area { border: 3px dashed var(--primary-blue); border-radius: 16px; padding: 2rem; text-align: center; background: white; cursor: pointer; transition: all 0.3s ease; margin-bottom: 1rem; }
-        .upload-area:hover { border-color: var(--primary-red); background: #FFF5F5; transform: translateY(-4px); }
-        .upload-area.has-image { border-color: var(--primary-green); background: #F0FFF4; }
-        .upload-icon { font-size: 3em; color: var(--primary-blue); margin-bottom: 0.5rem; }
-        .upload-area h4 { font-size: 1.2em; color: var(--text-dark); margin-bottom: 0.3rem; }
-        .upload-area p { color: var(--text-light); font-size: 0.9em; }
-        .preview-image { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-top: 1rem; display: none; }
-        .preview-image.visible { display: block; }
-        .btn { padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Google Sans', sans-serif; display: flex; align-items: center; gap: 0.5rem; justify-content: center; width: 100%; }
-        .btn-primary { background: linear-gradient(135deg, var(--primary-red), #C0392B); color: white; }
-        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4); }
-        .btn-secondary { background: linear-gradient(135deg, var(--primary-green), #00E676); color: white; }
-        .btn-secondary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .status { text-align: center; padding: 1rem; border-radius: 12px; margin-top: 1rem; font-weight: 600; }
-        .status.success { background: #C8E6C9; color: #1B5E20; }
-        .status.error { background: #FFCDD2; color: #B71C1C; }
-        .status.info { background: #BBDEFB; color: #0D47A1; }
-        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-blue); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: color 0.3s ease; }
-        .back-link:hover { color: var(--primary-red); }
-        .progress-bar { width: 100%; height: 8px; background: #E0E0E0; border-radius: 4px; margin-top: 1rem; overflow: hidden; display: none; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary-green), var(--primary-blue)); width: 0%; transition: width 0.3s ease; }
-        .cards-list { margin-top: 3rem; background: #F8F9FA; padding: 2rem; border-radius: 16px; }
-        .cards-list h2 { font-family: 'Mountains of Christmas', cursive; color: var(--text-dark); margin-bottom: 1.5rem; text-align: center; }
-        .saved-card { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem; align-items: center; }
-        .saved-card img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
-        .saved-card-info h4 { color: var(--text-dark); margin-bottom: 0.3rem; }
-        .saved-card-info p { color: var(--text-light); font-size: 0.9em; margin-bottom: 0.2rem; }
-        .saved-card-info .price { color: var(--primary-gold); font-weight: 700; font-size: 1.2em; }
-        .btn-delete { background: linear-gradient(135deg, #E53935, #C62828); color: white; padding: 0.5rem 1rem; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .btn-delete:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4); }
-        @media (max-width: 768px) {
-            .container { padding: 1.5rem; }
-            .header h1 { font-size: 2em; }
-            .cards-container { grid-template-columns: 1fr; }
-            .saved-card { grid-template-columns: 80px 1fr; }
-            .saved-card img { width: 80px; height: 80px; }
-            .btn-delete { grid-column: 1 / -1; width: 100%; margin-top: 0.5rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Christmas Pringle - Admin Panel Pro</title>
+  <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+      --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5;
+      --primary-gold:#FFB300; --text-dark:#263238; --text-light:#546E7A; --bg-light:#F5F9FC;
+    }
+    body{ font-family:'Google Sans',sans-serif; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; padding:2rem; }
+    .container{ max-width:1400px; margin:0 auto; background:#fff; border-radius:24px; padding:3rem; box-shadow:0 20px 60px rgba(0,0,0,.3);}
+    .header{ text-align:center; margin-bottom:3rem;}
+    .header h1{ font-family:'Mountains of Christmas',cursive; font-size:3em; color:var(--primary-red); margin-bottom:.5rem;}
+    .header .badge{ display:inline-block; background:linear-gradient(135deg,var(--primary-gold),#FDD835); color:var(--text-dark); padding:.5rem 1.5rem; border-radius:50px; font-weight:700; font-size:.9em;}
+    .header p{ color:var(--text-light); font-size:1.2em; margin-top:1rem;}
+    .cards-container{ display:grid; grid-template-columns:repeat(auto-fill,minmax(400px,1fr)); gap:2rem; margin-bottom:2rem;}
+    .card-form{ background:linear-gradient(135deg,#E3F2FD,#BBDEFB); padding:2rem; border-radius:16px; border-left:5px solid var(--primary-blue);}
+    .card-form h3{ color:var(--text-dark); margin-bottom:1.5rem; display:flex; align-items:center; gap:.5rem; font-size:1.5em;}
+    .form-group{ margin-bottom:1.5rem;}
+    .form-group label{ display:block; font-weight:600; color:var(--text-dark); margin-bottom:.5rem;}
+    .form-group input,.form-group textarea{ width:100%; padding:.8rem; border:2px solid #E0E0E0; border-radius:8px; font-size:1em; font-family:'Google Sans',sans-serif; transition:border-color .3s ease;}
+    .form-group input:focus,.form-group textarea:focus{ outline:none; border-color:var(--primary-blue);}
+    .form-group textarea{ resize:vertical; min-height:100px;}
+    .form-group small{ display:block; color:var(--text-light); margin-top:.5rem; line-height:1.5;}
+    .upload-area{ border:3px dashed var(--primary-blue); border-radius:16px; padding:2rem; text-align:center; background:#fff; cursor:pointer; transition:all .3s ease; margin-bottom:1rem;}
+    .upload-area:hover{ border-color:var(--primary-red); background:#FFF5F5; transform:translateY(-4px);}
+    .upload-area.has-image{ border-color:var(--primary-green); background:#F0FFF4;}
+    .upload-icon{ font-size:3em; color:var(--primary-blue); margin-bottom:.5rem;}
+    .upload-area h4{ font-size:1.2em; color:var(--text-dark); margin-bottom:.3rem;}
+    .upload-area p{ color:var(--text-light); font-size:.9em;}
+    .preview-image{ width:100%; height:200px; object-fit:cover; border-radius:12px; margin-top:1rem; display:none;}
+    .preview-image.visible{ display:block;}
+    .btn{ padding:1rem 2rem; border:none; border-radius:50px; font-size:1.1em; font-weight:700; cursor:pointer; transition:all .3s ease; font-family:'Google Sans',sans-serif; display:flex; align-items:center; gap:.5rem; justify-content:center; width:100%;}
+    .btn-primary{ background:linear-gradient(135deg,var(--primary-red),#C0392B); color:#fff;}
+    .btn-primary:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 8px 20px rgba(231,76,60,.4);}
+    .btn-secondary{ background:linear-gradient(135deg,var(--primary-green),#00E676); color:#fff;}
+    .btn-secondary:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,200,83,.4);}
+    .btn:disabled{ opacity:.5; cursor:not-allowed;}
+    .status{ text-align:center; padding:1rem; border-radius:12px; margin-top:1rem; font-weight:600;}
+    .status.success{ background:#C8E6C9; color:#1B5E20;}
+    .status.error{ background:#FFCDD2; color:#B71C1C;}
+    .status.info{ background:#BBDEFB; color:#0D47A1;}
+    .back-link{ display:inline-flex; align-items:center; gap:.5rem; color:var(--primary-blue); text-decoration:none; font-weight:600; margin-bottom:2rem; transition:color .3s ease;}
+    .back-link:hover{ color:var(--primary-red);}
+    .progress-bar{ width:100%; height:8px; background:#E0E0E0; border-radius:4px; margin-top:1rem; overflow:hidden; display:none;}
+    .progress-fill{ height:100%; background:linear-gradient(90deg,var(--primary-green),var(--primary-blue)); width:0%; transition:width .3s ease;}
+    .cards-list{ margin-top:3rem; background:#F8F9FA; padding:2rem; border-radius:16px;}
+    .cards-list h2{ font-family:'Mountains of Christmas',cursive; color:var(--text-dark); margin-bottom:1.5rem; text-align:center;}
+    .saved-card{ background:#fff; padding:1.5rem; border-radius:12px; margin-bottom:1rem; box-shadow:0 2px 8px rgba(0,0,0,.1); display:grid; grid-template-columns:100px 1fr auto; gap:1rem; align-items:center;}
+    .saved-card img{ width:100px; height:100px; object-fit:cover; border-radius:8px;}
+    .saved-card-info h4{ color:var(--text-dark); margin-bottom:.3rem;}
+    .saved-card-info p{ color:var(--text-light); font-size:.9em; margin-bottom:.2rem;}
+    .saved-card-info .price{ color:var(--primary-gold); font-weight:700; font-size:1.2em;}
+    .btn-delete{ background:linear-gradient(135deg,#E53935,#C62828); color:#fff; padding:.5rem 1rem; border:none; border-radius:25px; cursor:pointer; font-weight:600; transition:all .3s ease;}
+    .btn-delete:hover{ transform:scale(1.05); box-shadow:0 4px 12px rgba(229,57,53,.4);}
+    @media (max-width:768px){
+      .container{ padding:1.5rem;}
+      .header h1{ font-size:2em;}
+      .cards-container{ grid-template-columns:1fr;}
+      .saved-card{ grid-template-columns:80px 1fr;}
+      .saved-card img{ width:80px; height:80px;}
+      .btn-delete{ grid-column:1 / -1; width:100%; margin-top:.5rem;}
+    }
+    /* Banner PAT */
+    #patBanner{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff3cd;border-top:1px solid #ffeeba;padding:12px;z-index:9999; font-size:14px;}
+    #patBanner input{margin:0 8px;min-width:320px;padding:6px 10px;border:1px solid #ccc;border-radius:8px;}
+    #patBanner button{padding:8px 12px;border:0;border-radius:8px;background:#039BE5;color:#fff;font-weight:700;cursor:pointer;}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al sitio principal</a>
+  <div class="container">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al sitio principal</a>
 
-        <div class="header">
-            <h1>🎨 Panel de Administración PRO</h1>
-            <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
-            <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
-        </div>
-
-        <div class="cards-container" id="cardsContainer"></div>
-
-        <div id="statusMessage"></div>
-        <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-
-        <div class="cards-list">
-            <h2>📋 Tarjetas Guardadas</h2>
-            <div id="savedCardsList"></div>
-        </div>
+    <div class="header">
+      <h1>🎨 Panel de Administración PRO</h1>
+      <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
+      <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
     </div>
 
-    <script>
-        // ⚠️ SOLO DEMO: este token será visible en el navegador
-        const GITHUB_CONFIG = {
-            token: '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', // <-- tu PAT temporal
-            username: 'jmarinr',
-            repo: 'christmaspringle',
-            branch: 'main',
-            imagesDir: 'images' // carpeta para PNGs
+    <div class="cards-container" id="cardsContainer"></div>
+
+    <div id="statusMessage"></div>
+    <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+
+    <div class="cards-list">
+      <h2>📋 Tarjetas Guardadas</h2>
+      <div id="savedCardsList"></div>
+    </div>
+  </div>
+
+  <!-- Banner para configurar PAT en runtime (solo localStorage del navegador) -->
+  <div id="patBanner">
+    <strong>🔐 Configurar PAT de GitHub (solo en este navegador):</strong>
+    <input id="patInput" type="password" placeholder="pega tu ghp_..." autocomplete="off">
+    <button id="btnSavePAT">Guardar</button>
+    <small style="margin-left:8px;opacity:.75">Se guarda en localStorage y no se publica.</small>
+    <button id="btnClearPAT" style="margin-left:8px;background:#E53935">Borrar</button>
+  </div>
+
+  <script>
+    // ========= Configuración GitHub =========
+    const GITHUB_CONFIG = {
+      token: localStorage.getItem('christmasPringlePAT') || '',
+      username: 'jmarinr',
+      repo: 'christmaspringle',
+      branch: 'main'
+    };
+
+    // Helpers UI PAT
+    const patBanner = document.getElementById('patBanner');
+    const patInput  = document.getElementById('patInput');
+    document.getElementById('btnSavePAT').onclick = () => {
+      const v = (patInput.value || '').trim();
+      if (!v.startsWith('ghp_')) { alert('Pega un PAT (classic) válido que inicie con ghp_'); return; }
+      localStorage.setItem('christmasPringlePAT', v);
+      GITHUB_CONFIG.token = v;
+      patBanner.style.display = 'none';
+      alert('PAT guardado. Intenta subir de nuevo.');
+    };
+    document.getElementById('btnClearPAT').onclick = () => {
+      localStorage.removeItem('christmasPringlePAT');
+      GITHUB_CONFIG.token = '';
+      patInput.value = '';
+      alert('PAT eliminado de este navegador.');
+      showPATBanner();
+    };
+    function showPATBanner() { patBanner.style.display = 'block'; }
+    if (!GITHUB_CONFIG.token) showPATBanner();
+
+    // fetch con auth y manejo 401
+    async function fetchWithAuth(url, opts = {}) {
+      opts.headers = Object.assign({}, opts.headers, {
+        'Authorization': `token ${GITHUB_CONFIG.token}`
+      });
+      const res = await fetch(url, opts);
+      if (res.status === 401) showPATBanner();
+      return res;
+    }
+
+    // ========= Lógica Admin =========
+    const MAX_CARDS = 10;
+    let cardsData = [];
+
+    function loadCardsData() {
+      const saved = localStorage.getItem('christmasPringleCards');
+      if (saved) { cardsData = JSON.parse(saved); }
+      renderCardForms();
+      renderSavedCards();
+    }
+
+    function saveCardsData() {
+      localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData));
+      renderSavedCards();
+    }
+
+    function renderCardForms() {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = '';
+      for (let i = 0; i < MAX_CARDS; i++) {
+        const cardNumber = i + 1;
+        const existingCard = cardsData.find(c => c.number === cardNumber);
+        const cardForm = document.createElement('div');
+        cardForm.className = 'card-form';
+        cardForm.innerHTML = `
+          <h3><i class="fas fa-snowflake"></i> Tarjeta #${cardNumber}</h3>
+          <div class="upload-area" id="uploadArea${cardNumber}" data-card="${cardNumber}">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <h4>Clic para seleccionar imagen</h4>
+            <p>PNG, JPG, JPEG (Máx: 5MB)</p>
+            <input type="file" id="fileInput${cardNumber}" accept="image/png,image/jpeg,image/jpg" style="display:none;">
+            <img id="preview${cardNumber}" class="preview-image" alt="Vista previa">
+          </div>
+          <div class="form-group">
+            <label for="title${cardNumber}"><i class="fas fa-heading"></i> Título de la tarjeta</label>
+            <input type="text" id="title${cardNumber}" placeholder="Ej: Árbol de Esperanza" value="${existingCard ? existingCard.title : ''}">
+            <small>Máximo 50 caracteres</small>
+          </div>
+          <div class="form-group">
+            <label for="description${cardNumber}"><i class="fas fa-align-left"></i> Descripción</label>
+            <textarea id="description${cardNumber}" placeholder="Describe tu tarjeta navideña...">${existingCard ? existingCard.description : ''}</textarea>
+            <small>Máximo 200 caracteres</small>
+          </div>
+          <div class="form-group">
+            <label for="price${cardNumber}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
+            <input type="number" id="price${cardNumber}" placeholder="15.00" step="0.01" min="0" value="${existingCard ? existingCard.price : ''}">
+            <small>Precio en dólares estadounidenses</small>
+          </div>
+          <button class="btn btn-primary" id="uploadBtn${cardNumber}" onclick="uploadCard(${cardNumber})" disabled>
+            <i class="fas fa-upload"></i> <span>Subir Tarjeta #${cardNumber}</span>
+          </button>
+          <div id="status${cardNumber}"></div>
+        `;
+        container.appendChild(cardForm);
+        setupCardUpload(cardNumber);
+      }
+    }
+
+    function setupCardUpload(cardNumber) {
+      const uploadArea = document.getElementById(`uploadArea${cardNumber}`);
+      const fileInput  = document.getElementById(`fileInput${cardNumber}`);
+      const preview    = document.getElementById(`preview${cardNumber}`);
+      const uploadBtn  = document.getElementById(`uploadBtn${cardNumber}`);
+      const titleInput = document.getElementById(`title${cardNumber}`);
+      const descriptionInput = document.getElementById(`description${cardNumber}`);
+      const priceInput = document.getElementById(`price${cardNumber}`);
+
+      uploadArea.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          if (file.size > 5 * 1024 * 1024) { showCardStatus(cardNumber, 'La imagen debe ser menor a 5MB','error'); return; }
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            preview.src = ev.target.result;
+            preview.classList.add('visible');
+            uploadArea.classList.add('has-image');
+            validateCard(cardNumber);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      titleInput.addEventListener('input', () => validateCard(cardNumber));
+      descriptionInput.addEventListener('input', () => validateCard(cardNumber));
+      priceInput.addEventListener('input', () => validateCard(cardNumber));
+    }
+
+    function validateCard(cardNumber) {
+      const fileInput = document.getElementById(`fileInput${cardNumber}`);
+      const title = document.getElementById(`title${cardNumber}`).value.trim();
+      const description = document.getElementById(`description${cardNumber}`).value.trim();
+      const price = document.getElementById(`price${cardNumber}`).value;
+      const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
+      const isValid = fileInput.files.length > 0 && title && description && price > 0;
+      uploadBtn.disabled = !isValid;
+    }
+
+    async function uploadCard(cardNumber) {
+      const fileInput = document.getElementById(`fileInput${cardNumber}`);
+      const title = document.getElementById(`title${cardNumber}`).value.trim();
+      const description = document.getElementById(`description${cardNumber}`).value.trim();
+      const price = parseFloat(document.getElementById(`price${cardNumber}`).value);
+      const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
+
+      if (!fileInput.files[0] || !title || !description || !price) {
+        showCardStatus(cardNumber,'Por favor completa todos los campos','error'); return;
+      }
+      if (!GITHUB_CONFIG.token) { showCardStatus(cardNumber,'Falta configurar el PAT','error'); showPATBanner(); return; }
+
+      uploadBtn.disabled = true;
+      showCardStatus(cardNumber,'Subiendo a GitHub...','info');
+
+      try{
+        const file = fileInput.files[0];
+        const fileName = `${cardNumber}.png`;
+        const imageData = await convertToPNG(file);
+        const base64Data = await blobToBase64(imageData);
+
+        // 1) Subir imagen
+        await uploadFileToGithub(fileName, base64Data);
+
+        // 2) Actualizar cardsData local
+        const cardIndex = cardsData.findIndex(c => c.number === cardNumber);
+        const cardData = { number:cardNumber, title, description, price, image:fileName, uploadedAt:new Date().toISOString() };
+        if (cardIndex >= 0) cardsData[cardIndex] = cardData; else cardsData.push(cardData);
+        saveCardsData();
+
+        // 3) Actualizar cards.json
+        await updateCardsJSON();
+
+        showCardStatus(cardNumber,'¡Tarjeta subida exitosamente! 🎉','success');
+      }catch(error){
+        if (String(error.message || '').includes('Bad credentials')){
+          showCardStatus(cardNumber,'❌ Error de autenticación con GitHub. Verifica el PAT.','error');
+          showPATBanner();
+        } else {
+          showCardStatus(cardNumber, 'Error: ' + error.message, 'error');
+        }
+        console.error('Error completo:', error);
+      }finally{
+        uploadBtn.disabled = false;
+      }
+    }
+
+    async function updateCardsJSON(){
+      console.log('📝 Actualizando cards.json con', cardsData.length, 'tarjetas');
+      cardsData.sort((a,b)=>a.number-b.number);
+      const jsonContent = JSON.stringify(cardsData, null, 2);
+      const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+      const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/cards.json`;
+
+      // obtener sha si existe
+      let sha = null;
+      try{
+        const checkResponse = await fetchWithAuth(url, { headers:{ 'Accept':'application/vnd.github.v3+json' } });
+        if (checkResponse.ok){
+          const data = await checkResponse.json();
+          sha = data.sha;
+        }
+      }catch(e){ /* noop */ }
+
+      const body = { message:`Update cards data - ${cardsData.length} cards`, content:base64Content, branch:GITHUB_CONFIG.branch };
+      if (sha) body.sha = sha;
+
+      const response = await fetchWithAuth(url, {
+        method:'PUT',
+        headers:{ 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!response.ok){
+        const err = await response.json().catch(()=>({message:'Unknown error'}));
+        console.error('❌ Error al actualizar cards.json:', err);
+        throw new Error(err.message || 'Error al actualizar cards.json');
+      }
+      const result = await response.json();
+      console.log('✅ cards.json actualizado', result);
+      return result;
+    }
+
+    async function uploadFileToGithub(fileName, base64Content){
+      const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${fileName}`;
+
+      let sha = null;
+      try{
+        const checkResponse = await fetchWithAuth(url, { headers:{ 'Accept':'application/vnd.github.v3+json' } });
+        if (checkResponse.ok){
+          const data = await checkResponse.json();
+          sha = data.sha;
+        }
+      }catch(e){ /* noop */ }
+
+      const body = { message:`Upload ${fileName} via Admin Panel`, content: base64Content.split(',')[1], branch: GITHUB_CONFIG.branch };
+      if (sha) body.sha = sha;
+
+      const response = await fetchWithAuth(url, {
+        method:'PUT',
+        headers:{ 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok){
+        const error = await response.json().catch(()=>({message:'Unknown error'}));
+        throw new Error(error.message || 'Error al subir a GitHub');
+      }
+      return response.json();
+    }
+
+    // Convertir imagen a PNG
+    function convertToPNG(file){
+      return new Promise((resolve)=>{
+        const reader = new FileReader();
+        reader.onload = (e)=>{
+          const img = new Image();
+          img.onload = ()=>{
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width; canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img,0,0);
+            canvas.toBlob((blob)=>resolve(blob),'image/png');
+          };
+          img.src = e.target.result;
         };
+        reader.readAsDataURL(file);
+      });
+    }
 
-        const MAX_CARDS = 10;
-        let cardsData = [];
+    function blobToBase64(blob){
+      return new Promise((resolve)=>{
+        const reader = new FileReader();
+        reader.onloadend = ()=> resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    }
 
-        // -------- Utilidades comunes --------
-        function ghHeaders() {
-            return {
-                'Authorization': `Bearer ${GITHUB_CONFIG.token}`,
-                'Accept': 'application/vnd.github+json',
-                'X-GitHub-Api-Version': '2022-11-28',
-                'Content-Type': 'application/json'
-            };
+    function showCardStatus(cardNumber, message, type){
+      const statusDiv = document.getElementById(`status${cardNumber}`);
+      statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+    }
+
+    function renderSavedCards(){
+      const container = document.getElementById('savedCardsList');
+      if (cardsData.length === 0){
+        container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:2rem;">No hay tarjetas guardadas aún</p>';
+        return;
+      }
+      container.innerHTML = cardsData
+        .sort((a,b)=>a.number-b.number)
+        .map(card => `
+          <div class="saved-card">
+            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${card.image}" alt="${card.title}">
+            <div class="saved-card-info">
+              <h4>#${card.number} - ${card.title}</h4>
+              <p>${card.description}</p>
+              <p class="price">$${Number(card.price).toFixed(2)}</p>
+              <p style="font-size:.8em;opacity:.7;">Actualizado: ${new Date(card.uploadedAt).toLocaleString()}</p>
+            </div>
+            <button class="btn-delete" onclick="deleteCard(${card.number})"><i class="fas fa-trash"></i> Eliminar</button>
+          </div>
+        `).join('');
+    }
+
+    async function deleteCard(cardNumber){
+      if (!confirm(`¿Estás seguro de eliminar la Tarjeta #${cardNumber}?`)) return;
+      try{
+        const card = cardsData.find(c=>c.number===cardNumber);
+        if (!card) return;
+
+        const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${card.image}`;
+
+        // obtener sha
+        const checkResponse = await fetchWithAuth(url, { headers:{ 'Accept':'application/vnd.github.v3+json' } });
+        if (checkResponse.ok){
+          const data = await checkResponse.json();
+          await fetchWithAuth(url, {
+            method:'DELETE',
+            headers:{ 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+            body: JSON.stringify({ message:`Delete ${card.image}`, sha:data.sha, branch:GITHUB_CONFIG.branch })
+          });
         }
 
-        function ghContentUrl(path) {
-            return `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${path}`;
-        }
+        // limpiar locales y json
+        cardsData = cardsData.filter(c=>c.number !== cardNumber);
+        saveCardsData();
+        await updateCardsJSON();
 
-        function nowIso() {
-            return new Date().toISOString();
-        }
+        // limpiar formulario visual
+        document.getElementById(`fileInput${cardNumber}`).value = '';
+        document.getElementById(`preview${cardNumber}`).classList.remove('visible');
+        document.getElementById(`uploadArea${cardNumber}`).classList.remove('has-image');
+        document.getElementById(`title${cardNumber}`).value = '';
+        document.getElementById(`description${cardNumber}`).value = '';
+        document.getElementById(`price${cardNumber}`).value = '';
+        document.getElementById(`uploadBtn${cardNumber}`).disabled = true;
 
-        // -------- Estado local --------
-        function loadCardsData() {
-            const saved = localStorage.getItem('christmasPringleCards');
-            if (saved) {
-                try { cardsData = JSON.parse(saved); } catch {}
-            }
-            renderCardForms();
-            renderSavedCards();
-        }
+        alert('Tarjeta eliminada exitosamente');
+      }catch(error){
+        alert('Error al eliminar: ' + error.message);
+        console.error(error);
+      }
+    }
 
-        function saveCardsData() {
-            localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData));
-            renderSavedCards();
-        }
+    // (Opcional) verificación de auth al cargar
+    (async function verifyGithubAuth(){
+      if (!GITHUB_CONFIG.token) return;
+      try{
+        const r = await fetchWithAuth('https://api.github.com/user');
+        const j = await r.json();
+        if (r.ok) console.log('Auth OK como:', j.login);
+        else console.warn('Auth FAIL:', r.status, j);
+      }catch(e){ console.warn('Auth check error:', e); }
+    })();
 
-        // -------- Render UI --------
-        function renderCardForms() {
-            const container = document.getElementById('cardsContainer');
-            container.innerHTML = '';
-
-            for (let i = 0; i < MAX_CARDS; i++) {
-                const cardNumber = i + 1;
-                const existingCard = cardsData.find(c => c.number === cardNumber);
-
-                const cardForm = document.createElement('div');
-                cardForm.className = 'card-form';
-                cardForm.innerHTML = `
-                    <h3><i class="fas fa-snowflake"></i> Tarjeta #${cardNumber}</h3>
-
-                    <div class="upload-area" id="uploadArea${cardNumber}" data-card="${cardNumber}">
-                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                        <h4>Clic para seleccionar imagen</h4>
-                        <p>PNG, JPG, JPEG (Máx: 5MB)</p>
-                        <input type="file" id="fileInput${cardNumber}" accept="image/png,image/jpeg,image/jpg" style="display: none;">
-                        <img id="preview${cardNumber}" class="preview-image" alt="Vista previa">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="title${cardNumber}"><i class="fas fa-heading"></i> Título de la tarjeta</label>
-                        <input type="text" id="title${cardNumber}" placeholder="Ej: Árbol de Esperanza" value="${existingCard ? existingCard.title : ''}">
-                        <small>Máximo 50 caracteres</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description${cardNumber}"><i class="fas fa-align-left"></i> Descripción</label>
-                        <textarea id="description${cardNumber}" placeholder="Describe tu tarjeta navideña...">${existingCard ? existingCard.description : ''}</textarea>
-                        <small>Máximo 200 caracteres</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="price${cardNumber}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
-                        <input type="number" id="price${cardNumber}" placeholder="15.00" step="0.01" min="0" value="${existingCard ? existingCard.price : ''}">
-                        <small>Precio en dólares estadounidenses</small>
-                    </div>
-
-                    <button class="btn btn-primary" id="uploadBtn${cardNumber}" onclick="uploadCard(${cardNumber})" disabled>
-                        <i class="fas fa-upload"></i> <span>Subir Tarjeta #${cardNumber}</span>
-                    </button>
-
-                    <div id="status${cardNumber}"></div>
-                `;
-
-                container.appendChild(cardForm);
-                setupCardUpload(cardNumber);
-            }
-        }
-
-        function setupCardUpload(cardNumber) {
-            const uploadArea = document.getElementById(`uploadArea${cardNumber}`);
-            const fileInput = document.getElementById(`fileInput${cardNumber}`);
-            const preview = document.getElementById(`preview${cardNumber}`);
-            const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-            const titleInput = document.getElementById(`title${cardNumber}`);
-            const descriptionInput = document.getElementById(`description${cardNumber}`);
-            const priceInput = document.getElementById(`price${cardNumber}`);
-
-            uploadArea.addEventListener('click', () => fileInput.click());
-
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 5 * 1024 * 1024) {
-                        showCardStatus(cardNumber, 'La imagen debe ser menor a 5MB', 'error');
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = (ev) => {
-                        preview.src = ev.target.result;
-                        preview.classList.add('visible');
-                        uploadArea.classList.add('has-image');
-                        validateCard(cardNumber);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            titleInput.addEventListener('input', () => validateCard(cardNumber));
-            descriptionInput.addEventListener('input', () => validateCard(cardNumber));
-            priceInput.addEventListener('input', () => validateCard(cardNumber));
-        }
-
-        function validateCard(cardNumber) {
-            const fileInput = document.getElementById(`fileInput${cardNumber}`);
-            const title = document.getElementById(`title${cardNumber}`).value.trim();
-            const description = document.getElementById(`description${cardNumber}`).value.trim();
-            const price = document.getElementById(`price${cardNumber}`).value;
-            const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-            const isValid = fileInput.files.length > 0 && title && description && price > 0;
-            uploadBtn.disabled = !isValid;
-        }
-
-        function showCardStatus(cardNumber, message, type) {
-            const statusDiv = document.getElementById(`status${cardNumber}`);
-            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
-        }
-
-        function renderSavedCards() {
-            const container = document.getElementById('savedCardsList');
-            if (!cardsData.length) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">No hay tarjetas guardadas aún</p>';
-                return;
-            }
-            container.innerHTML = cardsData
-                .sort((a, b) => a.number - b.number)
-                .map(card => `
-                    <div class="saved-card">
-                        <img src="/${card.image}?t=${Date.now()}" alt="${card.title}">
-                        <div class="saved-card-info">
-                            <h4>#${card.number} - ${card.title}</h4>
-                            <p>${card.description}</p>
-                            <p class="price">$${Number(card.price).toFixed(2)}</p>
-                            <p style="font-size: 0.8em; opacity: 0.7;">Actualizado: ${new Date(card.uploadedAt).toLocaleString()}</p>
-                        </div>
-                        <button class="btn-delete" onclick="deleteCard(${card.number})">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </button>
-                    </div>
-                `).join('');
-        }
-
-        // -------- Lógica GitHub --------
-        async function uploadCard(cardNumber) {
-            const fileInput = document.getElementById(`fileInput${cardNumber}`);
-            const title = document.getElementById(`title${cardNumber}`).value.trim();
-            const description = document.getElementById(`description${cardNumber}`).value.trim();
-            const price = parseFloat(document.getElementById(`price${cardNumber}`).value);
-            const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-
-            if (!fileInput.files[0] || !title || !description || !price) {
-                showCardStatus(cardNumber, 'Por favor completa todos los campos', 'error');
-                return;
-            }
-
-            uploadBtn.disabled = true;
-            showCardStatus(cardNumber, 'Subiendo a GitHub...', 'info');
-
-            try {
-                const file = fileInput.files[0];
-                const fileName = `${cardNumber}.png`;
-                const imageBlob = await convertToPNG(file);
-                const base64 = await blobToBase64(imageBlob); // dataURL
-                const base64Raw = base64.split(',')[1];
-
-                // 1) Subir imagen a images/<n>.png
-                const imagePath = `${GITHUB_CONFIG.imagesDir}/${fileName}`;
-                await uploadOrUpdateFile(imagePath, base64Raw, `Upload ${imagePath} via Admin Panel`);
-
-                // 2) Actualizar cards.json (upsert)
-                await upsertCard({
-                    number: cardNumber,
-                    title,
-                    description,
-                    price,
-                    image: imagePath,
-                    uploadedAt: nowIso()
-                });
-
-                showCardStatus(cardNumber, '¡Tarjeta subida exitosamente! 🎉', 'success');
-
-            } catch (error) {
-                const msg = (error && error.message) ? error.message : String(error);
-                if (msg.toLowerCase().includes('bad credentials')) {
-                    showCardStatus(cardNumber, '❌ Error de autenticación con GitHub. Verifica el PAT.', 'error');
-                } else {
-                    showCardStatus(cardNumber, 'Error: ' + msg, 'error');
-                }
-                console.error('Error completo:', error);
-            } finally {
-                uploadBtn.disabled = false;
-            }
-        }
-
-        async function uploadOrUpdateFile(path, base64Content, message) {
-            const url = ghContentUrl(path);
-
-            // Buscar SHA si existe
-            let sha = null;
-            try {
-                const check = await fetch(url, { headers: ghHeaders() });
-                if (check.ok) {
-                    const j = await check.json();
-                    sha = j.sha || null;
-                }
-            } catch (_) {}
-
-            const body = {
-                message,
-                content: base64Content,
-                branch: GITHUB_CONFIG.branch
-            };
-            if (sha) body.sha = sha;
-
-            const res = await fetch(url, {
-                method: 'PUT',
-                headers: ghHeaders(),
-                body: JSON.stringify(body)
-            });
-            if (!res.ok) {
-                const err = await safeJson(res);
-                throw new Error(err?.message || `GitHub PUT failed (${res.status})`);
-            }
-            return res.json();
-        }
-
-        async function upsertCard(entry) {
-            const url = ghContentUrl('cards.json');
-
-            // Leer cards.json para obtener sha + contenido
-            let sha = null;
-            let cards = [];
-            const getRes = await fetch(url, { headers: ghHeaders() });
-            if (getRes.ok) {
-                const j = await getRes.json();
-                sha = j.sha || null;
-                if (j.content) {
-                    const decoded = atob(j.content.replace(/\n/g, ''));
-                    try {
-                        cards = JSON.parse(decoded);
-                    } catch {
-                        cards = [];
-                    }
-                }
-            } else if (getRes.status !== 404) {
-                const err = await safeJson(getRes);
-                throw new Error(err?.message || `No se pudo leer cards.json (${getRes.status})`);
-            }
-
-            // upsert por number
-            const idx = cards.findIndex(c => Number(c.number) === Number(entry.number));
-            if (idx >= 0) {
-                cards[idx] = { ...cards[idx], ...entry };
-            } else {
-                cards.push(entry);
-            }
-            cards.sort((a, b) => Number(a.number) - Number(b.number));
-
-            const jsonContent = JSON.stringify(cards, null, 2);
-            const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
-
-            const putBody = {
-                message: `Update cards data - ${cards.length} cards`,
-                content: base64Content,
-                branch: GITHUB_CONFIG.branch
-            };
-            if (sha) putBody.sha = sha;
-
-            const putRes = await fetch(url, {
-                method: 'PUT',
-                headers: ghHeaders(),
-                body: JSON.stringify(putBody)
-            });
-            if (!putRes.ok) {
-                const err = await safeJson(putRes);
-                throw new Error(err?.message || `No se pudo actualizar cards.json (${putRes.status})`);
-            }
-
-            // Actualizar local y UI
-            cardsData = cards;
-            saveCardsData();
-        }
-
-        // -------- Delete --------
-        async function deleteCard(cardNumber) {
-            if (!confirm(`¿Estás seguro de eliminar la Tarjeta #${cardNumber}?`)) return;
-
-            try {
-                const card = cardsData.find(c => Number(c.number) === Number(cardNumber));
-                if (!card) return;
-
-                // 1) Borrar imagen
-                await deleteFile(card.image, `Delete ${card.image}`);
-
-                // 2) Remover de cards.json
-                const remaining = cardsData.filter(c => Number(c.number) !== Number(cardNumber));
-                await writeCardsJsonArray(remaining);
-
-                // 3) Limpiar formulario
-                document.getElementById(`fileInput${cardNumber}`).value = '';
-                document.getElementById(`preview${cardNumber}`).classList.remove('visible');
-                document.getElementById(`uploadArea${cardNumber}`).classList.remove('has-image');
-                document.getElementById(`title${cardNumber}`).value = '';
-                document.getElementById(`description${cardNumber}`).value = '';
-                document.getElementById(`price${cardNumber}`).value = '';
-                document.getElementById(`uploadBtn${cardNumber}`).disabled = true;
-
-                alert('Tarjeta eliminada exitosamente');
-            } catch (error) {
-                alert('Error al eliminar: ' + (error?.message || String(error)));
-                console.error(error);
-            }
-        }
-
-        async function deleteFile(path, message) {
-            const url = ghContentUrl(path);
-            let sha = null;
-
-            const check = await fetch(url, { headers: ghHeaders() });
-            if (check.ok) {
-                const j = await check.json();
-                sha = j.sha || null;
-            } else {
-                // si no existe, no falles
-                return;
-            }
-
-            const res = await fetch(url, {
-                method: 'DELETE',
-                headers: ghHeaders(),
-                body: JSON.stringify({
-                    message,
-                    sha,
-                    branch: GITHUB_CONFIG.branch
-                })
-            });
-            if (!res.ok) {
-                const err = await safeJson(res);
-                throw new Error(err?.message || `No se pudo borrar ${path} (${res.status})`);
-            }
-        }
-
-        async function writeCardsJsonArray(cards) {
-            const url = ghContentUrl('cards.json');
-
-            // obtener SHA actual si existe
-            let sha = null;
-            const getRes = await fetch(url, { headers: ghHeaders() });
-            if (getRes.ok) {
-                const j = await getRes.json();
-                sha = j.sha || null;
-            } else if (getRes.status !== 404) {
-                const err = await safeJson(getRes);
-                throw new Error(err?.message || `No se pudo leer cards.json (${getRes.status})`);
-            }
-
-            const jsonContent = JSON.stringify(cards.sort((a,b)=>a.number-b.number), null, 2);
-            const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
-
-            const body = {
-                message: `Update cards data - ${cards.length} cards`,
-                content: base64Content,
-                branch: GITHUB_CONFIG.branch
-            };
-            if (sha) body.sha = sha;
-
-            const res = await fetch(url, {
-                method: 'PUT',
-                headers: ghHeaders(),
-                body: JSON.stringify(body)
-            });
-            if (!res.ok) {
-                const err = await safeJson(res);
-                throw new Error(err?.message || `No se pudo actualizar cards.json (${res.status})`);
-            }
-
-            cardsData = cards;
-            saveCardsData();
-        }
-
-        // -------- Helpers binarios --------
-        function convertToPNG(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        canvas.toBlob((blob) => resolve(blob), 'image/png');
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function blobToBase64(blob) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(blob);
-            });
-        }
-
-        async function safeJson(res) {
-            try { return await res.json(); } catch { return null; }
-        }
-
-        // -------- Init --------
-        loadCardsData();
-    </script>
+    // Inicializar
+    loadCardsData();
+  </script>
 </body>
 </html>

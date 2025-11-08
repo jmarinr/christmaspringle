@@ -34,16 +34,20 @@
     .form-row input[type="password"]{
       width:100%;padding:.9rem;border:2px solid #E0E0E0;border-radius:10px;font-size:1rem
     }
+    .password-row{position:relative}
+    .toggle-pass{
+      position:absolute;right:.6rem;top:50%;transform:translateY(-50%);
+      background:transparent;border:none;cursor:pointer;color:#666;font-size:1.05rem
+    }
     .login-actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:.5rem}
     .login-btn{
       width:100%;padding:1rem;border:none;border-radius:999px;color:#fff;font-weight:800;
       background:linear-gradient(135deg,var(--primary-green),#00E676);cursor:pointer
     }
-    .login-note{font-size:.9rem;color:var(--text-light);margin-top:.75rem}
     .login-error{margin-top:.75rem;background:#FFCDD2;color:#B71C1C;padding:.75rem;border-radius:10px;display:none}
     .remember{display:flex;align-items:center;gap:.5rem;color:var(--text-light);font-size:.95rem}
 
-    /* --- Admin UI (tu panel existente) --- */
+    /* --- Admin UI (panel existente) --- */
     .container{max-width:1400px;margin:0 auto;background:#fff;border-radius:24px;padding:3rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
     .header{text-align:center;margin-bottom:2rem;position:relative}
     .header h1{font-family:'Mountains of Christmas',cursive;font-size:3em;color:var(--primary-red);margin-bottom:.5rem}
@@ -126,16 +130,18 @@
           <label for="loginUser"><i class="fa-solid fa-user"></i> Usuario</label>
           <input id="loginUser" type="text" autocomplete="username" required placeholder="Usuario"/>
         </div>
-        <div class="form-row">
+        <div class="form-row password-row">
           <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
           <input id="loginPass" type="password" autocomplete="current-password" required placeholder="Contraseña"/>
+          <button type="button" id="togglePass" class="toggle-pass" aria-label="Mostrar u ocultar contraseña">
+            <i class="fa-regular fa-eye"></i>
+          </button>
         </div>
         <div class="login-actions">
           <label class="remember"><input id="rememberMe" type="checkbox"/> Recordarme</label>
         </div>
         <button class="login-btn" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
         <div id="loginError" class="login-error"></div>
-        <div class="login-note">Para demo. No usar este método en producción sin backend.</div>
       </form>
     </div>
   </div>
@@ -158,7 +164,6 @@
       <!-- Banner para capturar PAT si no existe -->
       <div id="patBanner" class="pat-banner">
         <b><i class="fa-solid fa-key"></i> Token de acceso GitHub requerido</b>
-        <div class="login-note">Pega tu <em>Personal Access Token</em> (scope: <code>repo</code>). Se guardará SOLO en tu navegador (localStorage) y se usará para PUT/DELETE de archivos.</div>
         <div class="pat-input">
           <input id="patInput" type="password" placeholder="ghp_**********************" />
           <button id="savePatBtn" class="login-btn" type="button" style="width:auto;padding:.8rem 1.2rem"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
@@ -185,10 +190,8 @@
     const AUTH_TOKEN_PREFIX = 'ok:';
     const USERNAME = 'patripringle';
 
-    // SHA-256 de "SoyPatri1978" en hex
-    // (Se usa hash para no dejar la contraseña visible en el código)
-    const PASSWORD_HASH_HEX = 'f3f8fef8a2ea6e8f3b1a0b9e8ea3b5b6a66a6c2b1c3f9096a6a7a6d3f74a6d1d';
-    // ↑ Este valor corresponde a "SoyPatri1978"
+    // SHA-256 real de "SoyPatri1978" (hex)
+    const PASSWORD_HASH_HEX = 'bd6b0c1ce7ad786ca69c80302ff2f14296958630bf0de8b47ef12bcf45b58276';
 
     async function sha256Hex(str){
       const enc = new TextEncoder().encode(str);
@@ -225,6 +228,15 @@
       document.getElementById('loginView').style.display = 'none';
       document.getElementById('adminView').style.display = 'block';
     }
+
+    // Toggle ver/ocultar contraseña
+    const passInput = document.getElementById('loginPass');
+    const toggleBtn = document.getElementById('togglePass');
+    toggleBtn.addEventListener('click', ()=>{
+      const isPwd = passInput.type === 'password';
+      passInput.type = isPwd ? 'text' : 'password';
+      toggleBtn.innerHTML = isPwd ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
+    });
 
     document.getElementById('loginForm').addEventListener('submit', async (e)=>{
       e.preventDefault();

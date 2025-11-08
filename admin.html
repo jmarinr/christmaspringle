@@ -19,59 +19,46 @@
         .header h1 { font-family: 'Mountains of Christmas', cursive; font-size: 3em; color: var(--primary-red); margin-bottom: 0.5rem; }
         .header .badge { display: inline-block; background: linear-gradient(135deg, var(--primary-gold), #FDD835); color: var(--text-dark); padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.9em; }
         .header p { color: var(--text-light); font-size: 1.2em; margin-top: 1rem; }
-        
         .cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-        
         .card-form { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); padding: 2rem; border-radius: 16px; border-left: 5px solid var(--primary-blue); }
         .card-form h3 { color: var(--text-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5em; }
-        
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
         .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1em; font-family: 'Google Sans', sans-serif; transition: border-color 0.3s ease; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-blue); }
         .form-group textarea { resize: vertical; min-height: 100px; }
         .form-group small { display: block; color: var(--text-light); margin-top: 0.5rem; line-height: 1.5; }
-        
         .upload-area { border: 3px dashed var(--primary-blue); border-radius: 16px; padding: 2rem; text-align: center; background: white; cursor: pointer; transition: all 0.3s ease; margin-bottom: 1rem; }
         .upload-area:hover { border-color: var(--primary-red); background: #FFF5F5; transform: translateY(-4px); }
         .upload-area.has-image { border-color: var(--primary-green); background: #F0FFF4; }
         .upload-icon { font-size: 3em; color: var(--primary-blue); margin-bottom: 0.5rem; }
         .upload-area h4 { font-size: 1.2em; color: var(--text-dark); margin-bottom: 0.3rem; }
         .upload-area p { color: var(--text-light); font-size: 0.9em; }
-        
         .preview-image { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-top: 1rem; display: none; }
         .preview-image.visible { display: block; }
-        
         .btn { padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Google Sans', sans-serif; display: flex; align-items: center; gap: 0.5rem; justify-content: center; width: 100%; }
         .btn-primary { background: linear-gradient(135deg, var(--primary-red), #C0392B); color: white; }
         .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4); }
         .btn-secondary { background: linear-gradient(135deg, var(--primary-green), #00E676); color: white; }
         .btn-secondary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        
         .status { text-align: center; padding: 1rem; border-radius: 12px; margin-top: 1rem; font-weight: 600; }
         .status.success { background: #C8E6C9; color: #1B5E20; }
         .status.error { background: #FFCDD2; color: #B71C1C; }
         .status.info { background: #BBDEFB; color: #0D47A1; }
-        
         .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-blue); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: color 0.3s ease; }
         .back-link:hover { color: var(--primary-red); }
-        
         .progress-bar { width: 100%; height: 8px; background: #E0E0E0; border-radius: 4px; margin-top: 1rem; overflow: hidden; display: none; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary-green), var(--primary-blue)); width: 0%; transition: width 0.3s ease; }
-        
         .cards-list { margin-top: 3rem; background: #F8F9FA; padding: 2rem; border-radius: 16px; }
         .cards-list h2 { font-family: 'Mountains of Christmas', cursive; color: var(--text-dark); margin-bottom: 1.5rem; text-align: center; }
-        
         .saved-card { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem; align-items: center; }
         .saved-card img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
         .saved-card-info h4 { color: var(--text-dark); margin-bottom: 0.3rem; }
         .saved-card-info p { color: var(--text-light); font-size: 0.9em; margin-bottom: 0.2rem; }
         .saved-card-info .price { color: var(--primary-gold); font-weight: 700; font-size: 1.2em; }
-        
         .btn-delete { background: linear-gradient(135deg, #E53935, #C62828); color: white; padding: 0.5rem 1rem; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
         .btn-delete:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4); }
-        
         @media (max-width: 768px) {
             .container { padding: 1.5rem; }
             .header h1 { font-size: 2em; }
@@ -85,7 +72,7 @@
 <body>
     <div class="container">
         <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al sitio principal</a>
-        
+
         <div class="header">
             <h1>🎨 Panel de Administración PRO</h1>
             <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
@@ -93,10 +80,10 @@
         </div>
 
         <div class="cards-container" id="cardsContainer"></div>
-        
+
         <div id="statusMessage"></div>
         <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-        
+
         <div class="cards-list">
             <h2>📋 Tarjetas Guardadas</h2>
             <div id="savedCardsList"></div>
@@ -104,33 +91,52 @@
     </div>
 
     <script>
-        // Configuración de GitHub (oculta en el código)
+        // ⚠️ SOLO DEMO: este token será visible en el navegador
         const GITHUB_CONFIG = {
-            token: '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',
+            token: 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // <-- tu PAT temporal
             username: 'jmarinr',
-            repo: 'christmaspringle'
+            repo: 'christmaspringle',
+            branch: 'main',
+            imagesDir: 'images' // carpeta para PNGs
         };
 
         const MAX_CARDS = 10;
         let cardsData = [];
 
-        // Cargar datos guardados
+        // -------- Utilidades comunes --------
+        function ghHeaders() {
+            return {
+                'Authorization': `Bearer ${GITHUB_CONFIG.token}`,
+                'Accept': 'application/vnd.github+json',
+                'X-GitHub-Api-Version': '2022-11-28',
+                'Content-Type': 'application/json'
+            };
+        }
+
+        function ghContentUrl(path) {
+            return `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${path}`;
+        }
+
+        function nowIso() {
+            return new Date().toISOString();
+        }
+
+        // -------- Estado local --------
         function loadCardsData() {
             const saved = localStorage.getItem('christmasPringleCards');
             if (saved) {
-                cardsData = JSON.parse(saved);
+                try { cardsData = JSON.parse(saved); } catch {}
             }
             renderCardForms();
             renderSavedCards();
         }
 
-        // Guardar datos
         function saveCardsData() {
             localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData));
             renderSavedCards();
         }
 
-        // Renderizar formularios de tarjetas
+        // -------- Render UI --------
         function renderCardForms() {
             const container = document.getElementById('cardsContainer');
             container.innerHTML = '';
@@ -138,12 +144,12 @@
             for (let i = 0; i < MAX_CARDS; i++) {
                 const cardNumber = i + 1;
                 const existingCard = cardsData.find(c => c.number === cardNumber);
-                
+
                 const cardForm = document.createElement('div');
                 cardForm.className = 'card-form';
                 cardForm.innerHTML = `
                     <h3><i class="fas fa-snowflake"></i> Tarjeta #${cardNumber}</h3>
-                    
+
                     <div class="upload-area" id="uploadArea${cardNumber}" data-card="${cardNumber}">
                         <i class="fas fa-cloud-upload-alt upload-icon"></i>
                         <h4>Clic para seleccionar imagen</h4>
@@ -151,40 +157,37 @@
                         <input type="file" id="fileInput${cardNumber}" accept="image/png,image/jpeg,image/jpg" style="display: none;">
                         <img id="preview${cardNumber}" class="preview-image" alt="Vista previa">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="title${cardNumber}"><i class="fas fa-heading"></i> Título de la tarjeta</label>
                         <input type="text" id="title${cardNumber}" placeholder="Ej: Árbol de Esperanza" value="${existingCard ? existingCard.title : ''}">
                         <small>Máximo 50 caracteres</small>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="description${cardNumber}"><i class="fas fa-align-left"></i> Descripción</label>
                         <textarea id="description${cardNumber}" placeholder="Describe tu tarjeta navideña...">${existingCard ? existingCard.description : ''}</textarea>
                         <small>Máximo 200 caracteres</small>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="price${cardNumber}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
                         <input type="number" id="price${cardNumber}" placeholder="15.00" step="0.01" min="0" value="${existingCard ? existingCard.price : ''}">
                         <small>Precio en dólares estadounidenses</small>
                     </div>
-                    
+
                     <button class="btn btn-primary" id="uploadBtn${cardNumber}" onclick="uploadCard(${cardNumber})" disabled>
                         <i class="fas fa-upload"></i> <span>Subir Tarjeta #${cardNumber}</span>
                     </button>
-                    
+
                     <div id="status${cardNumber}"></div>
                 `;
-                
+
                 container.appendChild(cardForm);
-                
-                // Configurar eventos de carga
                 setupCardUpload(cardNumber);
             }
         }
 
-        // Configurar eventos de carga para cada tarjeta
         function setupCardUpload(cardNumber) {
             const uploadArea = document.getElementById(`uploadArea${cardNumber}`);
             const fileInput = document.getElementById(`fileInput${cardNumber}`);
@@ -193,9 +196,9 @@
             const titleInput = document.getElementById(`title${cardNumber}`);
             const descriptionInput = document.getElementById(`description${cardNumber}`);
             const priceInput = document.getElementById(`price${cardNumber}`);
-            
+
             uploadArea.addEventListener('click', () => fileInput.click());
-            
+
             fileInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
@@ -203,10 +206,9 @@
                         showCardStatus(cardNumber, 'La imagen debe ser menor a 5MB', 'error');
                         return;
                     }
-                    
                     const reader = new FileReader();
-                    reader.onload = (e) => {
-                        preview.src = e.target.result;
+                    reader.onload = (ev) => {
+                        preview.src = ev.target.result;
                         preview.classList.add('visible');
                         uploadArea.classList.add('has-image');
                         validateCard(cardNumber);
@@ -214,81 +216,96 @@
                     reader.readAsDataURL(file);
                 }
             });
-            
-            // Validar cuando cambien los campos
+
             titleInput.addEventListener('input', () => validateCard(cardNumber));
             descriptionInput.addEventListener('input', () => validateCard(cardNumber));
             priceInput.addEventListener('input', () => validateCard(cardNumber));
         }
 
-        // Validar tarjeta
         function validateCard(cardNumber) {
             const fileInput = document.getElementById(`fileInput${cardNumber}`);
             const title = document.getElementById(`title${cardNumber}`).value.trim();
             const description = document.getElementById(`description${cardNumber}`).value.trim();
             const price = document.getElementById(`price${cardNumber}`).value;
             const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-            
             const isValid = fileInput.files.length > 0 && title && description && price > 0;
             uploadBtn.disabled = !isValid;
         }
 
-        // Subir tarjeta individual
+        function showCardStatus(cardNumber, message, type) {
+            const statusDiv = document.getElementById(`status${cardNumber}`);
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function renderSavedCards() {
+            const container = document.getElementById('savedCardsList');
+            if (!cardsData.length) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">No hay tarjetas guardadas aún</p>';
+                return;
+            }
+            container.innerHTML = cardsData
+                .sort((a, b) => a.number - b.number)
+                .map(card => `
+                    <div class="saved-card">
+                        <img src="/${card.image}?t=${Date.now()}" alt="${card.title}">
+                        <div class="saved-card-info">
+                            <h4>#${card.number} - ${card.title}</h4>
+                            <p>${card.description}</p>
+                            <p class="price">$${Number(card.price).toFixed(2)}</p>
+                            <p style="font-size: 0.8em; opacity: 0.7;">Actualizado: ${new Date(card.uploadedAt).toLocaleString()}</p>
+                        </div>
+                        <button class="btn-delete" onclick="deleteCard(${card.number})">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                `).join('');
+        }
+
+        // -------- Lógica GitHub --------
         async function uploadCard(cardNumber) {
             const fileInput = document.getElementById(`fileInput${cardNumber}`);
             const title = document.getElementById(`title${cardNumber}`).value.trim();
             const description = document.getElementById(`description${cardNumber}`).value.trim();
             const price = parseFloat(document.getElementById(`price${cardNumber}`).value);
             const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-            
+
             if (!fileInput.files[0] || !title || !description || !price) {
                 showCardStatus(cardNumber, 'Por favor completa todos los campos', 'error');
                 return;
             }
-            
+
             uploadBtn.disabled = true;
             showCardStatus(cardNumber, 'Subiendo a GitHub...', 'info');
-            
+
             try {
                 const file = fileInput.files[0];
                 const fileName = `${cardNumber}.png`;
-                
-                // Convertir a PNG
-                const imageData = await convertToPNG(file);
-                const base64Data = await blobToBase64(imageData);
-                
-                // Subir a GitHub
-                await uploadFileToGithub(fileName, base64Data);
-                
-                // Guardar datos de la tarjeta
-                const cardIndex = cardsData.findIndex(c => c.number === cardNumber);
-                const cardData = {
+                const imageBlob = await convertToPNG(file);
+                const base64 = await blobToBase64(imageBlob); // dataURL
+                const base64Raw = base64.split(',')[1];
+
+                // 1) Subir imagen a images/<n>.png
+                const imagePath = `${GITHUB_CONFIG.imagesDir}/${fileName}`;
+                await uploadOrUpdateFile(imagePath, base64Raw, `Upload ${imagePath} via Admin Panel`);
+
+                // 2) Actualizar cards.json (upsert)
+                await upsertCard({
                     number: cardNumber,
                     title,
                     description,
                     price,
-                    image: fileName,
-                    uploadedAt: new Date().toISOString()
-                };
-                
-                if (cardIndex >= 0) {
-                    cardsData[cardIndex] = cardData;
-                } else {
-                    cardsData.push(cardData);
-                }
-                
-                saveCardsData();
-                
-                // Actualizar cards.json en GitHub
-                await updateCardsJSON();
-                
+                    image: imagePath,
+                    uploadedAt: nowIso()
+                });
+
                 showCardStatus(cardNumber, '¡Tarjeta subida exitosamente! 🎉', 'success');
-                
+
             } catch (error) {
-                if (error.message.includes('Bad credentials')) {
-                    showCardStatus(cardNumber, '❌ Error de autenticación con GitHub. Contacta al administrador.', 'error');
+                const msg = (error && error.message) ? error.message : String(error);
+                if (msg.toLowerCase().includes('bad credentials')) {
+                    showCardStatus(cardNumber, '❌ Error de autenticación con GitHub. Verifica el PAT.', 'error');
                 } else {
-                    showCardStatus(cardNumber, 'Error: ' + error.message, 'error');
+                    showCardStatus(cardNumber, 'Error: ' + msg, 'error');
                 }
                 console.error('Error completo:', error);
             } finally {
@@ -296,113 +313,193 @@
             }
         }
 
-        // Actualizar archivo cards.json en GitHub
-        async function updateCardsJSON() {
-            console.log('📝 Actualizando cards.json con', cardsData.length, 'tarjetas');
-            console.log('📋 Datos a guardar:', JSON.stringify(cardsData, null, 2));
-            
-            // Ordenar por número antes de guardar
-            cardsData.sort((a, b) => a.number - b.number);
-            
-            const jsonContent = JSON.stringify(cardsData, null, 2);
-            const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
-            
-            const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/cards.json`;
-            
+        async function uploadOrUpdateFile(path, base64Content, message) {
+            const url = ghContentUrl(path);
+
+            // Buscar SHA si existe
             let sha = null;
             try {
-                const checkResponse = await fetch(url, {
-                    headers: {
-                        'Authorization': `token ${GITHUB_CONFIG.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-                if (checkResponse.ok) {
-                    const data = await checkResponse.json();
-                    sha = data.sha;
-                    console.log('📄 Archivo cards.json existe, SHA:', sha);
-                } else {
-                    console.log('📄 Archivo cards.json no existe, se creará nuevo');
+                const check = await fetch(url, { headers: ghHeaders() });
+                if (check.ok) {
+                    const j = await check.json();
+                    sha = j.sha || null;
                 }
-            } catch (e) {
-                console.log('⚠️ Error verificando archivo existente:', e);
-            }
-            
+            } catch (_) {}
+
             const body = {
-                message: `Update cards data - ${cardsData.length} cards`,
+                message,
                 content: base64Content,
-                branch: 'main'
+                branch: GITHUB_CONFIG.branch
             };
             if (sha) body.sha = sha;
-            
-            console.log('🚀 Subiendo cards.json a GitHub...');
-            const response = await fetch(url, {
+
+            const res = await fetch(url, {
                 method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_CONFIG.token}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
+                headers: ghHeaders(),
                 body: JSON.stringify(body)
             });
-            
-            if (!response.ok) {
-                const error = await response.json();
-                console.error('❌ Error al actualizar cards.json:', error);
-                throw new Error(error.message || 'Error al actualizar cards.json');
+            if (!res.ok) {
+                const err = await safeJson(res);
+                throw new Error(err?.message || `GitHub PUT failed (${res.status})`);
             }
-            
-            const result = await response.json();
-            console.log('✅ cards.json actualizado exitosamente');
-            console.log('🔗 URL del archivo:', result.content.html_url);
-            
-            return result;
+            return res.json();
         }
 
-        // Subir archivo a GitHub
-        async function uploadFileToGithub(fileName, base64Content) {
-            const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${fileName}`;
-            
+        async function upsertCard(entry) {
+            const url = ghContentUrl('cards.json');
+
+            // Leer cards.json para obtener sha + contenido
             let sha = null;
-            try {
-                const checkResponse = await fetch(url, {
-                    headers: {
-                        'Authorization': `token ${GITHUB_CONFIG.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
+            let cards = [];
+            const getRes = await fetch(url, { headers: ghHeaders() });
+            if (getRes.ok) {
+                const j = await getRes.json();
+                sha = j.sha || null;
+                if (j.content) {
+                    const decoded = atob(j.content.replace(/\n/g, ''));
+                    try {
+                        cards = JSON.parse(decoded);
+                    } catch {
+                        cards = [];
                     }
-                });
-                if (checkResponse.ok) {
-                    const data = await checkResponse.json();
-                    sha = data.sha;
                 }
-            } catch (e) {}
-            
-            const body = {
-                message: `Upload ${fileName} via Admin Panel`,
-                content: base64Content.split(',')[1],
-                branch: 'main'
-            };
-            if (sha) body.sha = sha;
-            
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_CONFIG.token}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            });
-            
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || 'Error al subir a GitHub');
+            } else if (getRes.status !== 404) {
+                const err = await safeJson(getRes);
+                throw new Error(err?.message || `No se pudo leer cards.json (${getRes.status})`);
             }
-            
-            return response.json();
+
+            // upsert por number
+            const idx = cards.findIndex(c => Number(c.number) === Number(entry.number));
+            if (idx >= 0) {
+                cards[idx] = { ...cards[idx], ...entry };
+            } else {
+                cards.push(entry);
+            }
+            cards.sort((a, b) => Number(a.number) - Number(b.number));
+
+            const jsonContent = JSON.stringify(cards, null, 2);
+            const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+
+            const putBody = {
+                message: `Update cards data - ${cards.length} cards`,
+                content: base64Content,
+                branch: GITHUB_CONFIG.branch
+            };
+            if (sha) putBody.sha = sha;
+
+            const putRes = await fetch(url, {
+                method: 'PUT',
+                headers: ghHeaders(),
+                body: JSON.stringify(putBody)
+            });
+            if (!putRes.ok) {
+                const err = await safeJson(putRes);
+                throw new Error(err?.message || `No se pudo actualizar cards.json (${putRes.status})`);
+            }
+
+            // Actualizar local y UI
+            cardsData = cards;
+            saveCardsData();
         }
 
-        // Convertir imagen a PNG
+        // -------- Delete --------
+        async function deleteCard(cardNumber) {
+            if (!confirm(`¿Estás seguro de eliminar la Tarjeta #${cardNumber}?`)) return;
+
+            try {
+                const card = cardsData.find(c => Number(c.number) === Number(cardNumber));
+                if (!card) return;
+
+                // 1) Borrar imagen
+                await deleteFile(card.image, `Delete ${card.image}`);
+
+                // 2) Remover de cards.json
+                const remaining = cardsData.filter(c => Number(c.number) !== Number(cardNumber));
+                await writeCardsJsonArray(remaining);
+
+                // 3) Limpiar formulario
+                document.getElementById(`fileInput${cardNumber}`).value = '';
+                document.getElementById(`preview${cardNumber}`).classList.remove('visible');
+                document.getElementById(`uploadArea${cardNumber}`).classList.remove('has-image');
+                document.getElementById(`title${cardNumber}`).value = '';
+                document.getElementById(`description${cardNumber}`).value = '';
+                document.getElementById(`price${cardNumber}`).value = '';
+                document.getElementById(`uploadBtn${cardNumber}`).disabled = true;
+
+                alert('Tarjeta eliminada exitosamente');
+            } catch (error) {
+                alert('Error al eliminar: ' + (error?.message || String(error)));
+                console.error(error);
+            }
+        }
+
+        async function deleteFile(path, message) {
+            const url = ghContentUrl(path);
+            let sha = null;
+
+            const check = await fetch(url, { headers: ghHeaders() });
+            if (check.ok) {
+                const j = await check.json();
+                sha = j.sha || null;
+            } else {
+                // si no existe, no falles
+                return;
+            }
+
+            const res = await fetch(url, {
+                method: 'DELETE',
+                headers: ghHeaders(),
+                body: JSON.stringify({
+                    message,
+                    sha,
+                    branch: GITHUB_CONFIG.branch
+                })
+            });
+            if (!res.ok) {
+                const err = await safeJson(res);
+                throw new Error(err?.message || `No se pudo borrar ${path} (${res.status})`);
+            }
+        }
+
+        async function writeCardsJsonArray(cards) {
+            const url = ghContentUrl('cards.json');
+
+            // obtener SHA actual si existe
+            let sha = null;
+            const getRes = await fetch(url, { headers: ghHeaders() });
+            if (getRes.ok) {
+                const j = await getRes.json();
+                sha = j.sha || null;
+            } else if (getRes.status !== 404) {
+                const err = await safeJson(getRes);
+                throw new Error(err?.message || `No se pudo leer cards.json (${getRes.status})`);
+            }
+
+            const jsonContent = JSON.stringify(cards.sort((a,b)=>a.number-b.number), null, 2);
+            const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+
+            const body = {
+                message: `Update cards data - ${cards.length} cards`,
+                content: base64Content,
+                branch: GITHUB_CONFIG.branch
+            };
+            if (sha) body.sha = sha;
+
+            const res = await fetch(url, {
+                method: 'PUT',
+                headers: ghHeaders(),
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) {
+                const err = await safeJson(res);
+                throw new Error(err?.message || `No se pudo actualizar cards.json (${res.status})`);
+            }
+
+            cardsData = cards;
+            saveCardsData();
+        }
+
+        // -------- Helpers binarios --------
         function convertToPNG(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -422,7 +519,6 @@
             });
         }
 
-        // Convertir blob a base64
         function blobToBase64(blob) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -431,100 +527,11 @@
             });
         }
 
-        // Mostrar estado de tarjeta individual
-        function showCardStatus(cardNumber, message, type) {
-            const statusDiv = document.getElementById(`status${cardNumber}`);
-            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        async function safeJson(res) {
+            try { return await res.json(); } catch { return null; }
         }
 
-        // Renderizar tarjetas guardadas
-        function renderSavedCards() {
-            const container = document.getElementById('savedCardsList');
-            
-            if (cardsData.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">No hay tarjetas guardadas aún</p>';
-                return;
-            }
-            
-            container.innerHTML = cardsData
-                .sort((a, b) => a.number - b.number)
-                .map(card => `
-                    <div class="saved-card">
-                        <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${card.image}" alt="${card.title}">
-                        <div class="saved-card-info">
-                            <h4>#${card.number} - ${card.title}</h4>
-                            <p>${card.description}</p>
-                            <p class="price">$${card.price.toFixed(2)}</p>
-                            <p style="font-size: 0.8em; opacity: 0.7;">Actualizado: ${new Date(card.uploadedAt).toLocaleString()}</p>
-                        </div>
-                        <button class="btn-delete" onclick="deleteCard(${card.number})">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </button>
-                    </div>
-                `).join('');
-        }
-
-        // Eliminar tarjeta
-        async function deleteCard(cardNumber) {
-            if (!confirm(`¿Estás seguro de eliminar la Tarjeta #${cardNumber}?`)) return;
-            
-            try {
-                const card = cardsData.find(c => c.number === cardNumber);
-                if (!card) return;
-                
-                // Eliminar de GitHub
-                const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${card.image}`;
-                
-                const checkResponse = await fetch(url, {
-                    headers: {
-                        'Authorization': `token ${GITHUB_CONFIG.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-                
-                if (checkResponse.ok) {
-                    const data = await checkResponse.json();
-                    
-                    await fetch(url, {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `token ${GITHUB_CONFIG.token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: `Delete ${card.image}`,
-                            sha: data.sha,
-                            branch: 'main'
-                        })
-                    });
-                }
-                
-                // Eliminar de datos locales
-                cardsData = cardsData.filter(c => c.number !== cardNumber);
-                saveCardsData();
-                
-                // Actualizar cards.json
-                await updateCardsJSON();
-                
-                // Limpiar formulario
-                document.getElementById(`fileInput${cardNumber}`).value = '';
-                document.getElementById(`preview${cardNumber}`).classList.remove('visible');
-                document.getElementById(`uploadArea${cardNumber}`).classList.remove('has-image');
-                document.getElementById(`title${cardNumber}`).value = '';
-                document.getElementById(`description${cardNumber}`).value = '';
-                document.getElementById(`price${cardNumber}`).value = '';
-                document.getElementById(`uploadBtn${cardNumber}`).disabled = true;
-                
-                alert('Tarjeta eliminada exitosamente');
-                
-            } catch (error) {
-                alert('Error al eliminar: ' + error.message);
-                console.error(error);
-            }
-        }
-
-        // Inicializar
+        // -------- Init --------
         loadCardsData();
     </script>
 </body>

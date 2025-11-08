@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christmas Pringle - Tarjetas Navideñas Mágicas</title>
+    <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -558,7 +559,6 @@
             overflow: hidden;
             box-shadow: var(--shadow-soft);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
             border: 3px solid transparent;
         }
 
@@ -613,6 +613,18 @@
         .card:nth-child(6) .card-image { 
             background: linear-gradient(135deg, #00ACC1 0%, #80DEEA 100%);
         }
+        .card:nth-child(7) .card-image { 
+            background: linear-gradient(135deg, #8E24AA 0%, #BA68C8 100%);
+        }
+        .card:nth-child(8) .card-image { 
+            background: linear-gradient(135deg, #F4511E 0%, #FF7043 100%);
+        }
+        .card:nth-child(9) .card-image { 
+            background: linear-gradient(135deg, #00897B 0%, #4DB6AC 100%);
+        }
+        .card:nth-child(10) .card-image { 
+            background: linear-gradient(135deg, #D81B60 0%, #F06292 100%);
+        }
 
         .card-image::before {
             content: '';
@@ -655,62 +667,7 @@
             border-radius: 50px;
             font-size: 1.8em;
             font-weight: 700;
-            margin-bottom: 1.5rem;
             box-shadow: 0 4px 12px rgba(251, 188, 4, 0.4);
-        }
-
-        .btn {
-            width: 100%;
-            border: none;
-            padding: 1.2rem;
-            font-size: 1.1em;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: 'Google Sans', sans-serif;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .card:nth-child(1) .btn { background: linear-gradient(135deg, #00C853, #00E676); }
-        .card:nth-child(2) .btn { background: linear-gradient(135deg, #E53935, #FF5252); }
-        .card:nth-child(3) .btn { background: linear-gradient(135deg, #FFB300, #FFC107); }
-        .card:nth-child(4) .btn { background: linear-gradient(135deg, #039BE5, #29B6F6); }
-        .card:nth-child(5) .btn { background: linear-gradient(135deg, #AB47BC, #BA68C8); }
-        .card:nth-child(6) .btn { background: linear-gradient(135deg, #00ACC1, #26C6DA); }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-
-        .btn span {
-            position: relative;
-            z-index: 1;
         }
 
         /* Reviews Section */
@@ -871,73 +828,6 @@
             color: var(--primary-green);
         }
 
-        /* QR Section */
-        .qr-section {
-            background: linear-gradient(135deg, #E53935 0%, #AB47BC 50%, #039BE5 100%);
-            padding: 5rem 3rem;
-            border-radius: 32px;
-            text-align: center;
-            margin-bottom: 4rem;
-            box-shadow: var(--shadow-hover);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .qr-section::before {
-            content: '🎄🎅🎁⭐❄️';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            font-size: 4em;
-            opacity: 0.1;
-            letter-spacing: 30px;
-        }
-
-        .qr-section h2 {
-            font-family: 'Mountains of Christmas', cursive;
-            color: white;
-            font-size: 4em;
-            margin-bottom: 2rem;
-            font-weight: 700;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 2;
-        }
-
-        .qr-section p {
-            color: white;
-            font-size: 1.3em;
-            line-height: 1.8;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 2;
-        }
-
-        .qr-code {
-            width: 320px;
-            height: 320px;
-            background: white;
-            margin: 0 auto;
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12em;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 2;
-            border: 4px solid rgba(255,255,255,0.5);
-        }
-
-        .qr-code:hover {
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-
         /* Footer */
         footer {
             background: linear-gradient(135deg, #263238 0%, #37474F 100%);
@@ -1021,6 +911,26 @@
             transform: translateY(-5px);
         }
 
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.2em;
+            color: var(--text-light);
+        }
+
+        .no-cards {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .no-cards h3 {
+            font-size: 2em;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .city-buildings {
@@ -1064,7 +974,6 @@
             .hero h2 { font-size: 2.2em; }
             .hero p { font-size: 1.1em; }
             .section-title { font-size: 2em; }
-            .qr-code { width: 250px; height: 250px; font-size: 9em; }
             .city-buildings {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.6rem;
@@ -1132,7 +1041,6 @@
                 <a href="#inicio" aria-label="Ir a Inicio"><i class="fas fa-home"></i> Inicio</a>
                 <a href="#tarjetas" aria-label="Ver Tarjetas"><i class="fas fa-gifts"></i> Tarjetas</a>
                 <a href="#resenas" aria-label="Leer Reseñas"><i class="fas fa-star"></i> Reseñas</a>
-                <a href="#qr" aria-label="Escanear QR"><i class="fas fa-qrcode"></i> Escanear</a>
                 <button class="music-player-widget" id="musicPlayer" aria-label="Reproductor de música navideña">
                     <div class="music-icon-wrapper">
                         <div class="music-bars">
@@ -1221,107 +1129,10 @@
     <div class="container">
         <section id="tarjetas">
             <h2 class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
-            <div class="cards-grid">
-                <div class="card fade-in">
-                    <div class="card-image">
-                        <img src="1.png" alt="Árbol de Navidad - Tarjeta de Esperanza" class="card-photo">
-                    </div>
-                    <div class="card-content">
-                        <h3>Árbol de Esperanza</h3>
-                        <p>Un majestuoso árbol navideño pintado con tonos verdes y dorados, simbolizando la esperanza y la renovación de cada temporada festiva.</p>
-                        <div class="price-badge">
-                            <i class="fas fa-tag"></i>
-                            $15.00
-                        </div>
-                        <button class="btn" aria-label="Agregar Árbol de Esperanza al carrito">
-                            <span><i class="fas fa-shopping-cart"></i> Agregar al Carrito</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card fade-in" style="animation-delay: 0.1s;">
-                    <div class="card-image">
-                        <img src="2.png" alt="Santa Claus - Tarjeta Alegre" class="card-photo">
-                    </div>
-                    <div class="card-content">
-                        <h3>Santa Claus Alegre</h3>
-                        <p>La figura icónica de Santa Claus con sus colores vibrantes en acuarela, listo para llevar alegría a cada hogar en esta Navidad.</p>
-                        <div class="price-badge">
-                            <i class="fas fa-tag"></i>
-                            $15.00
-                        </div>
-                        <button class="btn" aria-label="Agregar Santa Claus Alegre al carrito">
-                            <span><i class="fas fa-shopping-cart"></i> Agregar al Carrito</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card fade-in" style="animation-delay: 0.2s;">
-                    <div class="card-image">
-                        <img src="3.png" alt="Estrella de Navidad - Tarjeta de Belén" class="card-photo">
-                    </div>
-                    <div class="card-content">
-                        <h3>Estrella de Belén</h3>
-                        <p>La estrella guía pintada con destellos dorados y plateados, recordándonos el verdadero significado de la Navidad y la luz interior.</p>
-                        <div class="price-badge">
-                            <i class="fas fa-tag"></i>
-                            $15.00
-                        </div>
-                        <button class="btn" aria-label="Agregar Estrella de Belén al carrito">
-                            <span><i class="fas fa-shopping-cart"></i> Agregar al Carrito</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card fade-in" style="animation-delay: 0.3s;">
-                    <div class="card-image">
-                        <img src="4.png" alt="Velas navideñas - Tarjeta de Paz" class="card-photo">
-                    </div>
-                    <div class="card-content">
-                        <h3>Velas de Paz</h3>
-                        <p>Hermosas velas navideñas con llamas danzantes en acuarela, simbolizando la luz que guía nuestros caminos en tiempos de oscuridad.</p>
-                        <div class="price-badge">
-                            <i class="fas fa-tag"></i>
-                            $15.00
-                        </div>
-                        <button class="btn" aria-label="Agregar Velas de Paz al carrito">
-                            <span><i class="fas fa-shopping-cart"></i> Agregar al Carrito</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card fade-in" style="animation-delay: 0.4s;">
-                    <div class="card-image">
-                        <img src="5.png" alt="Regalos navideños - Tarjeta de Amor" class="card-photo">
-                    </div>
-                    <div class="card-content">
-                        <h3>Regalos de Amor</h3>
-                        <p>Coloridos regalos apilados con lazos brillantes, representando la generosidad y el amor que compartimos en estas fechas especiales.</p>
-                        <div class="price-badge">
-                            <i class="fas fa-tag"></i>
-                            $15.00
-                        </div>
-                        <button class="btn" aria-label="Agregar Regalos de Amor al carrito">
-                            <span><i class="fas fa-shopping-cart"></i> Agregar al Carrito</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card fade-in" style="animation-delay: 0.5s;">
-                    <div class="card-image">
-                        <img src="6.png" alt="Copos de nieve - Tarjeta de Invierno" class="card-photo">
-                    </div>
-                    <div class="card-content">
-                        <h3>Copos de Nieve</h3>
-                        <p>Delicados copos de nieve pintados con sutileza, cada uno único como las bendiciones que recibimos durante la temporada navideña.</p>
-                        <div class="price-badge">
-                            <i class="fas fa-tag"></i>
-                            $15.00
-                        </div>
-                        <button class="btn" aria-label="Agregar Copos de Nieve al carrito">
-                            <span><i class="fas fa-shopping-cart"></i> Agregar al Carrito</span>
-                        </button>
-                    </div>
+            <div class="cards-grid" id="cardsGrid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 3em; color: var(--primary-red); margin-bottom: 1rem;"></i>
+                    <p>Cargando tarjetas mágicas...</p>
                 </div>
             </div>
         </section>
@@ -1367,7 +1178,7 @@
                             <div class="review-date"><i class="far fa-calendar"></i> 20 de Diciembre, 2024</div>
                         </div>
                     </div>
-                    <p class="review-text">Compré tres tarjetas diferentes y cada una es una pequeña obra maestra. El código QR con la reflexión fue un toque muy especial que sorprendió a todos mis familiares.</p>
+                    <p class="review-text">Compré tres tarjetas diferentes y cada una es una pequeña obra maestra. El detalle artesanal fue un toque muy especial que sorprendió a todos mis familiares.</p>
                     
                     <div class="meditation">
                         <h4>🙏 Meditación de Gratitud</h4>
@@ -1416,15 +1227,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- QR Section -->
-        <section id="qr" class="qr-section">
-            <h2>📱 Escanea tu Código QR</h2>
-            <p>Cada tarjeta incluye un código QR único. Escanéalo para acceder a reflexiones navideñas inspiradoras, mensajes personalizados y compartir tu experiencia con amigos y familiares.</p>
-            <div class="qr-code" role="img" aria-label="Código QR">
-                <i class="fas fa-qrcode"></i>
-            </div>
-        </section>
     </div>
 
     <!-- Footer -->
@@ -1460,12 +1262,87 @@
 
     <!-- Hidden Audio Element -->
     <audio id="christmasMusic" loop>
-        <!-- Tu música navideña - coloca el archivo MP3 en la misma carpeta que index.html -->
         <source src="Christmas Rap.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
     <script>
+        // GitHub Configuration
+        const GITHUB_CONFIG = {
+            username: 'jmarinr',
+            repo: 'repochristmaspringle',
+            branch: 'main'
+        };
+
+        // ==========================================
+        // LOAD CARDS FROM GITHUB
+        // ==========================================
+        async function loadCards() {
+            const cardsGrid = document.getElementById('cardsGrid');
+            
+            try {
+                // Intentar cargar cards.json desde GitHub
+                const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/cards.json`);
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar cards.json');
+                }
+                
+                const cardsData = await response.json();
+                
+                if (!cardsData || cardsData.length === 0) {
+                    cardsGrid.innerHTML = `
+                        <div class="no-cards">
+                            <h3>🎨 Pronto habrá tarjetas disponibles</h3>
+                            <p>Estamos preparando nuestra colección navideña. ¡Vuelve pronto!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Ordenar por número
+                cardsData.sort((a, b) => a.number - b.number);
+                
+                // Generar HTML de las tarjetas
+                cardsGrid.innerHTML = cardsData.map((card, index) => `
+                    <div class="card fade-in" style="animation-delay: ${index * 0.1}s;">
+                        <div class="card-image">
+                            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${card.image}" 
+                                 alt="${card.title}" 
+                                 class="card-photo"
+                                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e0e0e0%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23999%22 font-family=%22Arial%22 font-size=%2220%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
+                        </div>
+                        <div class="card-content">
+                            <h3>${card.title}</h3>
+                            <p>${card.description}</p>
+                            <div class="price-badge">
+                                <i class="fas fa-tag"></i>
+                                $${card.price.toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Activar animaciones
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-in').forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    });
+                }, 100);
+                
+            } catch (error) {
+                console.error('Error cargando tarjetas:', error);
+                cardsGrid.innerHTML = `
+                    <div class="no-cards">
+                        <h3>❌ Error al cargar tarjetas</h3>
+                        <p>No pudimos cargar las tarjetas. Por favor, intenta de nuevo más tarde.</p>
+                        <p style="font-size: 0.9em; opacity: 0.7; margin-top: 1rem;">Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
         // ==========================================
         // SNOWFLAKES ANIMATION
         // ==========================================
@@ -1609,93 +1486,6 @@
         });
 
         // ==========================================
-        // ADD TO CART BUTTONS
-        // ==========================================
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const originalHTML = this.innerHTML;
-                
-                this.innerHTML = '<span><i class="fas fa-check-circle"></i> ¡Agregado al Carrito!</span>';
-                this.style.transform = 'scale(0.95)';
-                
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 100);
-                
-                setTimeout(() => {
-                    this.innerHTML = originalHTML;
-                }, 2500);
-
-                createConfetti(e.clientX, e.clientY);
-            });
-        });
-
-        // ==========================================
-        // CONFETTI EFFECT
-        // ==========================================
-        function createConfetti(x, y) {
-            const colors = ['#E53935', '#00C853', '#FFB300', '#039BE5', '#AB47BC'];
-            const emojis = ['🎉', '✨', '🎊', '⭐', '🎁'];
-            
-            for (let i = 0; i < 15; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.left = x + 'px';
-                confetti.style.top = y + 'px';
-                confetti.style.zIndex = '10000';
-                confetti.style.pointerEvents = 'none';
-                
-                if (Math.random() > 0.5) {
-                    confetti.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                    confetti.style.fontSize = '1.5em';
-                } else {
-                    confetti.style.width = '8px';
-                    confetti.style.height = '8px';
-                    confetti.style.borderRadius = '50%';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                }
-                
-                document.body.appendChild(confetti);
-                
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 200 + 100;
-                const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity - 200;
-                
-                animateConfetti(confetti, vx, vy);
-            }
-        }
-
-        function animateConfetti(element, vx, vy) {
-            let x = 0, y = 0;
-            let opacity = 1;
-            const gravity = 500;
-            let lastTime = Date.now();
-            
-            function update() {
-                const now = Date.now();
-                const dt = (now - lastTime) / 1000;
-                lastTime = now;
-                
-                vy += gravity * dt;
-                x += vx * dt;
-                y += vy * dt;
-                opacity -= dt * 1.5;
-                
-                element.style.transform = `translate(${x}px, ${y}px) rotate(${x * 2}deg)`;
-                element.style.opacity = opacity;
-                
-                if (opacity > 0) {
-                    requestAnimationFrame(update);
-                } else {
-                    element.remove();
-                }
-            }
-            
-            update();
-        }
-
-        // ==========================================
         // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
         // ==========================================
         const observerOptions = {
@@ -1722,6 +1512,10 @@
         // INITIALIZE ON LOAD
         // ==========================================
         window.addEventListener('load', () => {
+            // Cargar tarjetas desde GitHub
+            loadCards();
+            
+            // Inicializar nieve
             for (let i = 0; i < 20; i++) {
                 setTimeout(createSnowflake, i * 200);
             }

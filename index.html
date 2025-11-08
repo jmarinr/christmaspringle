@@ -12,6 +12,7 @@
     --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5; --primary-gold:#FFB300;
     --text-dark:#263238; --text-light:#546E7A; --white:#fff;
     --shadow-soft:0 4px 16px rgba(0,0,0,.08); --shadow-medium:0 8px 24px rgba(0,0,0,.12); --shadow-hover:0 12px 32px rgba(0,0,0,.16);
+    --wood:#7a5236; --wood-dark:#5b3c28; --mat:#f7f6f2;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
@@ -25,7 +26,7 @@
   .snowflake{position:absolute; top:-10px; color:#fff; font-size:1.5em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
   @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
 
-  /* Tren (siempre hacia la izquierda) */
+  /* Tren (izquierda) */
   .train-container{
     --train-duration: 42s;
     position:fixed; bottom:60px; left:100vw; z-index:10000;
@@ -35,18 +36,18 @@
 
   .train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3)); cursor:pointer}
   .wagon, .engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
-  .wagon:nth-child(1){animation-delay:.05s} .wagon:nth-child(2){animation-delay:.1s}
-  .wagon:nth-child(3){animation-delay:.15s} .wagon:nth-child(4){animation-delay:.2s}
+  .wagon:nth-child(2){animation-delay:.05s} .wagon:nth-child(3){animation-delay:.1s}
+  .wagon:nth-child(4){animation-delay:.15s} .wagon:nth-child(5){animation-delay:.2s}
   .wagon:nth-last-child(2){animation-delay:.25s} .wagon:nth-last-child(1){animation-delay:.3s}
   @keyframes wBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-  /* Locomotora mirando a la izquierda */
-  .engine{transform:scaleX(-1)} /* espejado para que "mire" a la izquierda */
+  /* Locomotora mirando a la izquierda (al frente) */
+  .engine{transform:scaleX(-1)}
   .engine-wrap{position:relative; display:inline-block}
   .smoke{position:absolute; top:-58px; right:46px; font-size:2.4rem; animation:smokeRise 1.8s ease-out infinite}
   @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.4); opacity:0}}
 
-  /* Santa Tracker en 4 vagones */
+  /* Santa Tracker redondos arriba de 4 vagones */
   .tracker{
     position:absolute; top:-30px; left:18px;
     width:92px; height:92px; border-radius:50%;
@@ -82,6 +83,7 @@
   .chip-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
   .btn-home{background:linear-gradient(135deg,#00C853,#69F0AE)}
   .btn-cards{background:linear-gradient(135deg,#FFB300,#FFD54F); color:#332300}
+  .btn-art{background:linear-gradient(135deg,#8E24AA,#BA68C8)}
   .btn-reviews{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
   .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
   .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
@@ -117,6 +119,25 @@
 
   .loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-light)}
 
+  /* ARTE PRINGLE (marcos) */
+  .art-wrap{margin-top:3rem}
+  .art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px}
+  .frame{
+    background:linear-gradient(135deg, var(--wood), var(--wood-dark));
+    border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25);
+  }
+  .frame-inner{
+    background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7;
+  }
+  .frame-image{
+    width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .frame-image img{width:100%; height:100%; object-fit:contain}
+  .art-meta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px}
+  .art-title{font-weight:800; font-size:1.05rem}
+  .art-buy{white-space:nowrap}
+
   /* Footer */
   footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
   .footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
@@ -151,48 +172,36 @@
   <!-- Nieve -->
   <div id="snowContainer" class="snow-container"></div>
 
-  <!-- Tren → hacia la izquierda -->
+  <!-- Tren → izquierda | Locomotora al frente -->
   <div class="train-container" id="train" title="🚂 Tócalo para turbo 10s">
     <div class="train">
-      <!-- Vagones con Santa Tracker -->
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker">
-          <div class="num" id="stDays">--</div>
-          <div class="lbl">días</div>
-        </div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker">
-          <div class="num" id="stHours">--</div>
-          <div class="lbl">horas</div>
-        </div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker">
-          <div class="num" id="stMins">--</div>
-          <div class="lbl">min</div>
-        </div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker">
-          <div class="num" id="stSecs">--</div>
-          <div class="lbl">seg</div>
-        </div>
-      </div>
-
-      <!-- Árbol y Estrella AL FINAL -->
-      <div class="wagon">🎄</div>
-      <div class="wagon">⭐</div>
-
-      <!-- Locomotora (mirando a la izquierda) al final “empujando” -->
+      <!-- Locomotora -->
       <div class="engine-wrap">
         <div class="engine">🚂</div>
         <div class="smoke">💨</div>
       </div>
+
+      <!-- Vagones Tracker -->
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div>
+      </div>
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div>
+      </div>
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div>
+      </div>
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div>
+      </div>
+
+      <!-- Árbol y estrella al final -->
+      <div class="wagon">🎄</div>
+      <div class="wagon">⭐</div>
     </div>
   </div>
 
@@ -210,6 +219,7 @@
       <nav>
         <a class="chip-btn btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
         <a class="chip-btn btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
+        <a class="chip-btn btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
         <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
@@ -227,6 +237,7 @@
 
   <!-- Contenido -->
   <main class="container">
+    <!-- Tarjetas -->
     <section id="tarjetas">
       <h2 class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
       <div id="cardsGrid" class="cards-grid">
@@ -237,6 +248,52 @@
       </div>
     </section>
 
+    <!-- ARTE PRINGLE -->
+    <section id="arte" class="art-wrap">
+      <h2 class="section-title">🖼️ Colección Arte Pringle</h2>
+      <div class="art-grid">
+        <!-- Tren de Navidad -->
+        <article class="frame">
+          <div class="frame-inner">
+            <div class="frame-image">
+              <img src="arte-tren.jpg" alt="Tren de Navidad en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3ETren de Navidad (cargue arte-tren.jpg)%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="art-meta">
+              <div class="art-title">Tren de Navidad</div>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Tren%20de%20Navidad%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Barco navideño -->
+        <article class="frame">
+          <div class="frame-inner">
+            <div class="frame-image">
+              <img src="arte-barco.jpg" alt="Barco navideño en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EBarco%20Navide%C3%B1o%20(cargue%20arte-barco.jpg)%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="art-meta">
+              <div class="art-title">Barco Navideño</div>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pueblo navideño USA -->
+        <article class="frame">
+          <div class="frame-inner">
+            <div class="frame-image">
+              <img src="arte-pueblo.jpg" alt="Pueblo navideño de Estados Unidos en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EPueblo%20Navide%C3%B1o%20(cargue%20arte-pueblo.jpg)%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="art-meta">
+              <div class="art-title">Pueblo Navideño (USA)</div>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Pueblo%20Navide%C3%B1o%20(USA)%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Reseñas -->
     <section id="resenas" style="margin-top:3rem">
       <h2 class="section-title">⭐ Lo que dicen nuestros clientes</h2>
       <div class="no-cards">Muy pronto compartiremos reseñas reales de nuestros compradores ✨</div>

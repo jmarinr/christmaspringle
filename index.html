@@ -1,1595 +1,533 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Pringle - Tarjetas Navideñas Mágicas</title>
-    <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-red: #E74C3C;
-            --primary-green: #00C853;
-            --primary-blue: #039BE5;
-            --primary-gold: #FFB300;
-            --text-dark: #263238;
-            --text-light: #546E7A;
-            --bg-snow: #F5F9FC;
-            --shadow-soft: 0 4px 16px rgba(0,0,0,0.08);
-            --shadow-medium: 0 8px 24px rgba(0,0,0,0.12);
-            --shadow-hover: 0 12px 32px rgba(0,0,0,0.16);
-        }
-
-        body {
-            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(180deg, #4FC3F7 0%, #81D4FA 50%, #B3E5FC 100%);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* Animated Snow */
-        .snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            overflow: hidden;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: white;
-            font-size: 1.5em;
-            animation: snowfall linear infinite;
-            text-shadow: 0 0 10px rgba(255,255,255,0.8);
-            opacity: 0.8;
-        }
-
-        @keyframes snowfall {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% {
-                transform: translateY(100vh) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Christmas Train Animation */
-        .train-container {
-            position: fixed;
-            bottom: 60px;
-            left: -700px;
-            z-index: 10000;
-            animation: trainMove 40s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes trainMove {
-            0% { left: -700px; }
-            100% { left: 100vw; }
-        }
-
-        .train {
-            display: flex;
-            align-items: flex-end;
-            filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3));
-            gap: 5px;
-        }
-
-        .train-part {
-            font-size: 5.5em;
-            animation: trainBounce 0.6s ease-in-out infinite;
-            line-height: 1;
-        }
-
-        .train-part:nth-child(2) { animation-delay: 0.1s; }
-        .train-part:nth-child(3) { animation-delay: 0.2s; }
-        .train-part:nth-child(4) { animation-delay: 0.3s; }
-
-        @keyframes trainBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        .smoke {
-            position: absolute;
-            top: -60px;
-            left: 45px;
-            font-size: 2.5em;
-            animation: smokeRise 1.8s ease-out infinite;
-        }
-
-        @keyframes smokeRise {
-            0% { 
-                transform: translateY(0) scale(0.5); 
-                opacity: 0.8; 
-            }
-            100% { 
-                transform: translateY(-90px) scale(2.5); 
-                opacity: 0; 
-            }
-        }
-
-        /* Header - White and Clean */
-        header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow-soft);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-        }
-
-        .header-content {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container:hover {
-            transform: scale(1.03);
-        }
-
-        .logo-official {
-            height: 120px;
-            width: auto;
-            filter: drop-shadow(0 2px 8px rgba(231, 76, 60, 0.2));
-            animation: logoFloat 3s ease-in-out infinite;
-            border-radius: 8px;
-            object-fit: contain;
-            display: block;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        nav {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        nav a {
-            background: white;
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 0.75rem 1.4rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95em;
-            border: 2px solid #E0E0E0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        nav a:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-            border-color: var(--primary-red);
-            color: var(--primary-red);
-            background: #FFF5F5;
-        }
-
-        nav a:active {
-            transform: translateY(0);
-        }
-
-        /* Music Player - Enhanced Design */
-        .music-player-widget {
-            background: linear-gradient(135deg, var(--primary-red), #C0392B);
-            color: white;
-            padding: 0.9rem 1.6rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
-        }
-
-        .music-player-widget:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 24px rgba(231, 76, 60, 0.6);
-            border-color: rgba(255,255,255,0.5);
-        }
-
-        .music-player-widget:active {
-            transform: translateY(0) scale(1);
-        }
-
-        .music-icon-wrapper {
-            position: relative;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .music-bars {
-            display: flex;
-            gap: 3px;
-            align-items: flex-end;
-            height: 22px;
-        }
-
-        .music-bar {
-            width: 4px;
-            background: white;
-            border-radius: 2px;
-            animation: musicBounce 0.8s ease-in-out infinite;
-        }
-
-        .music-bar:nth-child(1) { animation-delay: 0s; height: 45%; }
-        .music-bar:nth-child(2) { animation-delay: 0.2s; height: 75%; }
-        .music-bar:nth-child(3) { animation-delay: 0.4s; height: 100%; }
-        .music-bar:nth-child(4) { animation-delay: 0.6s; height: 65%; }
-
-        @keyframes musicBounce {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(0.3); }
-        }
-
-        .music-player-widget.playing .music-bar {
-            animation-play-state: running;
-        }
-
-        .music-player-widget:not(.playing) .music-bar {
-            animation-play-state: paused;
-        }
-
-        .music-text {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-
-        .music-title {
-            font-weight: 700;
-            font-size: 0.95em;
-            line-height: 1.2;
-        }
-
-        .music-subtitle {
-            font-size: 0.75em;
-            opacity: 0.95;
-            line-height: 1;
-        }
-
-        /* Hero Section - Large Illustrated City */
-        .hero {
-            position: relative;
-            padding: 3rem 2rem 0;
-            min-height: 85vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hero-content-top {
-            max-width: 1000px;
-            margin: 0 auto 2rem;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: white;
-            color: var(--primary-red);
-            padding: 0.7rem 2rem;
-            border-radius: 50px;
-            font-size: 1em;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-medium);
-            border: 3px solid var(--primary-red);
-            animation: badgePulse 2s ease-in-out infinite;
-            transition: transform 0.3s ease;
-        }
-
-        .hero-badge:hover {
-            transform: scale(1.05);
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        .hero h2 {
-            font-family: 'Mountains of Christmas', cursive;
-            color: white;
-            font-size: 4em;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            font-weight: 700;
-            text-shadow: 
-                3px 3px 0 rgba(0,0,0,0.2),
-                0 0 30px rgba(255,255,255,0.5),
-                0 0 60px rgba(255,255,255,0.3);
-        }
-
-        .hero p {
-            color: white;
-            font-size: 1.25em;
-            line-height: 1.7;
-            max-width: 700px;
-            margin: 0 auto;
-            font-weight: 500;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        /* Christmas Village Scene - LARGE AND PROMINENT */
-        .christmas-city {
-            position: relative;
-            flex: 1;
-            min-height: 600px;
-            width: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 0 2rem 2rem;
-        }
-
-        .city-container {
-            position: relative;
-            width: 100%;
-            max-width: 1800px;
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-        }
-
-        /* Background Mountains and Sky */
-        .city-background {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            top: 0;
-            z-index: 1;
-        }
-
-        .mountains-back {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to bottom, 
-                rgba(255,255,255,0.1) 0%, 
-                rgba(255,255,255,0.3) 50%, 
-                rgba(255,255,255,0.4) 100%);
-            clip-path: polygon(0 100%, 0 70%, 15% 60%, 25% 75%, 35% 55%, 45% 65%, 55% 50%, 65% 60%, 75% 45%, 85% 55%, 100% 60%, 100% 100%);
-        }
-
-        .mountains-front {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 30%;
-            background: linear-gradient(to bottom, 
-                rgba(255,255,255,0.2) 0%, 
-                rgba(255,255,255,0.5) 100%);
-            clip-path: polygon(0 100%, 0 80%, 10% 70%, 20% 85%, 30% 65%, 40% 75%, 50% 60%, 60% 70%, 70% 55%, 80% 65%, 90% 75%, 100% 70%, 100% 100%);
-            z-index: 2;
-        }
-
-        /* City Buildings Grid */
-        .city-buildings {
-            position: relative;
-            z-index: 5;
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-            align-items: flex-end;
-            padding-bottom: 2rem;
-        }
-
-        .building-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            animation: buildingFloat 4s ease-in-out infinite;
-            filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3));
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-
-        .building-item:hover {
-            transform: scale(1.2) translateY(-10px) !important;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
-            z-index: 10;
-        }
-
-        @keyframes buildingFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        .building-item:nth-child(1) { animation-delay: 0s; }
-        .building-item:nth-child(2) { animation-delay: 0.3s; }
-        .building-item:nth-child(3) { animation-delay: 0.6s; }
-        .building-item:nth-child(4) { animation-delay: 0.9s; }
-        .building-item:nth-child(5) { animation-delay: 1.2s; }
-        .building-item:nth-child(6) { animation-delay: 1.5s; }
-        .building-item:nth-child(7) { animation-delay: 1.8s; }
-        .building-item:nth-child(8) { animation-delay: 2.1s; }
-        .building-item:nth-child(9) { animation-delay: 2.4s; }
-
-        .building-emoji {
-            font-size: 5.5em;
-            line-height: 1;
-        }
-
-        .building-decoration {
-            font-size: 2em;
-        }
-
-        /* Ground Snow Layer */
-        .snow-ground {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 120px;
-            background: linear-gradient(to bottom, 
-                rgba(255,255,255,0) 0%, 
-                rgba(255,255,255,0.7) 40%, 
-                rgba(255,255,255,0.95) 100%);
-            border-top: 4px solid rgba(255,255,255,0.6);
-            z-index: 4;
-        }
-
-        /* Floating Characters */
-        .floating-character {
-            position: absolute;
-            font-size: 4em;
-            animation: characterFloat 5s ease-in-out infinite;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
-            z-index: 6;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .floating-character:hover {
-            transform: scale(1.4) rotate(15deg) !important;
-            filter: drop-shadow(0 12px 24px rgba(0,0,0,0.4));
-        }
-
-        @keyframes characterFloat {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        .char1 { top: 15%; left: 8%; animation-delay: 0s; }
-        .char2 { top: 25%; right: 10%; animation-delay: 0.5s; }
-        .char3 { top: 35%; left: 15%; animation-delay: 1s; }
-        .char4 { top: 40%; right: 15%; animation-delay: 1.5s; }
-
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            background: white;
-            border-radius: 32px 32px 0 0;
-            position: relative;
-            margin-top: -80px;
-            box-shadow: 0 -12px 48px rgba(0,0,0,0.12);
-            z-index: 100;
-        }
-
-        /* Section Title */
-        .section-title {
-            font-family: 'Mountains of Christmas', cursive;
-            color: var(--text-dark);
-            font-size: 3.5em;
-            text-align: center;
-            margin-bottom: 3rem;
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
-            border-radius: 3px;
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 4rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid transparent;
-        }
-
-        .card:hover {
-            transform: translateY(-12px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-gold);
-        }
-
-        .card:active {
-            transform: translateY(-8px);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8em;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-photo {
-            transform: scale(1.1);
-        }
-
-        .card:nth-child(1) .card-image { 
-            background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
-        }
-        .card:nth-child(2) .card-image { 
-            background: linear-gradient(135deg, #E53935 0%, #FF6F00 100%);
-        }
-        .card:nth-child(3) .card-image { 
-            background: linear-gradient(135deg, #FFB300 0%, #FFD54F 100%);
-        }
-        .card:nth-child(4) .card-image { 
-            background: linear-gradient(135deg, #039BE5 0%, #4FC3F7 100%);
-        }
-        .card:nth-child(5) .card-image { 
-            background: linear-gradient(135deg, #AB47BC 0%, #CE93D8 100%);
-        }
-        .card:nth-child(6) .card-image { 
-            background: linear-gradient(135deg, #00ACC1 0%, #80DEEA 100%);
-        }
-        .card:nth-child(7) .card-image { 
-            background: linear-gradient(135deg, #8E24AA 0%, #BA68C8 100%);
-        }
-        .card:nth-child(8) .card-image { 
-            background: linear-gradient(135deg, #F4511E 0%, #FF7043 100%);
-        }
-        .card:nth-child(9) .card-image { 
-            background: linear-gradient(135deg, #00897B 0%, #4DB6AC 100%);
-        }
-        .card:nth-child(10) .card-image { 
-            background: linear-gradient(135deg, #D81B60 0%, #F06292 100%);
-        }
-
-        .card-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .card-content {
-            padding: 2rem;
-            background: white;
-        }
-
-        .card h3 {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            color: var(--text-light);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            font-size: 1.05em;
-        }
-
-        .price-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, var(--primary-gold), #FDD835);
-            color: var(--text-dark);
-            padding: 0.8rem 1.6rem;
-            border-radius: 50px;
-            font-size: 1.8em;
-            font-weight: 700;
-            box-shadow: 0 4px 12px rgba(251, 188, 4, 0.4);
-        }
-
-        /* Reviews Section */
-        .reviews-section {
-            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
-            border-radius: 32px;
-            padding: 4rem 3rem;
-            margin-bottom: 4rem;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .review {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 24px;
-            box-shadow: var(--shadow-soft);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid transparent;
-        }
-
-        .review:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-gold);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .review-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2em;
-            font-weight: 700;
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .review:nth-child(1) .review-avatar { 
-            background: linear-gradient(135deg, #E53935, #FF6F00);
-        }
-        .review:nth-child(2) .review-avatar { 
-            background: linear-gradient(135deg, #00C853, #69F0AE);
-        }
-        .review:nth-child(3) .review-avatar { 
-            background: linear-gradient(135deg, #039BE5, #4FC3F7);
-        }
-
-        .review-info h4 {
-            font-size: 1.4em;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .review-date {
-            color: var(--text-light);
-            font-size: 0.9em;
-        }
-
-        .review-text {
-            color: var(--text-dark);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            font-size: 1.05em;
-        }
-
-        .meditation {
-            padding: 2.5rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-
-        .meditation::before {
-            content: '✨';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 3em;
-            opacity: 0.2;
-        }
-
-        .review:nth-child(1) .meditation { 
-            background: linear-gradient(135deg, #E53935, #FF6F00);
-        }
-        .review:nth-child(2) .meditation { 
-            background: linear-gradient(135deg, #00C853, #69F0AE);
-        }
-        .review:nth-child(3) .meditation { 
-            background: linear-gradient(135deg, #039BE5, #4FC3F7);
-        }
-
-        .meditation h4 {
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .meditation p {
-            line-height: 1.9;
-            font-size: 1.05em;
-        }
-
-        .rating-section {
-            background: linear-gradient(135deg, #F8F9FA, #E9ECEF);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-        }
-
-        .rating-section h4 {
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        .stars {
-            font-size: 3em;
-            cursor: pointer;
-            letter-spacing: 8px;
-        }
-
-        .star {
-            color: #E0E0E0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-block;
-        }
-
-        .star.active,
-        .star:hover {
-            color: var(--primary-gold);
-            transform: scale(1.3) rotate(15deg);
-            filter: drop-shadow(0 0 8px rgba(255, 179, 0, 0.6));
-        }
-
-        .rating-result {
-            margin-top: 1.5rem;
-            font-size: 1.3em;
-            font-weight: 700;
-            color: var(--primary-green);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #263238 0%, #37474F 100%);
-            color: white;
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .footer-logo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .footer-logo-img {
-            height: 160px;
-            width: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-            transition: transform 0.3s ease;
-            object-fit: contain;
-            display: block;
-        }
-
-        .footer-logo-img:hover {
-            transform: scale(1.05);
-        }
-
-        footer p {
-            margin: 1rem 0;
-            font-size: 1.05em;
-            opacity: 0.9;
-        }
-
-        .footer-emojis {
-            font-size: 2.5em;
-            margin-top: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-emojis span {
-            animation: bounce 2s ease-in-out infinite;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .footer-emojis span:hover {
-            transform: scale(1.3) rotate(15deg);
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .footer-emojis span:nth-child(1) { animation-delay: 0s; }
-        .footer-emojis span:nth-child(2) { animation-delay: 0.2s; }
-        .footer-emojis span:nth-child(3) { animation-delay: 0.4s; }
-        .footer-emojis span:nth-child(4) { animation-delay: 0.6s; }
-        .footer-emojis span:nth-child(5) { animation-delay: 0.8s; }
-        .footer-emojis span:nth-child(6) { animation-delay: 1s; }
-
-        .footer-social {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .footer-social a {
-            color: white;
-            font-size: 1.8em;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            color: var(--primary-gold);
-            transform: translateY(-5px);
-        }
-
-        /* Loading State */
-        .loading {
-            text-align: center;
-            padding: 4rem 2rem;
-            font-size: 1.2em;
-            color: var(--text-light);
-        }
-
-        .no-cards {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
-        }
-
-        .no-cards h3 {
-            font-size: 2em;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .city-buildings {
-                grid-template-columns: repeat(6, 1fr);
-                gap: 1rem;
-            }
-            .building-emoji {
-                font-size: 4em;
-            }
-        }
-
-        @media (max-width: 968px) {
-            .hero h2 { font-size: 3em; }
-            .section-title { font-size: 2.5em; }
-            .cards-grid, .reviews-grid { grid-template-columns: 1fr; }
-            .header-content { 
-                flex-direction: column; 
-                text-align: center;
-                gap: 1rem;
-            }
-            nav { 
-                width: 100%; 
-                justify-content: center; 
-            }
-            .city-buildings {
-                grid-template-columns: repeat(5, 1fr);
-                gap: 0.8rem;
-            }
-            .building-emoji { font-size: 3.5em; }
-            .christmas-city { min-height: 500px; }
-            .train-part { font-size: 4em; }
-        }
-
-        @media (max-width: 640px) {
-            header {
-                padding: 0.8rem 1rem;
-            }
-            .logo-official {
-                height: 80px;
-            }
-            .hero h2 { font-size: 2.2em; }
-            .hero p { font-size: 1.1em; }
-            .section-title { font-size: 2em; }
-            .city-buildings {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.6rem;
-            }
-            .building-emoji { font-size: 3em; }
-            .floating-character { font-size: 2.5em; }
-            .train-part { font-size: 3em; }
-            nav a {
-                padding: 0.6rem 1rem;
-                font-size: 0.85em;
-            }
-            .music-player-widget {
-                padding: 0.7rem 1.2rem;
-            }
-        }
-
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Loading Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Pringle - Tarjetas Navideñas Mágicas</title>
+  <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --primary-red:#E74C3C;--primary-green:#00C853;--primary-blue:#039BE5;--primary-gold:#FFB300;
+      --text-dark:#263238;--text-light:#546E7A;--bg-snow:#F5F9FC;
+      --shadow-soft:0 4px 16px rgba(0,0,0,.08);--shadow-medium:0 8px 24px rgba(0,0,0,.12);--shadow-hover:0 12px 32px rgba(0,0,0,.16);
+      --card-aspect: 4/3; /* Desktop por defecto */
+    }
+    body{
+      font-family:'Google Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+      background:linear-gradient(180deg,#4FC3F7 0%,#81D4FA 50%,#B3E5FC 100%);
+      color:var(--text-dark);overflow-x:hidden;min-height:100vh
+    }
+
+    /* Nieve */
+    .snow-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .snowflake{position:absolute;top:-10px;color:#fff;font-size:1.5em;animation:snowfall linear infinite;text-shadow:0 0 10px rgba(255,255,255,.8);opacity:.8}
+    @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0);opacity:0}10%,90%{opacity:1}100%{transform:translateY(100vh) translateX(100px) rotate(360deg);opacity:0}}
+
+    /* Tren */
+    .train-container{position:fixed;bottom:60px;left:-700px;z-index:10000;animation:trainMove 40s linear infinite;pointer-events:none}
+    @keyframes trainMove{0%{left:-700px}100%{left:100vw}}
+    .train{display:flex;align-items:flex-end;filter:drop-shadow(0 12px 24px rgba(0,0,0,.3));gap:5px}
+    .train-part{font-size:5.5em;animation:trainBounce .6s ease-in-out infinite;line-height:1}
+    .train-part:nth-child(2){animation-delay:.1s}.train-part:nth-child(3){animation-delay:.2s}.train-part:nth-child(4){animation-delay:.3s}
+    @keyframes trainBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .smoke{position:absolute;top:-60px;left:45px;font-size:2.5em;animation:smokeRise 1.8s ease-out infinite}
+    @keyframes smokeRise{0%{transform:translateY(0) scale(.5);opacity:.8}100%{transform:translateY(-90px) scale(2.5);opacity:0}}
+
+    /* Header */
+    header{background:rgba(255,255,255,.98);backdrop-filter:blur(20px);padding:1rem 2rem;box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000;border-bottom:1px solid rgba(0,0,0,.06)}
+    .header-content{max-width:1600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+    .logo-container{display:flex;align-items:center;text-decoration:none;transition:transform .3s}
+    .logo-container:hover{transform:scale(1.03)}
+    .logo-official{height:120px;width:auto;filter:drop-shadow(0 2px 8px rgba(231,76,60,.2));animation:logoFloat 3s ease-in-out infinite;border-radius:8px;object-fit:contain;display:block}
+    @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    nav{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+    nav a, nav button.music-player-widget{background:#fff;color:var(--text-dark);text-decoration:none;padding:.75rem 1.4rem;border-radius:50px;font-weight:600;font-size:.95em;border:2px solid #E0E0E0;transition:all .3s;display:flex;align-items:center;gap:.5rem}
+    nav a:hover,.music-player-widget:hover{transform:translateY(-2px);box-shadow:var(--shadow-medium);border-color:var(--primary-red);color:var(--primary-red);background:#FFF5F5}
+    nav a:active{transform:translateY(0)}
+
+    /* Music */
+    .music-player-widget{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff;border:2px solid rgba(255,255,255,.3);box-shadow:0 4px 16px rgba(231,76,60,.4)}
+    .music-player-widget:hover{box-shadow:0 8px 24px rgba(231,76,60,.6);border-color:rgba(255,255,255,.5)}
+    .music-icon-wrapper{position:relative;width:35px;height:35px;display:flex;align-items:center;justify-content:center}
+    .music-bars{display:flex;gap:3px;align-items:flex-end;height:22px}
+    .music-bar{width:4px;background:#fff;border-radius:2px;animation:musicBounce .8s ease-in-out infinite}
+    .music-bar:nth-child(1){animation-delay:0;height:45%}.music-bar:nth-child(2){animation-delay:.2s;height:75%}.music-bar:nth-child(3){animation-delay:.4s;height:100%}.music-bar:nth-child(4){animation-delay:.6s;height:65%}
+    @keyframes musicBounce{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.3)}}
+    .music-player-widget:not(.playing) .music-bar{animation-play-state:paused}
+
+    /* Hero */
+    .hero{position:relative;padding:3rem 2rem 0;min-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+    .hero-content-top{max-width:1000px;margin:0 auto 2rem;text-align:center;position:relative;z-index:10}
+    .hero-badge{display:inline-block;background:#fff;color:var(--primary-red);padding:.7rem 2rem;border-radius:50px;font-size:1em;font-weight:700;margin-bottom:1.5rem;box-shadow:var(--shadow-medium);border:3px solid var(--primary-red);animation:badgePulse 2s ease-in-out infinite}
+    @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+    .hero h2{font-family:'Mountains of Christmas',cursive;color:#fff;font-size:4em;margin-bottom:1rem;line-height:1.2;font-weight:700;text-shadow:3px 3px 0 rgba(0,0,0,.2),0 0 30px rgba(255,255,255,.5),0 0 60px rgba(255,255,255,.3)}
+    .hero p{color:#fff;font-size:1.25em;line-height:1.7;max-width:700px;margin:0 auto;font-weight:500;text-shadow:0 2px 8px rgba(0,0,0,.3)}
+
+    /* Ciudad */
+    .christmas-city{position:relative;flex:1;min-height:600px;width:100%;display:flex;align-items:flex-end;justify-content:center;padding:0 2rem 2rem}
+    .city-background{position:absolute;inset:0;z-index:1}
+    .mountains-back{position:absolute;bottom:0;width:100%;height:40%;background:linear-gradient(to bottom,rgba(255,255,255,.1) 0%,rgba(255,255,255,.3) 50%,rgba(255,255,255,.4) 100%);clip-path:polygon(0 100%,0 70%,15% 60%,25% 75%,35% 55%,45% 65%,55% 50%,65% 60%,75% 45%,85% 55%,100% 60%,100% 100%)}
+    .mountains-front{position:absolute;bottom:0;width:100%;height:30%;background:linear-gradient(to bottom,rgba(255,255,255,.2) 0%,rgba(255,255,255,.5) 100%);clip-path:polygon(0 100%,0 80%,10% 70%,20% 85%,30% 65%,40% 75%,50% 60%,60% 70%,70% 55%,80% 65%,90% 75%,100% 70%,100% 100%);z-index:2}
+    .city-container{position:relative;width:100%;max-width:1800px;height:100%;display:flex;align-items:flex-end;justify-content:space-around}
+    .city-buildings{position:relative;z-index:5;display:grid;grid-template-columns:repeat(9,1fr);gap:1.5rem;width:100%;align-items:flex-end;padding-bottom:2rem}
+    .building-item{display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:buildingFloat 4s ease-in-out infinite;filter:drop-shadow(0 12px 24px rgba(0,0,0,.3));transition:transform .3s;cursor:pointer}
+    .building-item:hover{transform:scale(1.2) translateY(-10px)!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,.4));z-index:10}
+    @keyframes buildingFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .building-emoji{font-size:5.5em;line-height:1}
+    .building-decoration{font-size:2em}
+    .snow-ground{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.7) 40%,rgba(255,255,255,.95) 100%);border-top:4px solid rgba(255,255,255,.6);z-index:4}
+    .floating-character{position:absolute;font-size:4em;animation:characterFloat 5s ease-in-out infinite;filter:drop-shadow(0 8px 16px rgba(0,0,0,.3));z-index:6;cursor:pointer;transition:transform .3s}
+    .floating-character:hover{transform:scale(1.4) rotate(15deg)!important;filter:drop-shadow(0 12px 24px rgba(0,0,0,.4))}
+    @keyframes characterFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(5deg)}}
+    .char1{top:15%;left:8%}.char2{top:25%;right:10%}.char3{top:35%;left:15%}.char4{top:40%;right:15%}
+
+    /* Contenedor principal */
+    .container{max-width:1400px;margin:0 auto;padding:4rem 2rem;background:#fff;border-radius:32px 32px 0 0;position:relative;margin-top:-80px;box-shadow:0 -12px 48px rgba(0,0,0,.12);z-index:100}
+
+    /* Títulos */
+    .section-title{font-family:'Mountains of Christmas',cursive;color:var(--text-dark);font-size:3.2em;text-align:center;margin:0 0 2.4rem;font-weight:700;position:relative}
+    .section-title::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:120px;height:5px;background:linear-gradient(90deg,var(--primary-red),var(--primary-gold));border-radius:3px}
+
+    /* GRID de tarjetas */
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.6rem;margin-bottom:3rem}
+    .card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-soft);transition:all .3s;border:3px solid transparent}
+    .card:hover{transform:translateY(-10px);box-shadow:var(--shadow-hover);border-color:var(--primary-gold)}
+    .card:active{transform:translateY(-6px)}
+
+    /* IMAGEN VISUALIZADA COMPLETA (SIN RECORTE) */
+    .card-image{
+      position:relative;
+      width:100%;
+      aspect-ratio: var(--card-aspect);
+      display:flex;align-items:center;justify-content:center;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.02)),
+        #fff;
+      /* patrón sutil para letterboxing */
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.02)),
+        repeating-linear-gradient(45deg, #fafafa 0 6px, #f6f6f6 6px 12px);
+      overflow:hidden;
+    }
+    .card-photo{
+      max-width:100%;
+      max-height:100%;
+      width:auto;height:auto;
+      object-fit:contain; /* <-- clave para NO recortar */
+      image-rendering:auto;
+      display:block;
+      transition:transform .5s ease;
+    }
+    .card:hover .card-photo{transform:scale(1.02)} /* zoom leve sin cortar */
+
+    .card-content{padding:1.4rem;background:#fff}
+    .card h3{font-size:1.4em;font-weight:700;color:var(--text-dark);margin:0 0 .5rem}
+    .card p{color:var(--text-light);line-height:1.6;margin:0 0 1rem;font-size:1em}
+    .price-badge{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--primary-gold),#FDD835);color:var(--text-dark);padding:.6rem 1.2rem;border-radius:999px;font-size:1.2em;font-weight:700;box-shadow:0 4px 12px rgba(251,188,4,.4)}
+
+    /* Reseñas (sin cambios estructurales, solo tamaños) */
+    .reviews-section{background:linear-gradient(135deg,#F8F9FA 0%,#E9ECEF 100%);border-radius:32px;padding:3rem 2rem;margin-bottom:3rem;box-shadow:inset 0 2px 8px rgba(0,0,0,.05)}
+    .reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem}
+    .review{background:#fff;padding:1.6rem;border-radius:24px;box-shadow:var(--shadow-soft);transition:all .3s;border:3px solid transparent}
+    .review:hover{transform:translateY(-8px);box-shadow:var(--shadow-hover);border-color:var(--primary-gold)}
+    .review-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+    .review-avatar{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6em;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .review:nth-child(1) .review-avatar{background:linear-gradient(135deg,#E53935,#FF6F00)}
+    .review:nth-child(2) .review-avatar{background:linear-gradient(135deg,#00C853,#69F0AE)}
+    .review:nth-child(3) .review-avatar{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
+    .review-info h4{font-size:1.1em;font-weight:700;margin:0 0 .1rem}
+    .review-date{color:var(--text-light);font-size:.9em}
+    .review-text{color:var(--text-dark);line-height:1.7;margin-bottom:1.2rem;font-size:1em}
+    .meditation{padding:1.2rem;border-radius:18px;margin:1.2rem 0;color:#fff;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+    .meditation::before{content:'✨';position:absolute;top:10px;right:10px;font-size:2.2em;opacity:.2}
+    .review:nth-child(1) .meditation{background:linear-gradient(135deg,#E53935,#FF6F00)}
+    .review:nth-child(2) .meditation{background:linear-gradient(135deg,#00C853,#69F0AE)}
+    .review:nth-child(3) .meditation{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
+    .meditation h4{font-size:1.1em;font-weight:700;margin:0 0 .6rem}
+    .meditation p{line-height:1.8;font-size:1em}
+    .rating-section{background:linear-gradient(135deg,#F8F9FA,#E9ECEF);padding:1rem;border-radius:16px;text-align:center}
+    .rating-section h4{font-size:1.05em;font-weight:700;margin:0 0 1rem}
+    .stars{font-size:2em;cursor:pointer;letter-spacing:6px}
+    .star{color:#E0E0E0;transition:all .3s;display:inline-block}
+    .star.active,.star:hover{color:var(--primary-gold);transform:scale(1.2) rotate(15deg);filter:drop-shadow(0 0 8px rgba(255,179,0,.6))}
+    .rating-result{margin-top:1rem;font-size:1.1em;font-weight:700;color:var(--primary-green)}
+
+    /* Footer */
+    footer{background:linear-gradient(135deg,#263238 0%,#37474F 100%);color:#fff;text-align:center;padding:3rem 1.4rem}
+    .footer-logo-container{display:flex;justify-content:center;margin-bottom:1.2rem}
+    .footer-logo-img{height:140px;width:auto;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:transform .3s;object-fit:contain;display:block}
+    .footer-logo-img:hover{transform:scale(1.05)}
+    footer p{margin:.6rem 0;font-size:1em;opacity:.9}
+    .footer-emojis{font-size:2em;margin-top:1.2rem;display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap}
+    .footer-emojis span{animation:bounce 2s ease-in-out infinite;cursor:pointer;transition:transform .3s}
+    .footer-emojis span:hover{transform:scale(1.2) rotate(15deg)}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .footer-social{margin-top:1.2rem;display:flex;justify-content:center;gap:1rem}
+    .footer-social a{color:#fff;font-size:1.4em;transition:all .3s}
+    .footer-social a:hover{color:var(--primary-gold);transform:translateY(-4px)}
+
+    /* Estados */
+    .loading,.no-cards{text-align:center;padding:2rem 1.4rem;color:var(--text-light)}
+    .no-cards h3{font-size:1.6em;margin-bottom:.6rem;color:var(--text-dark)}
+
+    /* Responsive */
+    @media (max-width:1200px){
+      .city-buildings{grid-template-columns:repeat(6,1fr);gap:1rem}
+      .building-emoji{font-size:4em}
+      .section-title{font-size:2.8em}
+      :root{--card-aspect: 3/2;} /* tablet landscape */
+      .cards-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+    }
+    @media (max-width:968px){
+      .hero h2{font-size:3em}
+      .header-content{flex-direction:column;text-align:center;gap:1rem}
+      nav{width:100%;justify-content:center}
+      .city-buildings{grid-template-columns:repeat(5,1fr);gap:.8rem}
+      .building-emoji{font-size:3.5em}
+      .christmas-city{min-height:500px}
+      .train-part{font-size:4em}
+      :root{--card-aspect: 4/3;} /* tablet portrait */
+    }
+    @media (max-width:640px){
+      header{padding:.8rem 1rem}
+      .logo-official{height:80px}
+      .hero h2{font-size:2.2em}
+      .hero p{font-size:1.05em}
+      .section-title{font-size:2.2em}
+      .city-buildings{grid-template-columns:repeat(3,1fr);gap:.6rem}
+      .building-emoji{font-size:3em}
+      .floating-character{font-size:2.5em}
+      .train-part{font-size:3em}
+      nav a{padding:.6rem 1rem;font-size:.85em}
+      .music-player-widget{padding:.7rem 1.2rem}
+      :root{--card-aspect: 1/1;} /* móvil: cuadrado para que todo quepa */
+    }
+
+    /* Accesibilidad / motion */
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    }
+
+    @keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .fade-in{animation:fadeIn .8s ease-out forwards}
+  </style>
 </head>
 <body>
-    <!-- Snow Container -->
-    <div class="snow-container" id="snowContainer"></div>
+  <!-- Nieve -->
+  <div class="snow-container" id="snowContainer"></div>
 
-    <!-- Christmas Train Animation -->
-    <div class="train-container">
-        <div class="train">
-            <div class="train-part" style="position: relative;">
-                🚂
-                <div class="smoke">💨</div>
-            </div>
-            <div class="train-part">🎁</div>
-            <div class="train-part">🎄</div>
-            <div class="train-part">⭐</div>
-        </div>
+  <!-- Tren -->
+  <div class="train-container">
+    <div class="train">
+      <div class="train-part" style="position:relative;">🚂<div class="smoke">💨</div></div>
+      <div class="train-part">🎁</div><div class="train-part">🎄</div><div class="train-part">⭐</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <a href="#inicio" class="logo-container" aria-label="Christmas Pringle - Inicio">
+        <img src="christmas-pringle-logo.png" alt="Christmas Pringle Logo" class="logo-official">
+      </a>
+      <nav>
+        <a href="#inicio" aria-label="Ir a Inicio"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#tarjetas" aria-label="Ver Tarjetas"><i class="fas fa-gifts"></i> Tarjetas</a>
+        <a href="#resenas" aria-label="Leer Reseñas"><i class="fas fa-star"></i> Reseñas</a>
+        <button class="music-player-widget" id="musicPlayer" aria-label="Reproductor de música navideña">
+          <div class="music-icon-wrapper"><div class="music-bars">
+            <div class="music-bar"></div><div class="music-bar"></div><div class="music-bar"></div><div class="music-bar"></div>
+          </div></div>
+          <div class="music-text">
+            <div class="music-title" id="musicTitle">🎵 Música</div>
+            <div class="music-subtitle" id="musicSubtitle">Click para reproducir</div>
+          </div>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="inicio" class="hero">
+    <div class="hero-content-top">
+      <div class="hero-badge">✨ Navidad 2025 - Edición Especial ✨</div>
+      <h2>Diversión festiva para<br>toda la familia</h2>
+      <p>Las tarjetas de Christmas Pringle son el regalo ideal para que las familias celebren estas fiestas. Pintadas a mano en acuarela, con actividades divertidas, educativas e interactivas.</p>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <a href="#inicio" class="logo-container" aria-label="Christmas Pringle - Inicio">
-                <img src="christmas-pringle-logo.png" 
-                     alt="Christmas Pringle Logo" 
-                     class="logo-official">
-            </a>
-            <nav>
-                <a href="#inicio" aria-label="Ir a Inicio"><i class="fas fa-home"></i> Inicio</a>
-                <a href="#tarjetas" aria-label="Ver Tarjetas"><i class="fas fa-gifts"></i> Tarjetas</a>
-                <a href="#resenas" aria-label="Leer Reseñas"><i class="fas fa-star"></i> Reseñas</a>
-                <button class="music-player-widget" id="musicPlayer" aria-label="Reproductor de música navideña">
-                    <div class="music-icon-wrapper">
-                        <div class="music-bars">
-                            <div class="music-bar"></div>
-                            <div class="music-bar"></div>
-                            <div class="music-bar"></div>
-                            <div class="music-bar"></div>
-                        </div>
-                    </div>
-                    <div class="music-text">
-                        <div class="music-title" id="musicTitle">🎵 Música</div>
-                        <div class="music-subtitle" id="musicSubtitle">Click para reproducir</div>
-                    </div>
-                </button>
-            </nav>
+    <div class="christmas-city">
+      <div class="city-background">
+        <div class="mountains-back"></div>
+        <div class="mountains-front"></div>
+      </div>
+      <div class="city-container">
+        <div class="city-buildings">
+          <div class="building-item" role="img" aria-label="Casa navideña"><div class="building-emoji">🏠</div><div class="building-decoration">🎄</div></div>
+          <div class="building-item" role="img" aria-label="Árbol de Navidad"><div class="building-emoji">🎄</div><div class="building-decoration">⭐</div></div>
+          <div class="building-item" role="img" aria-label="Iglesia"><div class="building-emoji">⛪</div><div class="building-decoration">🔔</div></div>
+          <div class="building-item" role="img" aria-label="Casas del pueblo"><div class="building-emoji">🏘️</div><div class="building-decoration">🎁</div></div>
+          <div class="building-item" role="img" aria-label="Santa Claus"><div class="building-emoji">🎅</div><div class="building-decoration">🎉</div></div>
+          <div class="building-item" role="img" aria-label="Reno navideño"><div class="building-emoji">🦌</div><div class="building-decoration">✨</div></div>
+          <div class="building-item" role="img" aria-label="Muñeco de nieve"><div class="building-emoji">⛄</div><div class="building-decoration">❄️</div></div>
+          <div class="building-item" role="img" aria-label="Regalo navideño"><div class="building-emoji">🎁</div><div class="building-decoration">🎀</div></div>
+          <div class="building-item" role="img" aria-label="Campanas"><div class="building-emoji">🔔</div><div class="building-decoration">🌟</div></div>
         </div>
-    </header>
+      </div>
+      <div class="floating-character char1" role="img" aria-label="Elfo navideño">🧝</div>
+      <div class="floating-character char2" role="img" aria-label="Santa Claus">🎅</div>
+      <div class="floating-character char3" role="img" aria-label="Mrs. Claus">🤶</div>
+      <div class="floating-character char4" role="img" aria-label="Reno Rudolf">🦌</div>
+      <div class="snow-ground"></div>
+    </div>
+  </section>
 
-    <!-- Hero Section with Large Christmas City -->
-    <section id="inicio" class="hero">
-        <div class="hero-content-top">
-            <div class="hero-badge">✨ Navidad 2025 - Edición Especial ✨</div>
-            <h2>Diversión festiva para<br>toda la familia</h2>
-            <p>Las tarjetas de Christmas Pringle son el regalo ideal para que las familias celebren estas fiestas. Pintadas a mano en acuarela, con actividades divertidas, educativas e interactivas.</p>
+  <!-- Tarjetas -->
+  <div class="container">
+    <section id="tarjetas">
+      <h2 class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
+      <div class="cards-grid" id="cardsGrid">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin" style="font-size:2.2em;color:var(--primary-red);margin-bottom:.6rem;"></i>
+          <p>Cargando tarjetas mágicas...</p>
         </div>
-        
-        <!-- Large Christmas City Illustration -->
-        <div class="christmas-city">
-            <div class="city-background">
-                <div class="mountains-back"></div>
-                <div class="mountains-front"></div>
-            </div>
-
-            <div class="city-container">
-                <div class="city-buildings">
-                    <div class="building-item" role="img" aria-label="Casa navideña">
-                        <div class="building-emoji">🏠</div>
-                        <div class="building-decoration">🎄</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Árbol de Navidad">
-                        <div class="building-emoji">🎄</div>
-                        <div class="building-decoration">⭐</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Iglesia">
-                        <div class="building-emoji">⛪</div>
-                        <div class="building-decoration">🔔</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Casas del pueblo">
-                        <div class="building-emoji">🏘️</div>
-                        <div class="building-decoration">🎁</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Santa Claus">
-                        <div class="building-emoji">🎅</div>
-                        <div class="building-decoration">🎉</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Reno navideño">
-                        <div class="building-emoji">🦌</div>
-                        <div class="building-decoration">✨</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Muñeco de nieve">
-                        <div class="building-emoji">⛄</div>
-                        <div class="building-decoration">❄️</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Regalo navideño">
-                        <div class="building-emoji">🎁</div>
-                        <div class="building-decoration">🎀</div>
-                    </div>
-                    <div class="building-item" role="img" aria-label="Campanas">
-                        <div class="building-emoji">🔔</div>
-                        <div class="building-decoration">🌟</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Floating Characters -->
-            <div class="floating-character char1" role="img" aria-label="Elfo navideño">🧝</div>
-            <div class="floating-character char2" role="img" aria-label="Santa Claus">🎅</div>
-            <div class="floating-character char3" role="img" aria-label="Mrs. Claus">🤶</div>
-            <div class="floating-character char4" role="img" aria-label="Reno Rudolf">🦌</div>
-
-            <div class="snow-ground"></div>
-        </div>
+      </div>
     </section>
 
-    <!-- Cards Section -->
-    <div class="container">
-        <section id="tarjetas">
-            <h2 class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
-            <div class="cards-grid" id="cardsGrid">
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 3em; color: var(--primary-red); margin-bottom: 1rem;"></i>
-                    <p>Cargando tarjetas mágicas...</p>
-                </div>
+    <!-- Reseñas (igual que antes, con tamaños ajustados) -->
+    <section id="resenas" class="reviews-section">
+      <h2 class="section-title">⭐ Lo Que Dicen Nuestros Clientes</h2>
+      <div class="reviews-grid">
+        <div class="review fade-in">
+          <div class="review-header">
+            <div class="review-avatar" role="img" aria-label="Avatar de María">M</div>
+            <div class="review-info"><h4>María González</h4><div class="review-date"><i class="far fa-calendar"></i> 24 de Diciembre, 2024</div></div>
+          </div>
+          <p class="review-text">¡Hermosa tarjeta! La calidad de la acuarela es excepcional. Mi familia quedó encantada con el detalle y el amor puesto en cada trazo. Definitivamente volveré a comprar.</p>
+          <div class="meditation"><h4>💫 Reflexión Navideña</h4><p>En esta Navidad, recordemos que el mayor regalo no viene envuelto en papel brillante, sino en momentos compartidos, abrazos sinceros y palabras de amor que perduran en el corazón.</p></div>
+          <div class="rating-section">
+            <h4>¿Te gustó esta reflexión?</h4>
+            <div class="stars" data-rating="0" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
+              <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="0">★</span>
             </div>
-        </section>
-
-        <!-- Reviews Section -->
-        <section id="resenas" class="reviews-section">
-            <h2 class="section-title">⭐ Lo Que Dicen Nuestros Clientes</h2>
-            
-            <div class="reviews-grid">
-                <div class="review fade-in">
-                    <div class="review-header">
-                        <div class="review-avatar" role="img" aria-label="Avatar de María">M</div>
-                        <div class="review-info">
-                            <h4>María González</h4>
-                            <div class="review-date"><i class="far fa-calendar"></i> 24 de Diciembre, 2024</div>
-                        </div>
-                    </div>
-                    <p class="review-text">¡Hermosa tarjeta! La calidad de la acuarela es excepcional. Mi familia quedó encantada con el detalle y el amor puesto en cada trazo. Definitivamente volveré a comprar.</p>
-                    
-                    <div class="meditation">
-                        <h4>💫 Reflexión Navideña</h4>
-                        <p>En esta Navidad, recordemos que el mayor regalo no viene envuelto en papel brillante, sino en momentos compartidos, abrazos sinceros y palabras de amor que perduran en el corazón.</p>
-                    </div>
-
-                    <div class="rating-section">
-                        <h4>¿Te gustó esta reflexión?</h4>
-                        <div class="stars" data-rating="0" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
-                            <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="0">★</span>
-                        </div>
-                        <div class="rating-result" role="status" aria-live="polite"></div>
-                    </div>
-                </div>
-
-                <div class="review fade-in" style="animation-delay: 0.2s;">
-                    <div class="review-header">
-                        <div class="review-avatar" role="img" aria-label="Avatar de Carlos">C</div>
-                        <div class="review-info">
-                            <h4>Carlos Ramírez</h4>
-                            <div class="review-date"><i class="far fa-calendar"></i> 20 de Diciembre, 2024</div>
-                        </div>
-                    </div>
-                    <p class="review-text">Compré tres tarjetas diferentes y cada una es una pequeña obra maestra. El detalle artesanal fue un toque muy especial que sorprendió a todos mis familiares.</p>
-                    
-                    <div class="meditation">
-                        <h4>🙏 Meditación de Gratitud</h4>
-                        <p>Mientras las estrellas brillan en el cielo navideño, tomemos un momento para agradecer por el pan de cada día, por las sonrisas recibidas y por cada pequeña bendición que ilumina nuestro camino.</p>
-                    </div>
-
-                    <div class="rating-section">
-                        <h4>¿Te gustó esta reflexión?</h4>
-                        <div class="stars" data-rating="0" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
-                            <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="0">★</span>
-                        </div>
-                        <div class="rating-result" role="status" aria-live="polite"></div>
-                    </div>
-                </div>
-
-                <div class="review fade-in" style="animation-delay: 0.4s;">
-                    <div class="review-header">
-                        <div class="review-avatar" role="img" aria-label="Avatar de Ana">A</div>
-                        <div class="review-info">
-                            <h4>Ana Martínez</h4>
-                            <div class="review-date"><i class="far fa-calendar"></i> 18 de Diciembre, 2024</div>
-                        </div>
-                    </div>
-                    <p class="review-text">Perfectas para regalar. La pintura en acuarela le da un toque único y personal que no encontrarás en tarjetas comerciales. Un verdadero tesoro navideño artesanal.</p>
-                    
-                    <div class="meditation">
-                        <h4>🌟 Mensaje de Esperanza</h4>
-                        <p>En medio del bullicio navideño, encontremos paz en el silencio. Que cada copo de nieve que cae nos recuerde que somos únicos e irrepetibles, creados con propósito divino y amor infinito.</p>
-                    </div>
-
-                    <div class="rating-section">
-                        <h4>¿Te gustó esta reflexión?</h4>
-                        <div class="stars" data-rating="0" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
-                            <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="0">★</span>
-                            <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="0">★</span>
-                        </div>
-                        <div class="rating-result" role="status" aria-live="polite"></div>
-                    </div>
-                </div>
+            <div class="rating-result" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="review fade-in" style="animation-delay:.2s">
+          <div class="review-header">
+            <div class="review-avatar" role="img" aria-label="Avatar de Carlos">C</div>
+            <div class="review-info"><h4>Carlos Ramírez</h4><div class="review-date"><i class="far fa-calendar"></i> 20 de Diciembre, 2024</div></div>
+          </div>
+          <p class="review-text">Compré tres tarjetas diferentes y cada una es una pequeña obra maestra. El detalle artesanal fue un toque muy especial que sorprendió a todos mis familiares.</p>
+          <div class="meditation"><h4>🙏 Meditación de Gratitud</h4><p>Mientras las estrellas brillan en el cielo navideño, tomemos un momento para agradecer por el pan de cada día, por las sonrisas recibidas y por cada pequeña bendición que ilumina nuestro camino.</p></div>
+          <div class="rating-section">
+            <h4>¿Te gustó esta reflexión?</h4>
+            <div class="stars" data-rating="0" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
+              <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="0">★</span>
             </div>
-        </section>
+            <div class="rating-result" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="review fade-in" style="animation-delay:.4s">
+          <div class="review-header">
+            <div class="review-avatar" role="img" aria-label="Avatar de Ana">A</div>
+            <div class="review-info"><h4>Ana Martínez</h4><div class="review-date"><i class="far fa-calendar"></i> 18 de Diciembre, 2024</div></div>
+          </div>
+          <p class="review-text">Perfectas para regalar. La pintura en acuarela le da un toque único y personal que no encontrarás en tarjetas comerciales. Un verdadero tesoro navideño artesanal.</p>
+          <div class="meditation"><h4>🌟 Mensaje de Esperanza</h4><p>En medio del bullicio navideño, encontremos paz en el silencio. Que cada copo de nieve que cae nos recuerde que somos únicos e irrepetibles, creados con propósito divino y amor infinito.</p></div>
+          <div class="rating-section">
+            <h4>¿Te gustó esta reflexión?</h4>
+            <div class="stars" data-rating="0" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
+              <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="0">★</span>
+              <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="0">★</span>
+            </div>
+            <div class="rating-result" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo-container"><img src="christmas-pringle-logo.png" alt="Christmas Pringle Logo" class="footer-logo-img"></div>
+    <p><i class="fas fa-paint-brush"></i> Pintando la magia de la Navidad ✨</p>
+    <p>© 2025 ChristmasPringle.com - Todos los derechos reservados</p>
+    <p><i class="fas fa-envelope"></i> info@christmaspringle.com | <i class="fas fa-phone"></i> +506 1234-5678</p>
+    <div class="footer-social">
+      <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" title="WhatsApp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
+    <div class="footer-emojis" role="img" aria-label="Decoración navideña">
+      <span>🎄</span><span>🎅</span><span>🎁</span><span>⭐</span><span>❄️</span><span>🔔</span>
+    </div>
+  </footer>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-logo-container">
-            <img src="christmas-pringle-logo.png" 
-                 alt="Christmas Pringle Logo" 
-                 class="footer-logo-img">
-        </div>
-        <p><i class="fas fa-paint-brush"></i> Pintando la magia de la Navidad ✨</p>
-        <p>© 2025 ChristmasPringle.com - Todos los derechos reservados</p>
-        <p>
-            <i class="fas fa-envelope"></i> info@christmaspringle.com | 
-            <i class="fas fa-phone"></i> +506 1234-5678
-        </p>
-        
-        <div class="footer-social">
-            <a href="#" title="Síguenos en Facebook" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="#" title="Síguenos en Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" title="Síguenos en Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" title="Contáctanos por WhatsApp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        </div>
+  <!-- Audio -->
+  <audio id="christmasMusic" loop>
+    <source src="Christmas Rap.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
 
-        <div class="footer-emojis" role="img" aria-label="Decoración navideña">
-            <span>🎄</span>
-            <span>🎅</span>
-            <span>🎁</span>
-            <span>⭐</span>
-            <span>❄️</span>
-            <span>🔔</span>
-        </div>
-    </footer>
+  <script>
+    // Cargar tarjetas desde mismo origen (sin CORS)
+    async function loadCards(){
+      const grid = document.getElementById('cardsGrid');
+      try{
+        const ts = Date.now();
+        const res = await fetch(`./cards.json?t=${ts}`, {cache:'no-store'});
+        if(!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        const text = await res.text();
+        let cards = JSON.parse(text);
+        if(!Array.isArray(cards)) throw new Error('cards.json debe ser un array');
 
-    <!-- Hidden Audio Element -->
-    <audio id="christmasMusic" loop>
-        <source src="Christmas Rap.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
+        cards.sort((a,b)=>a.number-b.number);
 
-    <script>
-        // GitHub Configuration (no usado para fetch ahora, lo dejamos por si lo quieres para logs)
-        const GITHUB_CONFIG = {
-            username: 'jmarinr',
-            repo: 'christmaspringle',
-            branch: 'main'
-        };
+        const html = cards.map((card, idx)=>{
+          const imageUrl = `${encodeURI(card.image)}?t=${ts}`;
+          // Prioriza SOLO las dos primeras imágenes para LCP; el resto lazy
+          const eager = idx < 2;
+          const fetchPriority = eager ? 'high' : 'low';
+          const loading = eager ? 'eager' : 'lazy';
 
-        // ==========================================
-        // LOAD CARDS FROM SAME ORIGIN (NO CORS)
-        // ==========================================
-        async function loadCards() {
-            const cardsGrid = document.getElementById('cardsGrid');
-            
-            try {
-                // Cache-busting para evitar CDN cache
-                const timestamp = new Date().getTime();
-                // ✅ Ahora leemos desde el MISMO ORIGEN
-                const url = `./cards.json?t=${timestamp}`;
-                console.log('🔍 Intentando cargar tarjetas desde:', url);
-                
-                const response = await fetch(url, {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const text = await response.text();
-                console.log('📄 Contenido raw recibido:', text.substring(0, 200) + '...');
-                
-                let cardsData;
-                try {
-                    cardsData = JSON.parse(text);
-                } catch (parseError) {
-                    console.error('❌ Error al parsear JSON:', parseError);
-                    throw new Error('El archivo cards.json no es un JSON válido');
-                }
-                
-                console.log('✅ Tarjetas cargadas:', cardsData);
-                console.log('📊 Total de tarjetas:', cardsData.length);
-                
-                if (!cardsData || cardsData.length === 0) {
-                    cardsGrid.innerHTML = `
-                        <div class="no-cards">
-                            <h3>🎨 Pronto habrá tarjetas disponibles</h3>
-                            <p>Estamos preparando nuestra colección navideña. ¡Vuelve pronto!</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                if (!Array.isArray(cardsData)) {
-                    console.error('❌ cards.json no es un array:', cardsData);
-                    throw new Error('El formato de cards.json es incorrecto (debe ser un array)');
-                }
-                
-                cardsData.sort((a, b) => a.number - b.number);
-                console.log('🔢 Tarjetas ordenadas:', cardsData.map(c => `#${c.number}: ${c.title}`));
-                
-                const cardsHTML = cardsData.map((card, index) => {
-                    console.log(`🎴 Generando tarjeta #${card.number}:`, card.title);
-                    // ✅ Imagen desde el MISMO ORIGEN (sin raw.githubusercontent)
-                    const imageUrl = `${encodeURI(card.image)}?t=${timestamp}`;
-                    return `
-                        <div class="card fade-in" style="animation-delay: ${index * 0.1}s;">
-                            <div class="card-image">
-                                <img src="${imageUrl}" 
-                                     alt="${card.title}" 
-                                     class="card-photo"
-                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e0e0e0%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23999%22 font-family=%22Arial%22 font-size=%2220%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
-                            </div>
-                            <div class="card-content">
-                                <h3>${card.title}</h3>
-                                <p>${card.description}</p>
-                                <div class="price-badge">
-                                    <i class="fas fa-tag"></i>
-                                    $${Number(card.price).toFixed(2)}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                
-                console.log('✅ HTML generado para', cardsData.length, 'tarjetas');
-                cardsGrid.innerHTML = cardsHTML;
-                
-                // Activar animaciones
-                setTimeout(() => {
-                    document.querySelectorAll('.fade-in').forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                    });
-                }, 100);
-                
-                console.log('🎉 Tarjetas cargadas y renderizadas exitosamente');
-                
-            } catch (error) {
-                console.error('❌ Error cargando tarjetas:', error);
-                cardsGrid.innerHTML = `
-                    <div class="no-cards">
-                        <h3>❌ Error al cargar tarjetas</h3>
-                        <p>No pudimos cargar las tarjetas. Por favor, intenta de nuevo más tarde.</p>
-                        <p style="font-size: 0.9em; opacity: 0.7; margin-top: 1rem;">Error: ${error.message}</p>
-                        <button onclick="loadCards()" style="margin-top: 1rem; padding: 0.8rem 1.5rem; background: var(--primary-blue); color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-sync"></i> Intentar de nuevo
-                        </button>
-                    </div>
-                `;
-            }
-        }
+          return `
+          <div class="card fade-in" style="animation-delay:${idx*0.08}s">
+            <div class="card-image">
+              <img
+                class="card-photo"
+                src="${imageUrl}"
+                alt="${card.title}"
+                loading="${loading}"
+                decoding="async"
+                fetchpriority="${fetchPriority}"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23ffffff%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23999%22 font-family=%22Arial%22 font-size=%2220%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="card-content">
+              <h3>${card.title}</h3>
+              <p>${card.description}</p>
+              <div class="price-badge"><i class="fas fa-tag"></i>$${Number(card.price).toFixed(2)}</div>
+            </div>
+          </div>`;
+        }).join('');
 
-        // ==========================================
-        // SNOWFLAKES ANIMATION
-        // ==========================================
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
-            snowflake.style.left = Math.random() * 100 + '%';
-            snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            snowflake.style.opacity = Math.random() * 0.6 + 0.4;
-            snowflake.style.fontSize = (Math.random() * 1 + 1) + 'em';
-            
-            document.getElementById('snowContainer').appendChild(snowflake);
-            
-            setTimeout(() => snowflake.remove(), 7000);
-        }
+        grid.innerHTML = html;
 
-        setInterval(createSnowflake, 300);
+        // animación de entrada
+        setTimeout(()=>document.querySelectorAll('.fade-in').forEach(el=>{
+          el.style.opacity='1';el.style.transform='translateY(0)';
+        }),100);
 
-        // ==========================================
-        // MUSIC PLAYER
-        // ==========================================
-        const musicPlayer = document.getElementById('musicPlayer');
-        const musicTitle = document.getElementById('musicTitle');
-        const musicSubtitle = document.getElementById('musicSubtitle');
-        const audio = document.getElementById('christmasMusic');
-        let isPlaying = false;
+      }catch(err){
+        grid.innerHTML = `
+          <div class="no-cards">
+            <h3>❌ Error al cargar tarjetas</h3>
+            <p>No pudimos cargar las tarjetas. Por favor, intenta de nuevo más tarde.</p>
+            <p style="font-size:.9em;opacity:.7;margin-top:.6rem">Error: ${err.message}</p>
+            <button onclick="loadCards()" style="margin-top:1rem;padding:.8rem 1.2rem;background:var(--primary-blue);color:#fff;border:none;border-radius:25px;cursor:pointer;font-weight:600">
+              <i class="fas fa-sync"></i> Intentar de nuevo
+            </button>
+          </div>`;
+      }
+    }
 
-        musicPlayer.addEventListener('click', () => {
-            if (!isPlaying) {
-                audio.play().catch(e => {
-                    console.log('Autoplay prevented:', e);
-                    alert('Por favor, haz clic de nuevo para reproducir la música navideña 🎵');
-                });
-                musicTitle.textContent = '⏸️ Pausar';
-                musicSubtitle.textContent = 'Reproduciendo...';
-                musicPlayer.classList.add('playing');
-                musicPlayer.setAttribute('aria-label', 'Pausar música navideña');
-                isPlaying = true;
-            } else {
-                audio.pause();
-                musicTitle.textContent = '▶️ Reproducir';
-                musicSubtitle.textContent = 'Click para continuar';
-                musicPlayer.classList.remove('playing');
-                musicPlayer.setAttribute('aria-label', 'Reproducir música navideña');
-                isPlaying = false;
-            }
+    // Nieve
+    function createSnowflake(){
+      const el=document.createElement('div');
+      el.classList.add('snowflake');
+      el.innerHTML=['❄','❅','❆'][Math.floor(Math.random()*3)];
+      el.style.left=Math.random()*100+'%';
+      el.style.animationDuration=(Math.random()*3+4)+'s';
+      el.style.opacity=Math.random()*.6+.4;
+      el.style.fontSize=(Math.random()*1+1)+'em';
+      document.getElementById('snowContainer').appendChild(el);
+      setTimeout(()=>el.remove(),7000);
+    }
+    setInterval(createSnowflake,300);
+
+    // Música
+    const musicPlayer=document.getElementById('musicPlayer');
+    const musicTitle=document.getElementById('musicTitle');
+    const musicSubtitle=document.getElementById('musicSubtitle');
+    const audio=document.getElementById('christmasMusic');
+    let isPlaying=false;
+    musicPlayer.addEventListener('click',()=>{
+      if(!isPlaying){
+        audio.play().catch(()=>alert('Por favor, haz clic de nuevo para reproducir la música navideña 🎵'));
+        musicTitle.textContent='⏸️ Pausar';
+        musicSubtitle.textContent='Reproduciendo...';
+        musicPlayer.classList.add('playing');
+        musicPlayer.setAttribute('aria-label','Pausar música navideña');
+        isPlaying=true;
+      }else{
+        audio.pause();
+        musicTitle.textContent='▶️ Reproducir';
+        musicSubtitle.textContent='Click para continuar';
+        musicPlayer.classList.remove('playing');
+        musicPlayer.setAttribute('aria-label','Reproducir música navideña');
+        isPlaying=false;
+      }
+    });
+    musicPlayer.addEventListener('keypress',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();musicPlayer.click();}
+    });
+
+    // Rating
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.querySelectorAll('.stars').forEach(st=>{
+        const stars=st.querySelectorAll('.star');
+        const result=st.parentElement.querySelector('.rating-result');
+        stars.forEach((star,i)=>{
+          star.addEventListener('click',()=>{
+            const rating=i+1;st.setAttribute('data-rating',rating);
+            stars.forEach((s,idx)=>{if(idx<rating){s.classList.add('active');s.setAttribute('aria-checked','true');}else{s.classList.remove('active');s.setAttribute('aria-checked','false');}});
+            const msgs=['¡Gracias por tu opinión! 🌟','¡Nos alegra que te guste! ⭐⭐','¡Excelente! ⭐⭐⭐','¡Increíble valoración! ⭐⭐⭐⭐','¡Perfecto! ⭐⭐⭐⭐⭐'];
+            result.textContent=msgs[rating-1];result.style.animation='none';setTimeout(()=>{result.style.animation='fadeIn .5s ease-out'},10);
+          });
+          star.addEventListener('keypress',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();star.click();}});
+          star.addEventListener('mouseenter',()=>{stars.forEach((s,idx)=>{if(idx<=i){s.style.color='var(--primary-gold)';s.style.transform='scale(1.2) rotate(15deg)';}});});
         });
+        st.addEventListener('mouseleave',()=>{const r=parseInt(st.getAttribute('data-rating'));stars.forEach((s,idx)=>{if(idx<r){s.style.color='var(--primary-gold)';s.style.transform='scale(1.2) rotate(15deg)'}else{s.style.color='#E0E0E0';s.style.transform='scale(1) rotate(0)'}});});
+      });
+    });
 
-        // Keyboard support for music player
-        musicPlayer.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                musicPlayer.click();
-            }
-        });
+    // Smooth scroll
+    document.querySelectorAll('nav a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){
+      e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t){t.scrollIntoView({behavior:'smooth',block:'start'});}
+    }));
 
-        // ==========================================
-        // STAR RATING SYSTEM
-        // ==========================================
-        document.querySelectorAll('.stars').forEach(starsContainer => {
-            const stars = starsContainer.querySelectorAll('.star');
-            const resultDiv = starsContainer.parentElement.querySelector('.rating-result');
-            
-            stars.forEach((star, index) => {
-                star.addEventListener('click', () => {
-                    const rating = index + 1;
-                    starsContainer.setAttribute('data-rating', rating);
-                    
-                    stars.forEach((s, i) => {
-                        if (i < rating) {
-                            s.classList.add('active');
-                            s.setAttribute('aria-checked', 'true');
-                        } else {
-                            s.classList.remove('active');
-                            s.setAttribute('aria-checked', 'false');
-                        }
-                    });
-                    
-                    const messages = [
-                        '¡Gracias por tu opinión! 🌟',
-                        '¡Nos alegra que te guste! ⭐⭐',
-                        '¡Excelente! ⭐⭐⭐',
-                        '¡Increíble valoración! ⭐⭐⭐⭐',
-                        '¡Perfecto! ¡Eres maravilloso! ⭐⭐⭐⭐⭐'
-                    ];
-                    
-                    resultDiv.innerHTML = messages[rating - 1];
-                    resultDiv.style.animation = 'none';
-                    setTimeout(() => {
-                        resultDiv.style.animation = 'fadeIn 0.5s ease-out';
-                    }, 10);
-                });
+    // Fade-in observer
+    const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)';}})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.fade-in').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(50px)';observer.observe(el);});
 
-                // Keyboard support
-                star.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        star.click();
-                    }
-                });
-                
-                star.addEventListener('mouseenter', () => {
-                    stars.forEach((s, i) => {
-                        if (i <= index) {
-                            s.style.color = 'var(--primary-gold)';
-                            s.style.transform = 'scale(1.3) rotate(15deg)';
-                        }
-                    });
-                });
-            });
-            
-            starsContainer.addEventListener('mouseleave', () => {
-                const currentRating = parseInt(starsContainer.getAttribute('data-rating'));
-                stars.forEach((s, i) => {
-                    if (i < currentRating) {
-                        s.style.color = 'var(--primary-gold)';
-                        s.style.transform = 'scale(1.3) rotate(15deg)';
-                    } else {
-                        s.style.color = '#E0E0E0';
-                        s.style.transform = 'scale(1) rotate(0deg)';
-                    }
-                });
-            });
-        });
+    // Skip link accesibilidad
+    document.addEventListener('DOMContentLoaded',()=>{
+      const skip=document.createElement('a');
+      skip.href='#tarjetas';skip.textContent='Saltar al contenido principal';skip.className='skip-link';
+      skip.style.cssText='position:absolute;top:-40px;left:0;background:var(--primary-red);color:#fff;padding:8px;text-decoration:none;z-index:100000';
+      skip.addEventListener('focus',()=>{skip.style.top='0'});skip.addEventListener('blur',()=>{skip.style.top='-40px'});document.body.insertBefore(skip,document.body.firstChild);
+    });
 
-        // ==========================================
-        // SMOOTH SCROLLING
-        // ==========================================
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
-                }
-            });
-        });
-
-        // ==========================================
-        // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
-        // ==========================================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(50px)';
-            observer.observe(el);
-        });
-
-        // ==========================================
-        // INITIALIZE ON LOAD
-        // ==========================================
-        window.addEventListener('load', () => {
-            // Cargar tarjetas desde mismo origen
-            loadCards();
-            
-            // Inicializar nieve
-            for (let i = 0; i < 20; i++) {
-                setTimeout(createSnowflake, i * 200);
-            }
-            
-            console.log('🎄 Christmas Pringle website loaded successfully! 🎄');
-        });
-
-        // ==========================================
-        // ACCESSIBILITY - SKIP LINK
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            const skipLink = document.createElement('a');
-            skipLink.href = '#tarjetas';
-            skipLink.textContent = 'Saltar al contenido principal';
-            skipLink.className = 'skip-link';
-            skipLink.style.cssText = `
-                position: absolute;
-                top: -40px;
-                left: 0;
-                background: var(--primary-red);
-                color: white;
-                padding: 8px;
-                text-decoration: none;
-                z-index: 100000;
-            `;
-            skipLink.addEventListener('focus', () => {
-                skipLink.style.top = '0';
-            });
-            skipLink.addEventListener('blur', () => {
-                skipLink.style.top = '-40px';
-            });
-            document.body.insertBefore(skipLink, document.body.firstChild);
-        });
-    </script>
+    // Init
+    window.addEventListener('load',()=>{
+      loadCards();
+      for(let i=0;i<20;i++) setTimeout(createSnowflake,i*200);
+      console.log('🎄 Christmas Pringle website loaded successfully! 🎄');
+    });
+  </script>
 </body>
 </html>

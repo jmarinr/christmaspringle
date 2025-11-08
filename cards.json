@@ -1,5 +1,13 @@
 [
   {
+    "number": 1,
+    "title": "test",
+    "description": "dafdsa",
+    "price": 4,
+    "image": "1.png",
+    "uploadedAt": "2025-11-08T15:09:39.464Z"
+  },
+  {
     "number": 2,
     "title": "Probando tarjeta 2",
     "description": "Esta tarjeta me recuerda mi infancia.",

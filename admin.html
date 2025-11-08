@@ -92,6 +92,36 @@
             <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
         </div>
 
+        <div class="setup-section" style="background: linear-gradient(135deg, #FFEBEE, #FFCDD2); border-left: 5px solid var(--primary-red); margin-bottom: 2rem;">
+            <h3><i class="fas fa-key"></i> Configuración de GitHub (Requerido)</h3>
+            <div class="form-group">
+                <label for="githubTokenInput"><i class="fas fa-shield-alt"></i> Token de acceso personal de GitHub</label>
+                <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                <small>
+                    <strong>⚠️ Sin token no podrás subir imágenes.</strong><br>
+                    1. Ve a <a href="https://github.com/settings/tokens/new" target="_blank" style="color: var(--primary-blue); font-weight: 600;">GitHub Tokens</a><br>
+                    2. Dale un nombre (ej: "Christmas Pringle Admin")<br>
+                    3. Marca SOLO el permiso <code>repo</code><br>
+                    4. Copia el token y pégalo aquí<br>
+                    5. Haz clic en "Guardar Token"
+                </small>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="githubUsernameInput"><i class="fas fa-user"></i> Usuario de GitHub</label>
+                    <input type="text" id="githubUsernameInput" value="jmarinr" placeholder="tu-usuario">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="githubRepoInput"><i class="fas fa-folder"></i> Nombre del repositorio</label>
+                    <input type="text" id="githubRepoInput" value="repochristmaspringle" placeholder="mi-repo">
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="saveGithubConfig()" style="margin-top: 1rem;">
+                <i class="fas fa-save"></i> Guardar Token y Configuración
+            </button>
+            <div id="tokenStatus" style="margin-top: 1rem;"></div>
+        </div>
+
         <div class="cards-container" id="cardsContainer"></div>
         
         <div id="statusMessage"></div>
@@ -104,12 +134,33 @@
     </div>
 
     <script>
-        // Configuración por defecto
+        // Configuración por defecto - IMPORTANTE: Actualiza tu token aquí
         const GITHUB_CONFIG = {
-            token: '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',
+            token: '', // ⚠️ COLOCA TU TOKEN AQUÍ - Crear en: https://github.com/settings/tokens/new
             username: 'jmarinr',
-            repo: 'christmaspringle'
+            repo: 'repochristmaspringle'
         };
+        
+        // Verificar si hay token configurado
+        if (!GITHUB_CONFIG.token) {
+            alert('⚠️ ERROR: No has configurado tu token de GitHub.\n\n' +
+                  '1. Ve a: https://github.com/settings/tokens/new\n' +
+                  '2. Marca el permiso "repo"\n' +
+                  '3. Copia el token generado\n' +
+                  '4. Pégalo en la línea 1168 del archivo admin.html\n\n' +
+                  'O usa el localStorage (ver consola)');
+            console.log('%c⚠️ CONFIGURA TU TOKEN', 'font-size: 20px; color: red; font-weight: bold;');
+            console.log('Opción 1: Edita la línea 1168 de admin.html y coloca tu token');
+            console.log('Opción 2: Ejecuta este comando en la consola:');
+            console.log('localStorage.setItem("github_token", "TU_TOKEN_AQUI")');
+        }
+        
+        // Intentar cargar token desde localStorage si no está en el código
+        const savedToken = localStorage.getItem('github_token');
+        if (savedToken && !GITHUB_CONFIG.token) {
+            GITHUB_CONFIG.token = savedToken;
+            console.log('✅ Token cargado desde localStorage');
+        }
 
         const MAX_CARDS = 10;
         let cardsData = [];
@@ -122,6 +173,70 @@
             }
             renderCardForms();
             renderSavedCards();
+            loadGithubConfigUI();
+        }
+
+        // Guardar configuración de GitHub
+        function saveGithubConfig() {
+            const token = document.getElementById('githubTokenInput').value.trim();
+            const username = document.getElementById('githubUsernameInput').value.trim();
+            const repo = document.getElementById('githubRepoInput').value.trim();
+            const statusDiv = document.getElementById('tokenStatus');
+            
+            if (!token) {
+                statusDiv.innerHTML = '<div class="status error">⚠️ Debes ingresar un token de GitHub</div>';
+                return;
+            }
+            
+            if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+                statusDiv.innerHTML = '<div class="status error">⚠️ El token no tiene el formato correcto. Debe empezar con "ghp_" o "github_pat_"</div>';
+                return;
+            }
+            
+            if (!username || !repo) {
+                statusDiv.innerHTML = '<div class="status error">⚠️ Debes completar usuario y repositorio</div>';
+                return;
+            }
+            
+            // Guardar en la configuración
+            GITHUB_CONFIG.token = token;
+            GITHUB_CONFIG.username = username;
+            GITHUB_CONFIG.repo = repo;
+            
+            // Guardar en localStorage
+            localStorage.setItem('github_token', token);
+            localStorage.setItem('github_username', username);
+            localStorage.setItem('github_repo', repo);
+            
+            statusDiv.innerHTML = '<div class="status success">✅ Configuración guardada correctamente. Ya puedes subir imágenes.</div>';
+            
+            console.log('✅ Token configurado correctamente');
+        }
+        
+        // Cargar configuración guardada en la UI
+        function loadGithubConfigUI() {
+            const savedToken = localStorage.getItem('github_token');
+            const savedUsername = localStorage.getItem('github_username');
+            const savedRepo = localStorage.getItem('github_repo');
+            
+            if (savedToken) {
+                document.getElementById('githubTokenInput').value = savedToken;
+                GITHUB_CONFIG.token = savedToken;
+            }
+            if (savedUsername) {
+                document.getElementById('githubUsernameInput').value = savedUsername;
+                GITHUB_CONFIG.username = savedUsername;
+            }
+            if (savedRepo) {
+                document.getElementById('githubRepoInput').value = savedRepo;
+                GITHUB_CONFIG.repo = savedRepo;
+            }
+            
+            if (savedToken) {
+                document.getElementById('tokenStatus').innerHTML = '<div class="status success">✅ Token cargado desde configuración anterior</div>';
+            } else {
+                document.getElementById('tokenStatus').innerHTML = '<div class="status error">⚠️ Debes configurar tu token de GitHub para poder subir imágenes</div>';
+            }
         }
 
         // Guardar datos
@@ -246,6 +361,17 @@
                 return;
             }
             
+            // Validar token
+            if (!GITHUB_CONFIG.token) {
+                showCardStatus(cardNumber, '⚠️ Debes configurar tu token de GitHub primero (sección roja arriba)', 'error');
+                alert('⚠️ ERROR: No has configurado tu token de GitHub.\n\n' +
+                      '1. Ve a la sección roja al inicio de la página\n' +
+                      '2. Ingresa tu token de GitHub\n' +
+                      '3. Haz clic en "Guardar Token"\n\n' +
+                      'Necesitas crear un token en: https://github.com/settings/tokens/new');
+                return;
+            }
+            
             uploadBtn.disabled = true;
             showCardStatus(cardNumber, 'Subiendo a GitHub...', 'info');
             
@@ -285,8 +411,19 @@
                 showCardStatus(cardNumber, '¡Tarjeta subida exitosamente! 🎉', 'success');
                 
             } catch (error) {
-                showCardStatus(cardNumber, 'Error: ' + error.message, 'error');
-                console.error(error);
+                if (error.message.includes('Bad credentials')) {
+                    showCardStatus(cardNumber, '❌ Token de GitHub inválido. Verifica tu token en la sección roja arriba.', 'error');
+                    alert('❌ TOKEN INVÁLIDO\n\n' +
+                          'Tu token de GitHub no es válido o expiró.\n\n' +
+                          'Solución:\n' +
+                          '1. Ve a: https://github.com/settings/tokens/new\n' +
+                          '2. Crea un nuevo token con permiso "repo"\n' +
+                          '3. Cópialo y pégalo en la sección roja al inicio\n' +
+                          '4. Guarda la configuración');
+                } else {
+                    showCardStatus(cardNumber, 'Error: ' + error.message, 'error');
+                }
+                console.error('Error completo:', error);
             } finally {
                 uploadBtn.disabled = false;
             }

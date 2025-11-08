@@ -7,15 +7,11 @@
   <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
     :root{
       --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5; --primary-gold:#FFB300;
-      --text-dark:#263238; --text-light:#546E7A;
-      --white:#fff; --border:#E0E0E0;
-      --shadow-soft:0 4px 16px rgba(0,0,0,.08);
-      --shadow-medium:0 8px 24px rgba(0,0,0,.12);
-      --shadow-hover:0 12px 32px rgba(0,0,0,.16);
+      --text-dark:#263238; --text-light:#546E7A; --white:#fff; --border:#E0E0E0;
+      --shadow-soft:0 4px 16px rgba(0,0,0,.08); --shadow-medium:0 8px 24px rgba(0,0,0,.12); --shadow-hover:0 12px 32px rgba(0,0,0,.16);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
@@ -24,148 +20,118 @@
       color:var(--text-dark); min-height:100vh; overflow-x:hidden;
     }
 
+    /* Nieve */
+    .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
+    .snowflake{position:absolute; top:-10px; color:#fff; font-size:1.5em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
+    @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0deg); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(100px) rotate(360deg); opacity:0}}
+
+    /* Tren */
+    .train-container{position:fixed; bottom:60px; left:-700px; z-index:10000; animation:trainMove 40s linear infinite; pointer-events:none}
+    @keyframes trainMove{0%{left:-700px} 100%{left:100vw}}
+    .train{display:flex; align-items:flex-end; gap:5px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3))}
+    .train-part{font-size:5.5em; line-height:1; animation:trainBounce .6s ease-in-out infinite}
+    .train-part:nth-child(2){animation-delay:.1s} .train-part:nth-child(3){animation-delay:.2s} .train-part:nth-child(4){animation-delay:.3s}
+    @keyframes trainBounce{0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)}}
+    .smoke{position:absolute; top:-60px; left:45px; font-size:2.5em; animation:smokeRise 1.8s ease-out infinite}
+    @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8} 100%{transform:translateY(-90px) scale(2.5); opacity:0}}
+
     /* Header */
-    header{
-      position:sticky; top:0; z-index:1000;
-      background:rgba(255,255,255,.95); backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(0,0,0,.06);
-      box-shadow:var(--shadow-soft);
-    }
-    .header-content{
-      max-width:1600px; margin:0 auto; padding:12px 20px;
-      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
-    }
+    header{position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft)}
+    .header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
     .logo-link{display:flex; align-items:center; gap:12px; text-decoration:none}
     .logo-img{
-      height:110px; width:auto; border-radius:12px; object-fit:contain;
-      filter:drop-shadow(0 2px 8px rgba(231,76,60,.2));
-      transition:transform .3s; display:block;
+      height:140px; width:auto; border-radius:14px; object-fit:contain; display:block;
+      filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s;
     }
-    .logo-link:hover .logo-img{ transform:scale(1.03) }
+    .logo-link:hover .logo-img{ transform:scale(1.04) }
 
     nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center}
-
-    .chip-btn{
-      display:inline-flex; align-items:center; gap:.5rem; font-weight:700;
-      text-decoration:none; border:2px solid transparent; color:#fff;
-      padding:.7rem 1.2rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft);
-    }
-    .chip-btn i{opacity:.95}
+    .chip-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
+      padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft)}
     .chip-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
+    .btn-home{background:linear-gradient(135deg,#00C853,#69F0AE)}
+    .btn-cards{background:linear-gradient(135deg,#FFB300,#FFD54F); color:#332300}
+    .btn-reviews{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
+    .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
+    .music-bars{display:flex; gap:3px; align-items:flex-end; height:22px}
+    .music-bar{width:4px; background:#fff; border-radius:2px; animation:bar .8s ease-in-out infinite}
+    .music-bar:nth-child(1){height:45%} .music-bar:nth-child(2){height:75%; animation-delay:.2s} .music-bar:nth-child(3){height:100%; animation-delay:.4s} .music-bar:nth-child(4){height:65%; animation-delay:.6s}
+    @keyframes bar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.3)}}
+    .music-paused .music-bar{animation-play-state:paused}
 
-    .btn-home{ background:linear-gradient(135deg,#00C853,#69F0AE) }
-    .btn-cards{ background:linear-gradient(135deg,#FFB300,#FFD54F); color:#332300 }
-    .btn-reviews{ background:linear-gradient(135deg,#039BE5,#4FC3F7) }
-    .btn-music{ background:linear-gradient(135deg,#E74C3C,#C0392B) }
+    /* Hero */
+    .hero{text-align:center; padding:2.2rem 1rem 0}
+    .hero-title{font-family:'Mountains of Christmas',cursive; color:#fff; font-size:3.6rem; text-shadow:0 2px 8px rgba(0,0,0,.25)}
 
-    /* Hero (solo título y respiro) */
-    .hero{
-      text-align:center; padding:2.4rem 1rem 0;
-    }
-    .hero-title{
-      font-family:'Mountains of Christmas',cursive; color:#fff; font-size:3.4rem;
-      text-shadow:0 2px 8px rgba(0,0,0,.25);
-    }
+    /* Figuras flotantes */
+    .floating-character{position:absolute; font-size:4em; filter:drop-shadow(0 8px 16px rgba(0,0,0,.3)); z-index:6; cursor:pointer; animation:charFloat 5s ease-in-out infinite}
+    .floating-character:hover{transform:scale(1.3) rotate(12deg) !important}
+    @keyframes charFloat{0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-20px) rotate(5deg)}}
+    .char1{top:15%; left:8%} .char2{top:25%; right:10%} .char3{top:35%; left:15%} .char4{top:40%; right:15%}
 
     /* Contenedor principal */
-    .container{
-      max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem;
-      background:#fff; border-radius:32px 32px 0 0; margin-top:12px;
-      box-shadow:0 -12px 48px rgba(0,0,0,.12);
-    }
+    .container{max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem; background:#fff; border-radius:32px 32px 0 0; margin-top:12px; box-shadow:0 -12px 48px rgba(0,0,0,.12)}
+    .section-title{font-family:'Mountains of Christmas',cursive; font-size:2.6rem; text-align:center; margin-bottom:2rem; position:relative; display:inline-block; left:50%; transform:translateX(-50%)}
+    .section-title::after{content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-8px; width:120px; height:5px; border-radius:3px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold))}
 
-    .section-title{
-      font-family:'Mountains of Christmas',cursive; font-size:2.6rem; text-align:center; margin-bottom:2rem;
-      position:relative; display:inline-block; left:50%; transform:translateX(-50%);
-    }
-    .section-title::after{
-      content:""; position:absolute; left:50%; transform:translateX(-50%);
-      bottom:-8px; width:120px; height:5px; border-radius:3px;
-      background:linear-gradient(90deg,var(--primary-red),var(--primary-gold));
-    }
+    /* Cards */
+    .cards-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
+    .card{background:#fff; border-radius:24px; overflow:hidden; border:3px solid transparent; box-shadow:var(--shadow-soft); transition:.3s; display:flex; flex-direction:column}
+    .card:hover{transform:translateY(-8px); box-shadow:var(--shadow-hover); border-color:var(--primary-gold)}
+    .card-image{width:100%; aspect-ratio:4/3; background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
+      repeating-linear-gradient(45deg, #f7f7f7 0 8px, #f2f2f2 8px 16px);
+      display:flex; align-items:center; justify-content:center; position:relative}
+    .card-photo{width:100%; height:100%; object-fit:contain; image-rendering:auto; transition:transform .5s ease}
+    .card:hover .card-photo{transform:scale(1.03)}
+    .card-content{padding:18px 18px 20px}
+    .card h3{font-size:1.3rem; margin-bottom:.35rem}
+    .card p{color:var(--text-light); line-height:1.6; margin-bottom:1rem}
+    .price-row{display:flex; align-items:center; gap:.6rem; justify-content:space-between; margin-top:auto}
+    .price-badge{display:inline-flex; align-items:center; gap:.45rem; font-weight:800; background:linear-gradient(135deg,#FFB300,#FDD835); color:#332300; padding:.55rem .95rem; border-radius:999px; box-shadow:0 4px 12px rgba(251,188,4,.35)}
+    .wa-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none; background:linear-gradient(135deg,#25D366,#1EBE57); color:#fff; padding:.6rem 1rem; border-radius:999px; box-shadow:var(--shadow-soft); transition:.25s}
+    .wa-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
 
-    /* Cards Grid */
-    .cards-grid{
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-      gap:24px;
-    }
-    .card{
-      background:#fff; border-radius:24px; overflow:hidden; border:3px solid transparent;
-      box-shadow:var(--shadow-soft); transition:.3s;
-      display:flex; flex-direction:column;
-    }
-    .card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-hover); border-color:var(--primary-gold) }
-
-    .card-image{
-      width:100%; aspect-ratio:4/3; /* mantiene proporción */
-      background:
-        radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
-        repeating-linear-gradient(45deg, #f7f7f7 0 8px, #f2f2f2 8px 16px);
-      display:flex; align-items:center; justify-content:center; position:relative;
-    }
-    .card-photo{
-      width:100%; height:100%;
-      object-fit:contain;  /* muestra la imagen completa */
-      image-rendering:auto;
-      transition:transform .5s ease;
-    }
-    .card:hover .card-photo{ transform:scale(1.03) }
-
-    .card-content{ padding:18px 18px 20px }
-    .card h3{ font-size:1.3rem; margin-bottom:.35rem }
-    .card p{ color:var(--text-light); line-height:1.6; margin-bottom:1rem }
-
-    .price-row{
-      display:flex; align-items:center; gap:.6rem; justify-content:space-between; margin-top:auto;
-    }
-    .price-badge{
-      display:inline-flex; align-items:center; gap:.45rem; font-weight:800;
-      background:linear-gradient(135deg,#FFB300,#FDD835); color:#332300;
-      padding:.55rem .95rem; border-radius:999px; box-shadow:0 4px 12px rgba(251,188,4,.35);
-    }
-    .wa-btn{
-      display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none;
-      background:linear-gradient(135deg,#25D366,#1EBE57); color:#fff;
-      padding:.6rem 1rem; border-radius:999px; box-shadow:var(--shadow-soft); transition:.25s;
-    }
-    .wa-btn:hover{ transform:translateY(-2px); box-shadow:var(--shadow-medium) }
-
-    /* Loading / vacío */
-    .loading,.no-cards{ text-align:center; padding:2rem 1rem; color:var(--text-light) }
+    .loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-light)}
 
     /* Footer */
-    footer{
-      background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem;
-    }
-    .footer-logo{ height:150px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25) }
-    .footer-social{ margin-top:1rem; display:flex; justify-content:center; gap:1rem }
-    .footer-social a{ color:#fff; font-size:1.6rem; transition:.2s }
-    .footer-social a:hover{ color:#FDD835; transform:translateY(-3px) }
-
-    /* Music widget bars */
-    .music-bars{ display:flex; gap:3px; align-items:flex-end; height:22px }
-    .music-bar{ width:4px; background:#fff; border-radius:2px; animation:bar .8s ease-in-out infinite }
-    .music-bar:nth-child(1){height:45%}
-    .music-bar:nth-child(2){height:75%; animation-delay:.2s}
-    .music-bar:nth-child(3){height:100%; animation-delay:.4s}
-    .music-bar:nth-child(4){height:65%; animation-delay:.6s}
-    @keyframes bar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.3)}}
-    .music-paused .music-bar{ animation-play-state:paused }
+    footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
+    .footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
+    .footer-social{margin-top:1rem; display:flex; justify-content:center; gap:1rem}
+    .footer-social a{color:#fff; font-size:1.6rem; transition:.2s}
+    .footer-social a:hover{color:#FDD835; transform:translateY(-3px)}
 
     /* Responsive */
     @media (max-width:992px){
-      .logo-img{ height:90px }
+      .logo-img{height:100px}
+      .train-part{font-size:4em}
     }
     @media (max-width:640px){
-      .logo-img{ height:72px }
-      .chip-btn{ padding:.62rem 1rem; font-size:.92rem }
-      .hero-title{ font-size:2.2rem }
-      .cards-grid{ gap:18px }
-      .card-image{ aspect-ratio:3/2 }
+      .logo-img{height:78px}
+      .chip-btn{padding:.62rem 1rem; font-size:.92rem}
+      .hero-title{font-size:2.2rem}
+      .cards-grid{gap:18px}
+      .card-image{aspect-ratio:3/2}
+      .floating-character{font-size:2.6em}
+      .train-part{font-size:3.2em}
     }
   </style>
 </head>
 <body>
+  <!-- Nieve -->
+  <div id="snowContainer" class="snow-container"></div>
+
+  <!-- Tren -->
+  <div class="train-container" aria-hidden="true">
+    <div class="train">
+      <div class="train-part" style="position:relative">
+        🚂 <div class="smoke">💨</div>
+      </div>
+      <div class="train-part">🎁</div>
+      <div class="train-part">🎄</div>
+      <div class="train-part">⭐</div>
+    </div>
+  </div>
 
   <!-- Header -->
   <header>
@@ -173,15 +139,13 @@
       <a href="#inicio" class="logo-link" aria-label="Inicio">
         <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
       </a>
-
       <nav>
         <a class="chip-btn btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
         <a class="chip-btn btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
         <button id="musicBtn" class="chip-btn btn-music music-paused" aria-label="Reproductor de música">
           <span class="music-bars" aria-hidden="true">
-            <span class="music-bar"></span><span class="music-bar"></span>
-            <span class="music-bar"></span><span class="music-bar"></span>
+            <span class="music-bar"></span><span class="music-bar"></span><span class="music-bar"></span><span class="music-bar"></span>
           </span>
           <span id="musicText">Reproducir</span>
         </button>
@@ -190,8 +154,14 @@
   </header>
 
   <!-- Hero -->
-  <section id="inicio" class="hero">
+  <section id="inicio" class="hero" aria-label="Presentación">
     <h1 class="hero-title">Diversión festiva para toda la familia</h1>
+
+    <!-- Figuras flotantes -->
+    <div class="floating-character char1" role="img" aria-label="Elfo navideño">🧝</div>
+    <div class="floating-character char2" role="img" aria-label="Santa Claus">🎅</div>
+    <div class="floating-character char3" role="img" aria-label="Señora Claus">🤶</div>
+    <div class="floating-character char4" role="img" aria-label="Reno Rudolf">🦌</div>
   </section>
 
   <!-- Contenido -->
@@ -223,40 +193,60 @@
     </div>
   </footer>
 
-  <!-- Audio oculto -->
+  <!-- Audio -->
   <audio id="christmasMusic" loop>
     <source src="Christmas Rap.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // ---------- Carga de tarjetas desde mismo origen ----------
-    async function loadCards(){
-      const grid = document.getElementById('cardsGrid');
+    // Nieve
+    function createSnowflake(){
+      const s=document.createElement('div');
+      s.className='snowflake';
+      s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
+      s.style.left = Math.random()*100 + '%';
+      s.style.animationDuration = (Math.random()*3 + 4) + 's';
+      s.style.opacity = Math.random()*.6 + .4;
+      s.style.fontSize = (Math.random()*1 + 1) + 'em';
+      document.getElementById('snowContainer').appendChild(s);
+      setTimeout(()=>s.remove(),7000);
+    }
+    setInterval(createSnowflake,300);
+
+    // Música
+    const musicBtn=document.getElementById('musicBtn');
+    const musicText=document.getElementById('musicText');
+    const audio=document.getElementById('christmasMusic');
+    let playing=false;
+    musicBtn.addEventListener('click', async ()=>{
       try{
-        const ts = Date.now();
-        const res = await fetch(`./cards.json?t=${ts}`, {cache:'no-store'});
+        if(!playing){ await audio.play(); playing=true; musicText.textContent='Pausar'; musicBtn.classList.remove('music-paused'); }
+        else{ audio.pause(); playing=false; musicText.textContent='Reproducir'; musicBtn.classList.add('music-paused'); }
+      }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
+    });
+
+    // Tarjetas (mismo origen)
+    async function loadCards(){
+      const grid=document.getElementById('cardsGrid');
+      try{
+        const ts=Date.now();
+        const res=await fetch(`./cards.json?t=${ts}`,{cache:'no-store'});
         if(!res.ok) throw new Error(`HTTP ${res.status}`);
-        const raw = await res.text();
-        const cards = JSON.parse(raw);
-        if(!Array.isArray(cards) || !cards.length){
-          grid.innerHTML = `<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`;
+        const cards=await res.json();
+        if(!Array.isArray(cards)||!cards.length){
+          grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`;
           return;
         }
         cards.sort((a,b)=>a.number-b.number);
-
-        grid.innerHTML = cards.map((c,idx)=>{
-          const img = `${encodeURI(c.image)}?t=${ts}`;
-          const price = Number(c.price).toFixed(2);
-          const msg = `Hola, vi la tarjeta "${c.title}" ($ ${price}) en ChristmasPringle.com y quiero comprarla`;
-          const wa = `https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
-
+        grid.innerHTML = cards.map(c=>{
+          const img=`${encodeURI(c.image)}?t=${ts}`;
+          const price=Number(c.price).toFixed(2);
+          const msg=`Hola, vi la tarjeta "${c.title}" ($ ${price}) en ChristmasPringle.com y quiero comprarla`;
+          const wa=`https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
           return `
-            <article class="card" style="animation-delay:${idx*0.08}s">
+            <article class="card">
               <div class="card-image">
-                <img class="card-photo"
-                     src="${img}"
-                     alt="${c.title}"
-                     loading="lazy" decoding="async"
+                <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
                      onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
               </div>
               <div class="card-content">
@@ -269,41 +259,33 @@
                   </a>
                 </div>
               </div>
-            </article>
-          `;
+            </article>`;
         }).join('');
       }catch(e){
-        grid.innerHTML = `<div class="no-cards">❌ Error al cargar tarjetas. Intenta de nuevo más tarde.</div>`;
+        grid.innerHTML=`<div class="no-cards">❌ Error al cargar tarjetas. Intenta de nuevo más tarde.</div>`;
         console.error(e);
       }
     }
 
-    // ---------- Música ----------
-    const musicBtn = document.getElementById('musicBtn');
-    const musicText = document.getElementById('musicText');
-    const audio = document.getElementById('christmasMusic');
-    let playing = false;
-
-    musicBtn.addEventListener('click', async ()=>{
-      try{
-        if(!playing){ await audio.play(); playing=true; musicText.textContent='Pausar'; musicBtn.classList.remove('music-paused'); }
-        else{ audio.pause(); playing=false; musicText.textContent='Reproducir'; musicBtn.classList.add('music-paused'); }
-      }catch(err){
-        alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵');
-      }
+    // Smooth scroll
+    document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        e.preventDefault();
+        const t=document.querySelector(a.getAttribute('href'));
+        if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
+      });
     });
 
-    // ---------- Init ----------
-    window.addEventListener('load', loadCards);
+    window.addEventListener('load', ()=>{
+      loadCards();
+      for(let i=0;i<20;i++){ setTimeout(createSnowflake, i*200); }
+    });
 
-    // ---------- Accesibilidad: skip link ----------
+    // Skip link accesibilidad
     document.addEventListener('DOMContentLoaded', ()=>{
-      const skip = document.createElement('a');
-      skip.href="#tarjetas"; skip.textContent='Saltar al contenido principal';
-      Object.assign(skip.style,{
-        position:'absolute', top:'-40px', left:'0', background: 'var(--primary-red)', color:'#fff',
-        padding:'8px', textDecoration:'none', zIndex:100000
-      });
+      const skip=document.createElement('a');
+      skip.href='#tarjetas'; skip.textContent='Saltar al contenido principal';
+      Object.assign(skip.style,{position:'absolute',top:'-40px',left:'0',background:'var(--primary-red)',color:'#fff',padding:'8px',textDecoration:'none',zIndex:100000});
       skip.addEventListener('focus',()=>skip.style.top='0');
       skip.addEventListener('blur',()=>skip.style.top='-40px');
       document.body.prepend(skip);

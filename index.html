@@ -23,54 +23,53 @@
   /* Nieve */
   .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
   .snowflake{position:absolute; top:-10px; color:#fff; font-size:1.5em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
-  @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(100px) rotate(360deg); opacity:0}}
+  @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
 
-  /* Tren (siempre hacia adelante) */
+  /* Tren (siempre hacia la izquierda) */
   .train-container{
-    --train-duration: 40s;
-    position:fixed; bottom:60px; left:-700px; z-index:10000;
-    animation:trainMove var(--train-duration) linear infinite normal;
+    --train-duration: 42s;
+    position:fixed; bottom:60px; left:100vw; z-index:10000;
+    animation:trainMoveLeft var(--train-duration) linear infinite;
   }
-  @keyframes trainMove{0%{left:-700px}100%{left:100vw}}
-  .train{display:flex; align-items:flex-end; gap:5px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3)); cursor:pointer}
-  .train-part{font-size:5.5em; line-height:1; animation:trainBounce .6s ease-in-out infinite}
-  .train-part:nth-child(2){animation-delay:.1s}.train-part:nth-child(3){animation-delay:.2s}.train-part:nth-child(4){animation-delay:.3s}
-  @keyframes trainBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  .smoke{position:absolute; top:-60px; left:45px; font-size:2.5em; animation:smokeRise 1.8s ease-out infinite}
-  @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.5); opacity:0}}
+  @keyframes trainMoveLeft{ 0%{ left:100vw } 100%{ left:-950px } }
 
-  /* Santa Tracker (cronómetro D:HH:MM:SS) sobre el 2º vagón */
-  .santa-tracker{
+  .train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3)); cursor:pointer}
+  .wagon, .engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
+  .wagon:nth-child(1){animation-delay:.05s} .wagon:nth-child(2){animation-delay:.1s}
+  .wagon:nth-child(3){animation-delay:.15s} .wagon:nth-child(4){animation-delay:.2s}
+  .wagon:nth-last-child(2){animation-delay:.25s} .wagon:nth-last-child(1){animation-delay:.3s}
+  @keyframes wBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* Locomotora mirando a la izquierda */
+  .engine{transform:scaleX(-1)} /* espejado para que "mire" a la izquierda */
+  .engine-wrap{position:relative; display:inline-block}
+  .smoke{position:absolute; top:-58px; right:46px; font-size:2.4rem; animation:smokeRise 1.8s ease-out infinite}
+  @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.4); opacity:0}}
+
+  /* Santa Tracker en 4 vagones */
+  .tracker{
     position:absolute; top:-30px; left:18px;
-    width:90px; height:90px; border-radius:50%;
+    width:92px; height:92px; border-radius:50%;
     background:radial-gradient(circle at 30% 25%,#fff 0 35%, #ffe9ec 36% 100%);
     border:4px solid #c0392b; box-shadow:0 8px 18px rgba(231,76,60,.35);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    color:#c0392b; font-weight:900; text-align:center; line-height:1;
+    color:#b23a2e; font-weight:900; text-align:center; line-height:1;
   }
-  .santa-tracker:before{ /* botoncito */
-    content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px;
-    box-shadow:0 2px 0 #922b21;
-  }
-  .st-number{font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.95rem; letter-spacing:.5px}
-  .st-label{font-size:.6rem; margin-top:2px}
-  .santa-label{
-    position:absolute; bottom:-16px; left:50%; transform:translateX(-50%);
-    font-size:.62rem; font-weight:800; color:#b23a2e; text-transform:uppercase;
-    background:#fff; padding:2px 6px; border-radius:999px; border:1px solid #f5c6cb;
-  }
+  .tracker .num{font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:1.05rem}
+  .tracker .lbl{font-size:.62rem; margin-top:2px; text-transform:uppercase}
+  .tracker:before{content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px; box-shadow:0 2px 0 #922b21;}
 
   /* Header */
   header{position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft)}
   .header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto}
   .logo-link{display:block; line-height:0}
-  .logo-img{height:160px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
+  .logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
   .logo-link:hover .logo-img{transform:scale(1.04)}
 
-  /* Lema con bastones */
+  /* Lema bastones */
   .header-candy{
     justify-self:center; text-align:center; line-height:1.02; letter-spacing:.5px;
-    font-family:'Mountains of Christmas',cursive; font-weight:700; font-size:3rem; padding:.2rem .7rem;
+    font-family:'Mountains of Christmas',cursive; font-weight:700; font-size:3.2rem; padding:.2rem .7rem;
     background:repeating-linear-gradient(45deg,#fff 0 10px,#d32f2f 10px 20px,#fff 20px 30px,#b71c1c 30px 40px);
     -webkit-background-clip:text; background-clip:text; color:transparent;
     -webkit-text-stroke:1.4px #2e7d32; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
@@ -87,7 +86,7 @@
   .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
   .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
 
-  /* Franja decorativa */
+  /* Franja decorativa superior */
   .hero{position:relative; min-height:140px; padding:10px 0}
   .celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:.18; font-size:2.4rem; display:flex; justify-content:space-around; align-items:center}
   .celeste-icons span:nth-child(odd){transform:translateY(-8px)} .celeste-icons span:nth-child(even){transform:translateY(8px)}
@@ -127,24 +126,24 @@
   .site-version{margin-top:10px; opacity:.85; font-weight:700}
 
   /* Responsive */
-  @media (max-width:1200px){ .logo-img{height:140px} .header-candy{font-size:2.5rem} }
-  @media (max-width:992px){ .logo-img{height:120px} .header-candy{font-size:2.2rem} .train-part{font-size:4em} }
+  @media (max-width:1200px){ .logo-img{height:150px} .header-candy{font-size:2.7rem} }
+  @media (max-width:992px){ .logo-img{height:128px} .header-candy{font-size:2.35rem} .wagon,.engine{font-size:4.2em} }
   @media (max-width:800px){
     .header-content{grid-template-columns:1fr; text-align:center}
     nav{justify-content:center}
     .header-candy{order:3}
   }
   @media (max-width:640px){
-    .logo-img{height:88px}
+    .logo-img{height:96px}
     .chip-btn{padding:.6rem .9rem; font-size:.92rem}
     .cards-grid{gap:18px}
     .card-image{aspect-ratio:3/2}
-    .train-part{font-size:3.2em}
-    .santa-tracker{transform:scale(.92); left:10px; top:-26px}
+    .wagon,.engine{font-size:3.3em}
+    .tracker{transform:scale(.9); left:10px; top:-26px}
   }
   @media (prefers-reduced-motion:reduce){
     .train-container{animation-duration:60s}
-    .train-part,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
+    .wagon,.engine,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
   }
 </style>
 </head>
@@ -152,22 +151,48 @@
   <!-- Nieve -->
   <div id="snowContainer" class="snow-container"></div>
 
-  <!-- Tren + Santa Tracker -->
-  <div class="train-container" id="train">
-    <div class="train" title="🚂 Tócalo para turbo 10s">
-      <div class="train-part" style="position:relative">
-        🚂 <div class="smoke">💨</div>
-      </div>
-      <div class="train-part" style="position:relative">
+  <!-- Tren → hacia la izquierda -->
+  <div class="train-container" id="train" title="🚂 Tócalo para turbo 10s">
+    <div class="train">
+      <!-- Vagones con Santa Tracker -->
+      <div class="wagon" style="position:relative">
         🎁
-        <div class="santa-tracker" aria-label="Cuenta regresiva a Navidad">
-          <div class="st-number" id="stDays">--</div>
-          <div class="st-number" id="stTime">--:--:--</div>
-          <div class="santa-label">Santa</div>
+        <div class="tracker">
+          <div class="num" id="stDays">--</div>
+          <div class="lbl">días</div>
         </div>
       </div>
-      <div class="train-part">🎄</div>
-      <div class="train-part">⭐</div>
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker">
+          <div class="num" id="stHours">--</div>
+          <div class="lbl">horas</div>
+        </div>
+      </div>
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker">
+          <div class="num" id="stMins">--</div>
+          <div class="lbl">min</div>
+        </div>
+      </div>
+      <div class="wagon" style="position:relative">
+        🎁
+        <div class="tracker">
+          <div class="num" id="stSecs">--</div>
+          <div class="lbl">seg</div>
+        </div>
+      </div>
+
+      <!-- Árbol y Estrella AL FINAL -->
+      <div class="wagon">🎄</div>
+      <div class="wagon">⭐</div>
+
+      <!-- Locomotora (mirando a la izquierda) al final “empujando” -->
+      <div class="engine-wrap">
+        <div class="engine">🚂</div>
+        <div class="smoke">💨</div>
+      </div>
     </div>
   </div>
 
@@ -261,7 +286,7 @@
       }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
     });
 
-    /* ===== Lema bastones: tilt parallax ===== */
+    /* ===== Lema bastones tilt ===== */
     const candy=document.getElementById('candyTitle');
     function tilt(e){
       const r=candy.getBoundingClientRect();
@@ -276,7 +301,7 @@
     window.addEventListener('touchmove', (ev)=>{ if(ev.touches[0]) tilt(ev.touches[0]); }, {passive:true});
     window.addEventListener('touchend', resetTilt);
 
-    /* ===== Formato ₡ CRC ===== */
+    /* ===== CRC ===== */
     const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
 
     /* ===== Cargar tarjetas ===== */
@@ -319,7 +344,7 @@
       }
     }
 
-    /* ===== Santa Tracker D:HH:MM:SS ===== */
+    /* ===== Santa Tracker D/H/M/S ===== */
     function targetChristmas(){
       const now=new Date();
       const y = (now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
@@ -329,26 +354,26 @@
     function updateSanta(){
       const now=new Date();
       const end=targetChristmas();
-      let diff=end-now;
-      if(diff<0) diff=0;
-      const days=Math.floor(diff/86400000);
-      const hours=Math.floor((diff%86400000)/3600000);
-      const mins=Math.floor((diff%3600000)/60000);
-      const secs=Math.floor((diff%60000)/1000);
-      document.getElementById('stDays').textContent = days+' d';
-      document.getElementById('stTime').textContent = `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+      let diff=end-now; if(diff<0) diff=0;
+      const d=Math.floor(diff/86400000);
+      const h=Math.floor((diff%86400000)/3600000);
+      const m=Math.floor((diff%3600000)/60000);
+      const s=Math.floor((diff%60000)/1000);
+      document.getElementById('stDays').textContent = d;
+      document.getElementById('stHours').textContent = pad(h);
+      document.getElementById('stMins').textContent = pad(m);
+      document.getElementById('stSecs').textContent = pad(s);
     }
-    updateSanta();
-    setInterval(updateSanta, 1000);
+    updateSanta(); setInterval(updateSanta,1000);
 
-    /* ===== Tren turbo (avanza hacia adelante; click = acelera 10s) ===== */
+    /* ===== Turbo 10s ===== */
     const train=document.getElementById('train');
-    let turboTimer=null, turbo=false;
+    let turbo=false;
     train.addEventListener('click', ()=>{
       if(turbo) return;
       turbo=true;
-      train.style.setProperty('--train-duration','20s');
-      turboTimer=setTimeout(()=>{ train.style.setProperty('--train-duration','40s'); turbo=false; }, 10000);
+      train.style.setProperty('--train-duration','22s');
+      setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; }, 10000);
     });
 
     /* ===== Smooth scroll ===== */
@@ -364,16 +389,6 @@
     window.addEventListener('load', ()=>{
       loadCards();
       for(let i=0;i<20;i++){ setTimeout(createSnowflake, i*200); }
-    });
-
-    /* ===== Skip link accesibilidad ===== */
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const skip=document.createElement('a');
-      skip.href='#tarjetas'; skip.textContent='Saltar al contenido principal';
-      Object.assign(skip.style,{position:'absolute',top:'-40px',left:'0',background:'var(--primary-red)',color:'#fff',padding:'8px',textDecoration:'none',zIndex:100000});
-      skip.addEventListener('focus',()=>skip.style.top='0');
-      skip.addEventListener('blur',()=>skip.style.top='-40px');
-      document.body.prepend(skip);
     });
   </script>
 </body>

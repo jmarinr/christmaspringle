@@ -3,324 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Pringle - Admin Panel</title>
+    <title>Christmas Pringle - Admin Panel Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary-red: #E74C3C;
-            --primary-green: #00C853;
-            --primary-blue: #039BE5;
-            --primary-gold: #FFB300;
-            --text-dark: #263238;
-            --text-light: #546E7A;
-            --bg-light: #F5F9FC;
+            --primary-red: #E74C3C; --primary-green: #00C853; --primary-blue: #039BE5;
+            --primary-gold: #FFB300; --text-dark: #263238; --text-light: #546E7A; --bg-light: #F5F9FC;
         }
-
-        body {
-            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            font-family: 'Mountains of Christmas', cursive;
-            font-size: 3em;
-            color: var(--primary-red);
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: var(--text-light);
-            font-size: 1.2em;
-        }
-
-        .alert {
-            background: linear-gradient(135deg, #FFB300, #FDD835);
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            border-left: 5px solid var(--primary-red);
-        }
-
-        .alert h3 {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .alert p {
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        .upload-section {
-            background: var(--bg-light);
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-        }
-
-        .upload-area {
-            border: 3px dashed var(--primary-blue);
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .upload-area:hover {
-            border-color: var(--primary-red);
-            background: #FFF5F5;
-            transform: translateY(-4px);
-        }
-
-        .upload-area.dragover {
-            border-color: var(--primary-green);
-            background: #F0FFF4;
-        }
-
-        .upload-icon {
-            font-size: 4em;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-        }
-
-        .upload-area h3 {
-            font-size: 1.5em;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .upload-area p {
-            color: var(--text-light);
-            font-size: 1.1em;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .preview-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .preview-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        }
-
-        .preview-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        .preview-info {
-            padding: 1rem;
-        }
-
-        .preview-info h4 {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.2em;
-        }
-
-        .preview-info p {
-            color: var(--text-light);
-            font-size: 0.9em;
-        }
-
-        .actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Google Sans', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-red), #C0392B);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--primary-green), #00E676);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .instructions {
-            background: #E3F2FD;
-            padding: 2rem;
-            border-radius: 16px;
-            margin-top: 2rem;
-            border-left: 5px solid var(--primary-blue);
-        }
-
-        .instructions h3 {
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .instructions ol {
-            margin-left: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        .instructions li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-        }
-
-        .instructions code {
-            background: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: var(--primary-red);
-        }
-
-        .status {
-            text-align: center;
-            padding: 1rem;
-            border-radius: 12px;
-            margin-top: 1rem;
-            font-weight: 600;
-        }
-
-        .status.success {
-            background: #C8E6C9;
-            color: #1B5E20;
-        }
-
-        .status.error {
-            background: #FFCDD2;
-            color: #B71C1C;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--primary-red);
-        }
-
+        body { font-family: 'Google Sans', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 2rem; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; padding: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-family: 'Mountains of Christmas', cursive; font-size: 3em; color: var(--primary-red); margin-bottom: 0.5rem; }
+        .header .badge { display: inline-block; background: linear-gradient(135deg, var(--primary-gold), #FDD835); color: var(--text-dark); padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.9em; }
+        .header p { color: var(--text-light); font-size: 1.2em; margin-top: 1rem; }
+        .setup-section { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); padding: 2rem; border-radius: 16px; margin-bottom: 2rem; border-left: 5px solid var(--primary-blue); }
+        .setup-section h3 { color: var(--text-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .config-group { margin-bottom: 1.5rem; }
+        .config-group label { display: block; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .config-group input { width: 100%; padding: 0.8rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1em; font-family: 'Google Sans', sans-serif; transition: border-color 0.3s ease; }
+        .config-group input:focus { outline: none; border-color: var(--primary-blue); }
+        .config-group small { display: block; color: var(--text-light); margin-top: 0.5rem; line-height: 1.5; }
+        .config-group code { background: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-family: 'Courier New', monospace; color: var(--primary-red); }
+        .upload-section { background: var(--bg-light); padding: 2rem; border-radius: 16px; margin-bottom: 2rem; }
+        .upload-area { border: 3px dashed var(--primary-blue); border-radius: 16px; padding: 3rem; text-align: center; background: white; cursor: pointer; transition: all 0.3s ease; }
+        .upload-area:hover { border-color: var(--primary-red); background: #FFF5F5; transform: translateY(-4px); }
+        .upload-area.dragover { border-color: var(--primary-green); background: #F0FFF4; }
+        .upload-icon { font-size: 4em; color: var(--primary-blue); margin-bottom: 1rem; }
+        .upload-area h3 { font-size: 1.5em; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .upload-area p { color: var(--text-light); font-size: 1.1em; }
+        #fileInput { display: none; }
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .preview-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .preview-card:hover { transform: translateY(-8px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .preview-image { width: 100%; height: 250px; object-fit: cover; background: linear-gradient(135deg, #667eea, #764ba2); }
+        .preview-info { padding: 1rem; }
+        .preview-info h4 { color: var(--text-dark); margin-bottom: 0.5rem; font-size: 1.2em; }
+        .preview-info p { color: var(--text-light); font-size: 0.9em; }
+        .actions { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+        .btn { padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Google Sans', sans-serif; display: flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary-red), #C0392B); color: white; }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4); }
+        .btn-secondary { background: linear-gradient(135deg, var(--primary-green), #00E676); color: white; }
+        .btn-secondary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .status { text-align: center; padding: 1rem; border-radius: 12px; margin-top: 1rem; font-weight: 600; }
+        .status.success { background: #C8E6C9; color: #1B5E20; }
+        .status.error { background: #FFCDD2; color: #B71C1C; }
+        .status.info { background: #BBDEFB; color: #0D47A1; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-blue); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: color 0.3s ease; }
+        .back-link:hover { color: var(--primary-red); }
+        .progress-bar { width: 100%; height: 8px; background: #E0E0E0; border-radius: 4px; margin-top: 1rem; overflow: hidden; display: none; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary-green), var(--primary-blue)); width: 0%; transition: width 0.3s ease; }
+        .toggle-section { background: #FFF3E0; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 5px solid var(--primary-gold); }
+        .toggle-section h4 { color: var(--text-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-green); }
+        input:checked + .slider:before { transform: translateX(26px); }
+        .hidden { display: none; }
         @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .preview-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
+            .container { padding: 1.5rem; }
+            .header h1 { font-size: 2em; }
+            .preview-grid { grid-template-columns: 1fr; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i> Volver al sitio principal
-        </a>
-
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al sitio principal</a>
+        
         <div class="header">
-            <h1>🎨 Panel de Administración</h1>
-            <p>Carga y prepara las imágenes de tus tarjetas navideñas</p>
+            <h1>🎨 Panel de Administración PRO</h1>
+            <span class="badge"><i class="fas fa-bolt"></i> Subida directa a GitHub</span>
+            <p>Carga imágenes directamente a tu repositorio de GitHub</p>
         </div>
 
-        <div class="alert">
-            <h3><i class="fas fa-exclamation-circle"></i> Importante</h3>
-            <p>Esta herramienta preparará tus imágenes localmente. Después de procesarlas, las descargarás y subirás manualmente a GitHub. GitHub Pages no permite subir archivos automáticamente desde el navegador.</p>
+        <div class="toggle-section">
+            <h4><i class="fas fa-exchange-alt"></i> Modo de carga</h4>
+            <label style="display: flex; align-items: center; gap: 1rem;">
+                <span style="font-weight: 600;">Descarga manual (ZIP)</span>
+                <label class="switch"><input type="checkbox" id="modeToggle"><span class="slider"></span></label>
+                <span style="font-weight: 600; color: var(--primary-green);">Subida directa a GitHub</span>
+            </label>
+            <p style="margin-top: 1rem; color: var(--text-light);"><i class="fas fa-info-circle"></i> Activa "Subida directa" para cargar automáticamente a GitHub sin descargar ZIP</p>
+        </div>
+
+        <div id="githubConfig" class="setup-section hidden">
+            <h3><i class="fas fa-cog"></i> Configuración de GitHub</h3>
+            <div class="config-group">
+                <label for="githubToken"><i class="fas fa-key"></i> Token de acceso personal de GitHub</label>
+                <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                <small>No tienes token? <a href="https://github.com/settings/tokens/new" target="_blank" style="color: var(--primary-blue); font-weight: 600;">Créalo aquí</a> (marca solo "repo")</small>
+            </div>
+            <div class="config-group">
+                <label for="githubUsername"><i class="fas fa-user"></i> Tu usuario de GitHub</label>
+                <input type="text" id="githubUsername" placeholder="tu-usuario">
+                <small>Ejemplo: si tu repo es <code>github.com/juan123/christmas-pringle</code>, tu usuario es <code>juan123</code></small>
+            </div>
+            <div class="config-group">
+                <label for="githubRepo"><i class="fas fa-folder"></i> Nombre del repositorio</label>
+                <input type="text" id="githubRepo" placeholder="christmas-pringle">
+                <small>Solo el nombre del repositorio, ejemplo: <code>christmas-pringle</code></small>
+            </div>
+            <button class="btn btn-secondary" onclick="saveGithubConfig()"><i class="fas fa-save"></i> Guardar Configuración</button>
         </div>
 
         <div class="upload-section">
@@ -328,37 +119,16 @@
                 <i class="fas fa-cloud-upload-alt upload-icon"></i>
                 <h3>Arrastra 6 imágenes aquí</h3>
                 <p>o haz clic para seleccionar archivos</p>
-                <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.9em;">
-                    Formatos: PNG, JPG, JPEG | Máx: 5MB por imagen
-                </p>
+                <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.9em;">Formatos: PNG, JPG, JPEG | Máx: 5MB por imagen</p>
                 <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" multiple>
             </div>
-
             <div id="previewContainer" class="preview-grid"></div>
-
+            <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
             <div id="statusMessage"></div>
-
             <div class="actions" id="actionButtons" style="display: none;">
-                <button class="btn btn-secondary" id="downloadBtn">
-                    <i class="fas fa-download"></i> Descargar Imágenes Preparadas
-                </button>
-                <button class="btn btn-primary" id="resetBtn">
-                    <i class="fas fa-redo"></i> Cargar Otras Imágenes
-                </button>
+                <button class="btn btn-primary" id="uploadBtn"><i class="fas fa-upload"></i> <span id="uploadBtnText">Subir a GitHub</span></button>
+                <button class="btn btn-secondary" id="resetBtn"><i class="fas fa-redo"></i> Cargar Otras Imágenes</button>
             </div>
-        </div>
-
-        <div class="instructions">
-            <h3><i class="fas fa-info-circle"></i> Instrucciones</h3>
-            <ol>
-                <li><strong>Selecciona 6 imágenes</strong> de tus tarjetas navideñas (arrastra o haz clic en el área de carga)</li>
-                <li>Las imágenes se <strong>renombrarán automáticamente</strong> a: <code>1.png</code>, <code>2.png</code>, <code>3.png</code>, <code>4.png</code>, <code>5.png</code>, <code>6.png</code></li>
-                <li>Haz clic en <strong>"Descargar Imágenes Preparadas"</strong> - se descargará un archivo ZIP</li>
-                <li>Extrae las imágenes del ZIP</li>
-                <li>Ve a tu repositorio de GitHub</li>
-                <li>Sube las 6 imágenes directamente a la <strong>raíz del repositorio</strong> (mismo lugar donde está <code>index.html</code>)</li>
-                <li>Espera 1-2 minutos y <strong>refresca tu sitio</strong> - ¡las imágenes aparecerán!</li>
-            </ol>
         </div>
     </div>
 
@@ -368,168 +138,177 @@
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
         const actionButtons = document.getElementById('actionButtons');
-        const downloadBtn = document.getElementById('downloadBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadBtnText = document.getElementById('uploadBtnText');
         const resetBtn = document.getElementById('resetBtn');
         const statusMessage = document.getElementById('statusMessage');
-
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const modeToggle = document.getElementById('modeToggle');
+        const githubConfig = document.getElementById('githubConfig');
         let selectedFiles = [];
+        let githubSettings = { token: '', username: '', repo: '' };
 
-        // Click to upload
+        loadGithubConfig();
+
+        modeToggle.addEventListener('change', () => {
+            if (modeToggle.checked) {
+                githubConfig.classList.remove('hidden');
+                uploadBtnText.textContent = 'Subir a GitHub';
+            } else {
+                githubConfig.classList.add('hidden');
+                uploadBtnText.textContent = 'Descargar ZIP';
+            }
+        });
+
         uploadArea.addEventListener('click', () => fileInput.click());
-
-        // File input change
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-
-        // Drag and drop
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
-        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea.addEventListener('drop', (e) => { e.preventDefault(); uploadArea.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
 
         function handleFiles(files) {
-            if (files.length !== 6) {
-                showStatus('Por favor selecciona exactamente 6 imágenes', 'error');
-                return;
-            }
-
+            if (files.length !== 6) { showStatus('Por favor selecciona exactamente 6 imágenes', 'error'); return; }
             selectedFiles = Array.from(files);
-            
-            // Validate files
             const validFiles = selectedFiles.every(file => {
                 const isValidType = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg';
-                const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB
+                const isValidSize = file.size <= 5 * 1024 * 1024;
                 return isValidType && isValidSize;
             });
-
-            if (!validFiles) {
-                showStatus('Asegúrate que todas las imágenes sean PNG o JPG y menores a 5MB', 'error');
-                return;
-            }
-
+            if (!validFiles) { showStatus('Asegúrate que todas las imágenes sean PNG o JPG y menores a 5MB', 'error'); return; }
             displayPreviews();
-            showStatus('¡Imágenes cargadas correctamente! Ahora descárgalas para subirlas a GitHub.', 'success');
+            showStatus('¡Imágenes cargadas correctamente!', 'success');
             actionButtons.style.display = 'flex';
         }
 
         function displayPreviews() {
             previewContainer.innerHTML = '';
-
             selectedFiles.forEach((file, index) => {
                 const reader = new FileReader();
-                
                 reader.onload = (e) => {
                     const card = document.createElement('div');
                     card.className = 'preview-card';
-                    
-                    const cardNames = [
-                        'Árbol de Esperanza',
-                        'Santa Claus Alegre',
-                        'Estrella de Belén',
-                        'Velas de Paz',
-                        'Regalos de Amor',
-                        'Copos de Nieve'
-                    ];
-                    
-                    card.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview ${index + 1}" class="preview-image">
-                        <div class="preview-info">
-                            <h4>${index + 1}.png</h4>
-                            <p>${cardNames[index]}</p>
-                            <p style="font-size: 0.8em; margin-top: 0.5rem; opacity: 0.7;">
-                                ${(file.size / 1024).toFixed(0)} KB
-                            </p>
-                        </div>
-                    `;
-                    
+                    const cardNames = ['Árbol de Esperanza', 'Santa Claus Alegre', 'Estrella de Belén', 'Velas de Paz', 'Regalos de Amor', 'Copos de Nieve'];
+                    card.innerHTML = `<img src="${e.target.result}" alt="Preview ${index + 1}" class="preview-image"><div class="preview-info"><h4>${index + 1}.png</h4><p>${cardNames[index]}</p><p style="font-size: 0.8em; margin-top: 0.5rem; opacity: 0.7;">${(file.size / 1024).toFixed(0)} KB</p></div>`;
                     previewContainer.appendChild(card);
                 };
-                
                 reader.readAsDataURL(file);
             });
         }
 
-        async function downloadImages() {
+        async function uploadToGithub() {
+            if (!githubSettings.token || !githubSettings.username || !githubSettings.repo) { showStatus('Por favor configura GitHub primero (token, usuario y repositorio)', 'error'); return; }
+            uploadBtn.disabled = true;
+            progressBar.style.display = 'block';
+            showStatus('Subiendo imágenes a GitHub...', 'info');
+            try {
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    const fileName = `${i + 1}.png`;
+                    const progress = ((i + 1) / selectedFiles.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    showStatus(`Subiendo ${fileName} (${i + 1} de 6)...`, 'info');
+                    const imageData = await convertToPNG(file);
+                    const base64Data = await blobToBase64(imageData);
+                    await uploadFileToGithub(fileName, base64Data);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                showStatus('¡Todas las imágenes subidas exitosamente a GitHub! 🎉', 'success');
+                progressFill.style.width = '100%';
+                setTimeout(() => showStatus('Las imágenes estarán disponibles en tu sitio en 1-2 minutos', 'success'), 2000);
+            } catch (error) {
+                showStatus('Error: ' + error.message, 'error');
+                console.error(error);
+            } finally {
+                uploadBtn.disabled = false;
+            }
+        }
+
+        async function uploadFileToGithub(fileName, base64Content) {
+            const url = `https://api.github.com/repos/${githubSettings.username}/${githubSettings.repo}/contents/${fileName}`;
+            let sha = null;
+            try {
+                const checkResponse = await fetch(url, { headers: { 'Authorization': `token ${githubSettings.token}`, 'Accept': 'application/vnd.github.v3+json' } });
+                if (checkResponse.ok) { const data = await checkResponse.json(); sha = data.sha; }
+            } catch (e) {}
+            const body = { message: `Upload ${fileName} via Admin Panel`, content: base64Content.split(',')[1], branch: 'main' };
+            if (sha) body.sha = sha;
+            const response = await fetch(url, { method: 'PUT', headers: { 'Authorization': `token ${githubSettings.token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+            if (!response.ok) { const error = await response.json(); throw new Error(error.message || 'Error al subir a GitHub'); }
+            return response.json();
+        }
+
+        async function downloadZip() {
             const zip = new JSZip();
-            
             showStatus('Preparando imágenes...', 'success');
-            
+            progressBar.style.display = 'block';
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 const newName = `${i + 1}.png`;
-                
-                // Convert to PNG if needed
+                const progress = ((i + 1) / selectedFiles.length) * 100;
+                progressFill.style.width = progress + '%';
                 const imageData = await convertToPNG(file);
                 zip.file(newName, imageData);
             }
-            
             showStatus('Generando archivo ZIP...', 'success');
-            
             const content = await zip.generateAsync({ type: 'blob' });
             const url = URL.createObjectURL(content);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = 'christmas-pringle-cards.zip';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            a.href = url; a.download = 'christmas-pringle-cards.zip';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
-            showStatus('¡Imágenes descargadas! Ahora súbelas a GitHub siguiendo las instrucciones.', 'success');
+            showStatus('¡Imágenes descargadas! Ahora súbelas a GitHub manualmente.', 'success');
+            progressBar.style.display = 'none';
         }
 
         function convertToPNG(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
-                
                 reader.onload = (e) => {
                     const img = new Image();
-                    
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        
+                        canvas.width = img.width; canvas.height = img.height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0);
-                        
-                        canvas.toBlob((blob) => {
-                            resolve(blob);
-                        }, 'image/png');
+                        canvas.toBlob((blob) => resolve(blob), 'image/png');
                     };
-                    
                     img.src = e.target.result;
                 };
-                
                 reader.readAsDataURL(file);
             });
         }
 
-        function showStatus(message, type) {
-            statusMessage.innerHTML = `<div class="status ${type}">${message}</div>`;
+        function blobToBase64(blob) { return new Promise((resolve) => { const reader = new FileReader(); reader.onloadend = () => resolve(reader.result); reader.readAsDataURL(blob); }); }
+        
+        function saveGithubConfig() {
+            githubSettings.token = document.getElementById('githubToken').value.trim();
+            githubSettings.username = document.getElementById('githubUsername').value.trim();
+            githubSettings.repo = document.getElementById('githubRepo').value.trim();
+            if (!githubSettings.token || !githubSettings.username || !githubSettings.repo) { showStatus('Por favor completa todos los campos de configuración', 'error'); return; }
+            localStorage.setItem('githubConfig', JSON.stringify(githubSettings));
+            showStatus('Configuración guardada correctamente ✓', 'success');
         }
 
+        function loadGithubConfig() {
+            const saved = localStorage.getItem('githubConfig');
+            if (saved) {
+                githubSettings = JSON.parse(saved);
+                document.getElementById('githubToken').value = githubSettings.token;
+                document.getElementById('githubUsername').value = githubSettings.username;
+                document.getElementById('githubRepo').value = githubSettings.repo;
+            }
+        }
+
+        function showStatus(message, type) { statusMessage.innerHTML = `<div class="status ${type}">${message}</div>`; }
+        
         function resetUpload() {
-            selectedFiles = [];
-            previewContainer.innerHTML = '';
-            fileInput.value = '';
-            actionButtons.style.display = 'none';
-            statusMessage.innerHTML = '';
+            selectedFiles = []; previewContainer.innerHTML = ''; fileInput.value = '';
+            actionButtons.style.display = 'none'; statusMessage.innerHTML = '';
+            progressBar.style.display = 'none'; progressFill.style.width = '0%';
         }
 
-        // Event listeners
-        downloadBtn.addEventListener('click', downloadImages);
+        uploadBtn.addEventListener('click', () => { if (modeToggle.checked) { uploadToGithub(); } else { downloadZip(); } });
         resetBtn.addEventListener('click', resetUpload);
     </script>
 </body>

@@ -87,7 +87,6 @@
     background:repeating-linear-gradient(45deg,#fff 0 10px,#d32f2f 10px 20px,#fff 20px 30px,#b71c1c 30px 40px);
     -webkit-background-clip:text; background-clip:text;
   }
-  /* Guirnalda SVG sobre el texto */
   .lights-wrap{position:absolute; left:50%; transform:translateX(-50%); top:-10px; width:105%; height:72px; pointer-events:none}
   .lights-wrap svg{width:100%; height:100%}
   .bulb{filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
@@ -96,7 +95,6 @@
   .bulb use:nth-child(odd){ animation:hueShift 3s linear infinite }
   .bulb use:nth-child(even){ animation:hueShift 3.6s linear infinite }
   .cable{stroke:#2d2d2d; stroke-width:4; fill:none; stroke-linecap:round}
-  /* Enchufe bajo el botón música (desktop) */
   .music-plug{position:absolute; right:-24px; bottom:-28px; font-size:1.4rem; transform:rotate(12deg); filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
   .music-plug .cable-down{position:absolute; left:-110px; bottom:14px; width:120px; height:1px; border-top:3px solid #2d2d2d;}
 
@@ -132,7 +130,7 @@
     display:flex; align-items:center; justify-content:center; position:relative}
   .card-photo{
     width:100%; height:100%;
-    object-fit:contain; /* 🔎 ahora se ve la imagen completa */
+    object-fit:contain; /* imagen completa */
     image-rendering:auto; transition:transform .5s ease; cursor:zoom-in;
   }
   .card:hover .card-photo{transform:scale(1.03)}
@@ -150,16 +148,30 @@
   .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:12000}
   .lightbox.open{display:flex}
   .lb-inner{
-    width:min(92vw,1100px); max-height:92vh; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,.45); display:grid; grid-template-columns:1.2fr 1fr;
+    width:min(92vw,1100px); max-height:92vh; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,.45); display:grid; grid-template-columns:1.2fr 1fr; position:relative;
   }
-  .lb-media{background:#000; display:flex; align-items:center; justify-content:center}
-  .lb-media img{max-width:100%; max-height:92vh; object-fit:contain}
+  .lb-media{background:#000; display:flex; align-items:center; justify-content:center; overflow:hidden; touch-action:none}
+  .lb-media img{max-width:none; max-height:none; transform-origin:0 0; user-select:none; -webkit-user-drag:none;}
   .lb-info{padding:18px; display:flex; flex-direction:column; gap:10px}
   .lb-title{font-weight:800; font-size:1.35rem}
   .lb-desc{color:var(--text-light); line-height:1.6}
   .lb-row{margin-top:auto; display:flex; align-items:center; gap:10px; justify-content:space-between}
   .lb-close{position:absolute; top:14px; right:14px; background:#fff; border:0; border-radius:999px; width:40px; height:40px; display:grid; place-items:center; box-shadow:0 6px 18px rgba(0,0,0,.25); cursor:pointer}
   .lb-close:hover{transform:translateY(-1px)}
+
+  /* Botones navegación */
+  .lb-nav{
+    position:absolute; inset:0; pointer-events:none;
+  }
+  .lb-prev, .lb-next{
+    pointer-events:auto; position:absolute; top:50%; transform:translateY(-50%);
+    width:46px; height:46px; border-radius:999px; border:0; background:rgba(255,255,255,.95);
+    box-shadow:0 8px 20px rgba(0,0,0,.35); cursor:pointer; display:grid; place-items:center;
+  }
+  .lb-prev{ left:12px }
+  .lb-next{ right:12px }
+  .lb-prev:hover, .lb-next:hover{ transform:translateY(-50%) scale(1.05) }
+
   @media (max-width:960px){
     .lb-inner{grid-template-columns:1fr}
     .lb-media{max-height:60vh}
@@ -265,9 +277,7 @@
         <div class="lights-wrap" aria-hidden="true">
           <!-- SVG de guirnalda con bombillos -->
           <svg viewBox="0 0 1000 180" preserveAspectRatio="none">
-            <!-- cable -->
             <path class="cable" d="M 10 60 C 150 10, 300 110, 450 50 S 750 120, 990 60" />
-            <!-- bombillos (repetidos) -->
             <g class="bulb">
               <use href="#bulb" x="80"  y="40"></use>
               <use href="#bulb" x="200" y="90"></use>
@@ -296,7 +306,6 @@
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
         <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
-          <!-- Enchufe y cable (desktop) -->
           <span class="music-plug" aria-hidden="true">
             <span class="cable-down"></span>🔌
           </span>
@@ -329,7 +338,6 @@
     <section id="arte" class="art-wrap">
       <h2 class="section-title">🖼️ Colección Arte Pringle</h2>
       <div class="art-grid">
-        <!-- Tren de Navidad -->
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
@@ -342,7 +350,6 @@
           </div>
         </article>
 
-        <!-- Barco navideño -->
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
@@ -350,12 +357,11 @@
             </div>
             <div class="art-meta">
               <div class="art-title">Barco Navideño</div>
-              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20 el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
             </div>
           </div>
         </article>
 
-        <!-- Pueblo navideño -->
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
@@ -398,8 +404,13 @@
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
     <button class="lb-close" id="lbClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
     <div class="lb-inner">
-      <div class="lb-media">
+      <div class="lb-media" id="lbMedia">
         <img id="lbImg" alt="">
+        <!-- navegación -->
+        <div class="lb-nav">
+          <button class="lb-prev" id="lbPrev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="lb-next" id="lbNext" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
       </div>
       <div class="lb-info">
         <div class="lb-title" id="lbTitle"></div>
@@ -455,7 +466,7 @@
           grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`;
           return;
         }
-        grid.innerHTML = CARDS_CACHE.map(c=>{
+        grid.innerHTML = CARDS_CACHE.map((c,idx)=>{
           const img=`${encodeURI(c.image)}?t=${ts}`;
           const price=fmtCRC(c.price);
           const msg=`Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
@@ -465,6 +476,7 @@
               <div class="card-image">
                 <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
                      tabindex="0" role="button" aria-label="Ampliar ${c.title}"
+                     data-index="${idx}"
                      data-title="${encodeURIComponent(c.title)}"
                      data-desc="${encodeURIComponent(c.description)}"
                      data-price="${encodeURIComponent(price)}"
@@ -488,7 +500,7 @@
       }
     }
 
-    /* ===== Lightbox (visualizador) ===== */
+    /* ===== Lightbox (visualizador) con navegación + zoom ===== */
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lbImg');
     const lbTitle = document.getElementById('lbTitle');
@@ -496,15 +508,36 @@
     const lbPrice = document.getElementById('lbPrice');
     const lbWa = document.getElementById('lbWa');
     const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    const lbMedia = document.getElementById('lbMedia');
 
-    function openLightbox({src,title,desc,price,wa}){
-      lbImg.src = decodeURIComponent(src);
-      lbImg.alt = decodeURIComponent(title);
-      lbTitle.textContent = decodeURIComponent(title);
-      lbDesc.textContent = decodeURIComponent(desc);
-      lbPrice.innerHTML = `<i class="fa-solid fa-tag"></i> ${decodeURIComponent(price)}`;
-      lbWa.href = decodeURIComponent(wa);
+    let currentIndex = -1;
 
+    function fillLightboxByIndex(idx){
+      const card = CARDS_CACHE[idx];
+      if(!card) return;
+      const ts = Date.now();
+      const src = `${encodeURI(card.image)}?t=${ts}`;
+      const title = card.title || '';
+      const desc = card.description || '';
+      const price = fmtCRC(card.price);
+      const msg=`Hola, vi la tarjeta "${title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
+      const wa=`https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
+
+      lbImg.src = src;
+      lbImg.alt = title;
+      lbTitle.textContent = title;
+      lbDesc.textContent = desc;
+      lbPrice.innerHTML = `<i class="fa-solid fa-tag"></i> ${price}`;
+      lbWa.href = wa;
+
+      resetZoom(); // al cambiar de imagen, resetear zoom
+    }
+
+    function openLightboxAt(idx){
+      currentIndex = idx;
+      fillLightboxByIndex(currentIndex);
       lb.classList.add('open');
       lb.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
@@ -514,36 +547,159 @@
       lb.classList.remove('open');
       lb.setAttribute('aria-hidden','true');
       document.body.style.overflow='';
-      lbImg.src = '';
+      lbImg.src='';
+      currentIndex = -1;
+      resetZoom(true);
+    }
+    function showPrev(){
+      if(currentIndex<0) return;
+      currentIndex = (currentIndex - 1 + CARDS_CACHE.length) % CARDS_CACHE.length;
+      fillLightboxByIndex(currentIndex);
+    }
+    function showNext(){
+      if(currentIndex<0) return;
+      currentIndex = (currentIndex + 1) % CARDS_CACHE.length;
+      fillLightboxByIndex(currentIndex);
     }
 
     document.getElementById('cardsGrid').addEventListener('click',(e)=>{
       const img = e.target.closest('.card-photo');
       if(!img) return;
-      openLightbox({
-        src: img.dataset.src,
-        title: img.dataset.title,
-        desc: img.dataset.desc,
-        price: img.dataset.price,
-        wa: img.dataset.wa
-      });
+      openLightboxAt(parseInt(img.dataset.index,10));
     });
     document.getElementById('cardsGrid').addEventListener('keydown',(e)=>{
       if((e.key==='Enter' || e.key===' ') && e.target.classList.contains('card-photo')){
         e.preventDefault();
-        const img = e.target;
-        openLightbox({
-          src: img.dataset.src,
-          title: img.dataset.title,
-          desc: img.dataset.desc,
-          price: img.dataset.price,
-          wa: img.dataset.wa
-        });
+        openLightboxAt(parseInt(e.target.dataset.index,10));
       }
     });
+
     lb.addEventListener('click',(e)=>{ if(e.target===lb) closeLightbox(); });
     lbClose.addEventListener('click', closeLightbox);
-    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLightbox(); });
+    lbPrev.addEventListener('click', showPrev);
+    lbNext.addEventListener('click', showNext);
+
+    window.addEventListener('keydown',(e)=>{
+      if(!lb.classList.contains('open')) return;
+      if(e.key==='Escape') closeLightbox();
+      if(e.key==='ArrowLeft') showPrev();
+      if(e.key==='ArrowRight') showNext();
+    });
+
+    /* ---- Zoom & Pan ---- */
+    let scale = 1, minScale = 1, maxScale = 4;
+    let originX = 0, originY = 0;   // esquina sup-izq de la imagen (para transform)
+    let translateX = 0, translateY = 0;
+    let isPanning = false, startX = 0, startY = 0;
+
+    function applyTransform(){
+      lbImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+    function resetZoom(hard){
+      scale = 1;
+      translateX = 0; translateY = 0;
+      if(hard){ lbImg.style.transform = ''; }
+      else { applyTransform(); }
+    }
+    // centra el zoom donde está el puntero
+    function zoomAt(delta, clientX, clientY){
+      const rect = lbMedia.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+
+      const prevScale = scale;
+      scale = Math.min(maxScale, Math.max(minScale, scale * (delta>0 ? 0.9 : 1.1)));
+      const ratio = scale / prevScale;
+
+      // ajustar traslación para que el punto (x,y) permanezca estable
+      translateX = x - (x - translateX) * ratio;
+      translateY = y - (y - translateY) * ratio;
+
+      applyTransform();
+    }
+
+    lbMedia.addEventListener('wheel', (e)=>{
+      e.preventDefault();
+      zoomAt(e.deltaY, e.clientX, e.clientY);
+    }, { passive:false });
+
+    lbMedia.addEventListener('mousedown', (e)=>{
+      e.preventDefault();
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      lbMedia.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', (e)=>{
+      if(!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      applyTransform();
+    });
+    window.addEventListener('mouseup', ()=>{
+      isPanning = false;
+      lbMedia.style.cursor = '';
+    });
+
+    // Soporte táctil (pinch-to-zoom)
+    let touchMode = { active:false, startDist:0, startScale:1, startMid:{x:0,y:0}, lastMid:{x:0,y:0}, panning:false };
+
+    function distance(t1,t2){
+      const dx = t2.clientX - t1.clientX, dy = t2.clientY - t1.clientY;
+      return Math.hypot(dx,dy);
+    }
+    function midpoint(t1,t2){
+      return { x:(t1.clientX+t2.clientX)/2, y:(t1.clientY+t2.clientY)/2 };
+    }
+
+    lbMedia.addEventListener('touchstart', (e)=>{
+      if(e.touches.length===1){
+        touchMode.panning = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      }else if(e.touches.length===2){
+        touchMode.active = true;
+        touchMode.startDist = distance(e.touches[0], e.touches[1]);
+        touchMode.startScale = scale;
+        touchMode.startMid = midpoint(e.touches[0], e.touches[1]);
+        touchMode.lastMid = touchMode.startMid;
+      }
+    }, {passive:true});
+
+    lbMedia.addEventListener('touchmove', (e)=>{
+      if(e.touches.length===1 && touchMode.panning){
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        applyTransform();
+      }else if(e.touches.length===2 && touchMode.active){
+        e.preventDefault();
+        const newDist = distance(e.touches[0], e.touches[1]);
+        const mid = midpoint(e.touches[0], e.touches[1]);
+
+        // zoom relativo
+        const newScale = Math.min(maxScale, Math.max(minScale, touchMode.startScale * (newDist / touchMode.startDist)));
+        const rect = lbMedia.getBoundingClientRect();
+        const x = mid.x - rect.left, y = mid.y - rect.top;
+
+        const prevScale = scale;
+        scale = newScale;
+        const ratio = scale / prevScale;
+        translateX = x - (x - translateX) * ratio;
+        translateY = y - (y - translateY) * ratio;
+
+        // pan por movimiento del centro
+        translateX += (mid.x - touchMode.lastMid.x);
+        translateY += (mid.y - touchMode.lastMid.y);
+        touchMode.lastMid = mid;
+
+        applyTransform();
+      }
+    }, {passive:false});
+
+    lbMedia.addEventListener('touchend', ()=>{
+      touchMode.active = false;
+      touchMode.panning = false;
+    });
 
     /* ===== Santa Tracker D/H/M/S ===== */
     function targetChristmas(){

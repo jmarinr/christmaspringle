@@ -1,416 +1,292 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Christmas Pringle - Tarjetas Navideñas Mágicas</title>
+<meta name="description" content="Tarjetas navideñas en acuarela hechas a mano en Costa Rica. Compra fácil por WhatsApp. Colección Arte Pringle y Santa Tracker." />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:title" content="Christmas Pringle - Tarjetas Navideñas Mágicas">
+<meta property="og:description" content="Acuarelas únicas para regalar en Navidad. Ver catálogo y comprar por WhatsApp.">
+<meta property="og:image" content="christmas-pringle-logo.png">
+<meta property="og:url" content="https://christmaspringle.com/">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;600;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-  :root{
-    --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5; --primary-gold:#FFB300;
-    --text-dark:#263238; --text-light:#546E7A; --white:#fff;
-    --shadow-soft:0 4px 16px rgba(0,0,0,.08); --shadow-medium:0 8px 24px rgba(0,0,0,.12); --shadow-hover:0 12px 32px rgba(0,0,0,.16);
-    --wood:#7a5236; --wood-dark:#5b3c28; --mat:#f7f6f2;
+:root{
+  /* Colores base (modo claro) */
+  --bg-sky-1:#4FC3F7; --bg-sky-2:#81D4FA; --bg-sky-3:#B3E5FC;
+  --white:#fff; --black:#0e1420;
+  --text-dark:#263238; --text-muted:#5b6b75;
+  --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5; --primary-gold:#FFB300;
+  --chip-green-from:#00C853; --chip-green-to:#69F0AE;
+  --chip-yellow-from:#FFB300; --chip-yellow-to:#FFD54F; --chip-yellow-text:#332300;
+  --chip-blue-from:#039BE5; --chip-blue-to:#4FC3F7;
+  --chip-violet-from:#8E24AA; --chip-violet-to:#BA68C8;
+  --chip-red-from:#E74C3C; --chip-red-to:#C0392B;
 
-    /* Guirnalda */
-    --bulb-red:#ff4b4b; --bulb-yellow:#ffd54f; --bulb-blue:#4fc3f7; --bulb-green:#69f0ae;
-    --bulb-off:#a7b0b5; --wire:#111; --wire-night:#d9d9d9;
+  --panel:#ffffff; --panel-contrast:#0d1522;
+  --panel-subtle:#f4f6f8;
+  --card-shadow:0 4px 16px rgba(0,0,0,.08);
+  --card-shadow-lg:0 12px 32px rgba(0,0,0,.16);
 
-    /* Modo noche */
-    --night-bg1:#0c1220; --night-bg2:#0f1a33; --night-card:#0f1a2c; --night-text:#e9f0ff; --night-soft:#18243d;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:'Google Sans',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-    background:linear-gradient(180deg,#4FC3F7 0%,#81D4FA 50%,#B3E5FC 100%);
-    color:var(--text-dark); min-height:100vh; overflow-x:hidden;
-  }
+  /* Oscuro suave */
+  --dark-bg:#0c1220;
+  --dark-panel:#0f1a2b;
+  --dark-text:#E7ECEF;
+  --dark-muted:#B8C2CC;
 
-  /* ===== Nieve ===== */
-  .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
-  .snowflake{position:absolute; top:-10px; color:#fff; font-size:1.5em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
-  @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
+  /* Marcos arte */
+  --wood:#7a5236; --wood-dark:#5b3c28; --mat:#f7f6f2;
 
-  /* ===== Tren (izquierda) ===== */
-  .train-container{
-    --train-duration: 42s;
-    position:fixed; bottom:60px; left:100vw; z-index:1000;
-    animation:trainMoveLeft var(--train-duration) linear infinite;
-    pointer-events:none;
-  }
-  @keyframes trainMoveLeft{ 0%{ left:100vw } 100%{ left:-950px } }
+  /* Bulbos */
+  --bulb-red:#ff5858; --bulb-green:#31d67b; --bulb-blue:#3bb6ff; --bulb-yellow:#ffd15a;
+  --wire:#101317; --wire-dark:#e8edf4;
 
-  .train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3))}
-  .wagon, .engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
-  .wagon:nth-child(2){animation-delay:.05s} .wagon:nth-child(3){animation-delay:.1s}
-  .wagon:nth-child(4){animation-delay:.15s} .wagon:nth-child(5){animation-delay:.2s}
-  .wagon:nth-last-child(2){animation-delay:.25s} .wagon:nth-last-child(1){animation-delay:.3s}
-  @keyframes wBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  /* Accesibilidad */
+  --focus:#ffd54f;
 
-  /* Locomotora mirando a la izquierda (al frente) */
-  .engine{transform:scaleX(-1)}
-  .engine-wrap{position:relative; display:inline-block}
+  /* Misc */
+  --shadow-soft:0 4px 16px rgba(0,0,0,.08);
+  --shadow-medium:0 8px 24px rgba(0,0,0,.12);
+  --shadow-hover:0 12px 32px rgba(0,0,0,.16);
+}
 
-  /* Humo */
-  .smoke{position:absolute; top:-58px; right:46px; font-size:2.4rem; animation:smokeRise 1.8s ease-out infinite}
-  @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.4); opacity:0}}
+/* ===== Base ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Google Sans',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg-sky-1) 0%,var(--bg-sky-2) 50%,var(--bg-sky-3) 100%);
+  color:var(--text-dark); overflow-x:hidden;
+}
 
-  /* Faros de la locomotora en modo noche */
-  body.night .engine-wrap::before{
-    content:"";
-    position:absolute;
-    right:18px; top:18px;
-    width:360px; height:160px;
-    transform:translateX(100%) skewX(-12deg);
-    background: radial-gradient(ellipse at left,
-       rgba(255,255,210,.95) 0%,
-       rgba(255,255,210,.55) 25%,
-       rgba(255,255,170,.25) 45%,
-       rgba(255,255,150,.10) 65%,
-       rgba(255,255,150,0) 100%);
-    filter: blur(2px);
-    pointer-events:none;
-    z-index:-1;
-  }
-  body.night .train-container::after{
-    /* halo en el suelo bajo los faros */
-    content:"";
-    position:fixed; bottom:35px; left:0; right:0;
-    height:60px;
-    background: radial-gradient(ellipse at 60% 50%,
-      rgba(255,236,170,.18),rgba(255,236,170,0) 60%);
-    pointer-events:none;
-  }
+/* ===== Nieve ===== */
+.snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
+.snowflake{position:absolute; top:-10px; color:#fff; font-size:1.3em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
+@keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
 
-  /* ===== Santa Tracker redondos arriba de 4 vagones ===== */
-  .tracker{
-    position:absolute; top:-30px; left:18px;
-    width:92px; height:92px; border-radius:50%;
-    background:radial-gradient(circle at 30% 25%,#fff 0 35%, #ffe9ec 36% 100%);
-    border:4px solid #c0392b; box-shadow:0 8px 18px rgba(231,76,60,.35);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    color:#b23a2e; font-weight:900; text-align:center; line-height:1;
-  }
-  .tracker .num{font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:1.05rem}
-  .tracker .lbl{font-size:.62rem; margin-top:2px; text-transform:uppercase}
-  .tracker:before{content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px; box-shadow:0 2px 0 #922b21;}
+/* ===== Tren hacia la izquierda con Santa Tracker ===== */
+.train-container{--train-duration:42s; position:fixed; bottom:60px; left:100vw; z-index:10000; animation:trainMoveLeft var(--train-duration) linear infinite}
+@keyframes trainMoveLeft{0%{left:100vw}100%{left:-950px}}
+.train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3))}
+.wagon,.engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
+.wagon:nth-child(2){animation-delay:.05s}.wagon:nth-child(3){animation-delay:.1s}.wagon:nth-child(4){animation-delay:.15s}.wagon:nth-child(5){animation-delay:.2s}.wagon:nth-last-child(2){animation-delay:.25s}.wagon:nth-last-child(1){animation-delay:.3s}
+@keyframes wBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.engine{transform:scaleX(-1)}
+.engine-wrap{position:relative; display:inline-block}
+.smoke{position:absolute; top:-58px; right:46px; font-size:2.2rem; animation:smokeRise 1.8s ease-out infinite}
+@keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.4); opacity:0}}
 
-  /* ===== Header ===== */
-  header{position:sticky; top:0; z-index:900; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft)}
-  .header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto}
-  .logo-link{display:block; line-height:0}
-  .logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
-  .logo-link:hover .logo-img{transform:scale(1.04)}
+/* Faros (solo oscuro) */
+body.dark .engine-wrap::after{
+  content:""; position:absolute; left:-18px; bottom:20px; width:0; height:0;
+  border-left:0 solid transparent; border-right:160px solid rgba(255,238,180,.28);
+  border-top:36px solid transparent; border-bottom:12px solid transparent; filter:blur(2px);
+}
 
-  /* Frase central (sin bastones, tipografía navideña) */
-  .header-title-wrap{position:relative; justify-self:center; text-align:center}
-  .header-title{
-    font-family:'Mountains of Christmas',cursive;
-    font-weight:700; font-size:3.1rem; letter-spacing:.5px;
-    color:#123; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
-    line-height:1.02; padding:.15rem .4rem;
-  }
+/* Santa Tracker redondos arriba de 4 vagones */
+.tracker{
+  position:absolute; top:-30px; left:18px; width:92px; height:92px; border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,#fff 0 35%, #ffe9ec 36% 100%);
+  border:4px solid #c0392b; box-shadow:0 8px 18px rgba(231,76,60,.35);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; color:#b23a2e; font-weight:900; text-align:center; line-height:1;
+}
+.tracker .num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:1.05rem}
+.tracker .lbl{font-size:.62rem; margin-top:2px; text-transform:uppercase}
+.tracker:before{content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px; box-shadow:0 2px 0 #922b21}
 
-  /* Guirnalda SVG colocada sobre las letras */
-  .garland{
-    position:absolute; left:50%; transform:translateX(-50%);
-    top:-10px; width:680px; height:120px; overflow:visible; pointer-events:none;
-  }
-  .wire{ stroke:var(--wire); stroke-width:3; fill:none; stroke-linecap:round; opacity:.9 }
-  body.night .wire{ stroke:var(--wire-night); }
+/* ===== Header ===== */
+header{position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft); transition:background .25s,border-color .25s}
+body.dark header{background:rgba(10,16,27,.86); border-color:rgba(255,255,255,.06)}
+.header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto}
+.logo-link{display:block; line-height:0}
+.logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
+.logo-link:hover .logo-img{transform:scale(1.04)}
 
-  .bulb .glass { transition:filter .2s, opacity .2s; }
-  .bulb .cap { fill:#333 }
-  body.night .bulb .cap { fill:#bbb }
+/* Texto central + Guirnalda de bombillos */
+.header-title{
+  position:relative; justify-self:center; text-align:center; line-height:1.02; letter-spacing:.5px;
+  font-family:'Mountains of Christmas',cursive; font-weight:700; font-size:3.1rem; color:var(--text-dark);
+  text-shadow:0 2px 0 rgba(255,255,255,.8),0 3px 10px rgba(0,0,0,.08);
+}
+body.dark .header-title{color:var(--dark-text); text-shadow:0 1px 0 rgba(0,0,0,.25), 0 6px 24px rgba(0,0,0,.35)}
+.lights-wrap{position:absolute; left:-6px; right:-6px; top:-10px; height:56px; pointer-events:none}
+svg#garland{width:100%; height:100%}
+.bulb{filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+.bulb.glow-red    { fill:var(--bulb-red) }
+.bulb.glow-green  { fill:var(--bulb-green) }
+.bulb.glow-blue   { fill:var(--bulb-blue) }
+.bulb.glow-yellow { fill:var(--bulb-yellow) }
+body.dark .wire{ stroke:var(--wire-dark) } 
+.wire{ stroke:var(--wire); stroke-width:4; fill:none }
 
-  /* Brillo base (twinkle) */
-  .glow{ opacity:.25; filter:blur(6px); transform-origin:center; }
-  .tw-r{ fill:var(--bulb-red) }
-  .tw-y{ fill:var(--bulb-yellow) }
-  .tw-b{ fill:var(--bulb-blue) }
-  .tw-g{ fill:var(--bulb-green) }
+/* Chips navegación */
+nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+.chip{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
+  padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft); white-space:nowrap}
+.chip:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
+.chip:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+.btn-home{background:linear-gradient(135deg,var(--chip-green-from),var(--chip-green-to))}
+.btn-cards{background:linear-gradient(135deg,var(--chip-yellow-from),var(--chip-yellow-to)); color:var(--chip-yellow-text)}
+.btn-art{background:linear-gradient(135deg,var(--chip-violet-from),var(--chip-violet-to))}
+.btn-reviews{background:linear-gradient(135deg,var(--chip-blue-from),var(--chip-blue-to))}
+.btn-music{background:linear-gradient(135deg,var(--chip-red-from),var(--chip-red-to))}
+.btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
 
-  @keyframes twinkle {
-    0%,100%{ opacity:.22; filter: blur(6px) }
-    50%{ opacity:.9; filter: blur(12px) }
-  }
-  /* secuencia de parpadeo suave por color */
-  .tw-r{ animation: twinkle 2.6s ease-in-out infinite .0s }
-  .tw-y{ animation: twinkle 2.4s ease-in-out infinite .3s }
-  .tw-b{ animation: twinkle 2.8s ease-in-out infinite .6s }
-  .tw-g{ animation: twinkle 2.2s ease-in-out infinite .9s }
+/* Switch luces (modo) */
+.switch{display:inline-flex; align-items:center; gap:.5rem; color:var(--text-dark)}
+body.dark .switch{color:var(--dark-text)}
+.toggle{position:relative; width:56px; height:28px; background:#e9eef3; border-radius:999px; border:2px solid rgba(0,0,0,.1); cursor:pointer; transition:.2s}
+.toggle::after{content:""; position:absolute; top:2px; left:2px; width:22px; height:22px; background:#fff; border-radius:50%; box-shadow:0 1px 2px rgba(0,0,0,.3); transition:transform .2s}
+.toggle.on{background:#9be794; border-color:#79d070}
+.toggle.on::after{transform:translateX(28px)}
 
-  /* Estados ON/OFF para guirnalda */
-  body.lights-on .bulb .glass { filter: brightness(1.05) saturate(1.1) }
-  body:not(.lights-on) .bulb .glass { fill: var(--bulb-off) !important; filter: grayscale(.2) opacity(.6) }
-  body:not(.lights-on) .bulb .glow { display:none !important }
+/* Franja decorativa azul claro */
+.hero{position:relative; min-height:140px; padding:10px 0}
+.celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:.18; font-size:2.1rem; display:flex; justify-content:space-around; align-items:center}
+.celeste-icons span:nth-child(odd){transform:translateY(-8px)} .celeste-icons span:nth-child(even){transform:translateY(8px)}
 
-  /* Encender: chase temporal; Apagar: fade */
-  body.lights-on.blink-on .bulb .glow { animation: chase 1.5s linear both; }
-  body.lights-on.blink-on .bulb .glass { animation: glassPop .28s ease-out both; animation-delay: calc(var(--i)*.12s) }
-  body.blink-off .bulb .glass { animation: offFade .6s ease both; }
+/* Container principal */
+.container{max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem; background:var(--panel); border-radius:32px 32px 0 0; margin-top:12px; box-shadow:0 -12px 48px rgba(0,0,0,.12)}
+body.dark .container{background:var(--dark-panel); color:var(--dark-text)}
+.section-title{font-family:'Mountains of Christmas',cursive; font-size:2.7rem; text-align:center; margin-bottom:2rem; position:relative}
+.section-title::after{content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-8px; width:120px; height:5px; border-radius:3px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold))}
 
-  /* Escalonamos por índice --i */
-  body.lights-on.blink-on .bulb .glow { animation-delay: calc(var(--i) * .12s); }
+/* Tarjetas */
+.cards-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
+.card{background:var(--panel); border-radius:24px; overflow:hidden; border:3px solid transparent; box-shadow:var(--card-shadow); transition:.3s; display:flex; flex-direction:column}
+body.dark .card{background:#0b1726; border-color:transparent}
+.card:hover{transform:translateY(-8px); box-shadow:var(--card-shadow-lg); border-color:var(--primary-gold)}
+.card-image{width:100%; aspect-ratio:4/3; background:
+  radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
+  repeating-linear-gradient(45deg,#f7f7f7 0 8px,#f2f2f2 8px 16px);
+  display:flex; align-items:center; justify-content:center; position:relative}
+.card-photo{width:100%; height:100%; object-fit:contain; transition:transform .5s ease}
+.card:hover .card-photo{transform:scale(1.03)}
+.card-content{padding:18px 18px 20px}
+.card h3{font-size:1.25rem; margin-bottom:.35rem}
+.card p{color:var(--text-muted); line-height:1.55; margin-bottom:1rem}
+body.dark .card p{color:var(--dark-muted)}
+.price-row{display:flex; align-items:center; gap:.6rem; justify-content:space-between; margin-top:auto}
+.price-badge{display:inline-flex; align-items:center; gap:.45rem; font-weight:800; background:linear-gradient(135deg,#FFB300,#FDD835); color:#332300; padding:.55rem .95rem; border-radius:999px; box-shadow:0 4px 12px rgba(251,188,4,.35)}
+.wa-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none; background:linear-gradient(135deg,#25D366,#1EBE57); color:#fff; padding:.6rem 1rem; border-radius:999px; box-shadow:var(--shadow-soft); transition:.2s}
+.wa-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
+.wa-btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
 
-  @keyframes chase {
-    0%{opacity:.15; filter:blur(4px)}
-    10%{opacity:.25}
-    20%{opacity:.45}
-    35%{opacity:.9; filter:blur(10px)}
-    55%{opacity:.35; filter:blur(6px)}
-    75%{opacity:.15}
-    100%{opacity:.25}
-  }
-  @keyframes glassPop { 0%{transform:scale(.94)} 70%{transform:scale(1.06)} 100%{transform:scale(1)} }
-  @keyframes offFade { from{filter:brightness(1) saturate(1);opacity:1} to{filter:brightness(.5) saturate(.6);opacity:.5} }
+.loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-muted)}
+body.dark .loading, body.dark .no-cards{color:var(--dark-muted)}
 
-  /* ===== Interruptor retro (modo luces/oscuro) ===== */
-  .switch-wrap{ display:flex; align-items:center; gap:.6rem; justify-content:flex-end; }
-  .switch-label{font-weight:800; color:#334}
-  .retro-switch{
-    position:relative; width:66px; height:34px; border-radius:20px; border:2px solid #bbb;
-    background:#f2f2f2; box-shadow:inset 0 3px 8px rgba(0,0,0,.12);
-    cursor:pointer; transition:.2s;
-  }
-  .retro-switch .knob{
-    position:absolute; top:2px; left:2px; width:30px; height:30px; border-radius:50%;
-    background:linear-gradient(180deg,#fff,#ddd); box-shadow:0 2px 6px rgba(0,0,0,.3); transition:.2s;
-  }
-  .retro-switch input{position:absolute; inset:0; opacity:0; cursor:pointer}
-  .retro-switch input:checked ~ .knob{ left:34px; background:linear-gradient(180deg,#fff,#e6ffe6) }
-  .retro-switch:has(input:checked){ background:#c8f7c5; border-color:#9be29a }
+/* Lightbox */
+.lightbox{position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:10050}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw; max-height:88vh; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,.6)}
 
-  /* ===== Nav ===== */
-  nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end}
-  .chip-btn{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
-    padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft); white-space:nowrap}
-  .chip-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
-  .btn-home{background:linear-gradient(135deg,#00C853,#69F0AE)}
-  .btn-cards{background:linear-gradient(135deg,#FFB300,#FFD54F); color:#332300}
-  .btn-art{background:linear-gradient(135deg,#8E24AA,#BA68C8)}
-  .btn-reviews{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
-  .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
-  .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
-  /* Efecto header ocultable en móvil */
-  @media (max-width: 800px){
-    header{ position:sticky; top:-1px; transition: transform .25s ease; }
-    header.hide{ transform: translateY(-100%); }
-  }
+/* Arte Pringle (marcos) */
+.art-wrap{margin-top:3rem}
+.art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px}
+.frame{background:linear-gradient(135deg,var(--wood),var(--wood-dark)); border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.frame-inner{background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7}
+.frame-image{width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.frame-image img{width:100%; height:100%; object-fit:contain}
+.art-meta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px}
+.art-title{font-weight:800; font-size:1.05rem}
+.art-buy{white-space:nowrap}
 
-  /* Franja decorativa */
-  .hero{position:relative; min-height:140px; padding:10px 0}
-  .celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:.18; font-size:2.4rem; display:flex; justify-content:space-around; align-items:center}
-  .celeste-icons span:nth-child(odd){transform:translateY(-8px)} .celeste-icons span:nth-child(even){transform:translateY(8px)}
+/* Footer */
+footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
+.footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.footer-social{margin-top:1rem; display:flex; justify-content:center; gap:1rem}
+.footer-social a{color:#fff; font-size:1.6rem; transition:.2s}
+.footer-social a:hover{color:#FDD835; transform:translateY(-3px)}
+.site-version{margin-top:10px; opacity:.85; font-weight:700}
 
-  /* Contenido principal */
-  .container{max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem; background:#fff; border-radius:32px 32px 0 0; margin-top:12px; box-shadow:0 -12px 48px rgba(0,0,0,.12)}
-  .section-title{font-family:'Mountains of Christmas',cursive; font-size:2.6rem; text-align:center; margin-bottom:2rem; position:relative; display:inline-block; left:50%; transform:translateX(-50%)}
-  .section-title::after{content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-8px; width:120px; height:5px; border-radius:3px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold))}
+/* Responsive */
+@media (max-width:1200px){ .logo-img{height:150px} .header-title{font-size:2.7rem}}
+@media (max-width:992px){ .logo-img{height:128px} .header-title{font-size:2.35rem} .wagon,.engine{font-size:4.2em}}
+@media (max-width:800px){
+  .header-content{grid-template-columns:1fr; text-align:center}
+  nav{justify-content:center}
+}
+@media (max-width:640px){
+  .logo-img{height:96px}
+  .chip{padding:.6rem .9rem; font-size:.92rem}
+  .cards-grid{gap:18px}
+  .card-image{aspect-ratio:3/2}
+  .wagon,.engine{font-size:3.3em}
+  .tracker{transform:scale(.9); left:10px; top:-26px}
+}
 
-  /* Tarjetas */
-  .cards-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
-  .card{background:#fff; border-radius:24px; overflow:hidden; border:3px solid transparent; box-shadow:var(--shadow-soft); transition:.3s; display:flex; flex-direction:column}
-  .card:hover{transform:translateY(-8px); box-shadow:var(--shadow-hover); border-color:var(--primary-gold)}
-  .card-image{width:100%; aspect-ratio:4/3;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
-      repeating-linear-gradient(45deg,#f7f7f7 0 8px,#f2f2f2 8px 16px);
-    display:flex; align-items:center; justify-content:center; position:relative}
-  .card-photo{width:100%; height:100%; object-fit:contain; image-rendering:auto; transition:transform .5s ease; cursor:zoom-in}
-  .card:hover .card-photo{transform:scale(1.03)}
-  .card-content{padding:18px 18px 20px}
-  .card h3{font-size:1.3rem; margin-bottom:.35rem}
-  .card p{color:var(--text-light); line-height:1.6; margin-bottom:1rem}
-  .price-row{display:flex; align-items:center; gap:.6rem; justify-content:space-between; margin-top:auto}
-  .price-badge{display:inline-flex; align-items:center; gap:.45rem; font-weight:800; background:linear-gradient(135deg,#FFB300,#FDD835); color:#332300; padding:.55rem .95rem; border-radius:999px; box-shadow:0 4px 12px rgba(251,188,4,.35)}
-  .wa-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none; background:linear-gradient(135deg,#25D366,#1EBE57); color:#fff; padding:.6rem 1rem; border-radius:999px; box-shadow:var(--shadow-soft); transition:.25s}
-  .wa-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
-  .loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-light)}
-
-  /* Lightbox viewer */
-  .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:2000}
-  .lightbox.open{display:flex}
-  .lightbox-content{max-width:95vw; max-height:90vh; background:#000; border-radius:12px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.5); position:relative}
-  .lightbox-img{display:block; width:100%; height:100%; object-fit:contain}
-  .lightbox-close{position:absolute; top:8px; right:8px; background:#fff; border:0; width:40px; height:40px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.2rem}
-
-  /* ARTE PRINGLE (marcos) */
-  .art-wrap{margin-top:3rem}
-  .art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px}
-  .frame{ background:linear-gradient(135deg, var(--wood), var(--wood-dark)); border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25) }
-  .frame-inner{ background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7 }
-  .frame-image{ width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12) }
-  .frame-image img{width:100%; height:100%; object-fit:contain}
-  .art-meta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px}
-  .art-title{font-weight:800; font-size:1.05rem}
-  .art-buy{white-space:nowrap}
-
-  /* Footer */
-  footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
-  .footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
-  .footer-social{margin-top:1rem; display:flex; justify-content:center; gap:1rem}
-  .footer-social a{color:#fff; font-size:1.6rem; transition:.2s}
-  .footer-social a:hover{color:#FDD835; transform:translateY(-3px)}
-  .site-version{margin-top:10px; opacity:.85; font-weight:700}
-
-  /* ===== Modo noche global ===== */
-  body.night{
-    background: radial-gradient(1200px 600px at 50% -10%, #112042, var(--night-bg1) 30%, var(--night-bg2) 100%);
-    color: var(--night-text);
-  }
-  body.night header{
-    background: rgba(8,14,26,.92);
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
-  body.night .container{ background: #0b1527; box-shadow: 0 -12px 48px rgba(0,0,0,.4) }
-  body.night .card{ background:#0f1a2c; border-color:transparent }
-  body.night .card p{ color:#a9b6d0 }
-  body.night .frame-inner{ background:#f0ede6 }
-  body.night .section-title{ color: #e9f0ff }
-  body.night .header-title{ color:#f4f7ff; text-shadow:0 2px 12px rgba(255,255,255,.07)}
-
-  /* Responsive */
-  @media (max-width:1200px){ .logo-img{height:150px} .header-title{font-size:2.7rem} .garland{width:560px} }
-  @media (max-width:992px){ .logo-img{height:128px} .header-title{font-size:2.35rem} .wagon,.engine{font-size:4.2em} .garland{width:520px} }
-  @media (max-width:800px){
-    .header-content{grid-template-columns:1fr; text-align:center}
-    nav{justify-content:center; gap:.5rem}
-    .header-title-wrap{order:2}
-    .switch-wrap{justify-content:center}
-    .garland{top:-8px; width:88vw; max-width:620px}
-  }
-  @media (max-width:640px){
-    .logo-img{height:96px}
-    .chip-btn{padding:.6rem .9rem; font-size:.92rem}
-    .cards-grid{gap:18px}
-    .card-image{aspect-ratio:3/2}
-    .wagon,.engine{font-size:3.3em}
-    .tracker{transform:scale(.9); left:10px; top:-26px}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .train-container{animation-duration:60s}
-    .wagon,.engine,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
-  }
+/* Prefiere menos movimiento */
+@media (prefers-reduced-motion:reduce){
+  .train-container{animation-duration:60s}
+  .wagon,.engine,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
+}
 </style>
 </head>
 <body>
-  <!-- ===== Nieve ===== -->
-  <div id="snowContainer" class="snow-container"></div>
+  <!-- Nieve -->
+  <div id="snowContainer" class="snow-container" aria-hidden="true"></div>
 
-  <!-- ===== Tren → izquierda | Locomotora al frente ===== -->
+  <!-- Tren (izquierda) + Santa Tracker -->
   <div class="train-container" id="train" title="🚂 Tócalo para turbo 10s">
     <div class="train">
-      <!-- Locomotora -->
-      <div class="engine-wrap">
-        <div class="engine">🚂</div>
-        <div class="smoke">💨</div>
-      </div>
-
-      <!-- Vagones Tracker -->
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div>
-      </div>
-
-      <!-- Árbol y estrella al final -->
-      <div class="wagon">🎄</div>
-      <div class="wagon">⭐</div>
+      <div class="engine-wrap"><div class="engine">🚂</div><div class="smoke">💨</div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div></div>
+      <div class="wagon">🎄</div><div class="wagon">⭐</div>
     </div>
   </div>
 
-  <!-- ===== Header ===== -->
+  <!-- Header -->
   <header id="siteHeader">
     <div class="header-content">
       <a href="#inicio" class="logo-link" aria-label="Inicio">
         <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
       </a>
 
-      <!-- Frase + Guirnalda -->
-      <div class="header-title-wrap">
-        <h1 id="candyTitle" class="header-title" aria-label="Lema navideño">
-          Diversión festiva para toda la familia
-        </h1>
-
-        <!-- Guirnalda SVG (bombillos redondos con índice --i) -->
-        <svg class="garland" viewBox="0 0 700 120" aria-hidden="true">
-          <path class="wire" d="M10,70 C120,10 220,120 330,60 C450,10 550,110 690,40" />
-          <!-- Bombillos posicionados a lo largo de la curva -->
-          <!-- grupo = bulb (glass + glow) con --i para la secuencia -->
-          <g class="bulb" style="--i:0" transform="translate(80,58)">
-            <ellipse class="glass" rx="10" ry="12" fill="#ff4b4b"/>
-            <circle class="glow tw-r" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:1" transform="translate(150,42)">
-            <ellipse class="glass" rx="10" ry="12" fill="#ffd54f"/>
-            <circle class="glow tw-y" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:2" transform="translate(220,72)">
-            <ellipse class="glass" rx="10" ry="12" fill="#4fc3f7"/>
-            <circle class="glow tw-b" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:3" transform="translate(290,52)">
-            <ellipse class="glass" rx="10" ry="12" fill="#69f0ae"/>
-            <circle class="glow tw-g" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:4" transform="translate(360,66)">
-            <ellipse class="glass" rx="10" ry="12" fill="#ff4b4b"/>
-            <circle class="glow tw-r" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:5" transform="translate(430,40)">
-            <ellipse class="glass" rx="10" ry="12" fill="#ffd54f"/>
-            <circle class="glow tw-y" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:6" transform="translate(520,76)">
-            <ellipse class="glass" rx="10" ry="12" fill="#4fc3f7"/>
-            <circle class="glow tw-b" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-          <g class="bulb" style="--i:7" transform="translate(610,52)">
-            <ellipse class="glass" rx="10" ry="12" fill="#69f0ae"/>
-            <circle class="glow tw-g" r="16"/>
-            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
-          </g>
-        </svg>
+      <!-- Título + luces SVG -->
+      <div class="header-title" id="headerTitle">
+        Diversión festiva para toda la familia
+        <div class="lights-wrap" aria-hidden="true">
+          <svg id="garland" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path class="wire" d="M10,70 C200,30 350,110 500,60 S800,30 990,80" />
+            <!-- Bombillos (red, green, blue, yellow) -->
+            <g>
+              <circle class="bulb glow-red"    cx="120" cy="60" r="10"/>
+              <circle class="bulb glow-green"  cx="220" cy="48" r="10"/>
+              <circle class="bulb glow-blue"   cx="320" cy="78" r="10"/>
+              <circle class="bulb glow-yellow" cx="420" cy="58" r="10"/>
+              <circle class="bulb glow-red"    cx="520" cy="50" r="10"/>
+              <circle class="bulb glow-green"  cx="620" cy="72" r="10"/>
+              <circle class="bulb glow-blue"   cx="720" cy="52" r="10"/>
+              <circle class="bulb glow-yellow" cx="820" cy="82" r="10"/>
+              <circle class="bulb glow-red"    cx="920" cy="66" r="10"/>
+            </g>
+          </svg>
+        </div>
       </div>
 
+      <!-- Nav + switch -->
       <nav>
-        <a class="chip-btn btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
-        <a class="chip-btn btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
-        <a class="chip-btn btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
-        <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
-        <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
+        <a class="chip btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a class="chip btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
+        <a class="chip btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
+        <a class="chip btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
+        <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
         </button>
-
-        <!-- Interruptor retro -->
-        <div class="switch-wrap" title="Luces / Modo oscuro">
-          <span class="switch-label">Luces</span>
-          <label class="retro-switch" id="lightsToggle" role="switch" aria-checked="false">
-            <input id="lightsSwitch" type="checkbox">
-            <div class="knob"></div>
-          </label>
+        <div class="switch" aria-label="Luces y modo de color">
+          <span>🎄 Luces</span>
+          <div id="modeToggle" class="toggle" role="switch" aria-checked="false" tabindex="0"></div>
         </div>
       </nav>
     </div>
@@ -423,28 +299,27 @@
     </div>
   </section>
 
-  <!-- ===== Contenido ===== -->
+  <!-- Contenido -->
   <main class="container">
     <!-- Tarjetas -->
-    <section id="tarjetas">
-      <h2 class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
+    <section id="tarjetas" aria-labelledby="cardsTitle">
+      <h2 id="cardsTitle" class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
       <div id="cardsGrid" class="cards-grid">
         <div class="loading">
-          <i class="fas fa-spinner fa-spin" style="font-size:2.2rem;color:var(--primary-red)"></i>
+          <i class="fas fa-spinner fa-spin" style="font-size:2.1rem;color:var(--primary-red)"></i>
           <p>Cargando tarjetas...</p>
         </div>
       </div>
     </section>
 
     <!-- ARTE PRINGLE -->
-    <section id="arte" class="art-wrap">
-      <h2 class="section-title">🖼️ Colección Arte Pringle</h2>
+    <section id="arte" class="art-wrap" aria-labelledby="artTitle">
+      <h2 id="artTitle" class="section-title">🖼️ Colección Arte Pringle</h2>
       <div class="art-grid">
-        <!-- Tren de Navidad -->
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
-              <img src="arte-tren.jpg" alt="Tren de Navidad en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3ETren de Navidad (cargue arte-tren.jpg)%3C/text%3E%3C/svg%3E'">
+              <img src="arte-tren.jpg" alt="Tren de Navidad en acuarela" loading="lazy" decoding="async">
             </div>
             <div class="art-meta">
               <div class="art-title">Tren de Navidad</div>
@@ -453,11 +328,10 @@
           </div>
         </article>
 
-        <!-- Barco navideño -->
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
-              <img src="arte-barco.jpg" alt="Barco navideño en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EBarco%20Navide%C3%B1o%20(cargue%20arte-barco.jpg)%3C/text%3E%3C/svg%3E'">
+              <img src="arte-barco.jpg" alt="Barco navideño en acuarela" loading="lazy" decoding="async">
             </div>
             <div class="art-meta">
               <div class="art-title">Barco Navideño</div>
@@ -466,11 +340,10 @@
           </div>
         </article>
 
-        <!-- Pueblo navideño -->
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
-              <img src="arte-pueblo.jpg" alt="Pueblo navideño de Estados Unidos en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EPueblo%20Navide%C3%B1o%20(cargue%20arte-pueblo.jpg)%3C/text%3E%3C/svg%3E'">
+              <img src="arte-pueblo.jpg" alt="Pueblo navideño (USA) en acuarela" loading="lazy" decoding="async">
             </div>
             <div class="art-meta">
               <div class="art-title">Pueblo Navideño</div>
@@ -488,7 +361,7 @@
     </section>
   </main>
 
-  <!-- ===== Footer ===== -->
+  <!-- Footer -->
   <footer>
     <img src="christmas-pringle-logo.png" class="footer-logo" alt="Christmas Pringle">
     <p style="margin-top:10px;opacity:.9">© 2025 ChristmasPringle.com — Pintando la magia de la Navidad ✨</p>
@@ -500,203 +373,205 @@
     <div class="site-version">v1.4 · 2025</div>
   </footer>
 
-  <!-- ===== Audio ===== -->
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de la tarjeta">
+    <img id="lightboxImg" alt="">
+  </div>
+
+  <!-- Audio -->
   <audio id="christmasMusic" loop>
     <source src="Christmas Rap.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- ===== Lightbox ===== -->
-  <div id="lightbox" class="lightbox" aria-modal="true" role="dialog">
-    <div class="lightbox-content">
-      <img id="lightboxImg" class="lightbox-img" alt="Vista ampliada">
-      <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-  </div>
+  <!-- JSON-LD básicos -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Christmas Pringle",
+    "url": "https://christmaspringle.com",
+    "logo": "https://christmaspringle.com/christmas-pringle-logo.png"
+  }
+  </script>
 
 <script>
-  /* ===== Nieve ===== */
-  function createSnowflake(){
-    const s=document.createElement('div');
-    s.className='snowflake';
-    s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
-    s.style.left=Math.random()*100+'%';
-    s.style.animationDuration=(Math.random()*3+4)+'s';
-    s.style.opacity=Math.random()*.6+.4;
-    s.style.fontSize=(Math.random()*1+1)+'em';
-    document.getElementById('snowContainer').appendChild(s);
-    setTimeout(()=>s.remove(),7000);
-  }
-  setInterval(createSnowflake,300);
+/* ===== Utiles ===== */
+const qs = sel => document.querySelector(sel);
 
-  /* ===== Música ===== */
-  const musicBtn=document.getElementById('musicBtn');
-  const audio=document.getElementById('christmasMusic');
-  let playing=false;
-  musicBtn.addEventListener('click', async ()=>{
-    try{
-      if(!playing){ await audio.play(); playing=true; musicBtn.style.filter='brightness(1.05) drop-shadow(0 2px 8px rgba(0,0,0,.2))'; }
-      else{ audio.pause(); playing=false; musicBtn.style.filter=''; }
-    }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
-  });
+/* ===== Nieve (lazy) ===== */
+function createSnowflake(){
+  const s=document.createElement('div');
+  s.className='snowflake';
+  s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDuration=(Math.random()*3+4)+'s';
+  s.style.opacity=Math.random()*.6+.4;
+  s.style.fontSize=(Math.random()*1+1)+'em';
+  document.getElementById('snowContainer').appendChild(s);
+  setTimeout(()=>s.remove(),7000);
+}
+function startSnow(){ for(let i=0;i<18;i++) setTimeout(createSnowflake, i*180); return setInterval(createSnowflake, 300); }
+let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 900);
 
-  /* ===== CRC ===== */
-  const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
+/* ===== Música ===== */
+const musicBtn=qs('#musicBtn'); const audio=qs('#christmasMusic');
+let playing=false;
+musicBtn.addEventListener('click', async ()=>{
+  try{
+    if(!playing){ await audio.play(); playing=true; musicBtn.style.filter='brightness(1.05) drop-shadow(0 2px 8px rgba(0,0,0,.2))'; }
+    else{ audio.pause(); playing=false; musicBtn.style.filter=''; }
+  }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
+});
 
-  /* ===== Cargar tarjetas ===== */
-  async function loadCards(){
-    const grid=document.getElementById('cardsGrid');
-    try{
-      const ts=Date.now();
-      const res=await fetch(`./cards.json?t=${ts}`,{cache:'no-store'});
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      const cards=await res.json();
-      if(!Array.isArray(cards)||!cards.length){
-        grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`;
-        return;
-      }
-      cards.sort((a,b)=>a.number-b.number);
-      grid.innerHTML = cards.map((c,i)=>{
-        const img=`${encodeURI(c.image)}?t=${ts}`;
-        const price=fmtCRC(c.price);
-        const msg=`Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
-        const wa=`https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
-        return `
-          <article class="card">
-            <div class="card-image">
-              <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
-                   data-full="${img}"
-                   onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
-            </div>
-            <div class="card-content">
-              <h3>${c.title}</h3>
-              <p>${c.description}</p>
-              <div class="price-row">
-                <span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
-                <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
-              </div>
-            </div>
-          </article>`;
-      }).join('');
+/* ===== Santa Tracker ===== */
+function targetChristmas(){
+  const now=new Date();
+  const y = (now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
+  return new Date(y,11,25,0,0,0,0);
+}
+function pad(n){return String(n).padStart(2,'0')}
+function updateSanta(){
+  const now=new Date(); const end=targetChristmas();
+  let diff=end-now; if(diff<0) diff=0;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  qs('#stDays').textContent=d; qs('#stHours').textContent=pad(h);
+  qs('#stMins').textContent=pad(m); qs('#stSecs').textContent=pad(s);
+}
+updateSanta(); setInterval(updateSanta,1000);
 
-      // Lightbox: click en imagen
-      document.querySelectorAll('.card-photo').forEach(img=>{
-        img.addEventListener('click', ()=>{
-          openLightbox(img.getAttribute('data-full'));
-        });
-      });
-    }catch(e){
-      grid.innerHTML=`<div class="no-cards">❌ Error al cargar tarjetas. Intenta de nuevo más tarde.</div>`;
-      console.error(e);
+/* ===== Tren turbo 10s ===== */
+const train=qs('#train'); let turbo=false;
+train.addEventListener('click', ()=>{
+  if(turbo) return; turbo=true;
+  train.style.setProperty('--train-duration','22s');
+  setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; }, 10000);
+});
+
+/* ===== Modo claro/oscuro + luces ===== */
+const toggle=qs('#modeToggle'); const body=document.body;
+function setMode(on){
+  toggle.classList.toggle('on', on);
+  toggle.setAttribute('aria-checked', on ? 'true' : 'false');
+  body.classList.toggle('dark', on);
+  // Pequeño parpadeo de bombillos al encender
+  const bulbs = document.querySelectorAll('.bulb');
+  bulbs.forEach((b,i)=>{
+    b.style.opacity = on ? '1' : '.55';
+    b.style.filter = on ? 'drop-shadow(0 0 10px rgba(255,255,255,.55))' : 'drop-shadow(0 2px 6px rgba(0,0,0,.25))';
+    if(on){
+      b.animate([{opacity:.4},{opacity:1}],{duration:350+ i*60,fill:'forwards'});
     }
-  }
-
-  /* ===== Lightbox ===== */
-  const lightbox=document.getElementById('lightbox');
-  const lightboxImg=document.getElementById('lightboxImg');
-  const lightboxClose=document.getElementById('lightboxClose');
-  function openLightbox(src){ lightboxImg.src=src; lightbox.classList.add('open'); }
-  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
-  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
-
-  /* ===== Santa Tracker D/H/M/S ===== */
-  function targetChristmas(){
-    const now=new Date();
-    const y = (now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
-    return new Date(y,11,25,0,0,0,0);
-  }
-  function pad(n){return String(n).padStart(2,'0')}
-  function updateSanta(){
-    const now=new Date();
-    const end=targetChristmas();
-    let diff=end-now; if(diff<0) diff=0;
-    const d=Math.floor(diff/86400000);
-    const h=Math.floor((diff%86400000)/3600000);
-    const m=Math.floor((diff%3600000)/60000);
-    const s=Math.floor((diff%60000)/1000);
-    document.getElementById('stDays').textContent = d;
-    document.getElementById('stHours').textContent = pad(h);
-    document.getElementById('stMins').textContent = pad(m);
-    document.getElementById('stSecs').textContent = pad(s);
-  }
-  updateSanta(); setInterval(updateSanta,1000);
-
-  /* ===== Turbo 10s ===== */
-  const train=document.getElementById('train');
-  let turbo=false;
-  train.addEventListener('click', ()=>{
-    if(turbo) return;
-    turbo=true;
-    train.style.setProperty('--train-duration','22s');
-    setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; }, 10000);
   });
+  localStorage.setItem('cp_dark', on?'1':'0');
+}
+toggle.addEventListener('click', ()=> setMode(!toggle.classList.contains('on')));
+toggle.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setMode(!toggle.classList.contains('on')); }});
+setMode(localStorage.getItem('cp_dark')==='1');
 
-  /* ===== Smooth scroll ===== */
-  document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      e.preventDefault();
-      const t=document.querySelector(a.getAttribute('href'));
-      if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
+/* ===== Sticky header auto-hide en móvil ===== */
+let lastY=window.scrollY;
+window.addEventListener('scroll', ()=>{
+  const h = document.getElementById('siteHeader');
+  const y = window.scrollY;
+  if(window.innerWidth<820){
+    h.style.transform = (y>lastY && y>20) ? 'translateY(-110%)' : 'translateY(0)';
+  } else {
+    h.style.transform = 'translateY(0)';
+  }
+  lastY=y;
+});
+
+/* ===== Formato CRC ===== */
+const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
+
+/* ===== Lightbox ===== */
+const lightbox=qs('#lightbox'), lightboxImg=qs('#lightboxImg');
+function openLightbox(src,alt){ lightboxImg.src=src; lightboxImg.alt=alt||''; lightbox.classList.add('open'); }
+lightbox.addEventListener('click', ()=> lightbox.classList.remove('open'));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') lightbox.classList.remove('open'); });
+
+/* ===== Carga de tarjetas ===== */
+async function loadCards(){
+  const grid=qs('#cardsGrid');
+  try{
+    const ts=Date.now();
+    const res=await fetch(`./cards.json?t=${ts}`,{cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const cards=await res.json();
+    if(!Array.isArray(cards)||!cards.length){
+      grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`; return;
+    }
+    cards.sort((a,b)=>a.number-b.number);
+    grid.innerHTML = cards.map(c=>{
+      const img = `${encodeURI(c.image)}?t=${ts}`;
+      const price = fmtCRC(c.price);
+      const msg = `Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
+      const wa  = `https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
+      return `
+      <article class="card">
+        <div class="card-image">
+          <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
+               sizes="(max-width:640px) 92vw, (max-width:1200px) 44vw, 31vw"
+               onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
+        </div>
+        <div class="card-content">
+          <h3>${c.title}</h3>
+          <p>${c.description}</p>
+          <div class="price-row">
+            <span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
+            <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+
+    // Lightbox: click en foto
+    grid.querySelectorAll('.card-photo').forEach(img=>{
+      img.addEventListener('click',()=> openLightbox(img.src, img.alt));
+      img.style.cursor='zoom-in';
     });
-  });
 
-  /* ===== Interruptor (Luces / Noche) con efectos ===== */
-  const lightsSwitch = document.getElementById('lightsSwitch');
-  const lightsToggle = document.getElementById('lightsToggle');
-
-  // Estado persistente
-  const wasOn = localStorage.getItem('cp_lights_on') === '1';
-  if (wasOn) {
-    lightsSwitch.checked = true;
-    document.body.classList.add('lights-on','night');
-    lightsToggle.setAttribute('aria-checked','true');
+  }catch(e){
+    console.error(e);
+    // Fallback de 3 tarjetas estáticas
+    const fallback = [
+      {title:'Tarjeta en acuarela', description:'Edición especial', price:2500, image:'n.png'},
+      {title:'Acuarela copo de nieve', description:'Hecha a mano', price:2500, image:'n.png'},
+      {title:'Acuarela campanas', description:'Listas para regalar', price:2500, image:'n.png'}
+    ];
+    qs('#cardsGrid').innerHTML = fallback.map(c=>{
+      const price=fmtCRC(c.price);
+      const wa=`https://wa.me/50670757592?text=${encodeURIComponent('Hola, me interesa '+c.title+' ('+price+')')}`;
+      return `
+        <article class="card">
+          <div class="card-image"><img class="card-photo" src="${c.image}" alt="${c.title}" loading="lazy" decoding="async" sizes="(max-width:640px) 92vw, (max-width:1200px) 44vw, 31vw"></div>
+          <div class="card-content">
+            <h3>${c.title}</h3><p>${c.description}</p>
+            <div class="price-row"><span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
+              <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+            </div>
+          </div>
+        </article>`;
+    }).join('');
   }
+}
 
-  lightsSwitch.addEventListener('change', () => {
-    const on = lightsSwitch.checked;
-
-    // Aplica clases base
-    document.body.classList.toggle('lights-on', on);
-    document.body.classList.toggle('night', on);
-    lightsToggle.setAttribute('aria-checked', on ? 'true' : 'false');
-    localStorage.setItem('cp_lights_on', on ? '1' : '0');
-
-    // Efectos transitorios:
-    if (on) {
-      document.body.classList.remove('blink-off');
-      void document.body.offsetWidth;
-      document.body.classList.add('blink-on');
-      setTimeout(() => {
-        document.body.classList.remove('blink-on');
-      }, 1600);
-    } else {
-      document.body.classList.remove('blink-on');
-      void document.body.offsetWidth;
-      document.body.classList.add('blink-off');
-      setTimeout(() => {
-        document.body.classList.remove('blink-off');
-      }, 650);
-    }
+/* ===== Enlaces suavizados ===== */
+document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
   });
+});
 
-  /* ===== Header hide on scroll (móvil) ===== */
-  let lastY = window.scrollY;
-  const siteHeader = document.getElementById('siteHeader');
-  window.addEventListener('scroll', () => {
-    if (window.innerWidth <= 800) {
-      const y = window.scrollY;
-      if (y > lastY && y > 40) siteHeader.classList.add('hide');
-      else siteHeader.classList.remove('hide');
-      lastY = y;
-    }
-  });
-
-  /* ===== Init ===== */
-  window.addEventListener('load', ()=>{
-    loadCards();
-    for(let i=0;i<20;i++){ setTimeout(createSnowflake, i*200); }
-  });
+/* ===== Init ===== */
+window.addEventListener('load', ()=>{
+  loadCards();
+});
 </script>
 </body>
 </html>

@@ -12,111 +12,139 @@
     *{margin:0;padding:0;box-sizing:border-box}
     :root{
       --primary-red:#E74C3C;--primary-green:#00C853;--primary-blue:#039BE5;
-      --primary-gold:#FFB300;--text-dark:#263238;--text-light:#546E7A;--bg-light:#F5F9FC;
+      --primary-gold:#FFB300;--text-dark:#263238;--text-light:#546E7A;--bg:#F5F9FC;
+      --ring:#6EC1E4;--danger:#C62828;--ok:#2E7D32;--card:#ffffff;
     }
-    body{font-family:'Google Sans',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:2rem}
+    html,body{height:100%}
+    body{
+      font-family:'Google Sans',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      min-height:100vh;padding:2rem;color:var(--text-dark)
+    }
 
-    /* --- Login --- */
-    .login-wrap{
-      max-width: 460px;margin:4rem auto;background:#fff;border-radius:20px;
-      box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden
+    /* ---------- Shared ---------- */
+    .visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0}
+    .focus-ring:focus{outline:3px solid var(--ring);outline-offset:2px}
+    .shadow-soft{box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .rounded-xl{border-radius:20px}
+    .rounded-2xl{border-radius:24px}
+    .btn{
+      appearance:none;border:none;border-radius:999px;padding:.9rem 1.2rem;font-weight:800;cursor:pointer;
+      display:inline-flex;align-items:center;gap:.55rem;transition:transform .18s ease, box-shadow .18s ease
     }
-    .login-header{
-      background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff;
-      padding:1.75rem 2rem;display:flex;align-items:center;gap:.75rem
+    .btn:hover{transform:translateY(-2px)}
+    .btn:active{transform:translateY(0)}
+    .btn-primary{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff}
+    .btn-green{background:linear-gradient(135deg,var(--primary-green),#00E676);color:#fff}
+    .btn-blue{background:linear-gradient(135deg,#1E88E5,#42A5F5);color:#fff}
+    .btn-ghost{background:#fff;color:var(--primary-blue);border:2px solid #E0E0E0}
+    .btn-danger{background:linear-gradient(135deg,#E53935,#C62828);color:#fff}
+    .chip{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .8rem;border-radius:999px;border:2px solid #E0E0E0;background:#fff}
+
+    input[type="text"],input[type="password"],input[type="number"],textarea{
+      width:100%;padding:.9rem;border:2px solid #E0E0E0;border-radius:12px;font-size:1rem;background:#fff;
+      transition:border-color .2s ease, box-shadow .2s ease
     }
+    input:focus,textarea:focus{border-color:#90CAF9;box-shadow:0 0 0 4px rgba(144,202,249,.25);outline:none}
+
+    /* ---------- Login ---------- */
+    .login-wrap{max-width:460px;margin:4rem auto;background:#fff;border-radius:20px;overflow:hidden}
+    .login-header{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff;padding:1.6rem 1.4rem;display:flex;align-items:center;gap:.9rem}
     .login-header img{height:56px;width:auto;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
-    .login-header h1{font-size:1.35rem}
-    .login-body{padding:2rem}
+    .login-header h1{font-size:1.25rem;line-height:1.2}
+    .login-body{padding:1.6rem}
     .form-row{margin-bottom:1rem}
-    .form-row label{display:block;font-weight:700;color:var(--text-dark);margin-bottom:.4rem}
-    .form-row input[type="text"],
-    .form-row input[type="password"]{
-      width:100%;padding:.9rem;border:2px solid #E0E0E0;border-radius:10px;font-size:1rem
-    }
     .password-row{position:relative}
-    .toggle-pass{
-      position:absolute;right:.6rem;top:50%;transform:translateY(-50%);
-      background:transparent;border:none;cursor:pointer;color:#666;font-size:1.05rem
-    }
-    .login-actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:.5rem}
-    .login-btn{
-      width:100%;padding:1rem;border:none;border-radius:999px;color:#fff;font-weight:800;
-      background:linear-gradient(135deg,var(--primary-green),#00E676);cursor:pointer
-    }
-    .login-error{margin-top:.75rem;background:#FFCDD2;color:#B71C1C;padding:.75rem;border-radius:10px;display:none}
+    .toggle-pass{position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:transparent;border:none;cursor:pointer;color:#666;font-size:1.05rem}
+    .login-error{margin-top:.75rem;background:#FFEBEE;color:#B71C1C;padding:.75rem;border-radius:10px;display:none}
     .remember{display:flex;align-items:center;gap:.5rem;color:var(--text-light);font-size:.95rem}
 
-    /* --- Admin UI (panel existente) --- */
-    .container{max-width:1400px;margin:0 auto;background:#fff;border-radius:24px;padding:3rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-    .header{text-align:center;margin-bottom:2rem;position:relative}
-    .header h1{font-family:'Mountains of Christmas',cursive;font-size:3em;color:var(--primary-red);margin-bottom:.5rem}
-    .header .badge{display:inline-block;background:linear-gradient(135deg,var(--primary-gold),#FDD835);color:var(--text-dark);padding:.5rem 1.5rem;border-radius:50px;font-weight:700;font-size:.9em}
-    .header p{color:var(--text-light);font-size:1.05em;margin-top:.75rem}
-    .topbar{
-      position:absolute;right:0;top:0;display:flex;gap:.5rem;align-items:center
-    }
-    .link{appearance:none;border:none;background:transparent;color:var(--primary-blue);font-weight:700;cursor:pointer}
-    .danger{color:#C62828}
-    .pill{padding:.35rem .75rem;border-radius:999px;border:2px solid #E0E0E0}
+    /* ---------- Admin ---------- */
+    .container{max-width:1400px;margin:0 auto;background:#fff;border-radius:24px;padding:2rem 2rem 3rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .header{text-align:center;margin-bottom:1.2rem;position:relative}
+    .header h1{font-family:'Mountains of Christmas',cursive;font-size:2.6em;color:var(--primary-red);margin-bottom:.35rem}
+    .header .badge{display:inline-block;background:linear-gradient(135deg,var(--primary-gold),#FDD835);color:var(--text-dark);padding:.45rem 1.1rem;border-radius:50px;font-weight:700;font-size:.9em}
+    .header p{color:var(--text-light);font-size:1.02em;margin-top:.6rem}
+    .topbar{position:absolute;right:0;top:0;display:flex;gap:.5rem;align-items:center}
 
-    .cards-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:2rem;margin-bottom:2rem}
-    .card-form{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);padding:2rem;border-radius:16px;border-left:5px solid var(--primary-blue)}
-    .card-form h3{color:var(--text-dark);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;font-size:1.5em}
-
-    .form-group{margin-bottom:1.5rem}
-    .form-group label{display:block;font-weight:600;color:var(--text-dark);margin-bottom:.5rem}
-    .form-group input,.form-group textarea{width:100%;padding:.8rem;border:2px solid #E0E0E0;border-radius:8px;font-size:1em;transition:border-color .3s}
-    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--primary-blue)}
-    .form-group textarea{resize:vertical;min-height:100px}
-    .form-group small{display:block;color:var(--text-light);margin-top:.5rem;line-height:1.5}
-
-    .upload-area{border:3px dashed var(--primary-blue);border-radius:16px;padding:2rem;text-align:center;background:#fff;cursor:pointer;transition:all .3s;margin-bottom:1rem}
-    .upload-area:hover{border-color:var(--primary-red);background:#FFF5F5;transform:translateY(-4px)}
-    .upload-area.has-image{border-color:var(--primary-green);background:#F0FFF4}
-    .upload-icon{font-size:3em;color:var(--primary-blue);margin-bottom:.5rem}
-    .preview-image{width:100%;height:200px;object-fit:cover;border-radius:12px;margin-top:1rem;display:none}
-    .preview-image.visible{display:block}
-
-    .btn{padding:1rem 2rem;border:none;border-radius:50px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:.5rem;justify-content:center;width:100%}
-    .btn-primary{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff}
-    .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(231,76,60,.4)}
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-
-    .status{text-align:center;padding:1rem;border-radius:12px;margin-top:1rem;font-weight:600}
-    .status.success{background:#C8E6C9;color:#1B5E20}
-    .status.error{background:#FFCDD2;color:#B71C1C}
-    .status.info{background:#BBDEFB;color:#0D47A1}
-
-    .cards-list{margin-top:3rem;background:#F8F9FA;padding:2rem;border-radius:16px}
-    .cards-list h2{font-family:'Mountains of Christmas',cursive;color:var(--text-dark);margin-bottom:1.5rem;text-align:center}
-    .saved-card{background:#fff;padding:1.5rem;border-radius:12px;margin-bottom:1rem;box-shadow:0 2px 8px rgba(0,0,0,.1);display:grid;grid-template-columns:100px 1fr auto;gap:1rem;align-items:center}
-    .saved-card img{width:100px;height:100px;object-fit:cover;border-radius:8px}
-    .saved-card-info h4{color:var(--text-dark);margin-bottom:.3rem}
-    .saved-card-info p{color:var(--text-light);font-size:.9em;margin-bottom:.2rem}
-    .saved-card-info .price{color:var(--primary-gold);font-weight:700;font-size:1.2em}
-    .btn-delete{background:linear-gradient(135deg,#E53935,#C62828);color:#fff;padding:.5rem 1rem;border:none;border-radius:25px;cursor:pointer;font-weight:600;transition:all .3s}
-    .btn-delete:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(229,57,53,.4)}
-
-    /* PAT banner */
     .pat-banner{display:none;margin:0 0 16px 0;padding:12px;border-radius:12px;border:2px dashed #FFC107;background:#FFF9E6}
     .pat-input{display:flex;gap:.5rem;margin-top:.5rem}
-    .pat-input input{flex:1;padding:.6rem .8rem;border:2px solid #E0E0E0;border-radius:10px}
+    .pat-input input{flex:1}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:1.4rem;margin:1rem 0 2rem}
+    .card{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);padding:1.3rem;border-radius:16px;border-left:5px solid var(--primary-blue)}
+    .card h3{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;margin-bottom:.9rem;color:#0F172A}
+
+    .upload-area{border:3px dashed var(--primary-blue);border-radius:16px;padding:1.3rem;text-align:center;background:#fff;cursor:pointer;transition:.2s;margin-bottom:.8rem}
+    .upload-area:hover{border-color:var(--primary-red);background:#FFF5F5;transform:translateY(-2px)}
+    .upload-area.has-image{border-color:var(--primary-green);background:#F0FFF4}
+    .upload-icon{font-size:2.4em;color:var(--primary-blue);margin-bottom:.4rem}
+    .preview-image{width:100%;height:190px;object-fit:cover;border-radius:12px;margin-top:.6rem;display:none}
+    .preview-image.visible{display:block}
+
+    .row{display:grid;grid-template-columns:1fr;gap:.75rem;margin:.75rem 0}
+    .hint{color:var(--text-light);font-size:.88rem}
+    .status{margin-top:.6rem;font-weight:700;border-radius:10px;padding:.65rem;text-align:center}
+    .status.info{background:#E3F2FD;color:#0D47A1}
+    .status.success{background:#E8F5E9;color:#1B5E20}
+    .status.error{background:#FFEBEE;color:#B71C1C}
+
+    .list{margin-top:1.2rem;background:#F8F9FA;padding:1.2rem;border-radius:16px}
+    .list h2{font-family:'Mountains of Christmas',cursive;margin:0 0 .9rem;text-align:center}
+    .saved-card{background:#fff;padding:1rem;border-radius:12px;margin-bottom:.7rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:grid;grid-template-columns:90px 1fr auto;gap:.8rem;align-items:center}
+    .saved-card img{width:90px;height:90px;object-fit:cover;border-radius:10px}
+    .saved-card .meta h4{margin:.1rem 0 .25rem}
+    .skeleton{background:linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);background-size:400% 100%;animation:skeleton 1.4s ease infinite}
+    @keyframes skeleton{0%{background-position:100% 0}100%{background-position:0 0}}
+
+    /* ---------- Toasts ---------- */
+    .toasts{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:.6rem;z-index:9999}
+    .toast{min-width:280px;max-width:420px;background:#fff;border-left:6px solid var(--primary-blue);padding:.9rem 1rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);display:flex;gap:.6rem;align-items:flex-start;animation:pop .18s ease}
+    .toast.ok{border-color:var(--ok)}
+    .toast.warn{border-color:#F59E0B}
+    .toast.err{border-color:var(--danger)}
+    .toast .icon{font-size:1.2rem;margin-top:.1rem}
+    .toast .body{flex:1}
+    .toast .title{font-weight:800;margin-bottom:.2rem}
+    .toast .close{background:transparent;border:none;cursor:pointer;color:#64748B}
+    @keyframes pop{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ---------- Modal ---------- */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:9998}
+    .modal{width:min(560px,92vw);background:#fff;border-radius:18px;box-shadow:0 25px 60px rgba(0,0,0,.35);overflow:hidden}
+    .modal-hd{padding:1rem 1.2rem;border-bottom:1px solid #ECEFF1;font-weight:800;display:flex;align-items:center;gap:.6rem}
+    .modal-bd{padding:1.1rem}
+    .modal-ft{padding:1rem 1.2rem;display:flex;justify-content:flex-end;gap:.6rem;border-top:1px solid #ECEFF1}
+
+    /* ---------- Overlay (loader global) ---------- */
+    .overlay{position:fixed;inset:0;background:rgba(255,255,255,.55);backdrop-filter:blur(1px);display:none;align-items:center;justify-content:center;z-index:9997}
+    .spinner{width:54px;height:54px;border:6px solid #e5e7eb;border-top-color:#1E88E5;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
     @media (max-width:768px){
-      .container{padding:1.5rem}
-      .header h1{font-size:2em}
-      .cards-container{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
       .saved-card{grid-template-columns:80px 1fr}
       .saved-card img{width:80px;height:80px}
-      .btn-delete{grid-column:1/-1;width:100%;margin-top:.5rem}
     }
   </style>
 </head>
 <body>
 
+  <!-- Toasts / Modal / Overlay -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="overlay" class="overlay" aria-hidden="true"><div class="spinner" role="status" aria-label="Cargando"></div></div>
+  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="modalTitle">
+      <div class="modal-hd"><i class="fa-solid fa-circle-question" style="color:#0EA5E9"></i><span id="modalTitle">Confirmar acción</span></div>
+      <div class="modal-bd" id="modalBody">¿Deseas continuar?</div>
+      <div class="modal-ft">
+        <button id="modalCancel" class="btn btn-ghost">Cancelar</button>
+        <button id="modalOk" class="btn btn-danger">Sí, continuar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- LOGIN VIEW -->
-  <div id="loginView" class="login-wrap" aria-live="polite">
+  <div id="loginView" class="login-wrap shadow-soft rounded-xl" aria-live="polite">
     <div class="login-header">
       <img src="christmas-pringle-logo.png" alt="Christmas Pringle" />
       <div>
@@ -128,69 +156,127 @@
       <form id="loginForm">
         <div class="form-row">
           <label for="loginUser"><i class="fa-solid fa-user"></i> Usuario</label>
-          <input id="loginUser" type="text" autocomplete="username" required placeholder="Usuario"/>
+          <input id="loginUser" class="focus-ring" type="text" autocomplete="username" required placeholder="Usuario"/>
         </div>
         <div class="form-row password-row">
           <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
-          <input id="loginPass" type="password" autocomplete="current-password" required placeholder="Contraseña"/>
-          <button type="button" id="togglePass" class="toggle-pass" aria-label="Mostrar u ocultar contraseña">
+          <input id="loginPass" class="focus-ring" type="password" autocomplete="current-password" required placeholder="Contraseña"/>
+          <button type="button" id="togglePass" class="toggle-pass focus-ring" aria-label="Mostrar u ocultar contraseña">
             <i class="fa-regular fa-eye"></i>
           </button>
         </div>
-        <div class="login-actions">
-          <label class="remember"><input id="rememberMe" type="checkbox"/> Recordarme</label>
+        <label class="remember"><input id="rememberMe" type="checkbox"/> Recordarme</label>
+        <div style="display:flex;gap:.6rem;margin-top:.9rem">
+          <button class="btn btn-green focus-ring" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+          <a class="btn btn-ghost focus-ring" href="index.html"><i class="fa-solid fa-arrow-left"></i> Ir al sitio</a>
         </div>
-        <button class="login-btn" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
         <div id="loginError" class="login-error"></div>
       </form>
     </div>
   </div>
 
-  <!-- ADMIN VIEW (oculto hasta login correcto) -->
+  <!-- ADMIN VIEW -->
   <div id="adminView" style="display:none">
-    <div class="container">
-      <a href="index.html" class="link pill"><i class="fas fa-arrow-left"></i> Volver al sitio</a>
-
+    <div class="container rounded-2xl shadow-soft">
       <div class="header">
         <div class="topbar">
-          <span id="patStatus" class="pill" title="Estado del token de GitHub"></span>
-          <button id="logoutBtn" class="link danger"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+          <span id="patStatus" class="chip" title="Estado del token de GitHub"></span>
+          <button id="copyPatBtn" class="btn btn-ghost focus-ring" title="Copiar PAT en portapapeles"><i class="fa-regular fa-copy"></i> Copiar</button>
+          <button id="logoutBtn" class="btn btn-ghost focus-ring" style="color:var(--danger)"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         </div>
         <h1>🎨 Panel de Administración PRO</h1>
         <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
         <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
       </div>
 
-      <!-- Banner para capturar PAT si no existe -->
       <div id="patBanner" class="pat-banner">
-        <b><i class="fa-solid fa-key"></i> Token de acceso GitHub requerido</b>
+        <b><i class="fa-solid fa-key"></i> Necesitas un token (PAT) de GitHub con scope <code>repo</code> para subir archivos.</b>
         <div class="pat-input">
-          <input id="patInput" type="password" placeholder="ghp_**********************" />
-          <button id="savePatBtn" class="login-btn" type="button" style="width:auto;padding:.8rem 1.2rem"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+          <input id="patInput" class="focus-ring" type="password" placeholder="ghp_**********************" />
+          <button id="savePatBtn" class="btn btn-blue focus-ring" type="button"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
         </div>
+        <div class="hint" style="margin-top:.4rem">Tu PAT se guarda localmente en este navegador y no se comparte con el servidor.</div>
       </div>
 
-      <div class="cards-container" id="cardsContainer"></div>
+      <div id="cardsContainer" class="grid"></div>
 
-      <div id="statusMessage"></div>
-      <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-
-      <div class="cards-list">
+      <div class="list">
         <h2>📋 Tarjetas Guardadas</h2>
-        <div id="savedCardsList"></div>
+        <div id="savedCardsList">
+          <!-- skeletons -->
+          <div class="saved-card">
+            <div class="skeleton" style="width:90px;height:90px;border-radius:10px"></div>
+            <div>
+              <div class="skeleton" style="height:16px;width:60%;border-radius:6px;margin-bottom:8px"></div>
+              <div class="skeleton" style="height:12px;width:80%;border-radius:6px;margin-bottom:6px"></div>
+              <div class="skeleton" style="height:12px;width:40%;border-radius:6px"></div>
+            </div>
+            <div class="skeleton" style="height:36px;width:110px;border-radius:999px"></div>
+          </div>
+          <div class="saved-card">
+            <div class="skeleton" style="width:90px;height:90px;border-radius:10px"></div>
+            <div>
+              <div class="skeleton" style="height:16px;width:50%;border-radius:6px;margin-bottom:8px"></div>
+              <div class="skeleton" style="height:12px;width:70%;border-radius:6px;margin-bottom:6px"></div>
+              <div class="skeleton" style="height:12px;width:35%;border-radius:6px"></div>
+            </div>
+            <div class="skeleton" style="height:36px;width:110px;border-radius:999px"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    /********************
-     * AUTH (DEMO LOGIN)
-     ********************/
+    /************** Utilidades UI (Toast / Modal / Overlay) **************/
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    const overlay = $('#overlay');
+    const toasts = $('#toasts');
+    const modalBackdrop = $('#modalBackdrop');
+    const modalTitle = $('#modalTitle');
+    const modalBody  = $('#modalBody');
+    const modalOk    = $('#modalOk');
+    const modalCancel= $('#modalCancel');
+
+    const UI = {
+      busy(on=true){ overlay.style.display = on ? 'flex' : 'none'; overlay.setAttribute('aria-hidden', on?'false':'true'); },
+      toast(type, title, msg){
+        const wrap = document.createElement('div');
+        wrap.className = 'toast ' + (type||'');
+        wrap.innerHTML = `
+          <div class="icon">${type==='ok'?'✅':type==='warn'?'⚠️':type==='err'?'⛔':'ℹ️'}</div>
+          <div class="body">
+            <div class="title">${title||''}</div>
+            <div class="msg">${msg||''}</div>
+          </div>
+          <button class="close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        `;
+        wrap.querySelector('.close').onclick = ()=> wrap.remove();
+        toasts.appendChild(wrap);
+        setTimeout(()=>wrap.remove(), 5000);
+      },
+      confirm({title='Confirmar', body='¿Continuar?', okText='Sí, continuar', cancelText='Cancelar'}){
+        return new Promise(res=>{
+          modalTitle.textContent = title;
+          modalBody.innerHTML = body;
+          modalOk.textContent = okText;
+          modalCancel.textContent = cancelText;
+          modalBackdrop.style.display='flex';
+          const done = v=>{ modalBackdrop.style.display='none'; res(v); }
+          modalOk.onclick = ()=> done(true);
+          modalCancel.onclick = ()=> done(false);
+          modalBackdrop.onclick = (e)=>{ if(e.target===modalBackdrop) done(false); }
+        });
+      }
+    };
+
+    /******************** AUTH (Login) ********************/
     const AUTH_STORAGE_KEY = 'cp_admin_auth';
     const AUTH_TOKEN_PREFIX = 'ok:';
     const USERNAME = 'patripringle';
-
-    // SHA-256 real de "SoyPatri1978" (hex)
+    // SHA-256("SoyPatri1978") en hex
     const PASSWORD_HASH_HEX = 'bd6b0c1ce7ad786ca69c80302ff2f14296958630bf0de8b47ef12bcf45b58276';
 
     async function sha256Hex(str){
@@ -199,221 +285,279 @@
       const bytes = Array.from(new Uint8Array(buf));
       return bytes.map(b=>b.toString(16).padStart(2,'0')).join('');
     }
-
     function setSession(remember=false){
       const now = Date.now();
-      const ttl = remember ? 1000*60*60*24*7 : 1000*60*60*8; // 7 días vs 8 horas
+      const ttl = remember ? 1000*60*60*24*7 : 1000*60*60*8;
       const payload = { exp: now + ttl };
       localStorage.setItem(AUTH_STORAGE_KEY, AUTH_TOKEN_PREFIX + btoa(JSON.stringify(payload)));
     }
-
-    function clearSession(){
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-    }
-
+    function clearSession(){ localStorage.removeItem(AUTH_STORAGE_KEY); }
     function isSessionValid(){
       const token = localStorage.getItem(AUTH_STORAGE_KEY);
       if(!token || !token.startsWith(AUTH_TOKEN_PREFIX)) return false;
-      try{
-        const payload = JSON.parse(atob(token.slice(AUTH_TOKEN_PREFIX.length)));
-        return payload.exp && Date.now() < payload.exp;
-      }catch{ return false; }
+      try{ const payload = JSON.parse(atob(token.slice(AUTH_TOKEN_PREFIX.length))); return payload.exp && Date.now() < payload.exp; }
+      catch{ return false; }
     }
+    function showLogin(){ $('#loginView').style.display='block'; $('#adminView').style.display='none'; }
+    function showAdmin(){ $('#loginView').style.display='none'; $('#adminView').style.display='block'; }
 
-    function showLogin(){
-      document.getElementById('loginView').style.display = 'block';
-      document.getElementById('adminView').style.display = 'none';
-    }
-    function showAdmin(){
-      document.getElementById('loginView').style.display = 'none';
-      document.getElementById('adminView').style.display = 'block';
-    }
-
-    // Toggle ver/ocultar contraseña
-    const passInput = document.getElementById('loginPass');
-    const toggleBtn = document.getElementById('togglePass');
+    // Login UI
+    const passInput = $('#loginPass');
+    const toggleBtn = $('#togglePass');
     toggleBtn.addEventListener('click', ()=>{
       const isPwd = passInput.type === 'password';
       passInput.type = isPwd ? 'text' : 'password';
       toggleBtn.innerHTML = isPwd ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
     });
 
-    document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+    $('#loginForm').addEventListener('submit', async (e)=>{
       e.preventDefault();
-      const u = document.getElementById('loginUser').value.trim();
-      const p = document.getElementById('loginPass').value;
-      const remember = document.getElementById('rememberMe').checked;
-      const errBox = document.getElementById('loginError');
+      const u = $('#loginUser').value.trim();
+      const p = $('#loginPass').value;
+      const remember = $('#rememberMe').checked;
+      const errBox = $('#loginError');
 
       try{
         const hash = await sha256Hex(p);
         if (u === USERNAME && hash === PASSWORD_HASH_HEX){
           setSession(remember);
-          errBox.style.display = 'none';
-          initAdmin(); // continúa flujo admin
+          errBox.style.display='none';
+          UI.toast('ok','Bienvenido','Acceso concedido');
+          initAdmin();
         } else {
           errBox.textContent = 'Usuario o contraseña inválidos.';
           errBox.style.display = 'block';
+          UI.toast('err','Acceso denegado','Revisa tus credenciales');
         }
-      }catch(err){
+      }catch{
         errBox.textContent = 'Error de autenticación.';
         errBox.style.display = 'block';
+        UI.toast('err','Error','No fue posible autenticar');
       }
     });
 
-    document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    $('#logoutBtn').addEventListener('click', async ()=>{
+      const ok = await UI.confirm({ title:'Cerrar sesión', body:'¿Seguro que deseas salir?', okText:'Sí, salir' });
+      if(!ok) return;
       clearSession();
       showLogin();
+      UI.toast('ok','Sesión cerrada','Hasta pronto');
     });
 
-    /********************
-     * ADMIN LÓGICA
-     ********************/
-    const GITHUB_CONFIG = {
-      token: null, // se llena desde localStorage cp_pat
-      username: 'jmarinr',
-      repo: 'christmaspringle'
-    };
-
+    /******************** ADMIN (PAT + Cards) ********************/
+    const GITHUB_CONFIG = { token:null, username:'jmarinr', repo:'christmaspringle' };
     const MAX_CARDS = 10;
     let cardsData = [];
 
-    // UI PAT
-    const patBanner = document.getElementById('patBanner');
-    const patStatus = document.getElementById('patStatus');
-    document.getElementById('savePatBtn').addEventListener('click', ()=>{
-      const v = document.getElementById('patInput').value.trim();
-      if(!v){ alert('Pega tu PAT.'); return; }
-      localStorage.setItem('cp_pat', v);
-      GITHUB_CONFIG.token = v;
-      refreshPatUi();
-    });
+    const patBanner = $('#patBanner');
+    const patStatus = $('#patStatus');
+    const patInput  = $('#patInput');
 
     function refreshPatUi(){
       const pat = localStorage.getItem('cp_pat') || '';
       if(!pat){
         patBanner.style.display = 'block';
-        patStatus.textContent = 'PAT: faltante';
-        patStatus.style.borderColor = '#ff9800';
-        return;
+        patStatus.innerHTML = `<i class="fa-solid fa-key"></i> PAT: <b style="color:#F59E0B">faltante</b>`;
+        patStatus.style.borderColor = '#F59E0B';
+        GITHUB_CONFIG.token = null;
+      }else{
+        GITHUB_CONFIG.token = pat;
+        patBanner.style.display = 'none';
+        const masked = pat.length>10 ? pat.slice(0,4)+'****'+pat.slice(-4) : '********';
+        patStatus.innerHTML = `<i class="fa-solid fa-key"></i> PAT: <b style="color:#2E7D32">ok</b> <span class="hint" style="margin-left:.35rem">(${masked})</span>`;
+        patStatus.style.borderColor = '#66bb6a';
       }
-      GITHUB_CONFIG.token = pat;
-      patBanner.style.display = 'none';
-      patStatus.textContent = 'PAT: ok';
-      patStatus.style.borderColor = '#66bb6a';
     }
+    $('#savePatBtn').addEventListener('click', ()=>{
+      const v = patInput.value.trim();
+      if(!v){ UI.toast('warn','Token vacío','Pega tu PAT'); patInput.focus(); return; }
+      localStorage.setItem('cp_pat', v);
+      patInput.value='';
+      refreshPatUi();
+      UI.toast('ok','Token guardado','Listo para subir a GitHub');
+    });
+    $('#copyPatBtn').addEventListener('click', async ()=>{
+      const pat = localStorage.getItem('cp_pat') || '';
+      if(!pat){ UI.toast('warn','No hay PAT','Guárdalo primero'); return; }
+      try{ await navigator.clipboard.writeText(pat); UI.toast('ok','Copiado','Token al portapapeles'); }
+      catch{ UI.toast('warn','No se pudo copiar','Permite el portapapeles'); }
+    });
 
-    // Cargar datos guardados localmente
     function loadCardsData(){
       const saved = localStorage.getItem('christmasPringleCards');
       if (saved) cardsData = JSON.parse(saved);
       renderCardForms();
       renderSavedCards();
     }
-    function saveCardsData(){
-      localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData));
-      renderSavedCards();
-    }
+    function saveCardsData(){ localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData)); renderSavedCards(); }
 
-    function renderCardForms(){
-      const container = document.getElementById('cardsContainer');
-      container.innerHTML = '';
-      for (let i=0;i<MAX_CARDS;i++){
-        const n = i+1;
-        const existing = cardsData.find(c=>c.number===n);
-        const el = document.createElement('div');
-        el.className = 'card-form';
-        el.innerHTML = `
+    function cardForm(n, existing){
+      return `
+        <div class="card">
           <h3><i class="fas fa-snowflake"></i> Tarjeta #${n}</h3>
-          <div class="upload-area" id="uploadArea${n}" data-card="${n}">
+          <div class="upload-area" id="uploadArea${n}" data-card="${n}" tabindex="0" role="button" aria-label="Seleccionar imagen para tarjeta ${n}">
             <i class="fas fa-cloud-upload-alt upload-icon"></i>
-            <h4>Clic para seleccionar imagen</h4>
-            <p>PNG, JPG, JPEG (Máx: 5MB)</p>
+            <div>PNG, JPG, JPEG (Máx: 5MB)</div>
             <input type="file" id="fileInput${n}" accept="image/png,image/jpeg,image/jpg" style="display:none;">
             <img id="preview${n}" class="preview-image" alt="Vista previa">
           </div>
-          <div class="form-group">
-            <label for="title${n}"><i class="fas fa-heading"></i> Título de la tarjeta</label>
-            <input type="text" id="title${n}" placeholder="Ej: Árbol de Esperanza" value="${existing?existing.title:''}">
-            <small>Máximo 50 caracteres</small>
+          <div class="row">
+            <label for="title${n}"><i class="fas fa-heading"></i> Título</label>
+            <input type="text" id="title${n}" placeholder="Ej: Árbol de Esperanza" value="${existing?escapeHtml(existing.title):''}">
+            <div class="hint" id="hintTitle${n}"></div>
           </div>
-          <div class="form-group">
+          <div class="row">
             <label for="description${n}"><i class="fas fa-align-left"></i> Descripción</label>
-            <textarea id="description${n}" placeholder="Describe tu tarjeta navideña...">${existing?existing.description:''}</textarea>
-            <small>Máximo 200 caracteres</small>
+            <textarea id="description${n}" placeholder="Describe tu tarjeta navideña...">${existing?escapeHtml(existing.description):''}</textarea>
+            <div class="hint" id="hintDesc${n}"></div>
           </div>
-          <div class="form-group">
+          <div class="row">
             <label for="price${n}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
             <input type="number" id="price${n}" placeholder="15.00" step="0.01" min="0" value="${existing?existing.price:''}">
-            <small>Precio en dólares estadounidenses</small>
+            <div class="hint" id="hintPrice${n}"></div>
           </div>
-          <button class="btn btn-primary" id="uploadBtn${n}" onclick="uploadCard(${n})" disabled>
-            <i class="fas fa-upload"></i> <span>Subir Tarjeta #${n}</span>
-          </button>
-          <div id="status${n}"></div>
-        `;
-        container.appendChild(el);
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+            <button class="btn btn-primary" id="uploadBtn${n}" onclick="uploadCard(${n})" disabled><i class="fas fa-upload"></i> Subir #${n}</button>
+            <button class="btn btn-ghost" type="button" onclick="resetForm(${n})"><i class="fas fa-rotate"></i> Limpiar</button>
+          </div>
+          <div id="status${n}" aria-live="polite" style="min-height:44px"></div>
+        </div>
+      `;
+    }
+    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+
+    function renderCardForms(){
+      const container = $('#cardsContainer');
+      container.innerHTML = '';
+      for(let i=0;i<MAX_CARDS;i++){
+        const n=i+1;
+        const existing = cardsData.find(c=>c.number===n);
+        const wrap = document.createElement('div');
+        wrap.innerHTML = cardForm(n, existing);
+        container.appendChild(wrap.firstElementChild);
         setupCardUpload(n);
+        if(existing){
+          // precargar imagen si existe
+          const img = new Image();
+          img.onload = ()=>{
+            const pv = $(`#preview${n}`);
+            pv.src = `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${existing.image}`;
+            pv.classList.add('visible');
+            $(`#uploadArea${n}`).classList.add('has-image');
+          };
+          img.src = `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${existing.image}`;
+          $(`#uploadBtn${n}`).disabled = true; // hasta que elija nueva imagen
+        }
       }
     }
 
     function setupCardUpload(n){
-      const uploadArea = document.getElementById(`uploadArea${n}`);
-      const fileInput  = document.getElementById(`fileInput${n}`);
-      const preview    = document.getElementById(`preview${n}`);
-      const uploadBtn  = document.getElementById(`uploadBtn${n}`);
-      const titleInput = document.getElementById(`title${n}`);
-      const descInput  = document.getElementById(`description${n}`);
-      const priceInput = document.getElementById(`price${n}`);
+      const uploadArea = $(`#uploadArea${n}`);
+      const fileInput  = $(`#fileInput${n}`);
+      const preview    = $(`#preview${n}`);
+      const uploadBtn  = $(`#uploadBtn${n}`);
+
+      const titleInput = $(`#title${n}`);
+      const descInput  = $(`#description${n}`);
+      const priceInput = $(`#price${n}`);
+
+      const hintT = $(`#hintTitle${n}`);
+      const hintD = $(`#hintDesc${n}`);
+      const hintP = $(`#hintPrice${n}`);
+
+      const validate = ()=>{
+        let ok = true;
+        const t = titleInput.value.trim();
+        const d = descInput.value.trim();
+        const p = Number(priceInput.value);
+        hintT.textContent = t ? '' : 'Requerido';
+        hintD.textContent = d ? '' : 'Requerido';
+        hintP.textContent = (p>0 && !Number.isNaN(p)) ? '' : 'Debe ser un número mayor que 0';
+        if(!t || !d || !(p>0)) ok=false;
+        if(fileInput.files.length===0) ok=false;
+        uploadBtn.disabled = !ok;
+      };
 
       uploadArea.addEventListener('click', ()=>fileInput.click());
+      uploadArea.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); fileInput.click(); }});
       fileInput.addEventListener('change', (e)=>{
         const file = e.target.files[0];
         if(file){
           if(file.size > 5*1024*1024){
-            showCardStatus(n,'La imagen debe ser menor a 5MB','error');return;
+            showCardStatus(n,'La imagen debe ser menor a 5MB','error'); fileInput.value=''; return;
           }
           const reader = new FileReader();
           reader.onload = ev=>{
             preview.src = ev.target.result;
             preview.classList.add('visible');
             uploadArea.classList.add('has-image');
-            validateCard(n);
+            validate();
           };
           reader.readAsDataURL(file);
-        }
+        } else { preview.classList.remove('visible'); uploadArea.classList.remove('has-image'); validate(); }
       });
-      [titleInput,descInput,priceInput].forEach(inp=>{
-        inp.addEventListener('input', ()=>validateCard(n));
-      });
+      [titleInput,descInput,priceInput].forEach(inp=> inp.addEventListener('input', validate));
     }
 
-    function validateCard(n){
-      const fileInput = document.getElementById(`fileInput${n}`);
-      const title = document.getElementById(`title${n}`).value.trim();
-      const description = document.getElementById(`description${n}`).value.trim();
-      const price = document.getElementById(`price${n}`).value;
-      const uploadBtn = document.getElementById(`uploadBtn${n}`);
-      const isValid = fileInput.files.length>0 && title && description && price>0;
-      uploadBtn.disabled = !isValid;
+    function showCardStatus(n,message,type){
+      const status = $(`#status${n}`);
+      status.innerHTML = `<div class="status ${type}">${message}</div>`;
+    }
+
+    function resetForm(n){
+      const fi = $(`#fileInput${n}`), pv = $(`#preview${n}`), ua = $(`#uploadArea${n}`);
+      const ti = $(`#title${n}`), di = $(`#description${n}`), pi = $(`#price${n}`);
+      if(fi) fi.value='';
+      if(pv) pv.classList.remove('visible');
+      if(ua) ua.classList.remove('has-image');
+      if(ti) ti.value='';
+      if(di) di.value='';
+      if(pi) pi.value='';
+      const ub = $(`#uploadBtn${n}`); if(ub) ub.disabled = true;
+      $(`#hintTitle${n}`).textContent='';
+      $(`#hintDesc${n}`).textContent='';
+      $(`#hintPrice${n}`).textContent='';
+      showCardStatus(n,'','info'); // limpia status
+      UI.toast('ok','Formulario limpio',`Tarjeta #${n}`);
+    }
+
+    async function convertToPNG(file){
+      return new Promise(resolve=>{
+        const reader = new FileReader();
+        reader.onload = e=>{
+          const img = new Image();
+          img.onload = ()=>{
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width; canvas.height = img.height;
+            const ctx = canvas.getContext('2d'); ctx.drawImage(img,0,0);
+            canvas.toBlob(blob=>resolve(blob),'image/png');
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    function blobToBase64(blob){
+      return new Promise(resolve=>{
+        const r = new FileReader();
+        r.onloadend = ()=>resolve(r.result);
+        r.readAsDataURL(blob);
+      });
     }
 
     async function uploadCard(n){
-      if(!GITHUB_CONFIG.token){
-        alert('Falta PAT. Guarda tu token primero.');
-        return;
-      }
-      const fileInput = document.getElementById(`fileInput${n}`);
-      const title = document.getElementById(`title${n}`).value.trim();
-      const description = document.getElementById(`description${n}`).value.trim();
-      const price = parseFloat(document.getElementById(`price${n}`).value);
-      const uploadBtn = document.getElementById(`uploadBtn${n}`);
+      if(!GITHUB_CONFIG.token){ UI.toast('warn','Falta PAT','Guárdalo para poder subir'); patInput.focus(); return; }
+      const fileInput = $(`#fileInput${n}`);
+      const title = $(`#title${n}`).value.trim();
+      const description = $(`#description${n}`).value.trim();
+      const price = parseFloat($(`#price${n}`).value);
+      const uploadBtn = $(`#uploadBtn${n}`);
 
-      if(!fileInput.files[0]||!title||!description||!price){
-        showCardStatus(n,'Por favor completa todos los campos','error');return;
+      if(!fileInput.files[0] || !title || !description || !(price>0)){
+        showCardStatus(n,'Completa todos los campos y selecciona una imagen','error'); return;
       }
-
       uploadBtn.disabled = true;
+      UI.busy(true);
       showCardStatus(n,'Subiendo a GitHub...','info');
 
       try{
@@ -429,26 +573,26 @@
         saveCardsData();
         await updateCardsJSON();
 
+        // Limpieza visual lógica
+        fileInput.value='';
+        const pv = $(`#preview${n}`), ua=$(`#uploadArea${n}`);
+        if(pv) pv.classList.remove('visible');
+        if(ua) ua.classList.remove('has-image');
+        uploadBtn.disabled = true;
         showCardStatus(n,'¡Tarjeta subida exitosamente! 🎉','success');
+        UI.toast('ok','Subida completa',`Tarjeta #${n} actualizada`);
       }catch(error){
-        if(String(error?.message||'').includes('Bad credentials')){
-          showCardStatus(n,'❌ Error de autenticación con GitHub. Verifica el PAT.','error');
-        }else{
-          showCardStatus(n,'Error: '+(error?.message||'falló la subida'),'error');
-        }
-        console.error('Error completo:', error);
+        const msg = String(error?.message||'falló la subida');
+        if(msg.includes('Bad credentials')){ showCardStatus(n,'❌ Error de autenticación con GitHub. Verifica el PAT.','error'); UI.toast('err','Credenciales inválidas','Revisa el token'); }
+        else { showCardStatus(n,'Error: '+msg,'error'); UI.toast('err','Error al subir',msg); }
+        console.error(error);
       }finally{
+        UI.busy(false);
         uploadBtn.disabled=false;
       }
     }
 
-    function showCardStatus(n,msg,type){
-      const div = document.getElementById(`status${n}`);
-      div.innerHTML = `<div class="status ${type}">${msg}</div>`;
-    }
-
     async function updateCardsJSON(){
-      // ordena por número
       cardsData.sort((a,b)=>a.number-b.number);
       const jsonContent = JSON.stringify(cardsData,null,2);
       const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
@@ -508,55 +652,43 @@
       return resp.json();
     }
 
-    function convertToPNG(file){
-      return new Promise(resolve=>{
-        const reader = new FileReader();
-        reader.onload = e=>{
-          const img = new Image();
-          img.onload = ()=>{
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width; canvas.height = img.height;
-            const ctx = canvas.getContext('2d'); ctx.drawImage(img,0,0);
-            canvas.toBlob(blob=>resolve(blob),'image/png');
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-    function blobToBase64(blob){
-      return new Promise(resolve=>{
-        const r = new FileReader();
-        r.onloadend = ()=>resolve(r.result);
-        r.readAsDataURL(blob);
-      });
-    }
-
     function renderSavedCards(){
-      const container = document.getElementById('savedCardsList');
-      if(cardsData.length===0){
-        container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:2rem;">No hay tarjetas guardadas aún</p>';
+      const container = $('#savedCardsList');
+      if(!cardsData || cardsData.length===0){
+        container.innerHTML = `<div class="hint" style="text-align:center;padding:1.2rem">No hay tarjetas guardadas aún</div>`;
         return;
       }
       container.innerHTML = cardsData
         .sort((a,b)=>a.number-b.number)
         .map(c=>`
           <div class="saved-card">
-            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${c.image}" alt="${c.title}">
-            <div class="saved-card-info">
-              <h4>#${c.number} - ${c.title}</h4>
-              <p>${c.description}</p>
-              <p class="price">$${Number(c.price).toFixed(2)}</p>
-              <p style="font-size:.8em;opacity:.7;">Actualizado: ${new Date(c.uploadedAt).toLocaleString()}</p>
+            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${c.image}" alt="${escapeHtml(c.title)}">
+            <div class="meta">
+              <h4>#${c.number} - ${escapeHtml(c.title)}</h4>
+              <div class="hint">${escapeHtml(c.description)}</div>
+              <div class="chip" style="margin-top:.35rem"><i class="fa-solid fa-tag"></i> $${Number(c.price).toFixed(2)}</div>
+              <div class="hint" style="margin-top:.25rem">Actualizado: ${new Date(c.uploadedAt).toLocaleString()}</div>
             </div>
-            <button class="btn-delete" onclick="deleteCard(${c.number})"><i class="fas fa-trash"></i> Eliminar</button>
+            <div>
+              <button class="btn btn-danger" onclick="askDelete(${c.number})"><i class="fas fa-trash"></i> Eliminar</button>
+            </div>
           </div>
         `).join('');
     }
 
+    async function askDelete(n){
+      const ok = await UI.confirm({
+        title:'Eliminar tarjeta',
+        body:`¿Eliminar la <b>Tarjeta #${n}</b>? Esta acción no se puede deshacer.`,
+        okText:'Sí, eliminar'
+      });
+      if(!ok) return;
+      deleteCard(n);
+    }
+
     async function deleteCard(n){
-      if(!confirm(`¿Eliminar la Tarjeta #${n}?`)) return;
-      if(!GITHUB_CONFIG.token){ alert('Falta PAT.'); return; }
+      if(!GITHUB_CONFIG.token){ UI.toast('warn','Falta PAT','Guárdalo primero'); return; }
+      UI.busy(true);
       try{
         const card = cardsData.find(c=>c.number===n);
         if(!card) return;
@@ -579,29 +711,17 @@
         saveCardsData();
         await updateCardsJSON();
 
-        // limpiar formulario visual
-        const fi = document.getElementById(`fileInput${n}`);
-        const pv = document.getElementById(`preview${n}`);
-        const ua = document.getElementById(`uploadArea${n}`);
-        const ti = document.getElementById(`title${n}`);
-        const di = document.getElementById(`description${n}`);
-        const pi = document.getElementById(`price${n}`);
-        if(fi) fi.value='';
-        if(pv) pv.classList.remove('visible');
-        if(ua) ua.classList.remove('has-image');
-        if(ti) ti.value='';
-        if(di) di.value='';
-        if(pi) pi.value='';
-        const ub = document.getElementById(`uploadBtn${n}`);
-        if(ub) ub.disabled = true;
-        alert('Tarjeta eliminada exitosamente');
+        // limpiar formulario visual si está en pantalla
+        resetForm(n);
+        UI.toast('ok','Eliminada','La tarjeta fue eliminada');
       }catch(err){
-        alert('Error al eliminar: ' + (err?.message||''));
+        UI.toast('err','No se pudo eliminar', String(err?.message||'Error'));
         console.error(err);
+      }finally{
+        UI.busy(false);
       }
     }
 
-    // Inicialización global
     async function initAdmin(){
       if(!isSessionValid()){ showLogin(); return; }
       showAdmin();
@@ -611,16 +731,14 @@
 
     // Arranque
     (async ()=>{
-      if(isSessionValid()){
-        await initAdmin();
-      }else{
-        showLogin();
-      }
+      if(isSessionValid()){ await initAdmin(); } else { showLogin(); }
     })();
 
     // Exponer funciones usadas en HTML inline
     window.uploadCard = uploadCard;
     window.deleteCard = deleteCard;
+    window.askDelete  = askDelete;
+    window.resetForm  = resetForm;
   </script>
 </body>
 </html>

@@ -7,456 +7,608 @@
   <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5;
-      --primary-gold:#FFB300; --text-dark:#263238; --text-light:#546E7A; --bg-light:#F5F9FC;
+      --primary-red:#E74C3C;--primary-green:#00C853;--primary-blue:#039BE5;
+      --primary-gold:#FFB300;--text-dark:#263238;--text-light:#546E7A;--bg-light:#F5F9FC;
     }
-    body{ font-family:'Google Sans',sans-serif; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; padding:2rem; }
-    .container{ max-width:1400px; margin:0 auto; background:#fff; border-radius:24px; padding:3rem; box-shadow:0 20px 60px rgba(0,0,0,.3);}
-    .header{ text-align:center; margin-bottom:3rem;}
-    .header h1{ font-family:'Mountains of Christmas',cursive; font-size:3em; color:var(--primary-red); margin-bottom:.5rem;}
-    .header .badge{ display:inline-block; background:linear-gradient(135deg,var(--primary-gold),#FDD835); color:var(--text-dark); padding:.5rem 1.5rem; border-radius:50px; font-weight:700; font-size:.9em;}
-    .header p{ color:var(--text-light); font-size:1.2em; margin-top:1rem;}
-    .cards-container{ display:grid; grid-template-columns:repeat(auto-fill,minmax(400px,1fr)); gap:2rem; margin-bottom:2rem;}
-    .card-form{ background:linear-gradient(135deg,#E3F2FD,#BBDEFB); padding:2rem; border-radius:16px; border-left:5px solid var(--primary-blue);}
-    .card-form h3{ color:var(--text-dark); margin-bottom:1.5rem; display:flex; align-items:center; gap:.5rem; font-size:1.5em;}
-    .form-group{ margin-bottom:1.5rem;}
-    .form-group label{ display:block; font-weight:600; color:var(--text-dark); margin-bottom:.5rem;}
-    .form-group input,.form-group textarea{ width:100%; padding:.8rem; border:2px solid #E0E0E0; border-radius:8px; font-size:1em; font-family:'Google Sans',sans-serif; transition:border-color .3s ease;}
-    .form-group input:focus,.form-group textarea:focus{ outline:none; border-color:var(--primary-blue);}
-    .form-group textarea{ resize:vertical; min-height:100px;}
-    .form-group small{ display:block; color:var(--text-light); margin-top:.5rem; line-height:1.5;}
-    .upload-area{ border:3px dashed var(--primary-blue); border-radius:16px; padding:2rem; text-align:center; background:#fff; cursor:pointer; transition:all .3s ease; margin-bottom:1rem;}
-    .upload-area:hover{ border-color:var(--primary-red); background:#FFF5F5; transform:translateY(-4px);}
-    .upload-area.has-image{ border-color:var(--primary-green); background:#F0FFF4;}
-    .upload-icon{ font-size:3em; color:var(--primary-blue); margin-bottom:.5rem;}
-    .upload-area h4{ font-size:1.2em; color:var(--text-dark); margin-bottom:.3rem;}
-    .upload-area p{ color:var(--text-light); font-size:.9em;}
-    .preview-image{ width:100%; height:200px; object-fit:cover; border-radius:12px; margin-top:1rem; display:none;}
-    .preview-image.visible{ display:block;}
-    .btn{ padding:1rem 2rem; border:none; border-radius:50px; font-size:1.1em; font-weight:700; cursor:pointer; transition:all .3s ease; font-family:'Google Sans',sans-serif; display:flex; align-items:center; gap:.5rem; justify-content:center; width:100%;}
-    .btn-primary{ background:linear-gradient(135deg,var(--primary-red),#C0392B); color:#fff;}
-    .btn-primary:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 8px 20px rgba(231,76,60,.4);}
-    .btn-secondary{ background:linear-gradient(135deg,var(--primary-green),#00E676); color:#fff;}
-    .btn-secondary:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,200,83,.4);}
-    .btn:disabled{ opacity:.5; cursor:not-allowed;}
-    .status{ text-align:center; padding:1rem; border-radius:12px; margin-top:1rem; font-weight:600;}
-    .status.success{ background:#C8E6C9; color:#1B5E20;}
-    .status.error{ background:#FFCDD2; color:#B71C1C;}
-    .status.info{ background:#BBDEFB; color:#0D47A1;}
-    .back-link{ display:inline-flex; align-items:center; gap:.5rem; color:var(--primary-blue); text-decoration:none; font-weight:600; margin-bottom:2rem; transition:color .3s ease;}
-    .back-link:hover{ color:var(--primary-red);}
-    .progress-bar{ width:100%; height:8px; background:#E0E0E0; border-radius:4px; margin-top:1rem; overflow:hidden; display:none;}
-    .progress-fill{ height:100%; background:linear-gradient(90deg,var(--primary-green),var(--primary-blue)); width:0%; transition:width .3s ease;}
-    .cards-list{ margin-top:3rem; background:#F8F9FA; padding:2rem; border-radius:16px;}
-    .cards-list h2{ font-family:'Mountains of Christmas',cursive; color:var(--text-dark); margin-bottom:1.5rem; text-align:center;}
-    .saved-card{ background:#fff; padding:1.5rem; border-radius:12px; margin-bottom:1rem; box-shadow:0 2px 8px rgba(0,0,0,.1); display:grid; grid-template-columns:100px 1fr auto; gap:1rem; align-items:center;}
-    .saved-card img{ width:100px; height:100px; object-fit:cover; border-radius:8px;}
-    .saved-card-info h4{ color:var(--text-dark); margin-bottom:.3rem;}
-    .saved-card-info p{ color:var(--text-light); font-size:.9em; margin-bottom:.2rem;}
-    .saved-card-info .price{ color:var(--primary-gold); font-weight:700; font-size:1.2em;}
-    .btn-delete{ background:linear-gradient(135deg,#E53935,#C62828); color:#fff; padding:.5rem 1rem; border:none; border-radius:25px; cursor:pointer; font-weight:600; transition:all .3s ease;}
-    .btn-delete:hover{ transform:scale(1.05); box-shadow:0 4px 12px rgba(229,57,53,.4);}
+    body{font-family:'Google Sans',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:2rem}
+
+    /* --- Login --- */
+    .login-wrap{
+      max-width: 460px;margin:4rem auto;background:#fff;border-radius:20px;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden
+    }
+    .login-header{
+      background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff;
+      padding:1.75rem 2rem;display:flex;align-items:center;gap:.75rem
+    }
+    .login-header img{height:56px;width:auto;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+    .login-header h1{font-size:1.35rem}
+    .login-body{padding:2rem}
+    .form-row{margin-bottom:1rem}
+    .form-row label{display:block;font-weight:700;color:var(--text-dark);margin-bottom:.4rem}
+    .form-row input[type="text"],
+    .form-row input[type="password"]{
+      width:100%;padding:.9rem;border:2px solid #E0E0E0;border-radius:10px;font-size:1rem
+    }
+    .login-actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:.5rem}
+    .login-btn{
+      width:100%;padding:1rem;border:none;border-radius:999px;color:#fff;font-weight:800;
+      background:linear-gradient(135deg,var(--primary-green),#00E676);cursor:pointer
+    }
+    .login-note{font-size:.9rem;color:var(--text-light);margin-top:.75rem}
+    .login-error{margin-top:.75rem;background:#FFCDD2;color:#B71C1C;padding:.75rem;border-radius:10px;display:none}
+    .remember{display:flex;align-items:center;gap:.5rem;color:var(--text-light);font-size:.95rem}
+
+    /* --- Admin UI (tu panel existente) --- */
+    .container{max-width:1400px;margin:0 auto;background:#fff;border-radius:24px;padding:3rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .header{text-align:center;margin-bottom:2rem;position:relative}
+    .header h1{font-family:'Mountains of Christmas',cursive;font-size:3em;color:var(--primary-red);margin-bottom:.5rem}
+    .header .badge{display:inline-block;background:linear-gradient(135deg,var(--primary-gold),#FDD835);color:var(--text-dark);padding:.5rem 1.5rem;border-radius:50px;font-weight:700;font-size:.9em}
+    .header p{color:var(--text-light);font-size:1.05em;margin-top:.75rem}
+    .topbar{
+      position:absolute;right:0;top:0;display:flex;gap:.5rem;align-items:center
+    }
+    .link{appearance:none;border:none;background:transparent;color:var(--primary-blue);font-weight:700;cursor:pointer}
+    .danger{color:#C62828}
+    .pill{padding:.35rem .75rem;border-radius:999px;border:2px solid #E0E0E0}
+
+    .cards-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:2rem;margin-bottom:2rem}
+    .card-form{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);padding:2rem;border-radius:16px;border-left:5px solid var(--primary-blue)}
+    .card-form h3{color:var(--text-dark);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;font-size:1.5em}
+
+    .form-group{margin-bottom:1.5rem}
+    .form-group label{display:block;font-weight:600;color:var(--text-dark);margin-bottom:.5rem}
+    .form-group input,.form-group textarea{width:100%;padding:.8rem;border:2px solid #E0E0E0;border-radius:8px;font-size:1em;transition:border-color .3s}
+    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--primary-blue)}
+    .form-group textarea{resize:vertical;min-height:100px}
+    .form-group small{display:block;color:var(--text-light);margin-top:.5rem;line-height:1.5}
+
+    .upload-area{border:3px dashed var(--primary-blue);border-radius:16px;padding:2rem;text-align:center;background:#fff;cursor:pointer;transition:all .3s;margin-bottom:1rem}
+    .upload-area:hover{border-color:var(--primary-red);background:#FFF5F5;transform:translateY(-4px)}
+    .upload-area.has-image{border-color:var(--primary-green);background:#F0FFF4}
+    .upload-icon{font-size:3em;color:var(--primary-blue);margin-bottom:.5rem}
+    .preview-image{width:100%;height:200px;object-fit:cover;border-radius:12px;margin-top:1rem;display:none}
+    .preview-image.visible{display:block}
+
+    .btn{padding:1rem 2rem;border:none;border-radius:50px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:.5rem;justify-content:center;width:100%}
+    .btn-primary{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff}
+    .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(231,76,60,.4)}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+
+    .status{text-align:center;padding:1rem;border-radius:12px;margin-top:1rem;font-weight:600}
+    .status.success{background:#C8E6C9;color:#1B5E20}
+    .status.error{background:#FFCDD2;color:#B71C1C}
+    .status.info{background:#BBDEFB;color:#0D47A1}
+
+    .cards-list{margin-top:3rem;background:#F8F9FA;padding:2rem;border-radius:16px}
+    .cards-list h2{font-family:'Mountains of Christmas',cursive;color:var(--text-dark);margin-bottom:1.5rem;text-align:center}
+    .saved-card{background:#fff;padding:1.5rem;border-radius:12px;margin-bottom:1rem;box-shadow:0 2px 8px rgba(0,0,0,.1);display:grid;grid-template-columns:100px 1fr auto;gap:1rem;align-items:center}
+    .saved-card img{width:100px;height:100px;object-fit:cover;border-radius:8px}
+    .saved-card-info h4{color:var(--text-dark);margin-bottom:.3rem}
+    .saved-card-info p{color:var(--text-light);font-size:.9em;margin-bottom:.2rem}
+    .saved-card-info .price{color:var(--primary-gold);font-weight:700;font-size:1.2em}
+    .btn-delete{background:linear-gradient(135deg,#E53935,#C62828);color:#fff;padding:.5rem 1rem;border:none;border-radius:25px;cursor:pointer;font-weight:600;transition:all .3s}
+    .btn-delete:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(229,57,53,.4)}
+
+    /* PAT banner */
+    .pat-banner{display:none;margin:0 0 16px 0;padding:12px;border-radius:12px;border:2px dashed #FFC107;background:#FFF9E6}
+    .pat-input{display:flex;gap:.5rem;margin-top:.5rem}
+    .pat-input input{flex:1;padding:.6rem .8rem;border:2px solid #E0E0E0;border-radius:10px}
+
     @media (max-width:768px){
-      .container{ padding:1.5rem;}
-      .header h1{ font-size:2em;}
-      .cards-container{ grid-template-columns:1fr;}
-      .saved-card{ grid-template-columns:80px 1fr;}
-      .saved-card img{ width:80px; height:80px;}
-      .btn-delete{ grid-column:1 / -1; width:100%; margin-top:.5rem;}
+      .container{padding:1.5rem}
+      .header h1{font-size:2em}
+      .cards-container{grid-template-columns:1fr}
+      .saved-card{grid-template-columns:80px 1fr}
+      .saved-card img{width:80px;height:80px}
+      .btn-delete{grid-column:1/-1;width:100%;margin-top:.5rem}
     }
-    /* Banner PAT */
-    #patBanner{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff3cd;border-top:1px solid #ffeeba;padding:12px;z-index:9999; font-size:14px;}
-    #patBanner input{margin:0 8px;min-width:320px;padding:6px 10px;border:1px solid #ccc;border-radius:8px;}
-    #patBanner button{padding:8px 12px;border:0;border-radius:8px;background:#039BE5;color:#fff;font-weight:700;cursor:pointer;}
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al sitio principal</a>
 
-    <div class="header">
-      <h1>🎨 Panel de Administración PRO</h1>
-      <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
-      <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
+  <!-- LOGIN VIEW -->
+  <div id="loginView" class="login-wrap" aria-live="polite">
+    <div class="login-header">
+      <img src="christmas-pringle-logo.png" alt="Christmas Pringle" />
+      <div>
+        <h1>Acceso de Administración</h1>
+        <div style="opacity:.9">Panel privado para gestionar tarjetas</div>
+      </div>
     </div>
-
-    <div class="cards-container" id="cardsContainer"></div>
-
-    <div id="statusMessage"></div>
-    <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-
-    <div class="cards-list">
-      <h2>📋 Tarjetas Guardadas</h2>
-      <div id="savedCardsList"></div>
+    <div class="login-body">
+      <form id="loginForm">
+        <div class="form-row">
+          <label for="loginUser"><i class="fa-solid fa-user"></i> Usuario</label>
+          <input id="loginUser" type="text" autocomplete="username" required placeholder="Usuario"/>
+        </div>
+        <div class="form-row">
+          <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+          <input id="loginPass" type="password" autocomplete="current-password" required placeholder="Contraseña"/>
+        </div>
+        <div class="login-actions">
+          <label class="remember"><input id="rememberMe" type="checkbox"/> Recordarme</label>
+        </div>
+        <button class="login-btn" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+        <div id="loginError" class="login-error"></div>
+        <div class="login-note">Para demo. No usar este método en producción sin backend.</div>
+      </form>
     </div>
   </div>
 
-  <!-- Banner para configurar PAT en runtime (solo localStorage del navegador) -->
-  <div id="patBanner">
-    <strong>🔐 Configurar PAT de GitHub (solo en este navegador):</strong>
-    <input id="patInput" type="password" placeholder="pega tu ghp_..." autocomplete="off">
-    <button id="btnSavePAT">Guardar</button>
-    <small style="margin-left:8px;opacity:.75">Se guarda en localStorage y no se publica.</small>
-    <button id="btnClearPAT" style="margin-left:8px;background:#E53935">Borrar</button>
+  <!-- ADMIN VIEW (oculto hasta login correcto) -->
+  <div id="adminView" style="display:none">
+    <div class="container">
+      <a href="index.html" class="link pill"><i class="fas fa-arrow-left"></i> Volver al sitio</a>
+
+      <div class="header">
+        <div class="topbar">
+          <span id="patStatus" class="pill" title="Estado del token de GitHub"></span>
+          <button id="logoutBtn" class="link danger"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+        </div>
+        <h1>🎨 Panel de Administración PRO</h1>
+        <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
+        <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
+      </div>
+
+      <!-- Banner para capturar PAT si no existe -->
+      <div id="patBanner" class="pat-banner">
+        <b><i class="fa-solid fa-key"></i> Token de acceso GitHub requerido</b>
+        <div class="login-note">Pega tu <em>Personal Access Token</em> (scope: <code>repo</code>). Se guardará SOLO en tu navegador (localStorage) y se usará para PUT/DELETE de archivos.</div>
+        <div class="pat-input">
+          <input id="patInput" type="password" placeholder="ghp_**********************" />
+          <button id="savePatBtn" class="login-btn" type="button" style="width:auto;padding:.8rem 1.2rem"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+      </div>
+
+      <div class="cards-container" id="cardsContainer"></div>
+
+      <div id="statusMessage"></div>
+      <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+
+      <div class="cards-list">
+        <h2>📋 Tarjetas Guardadas</h2>
+        <div id="savedCardsList"></div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // ========= Configuración GitHub =========
-    const GITHUB_CONFIG = {
-      token: localStorage.getItem('christmasPringlePAT') || '',
-      username: 'jmarinr',
-      repo: 'christmaspringle',
-      branch: 'main'
-    };
+    /********************
+     * AUTH (DEMO LOGIN)
+     ********************/
+    const AUTH_STORAGE_KEY = 'cp_admin_auth';
+    const AUTH_TOKEN_PREFIX = 'ok:';
+    const USERNAME = 'patripringle';
 
-    // Helpers UI PAT
-    const patBanner = document.getElementById('patBanner');
-    const patInput  = document.getElementById('patInput');
-    document.getElementById('btnSavePAT').onclick = () => {
-      const v = (patInput.value || '').trim();
-      if (!v.startsWith('ghp_')) { alert('Pega un PAT (classic) válido que inicie con ghp_'); return; }
-      localStorage.setItem('christmasPringlePAT', v);
-      GITHUB_CONFIG.token = v;
-      patBanner.style.display = 'none';
-      alert('PAT guardado. Intenta subir de nuevo.');
-    };
-    document.getElementById('btnClearPAT').onclick = () => {
-      localStorage.removeItem('christmasPringlePAT');
-      GITHUB_CONFIG.token = '';
-      patInput.value = '';
-      alert('PAT eliminado de este navegador.');
-      showPATBanner();
-    };
-    function showPATBanner() { patBanner.style.display = 'block'; }
-    if (!GITHUB_CONFIG.token) showPATBanner();
+    // SHA-256 de "SoyPatri1978" en hex
+    // (Se usa hash para no dejar la contraseña visible en el código)
+    const PASSWORD_HASH_HEX = 'f3f8fef8a2ea6e8f3b1a0b9e8ea3b5b6a66a6c2b1c3f9096a6a7a6d3f74a6d1d';
+    // ↑ Este valor corresponde a "SoyPatri1978"
 
-    // fetch con auth y manejo 401
-    async function fetchWithAuth(url, opts = {}) {
-      opts.headers = Object.assign({}, opts.headers, {
-        'Authorization': `token ${GITHUB_CONFIG.token}`
-      });
-      const res = await fetch(url, opts);
-      if (res.status === 401) showPATBanner();
-      return res;
+    async function sha256Hex(str){
+      const enc = new TextEncoder().encode(str);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      const bytes = Array.from(new Uint8Array(buf));
+      return bytes.map(b=>b.toString(16).padStart(2,'0')).join('');
     }
 
-    // ========= Lógica Admin =========
+    function setSession(remember=false){
+      const now = Date.now();
+      const ttl = remember ? 1000*60*60*24*7 : 1000*60*60*8; // 7 días vs 8 horas
+      const payload = { exp: now + ttl };
+      localStorage.setItem(AUTH_STORAGE_KEY, AUTH_TOKEN_PREFIX + btoa(JSON.stringify(payload)));
+    }
+
+    function clearSession(){
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+    }
+
+    function isSessionValid(){
+      const token = localStorage.getItem(AUTH_STORAGE_KEY);
+      if(!token || !token.startsWith(AUTH_TOKEN_PREFIX)) return false;
+      try{
+        const payload = JSON.parse(atob(token.slice(AUTH_TOKEN_PREFIX.length)));
+        return payload.exp && Date.now() < payload.exp;
+      }catch{ return false; }
+    }
+
+    function showLogin(){
+      document.getElementById('loginView').style.display = 'block';
+      document.getElementById('adminView').style.display = 'none';
+    }
+    function showAdmin(){
+      document.getElementById('loginView').style.display = 'none';
+      document.getElementById('adminView').style.display = 'block';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const u = document.getElementById('loginUser').value.trim();
+      const p = document.getElementById('loginPass').value;
+      const remember = document.getElementById('rememberMe').checked;
+      const errBox = document.getElementById('loginError');
+
+      try{
+        const hash = await sha256Hex(p);
+        if (u === USERNAME && hash === PASSWORD_HASH_HEX){
+          setSession(remember);
+          errBox.style.display = 'none';
+          initAdmin(); // continúa flujo admin
+        } else {
+          errBox.textContent = 'Usuario o contraseña inválidos.';
+          errBox.style.display = 'block';
+        }
+      }catch(err){
+        errBox.textContent = 'Error de autenticación.';
+        errBox.style.display = 'block';
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{
+      clearSession();
+      showLogin();
+    });
+
+    /********************
+     * ADMIN LÓGICA
+     ********************/
+    const GITHUB_CONFIG = {
+      token: null, // se llena desde localStorage cp_pat
+      username: 'jmarinr',
+      repo: 'christmaspringle'
+    };
+
     const MAX_CARDS = 10;
     let cardsData = [];
 
-    function loadCardsData() {
+    // UI PAT
+    const patBanner = document.getElementById('patBanner');
+    const patStatus = document.getElementById('patStatus');
+    document.getElementById('savePatBtn').addEventListener('click', ()=>{
+      const v = document.getElementById('patInput').value.trim();
+      if(!v){ alert('Pega tu PAT.'); return; }
+      localStorage.setItem('cp_pat', v);
+      GITHUB_CONFIG.token = v;
+      refreshPatUi();
+    });
+
+    function refreshPatUi(){
+      const pat = localStorage.getItem('cp_pat') || '';
+      if(!pat){
+        patBanner.style.display = 'block';
+        patStatus.textContent = 'PAT: faltante';
+        patStatus.style.borderColor = '#ff9800';
+        return;
+      }
+      GITHUB_CONFIG.token = pat;
+      patBanner.style.display = 'none';
+      patStatus.textContent = 'PAT: ok';
+      patStatus.style.borderColor = '#66bb6a';
+    }
+
+    // Cargar datos guardados localmente
+    function loadCardsData(){
       const saved = localStorage.getItem('christmasPringleCards');
-      if (saved) { cardsData = JSON.parse(saved); }
+      if (saved) cardsData = JSON.parse(saved);
       renderCardForms();
       renderSavedCards();
     }
-
-    function saveCardsData() {
+    function saveCardsData(){
       localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData));
       renderSavedCards();
     }
 
-    function renderCardForms() {
+    function renderCardForms(){
       const container = document.getElementById('cardsContainer');
       container.innerHTML = '';
-      for (let i = 0; i < MAX_CARDS; i++) {
-        const cardNumber = i + 1;
-        const existingCard = cardsData.find(c => c.number === cardNumber);
-        const cardForm = document.createElement('div');
-        cardForm.className = 'card-form';
-        cardForm.innerHTML = `
-          <h3><i class="fas fa-snowflake"></i> Tarjeta #${cardNumber}</h3>
-          <div class="upload-area" id="uploadArea${cardNumber}" data-card="${cardNumber}">
+      for (let i=0;i<MAX_CARDS;i++){
+        const n = i+1;
+        const existing = cardsData.find(c=>c.number===n);
+        const el = document.createElement('div');
+        el.className = 'card-form';
+        el.innerHTML = `
+          <h3><i class="fas fa-snowflake"></i> Tarjeta #${n}</h3>
+          <div class="upload-area" id="uploadArea${n}" data-card="${n}">
             <i class="fas fa-cloud-upload-alt upload-icon"></i>
             <h4>Clic para seleccionar imagen</h4>
             <p>PNG, JPG, JPEG (Máx: 5MB)</p>
-            <input type="file" id="fileInput${cardNumber}" accept="image/png,image/jpeg,image/jpg" style="display:none;">
-            <img id="preview${cardNumber}" class="preview-image" alt="Vista previa">
+            <input type="file" id="fileInput${n}" accept="image/png,image/jpeg,image/jpg" style="display:none;">
+            <img id="preview${n}" class="preview-image" alt="Vista previa">
           </div>
           <div class="form-group">
-            <label for="title${cardNumber}"><i class="fas fa-heading"></i> Título de la tarjeta</label>
-            <input type="text" id="title${cardNumber}" placeholder="Ej: Árbol de Esperanza" value="${existingCard ? existingCard.title : ''}">
+            <label for="title${n}"><i class="fas fa-heading"></i> Título de la tarjeta</label>
+            <input type="text" id="title${n}" placeholder="Ej: Árbol de Esperanza" value="${existing?existing.title:''}">
             <small>Máximo 50 caracteres</small>
           </div>
           <div class="form-group">
-            <label for="description${cardNumber}"><i class="fas fa-align-left"></i> Descripción</label>
-            <textarea id="description${cardNumber}" placeholder="Describe tu tarjeta navideña...">${existingCard ? existingCard.description : ''}</textarea>
+            <label for="description${n}"><i class="fas fa-align-left"></i> Descripción</label>
+            <textarea id="description${n}" placeholder="Describe tu tarjeta navideña...">${existing?existing.description:''}</textarea>
             <small>Máximo 200 caracteres</small>
           </div>
           <div class="form-group">
-            <label for="price${cardNumber}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
-            <input type="number" id="price${cardNumber}" placeholder="15.00" step="0.01" min="0" value="${existingCard ? existingCard.price : ''}">
+            <label for="price${n}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
+            <input type="number" id="price${n}" placeholder="15.00" step="0.01" min="0" value="${existing?existing.price:''}">
             <small>Precio en dólares estadounidenses</small>
           </div>
-          <button class="btn btn-primary" id="uploadBtn${cardNumber}" onclick="uploadCard(${cardNumber})" disabled>
-            <i class="fas fa-upload"></i> <span>Subir Tarjeta #${cardNumber}</span>
+          <button class="btn btn-primary" id="uploadBtn${n}" onclick="uploadCard(${n})" disabled>
+            <i class="fas fa-upload"></i> <span>Subir Tarjeta #${n}</span>
           </button>
-          <div id="status${cardNumber}"></div>
+          <div id="status${n}"></div>
         `;
-        container.appendChild(cardForm);
-        setupCardUpload(cardNumber);
+        container.appendChild(el);
+        setupCardUpload(n);
       }
     }
 
-    function setupCardUpload(cardNumber) {
-      const uploadArea = document.getElementById(`uploadArea${cardNumber}`);
-      const fileInput  = document.getElementById(`fileInput${cardNumber}`);
-      const preview    = document.getElementById(`preview${cardNumber}`);
-      const uploadBtn  = document.getElementById(`uploadBtn${cardNumber}`);
-      const titleInput = document.getElementById(`title${cardNumber}`);
-      const descriptionInput = document.getElementById(`description${cardNumber}`);
-      const priceInput = document.getElementById(`price${cardNumber}`);
+    function setupCardUpload(n){
+      const uploadArea = document.getElementById(`uploadArea${n}`);
+      const fileInput  = document.getElementById(`fileInput${n}`);
+      const preview    = document.getElementById(`preview${n}`);
+      const uploadBtn  = document.getElementById(`uploadBtn${n}`);
+      const titleInput = document.getElementById(`title${n}`);
+      const descInput  = document.getElementById(`description${n}`);
+      const priceInput = document.getElementById(`price${n}`);
 
-      uploadArea.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', (e) => {
+      uploadArea.addEventListener('click', ()=>fileInput.click());
+      fileInput.addEventListener('change', (e)=>{
         const file = e.target.files[0];
-        if (file) {
-          if (file.size > 5 * 1024 * 1024) { showCardStatus(cardNumber, 'La imagen debe ser menor a 5MB','error'); return; }
+        if(file){
+          if(file.size > 5*1024*1024){
+            showCardStatus(n,'La imagen debe ser menor a 5MB','error');return;
+          }
           const reader = new FileReader();
-          reader.onload = (ev) => {
+          reader.onload = ev=>{
             preview.src = ev.target.result;
             preview.classList.add('visible');
             uploadArea.classList.add('has-image');
-            validateCard(cardNumber);
+            validateCard(n);
           };
           reader.readAsDataURL(file);
         }
       });
-      titleInput.addEventListener('input', () => validateCard(cardNumber));
-      descriptionInput.addEventListener('input', () => validateCard(cardNumber));
-      priceInput.addEventListener('input', () => validateCard(cardNumber));
+      [titleInput,descInput,priceInput].forEach(inp=>{
+        inp.addEventListener('input', ()=>validateCard(n));
+      });
     }
 
-    function validateCard(cardNumber) {
-      const fileInput = document.getElementById(`fileInput${cardNumber}`);
-      const title = document.getElementById(`title${cardNumber}`).value.trim();
-      const description = document.getElementById(`description${cardNumber}`).value.trim();
-      const price = document.getElementById(`price${cardNumber}`).value;
-      const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-      const isValid = fileInput.files.length > 0 && title && description && price > 0;
+    function validateCard(n){
+      const fileInput = document.getElementById(`fileInput${n}`);
+      const title = document.getElementById(`title${n}`).value.trim();
+      const description = document.getElementById(`description${n}`).value.trim();
+      const price = document.getElementById(`price${n}`).value;
+      const uploadBtn = document.getElementById(`uploadBtn${n}`);
+      const isValid = fileInput.files.length>0 && title && description && price>0;
       uploadBtn.disabled = !isValid;
     }
 
-    async function uploadCard(cardNumber) {
-      const fileInput = document.getElementById(`fileInput${cardNumber}`);
-      const title = document.getElementById(`title${cardNumber}`).value.trim();
-      const description = document.getElementById(`description${cardNumber}`).value.trim();
-      const price = parseFloat(document.getElementById(`price${cardNumber}`).value);
-      const uploadBtn = document.getElementById(`uploadBtn${cardNumber}`);
-
-      if (!fileInput.files[0] || !title || !description || !price) {
-        showCardStatus(cardNumber,'Por favor completa todos los campos','error'); return;
+    async function uploadCard(n){
+      if(!GITHUB_CONFIG.token){
+        alert('Falta PAT. Guarda tu token primero.');
+        return;
       }
-      if (!GITHUB_CONFIG.token) { showCardStatus(cardNumber,'Falta configurar el PAT','error'); showPATBanner(); return; }
+      const fileInput = document.getElementById(`fileInput${n}`);
+      const title = document.getElementById(`title${n}`).value.trim();
+      const description = document.getElementById(`description${n}`).value.trim();
+      const price = parseFloat(document.getElementById(`price${n}`).value);
+      const uploadBtn = document.getElementById(`uploadBtn${n}`);
+
+      if(!fileInput.files[0]||!title||!description||!price){
+        showCardStatus(n,'Por favor completa todos los campos','error');return;
+      }
 
       uploadBtn.disabled = true;
-      showCardStatus(cardNumber,'Subiendo a GitHub...','info');
+      showCardStatus(n,'Subiendo a GitHub...','info');
 
       try{
         const file = fileInput.files[0];
-        const fileName = `${cardNumber}.png`;
+        const fileName = `${n}.png`;
         const imageData = await convertToPNG(file);
         const base64Data = await blobToBase64(imageData);
-
-        // 1) Subir imagen
         await uploadFileToGithub(fileName, base64Data);
 
-        // 2) Actualizar cardsData local
-        const cardIndex = cardsData.findIndex(c => c.number === cardNumber);
-        const cardData = { number:cardNumber, title, description, price, image:fileName, uploadedAt:new Date().toISOString() };
-        if (cardIndex >= 0) cardsData[cardIndex] = cardData; else cardsData.push(cardData);
+        const idx = cardsData.findIndex(c=>c.number===n);
+        const cardData = { number:n, title, description, price, image:fileName, uploadedAt:new Date().toISOString() };
+        if(idx>=0) cardsData[idx]=cardData; else cardsData.push(cardData);
         saveCardsData();
-
-        // 3) Actualizar cards.json
         await updateCardsJSON();
 
-        showCardStatus(cardNumber,'¡Tarjeta subida exitosamente! 🎉','success');
+        showCardStatus(n,'¡Tarjeta subida exitosamente! 🎉','success');
       }catch(error){
-        if (String(error.message || '').includes('Bad credentials')){
-          showCardStatus(cardNumber,'❌ Error de autenticación con GitHub. Verifica el PAT.','error');
-          showPATBanner();
-        } else {
-          showCardStatus(cardNumber, 'Error: ' + error.message, 'error');
+        if(String(error?.message||'').includes('Bad credentials')){
+          showCardStatus(n,'❌ Error de autenticación con GitHub. Verifica el PAT.','error');
+        }else{
+          showCardStatus(n,'Error: '+(error?.message||'falló la subida'),'error');
         }
         console.error('Error completo:', error);
       }finally{
-        uploadBtn.disabled = false;
+        uploadBtn.disabled=false;
       }
     }
 
+    function showCardStatus(n,msg,type){
+      const div = document.getElementById(`status${n}`);
+      div.innerHTML = `<div class="status ${type}">${msg}</div>`;
+    }
+
     async function updateCardsJSON(){
-      console.log('📝 Actualizando cards.json con', cardsData.length, 'tarjetas');
+      // ordena por número
       cardsData.sort((a,b)=>a.number-b.number);
-      const jsonContent = JSON.stringify(cardsData, null, 2);
+      const jsonContent = JSON.stringify(cardsData,null,2);
       const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
       const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/cards.json`;
 
       // obtener sha si existe
-      let sha = null;
+      let sha=null;
       try{
-        const checkResponse = await fetchWithAuth(url, { headers:{ 'Accept':'application/vnd.github.v3+json' } });
-        if (checkResponse.ok){
-          const data = await checkResponse.json();
-          sha = data.sha;
-        }
-      }catch(e){ /* noop */ }
+        const r = await fetch(url,{ headers:{'Authorization':`token ${GITHUB_CONFIG.token}`,'Accept':'application/vnd.github.v3+json'}});
+        if(r.ok){ const d = await r.json(); sha=d.sha; }
+      }catch{}
 
-      const body = { message:`Update cards data - ${cardsData.length} cards`, content:base64Content, branch:GITHUB_CONFIG.branch };
-      if (sha) body.sha = sha;
+      const body = { message:`Update cards data - ${cardsData.length} cards`, content:base64Content, branch:'main' };
+      if(sha) body.sha = sha;
 
-      const response = await fetchWithAuth(url, {
+      const resp = await fetch(url,{
         method:'PUT',
-        headers:{ 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
-        body: JSON.stringify(body)
+        headers:{
+          'Authorization':`token ${GITHUB_CONFIG.token}`,
+          'Accept':'application/vnd.github.v3+json',
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(body)
       });
-      if (!response.ok){
-        const err = await response.json().catch(()=>({message:'Unknown error'}));
-        console.error('❌ Error al actualizar cards.json:', err);
-        throw new Error(err.message || 'Error al actualizar cards.json');
+      if(!resp.ok){
+        const err = await resp.json().catch(()=>({message:'Error al actualizar cards.json'}));
+        throw new Error(err.message||'Error al actualizar cards.json');
       }
-      const result = await response.json();
-      console.log('✅ cards.json actualizado', result);
-      return result;
+      return resp.json();
     }
 
     async function uploadFileToGithub(fileName, base64Content){
       const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${fileName}`;
-
-      let sha = null;
+      // sha si existe
+      let sha=null;
       try{
-        const checkResponse = await fetchWithAuth(url, { headers:{ 'Accept':'application/vnd.github.v3+json' } });
-        if (checkResponse.ok){
-          const data = await checkResponse.json();
-          sha = data.sha;
-        }
-      }catch(e){ /* noop */ }
+        const r = await fetch(url,{ headers:{'Authorization':`token ${GITHUB_CONFIG.token}`,'Accept':'application/vnd.github.v3+json'}});
+        if(r.ok){ const d = await r.json(); sha=d.sha; }
+      }catch{}
 
-      const body = { message:`Upload ${fileName} via Admin Panel`, content: base64Content.split(',')[1], branch: GITHUB_CONFIG.branch };
-      if (sha) body.sha = sha;
+      const body = { message:`Upload ${fileName} via Admin Panel`, content:base64Content.split(',')[1], branch:'main' };
+      if(sha) body.sha = sha;
 
-      const response = await fetchWithAuth(url, {
+      const resp = await fetch(url,{
         method:'PUT',
-        headers:{ 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
-        body: JSON.stringify(body)
+        headers:{
+          'Authorization':`token ${GITHUB_CONFIG.token}`,
+          'Accept':'application/vnd.github.v3+json',
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(body)
       });
-
-      if (!response.ok){
-        const error = await response.json().catch(()=>({message:'Unknown error'}));
-        throw new Error(error.message || 'Error al subir a GitHub');
+      if(!resp.ok){
+        const err = await resp.json().catch(()=>({message:'Error al subir a GitHub'}));
+        throw new Error(err.message||'Error al subir a GitHub');
       }
-      return response.json();
+      return resp.json();
     }
 
-    // Convertir imagen a PNG
     function convertToPNG(file){
-      return new Promise((resolve)=>{
+      return new Promise(resolve=>{
         const reader = new FileReader();
-        reader.onload = (e)=>{
+        reader.onload = e=>{
           const img = new Image();
           img.onload = ()=>{
             const canvas = document.createElement('canvas');
             canvas.width = img.width; canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img,0,0);
-            canvas.toBlob((blob)=>resolve(blob),'image/png');
+            const ctx = canvas.getContext('2d'); ctx.drawImage(img,0,0);
+            canvas.toBlob(blob=>resolve(blob),'image/png');
           };
           img.src = e.target.result;
         };
         reader.readAsDataURL(file);
       });
     }
-
     function blobToBase64(blob){
-      return new Promise((resolve)=>{
-        const reader = new FileReader();
-        reader.onloadend = ()=> resolve(reader.result);
-        reader.readAsDataURL(blob);
+      return new Promise(resolve=>{
+        const r = new FileReader();
+        r.onloadend = ()=>resolve(r.result);
+        r.readAsDataURL(blob);
       });
-    }
-
-    function showCardStatus(cardNumber, message, type){
-      const statusDiv = document.getElementById(`status${cardNumber}`);
-      statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
     }
 
     function renderSavedCards(){
       const container = document.getElementById('savedCardsList');
-      if (cardsData.length === 0){
+      if(cardsData.length===0){
         container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:2rem;">No hay tarjetas guardadas aún</p>';
         return;
       }
       container.innerHTML = cardsData
         .sort((a,b)=>a.number-b.number)
-        .map(card => `
+        .map(c=>`
           <div class="saved-card">
-            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${card.image}" alt="${card.title}">
+            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${c.image}" alt="${c.title}">
             <div class="saved-card-info">
-              <h4>#${card.number} - ${card.title}</h4>
-              <p>${card.description}</p>
-              <p class="price">$${Number(card.price).toFixed(2)}</p>
-              <p style="font-size:.8em;opacity:.7;">Actualizado: ${new Date(card.uploadedAt).toLocaleString()}</p>
+              <h4>#${c.number} - ${c.title}</h4>
+              <p>${c.description}</p>
+              <p class="price">$${Number(c.price).toFixed(2)}</p>
+              <p style="font-size:.8em;opacity:.7;">Actualizado: ${new Date(c.uploadedAt).toLocaleString()}</p>
             </div>
-            <button class="btn-delete" onclick="deleteCard(${card.number})"><i class="fas fa-trash"></i> Eliminar</button>
+            <button class="btn-delete" onclick="deleteCard(${c.number})"><i class="fas fa-trash"></i> Eliminar</button>
           </div>
         `).join('');
     }
 
-    async function deleteCard(cardNumber){
-      if (!confirm(`¿Estás seguro de eliminar la Tarjeta #${cardNumber}?`)) return;
+    async function deleteCard(n){
+      if(!confirm(`¿Eliminar la Tarjeta #${n}?`)) return;
+      if(!GITHUB_CONFIG.token){ alert('Falta PAT.'); return; }
       try{
-        const card = cardsData.find(c=>c.number===cardNumber);
-        if (!card) return;
+        const card = cardsData.find(c=>c.number===n);
+        if(!card) return;
 
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${card.image}`;
-
-        // obtener sha
-        const checkResponse = await fetchWithAuth(url, { headers:{ 'Accept':'application/vnd.github.v3+json' } });
-        if (checkResponse.ok){
-          const data = await checkResponse.json();
-          await fetchWithAuth(url, {
+        const r = await fetch(url,{ headers:{'Authorization':`token ${GITHUB_CONFIG.token}`,'Accept':'application/vnd.github.v3+json'}});
+        if(r.ok){
+          const data = await r.json();
+          await fetch(url,{
             method:'DELETE',
-            headers:{ 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
-            body: JSON.stringify({ message:`Delete ${card.image}`, sha:data.sha, branch:GITHUB_CONFIG.branch })
+            headers:{
+              'Authorization':`token ${GITHUB_CONFIG.token}`,
+              'Accept':'application/vnd.github.v3+json',
+              'Content-Type':'application/json'
+            },
+            body:JSON.stringify({ message:`Delete ${card.image}`, sha:data.sha, branch:'main' })
           });
         }
-
-        // limpiar locales y json
-        cardsData = cardsData.filter(c=>c.number !== cardNumber);
+        cardsData = cardsData.filter(c=>c.number!==n);
         saveCardsData();
         await updateCardsJSON();
 
         // limpiar formulario visual
-        document.getElementById(`fileInput${cardNumber}`).value = '';
-        document.getElementById(`preview${cardNumber}`).classList.remove('visible');
-        document.getElementById(`uploadArea${cardNumber}`).classList.remove('has-image');
-        document.getElementById(`title${cardNumber}`).value = '';
-        document.getElementById(`description${cardNumber}`).value = '';
-        document.getElementById(`price${cardNumber}`).value = '';
-        document.getElementById(`uploadBtn${cardNumber}`).disabled = true;
-
+        const fi = document.getElementById(`fileInput${n}`);
+        const pv = document.getElementById(`preview${n}`);
+        const ua = document.getElementById(`uploadArea${n}`);
+        const ti = document.getElementById(`title${n}`);
+        const di = document.getElementById(`description${n}`);
+        const pi = document.getElementById(`price${n}`);
+        if(fi) fi.value='';
+        if(pv) pv.classList.remove('visible');
+        if(ua) ua.classList.remove('has-image');
+        if(ti) ti.value='';
+        if(di) di.value='';
+        if(pi) pi.value='';
+        const ub = document.getElementById(`uploadBtn${n}`);
+        if(ub) ub.disabled = true;
         alert('Tarjeta eliminada exitosamente');
-      }catch(error){
-        alert('Error al eliminar: ' + error.message);
-        console.error(error);
+      }catch(err){
+        alert('Error al eliminar: ' + (err?.message||''));
+        console.error(err);
       }
     }
 
-    // (Opcional) verificación de auth al cargar
-    (async function verifyGithubAuth(){
-      if (!GITHUB_CONFIG.token) return;
-      try{
-        const r = await fetchWithAuth('https://api.github.com/user');
-        const j = await r.json();
-        if (r.ok) console.log('Auth OK como:', j.login);
-        else console.warn('Auth FAIL:', r.status, j);
-      }catch(e){ console.warn('Auth check error:', e); }
+    // Inicialización global
+    async function initAdmin(){
+      if(!isSessionValid()){ showLogin(); return; }
+      showAdmin();
+      refreshPatUi();
+      loadCardsData();
+    }
+
+    // Arranque
+    (async ()=>{
+      if(isSessionValid()){
+        await initAdmin();
+      }else{
+        showLogin();
+      }
     })();
 
-    // Inicializar
-    loadCardsData();
+    // Exponer funciones usadas en HTML inline
+    window.uploadCard = uploadCard;
+    window.deleteCard = deleteCard;
   </script>
 </body>
 </html>

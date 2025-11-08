@@ -6,5 +6,13 @@
     "price": 8,
     "image": "1.png",
     "uploadedAt": "2025-11-08T16:16:17.358Z"
+  },
+  {
+    "number": 2,
+    "title": "Jdjdj",
+    "description": "Bzbzn",
+    "price": 3,
+    "image": "2.png",
+    "uploadedAt": "2025-11-08T16:38:42.803Z"
   }
 ]

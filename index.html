@@ -7,7 +7,6 @@
 <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
   :root{
     --primary-red:#E74C3C; --primary-green:#00C853; --primary-blue:#039BE5; --primary-gold:#FFB300;
@@ -19,7 +18,7 @@
     --wood:#7a5236; --wood-dark:#5b3c28; --mat:#f7f6f2;
     --cable:#111; --cable-contrast:#1B5E20;
   }
-  /* ===== Night Mode (todo el sitio) ===== */
+  /* Night mode */
   body.night{
     --bg-grad-start:#0b1b2b; --bg-grad-mid:#0f2741; --bg-grad-end:#153a59;
     --panel-bg:#0e1520; --panel-shadow:0 -12px 48px rgba(0,0,0,.45);
@@ -40,27 +39,18 @@
   @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
 
   /* Tren (izquierda) */
-  .train-container{
-    --train-duration: 42s;
-    position:fixed; bottom:60px; left:100vw; z-index:10000;
-    animation:trainMoveLeft var(--train-duration) linear infinite;
-  }
+  .train-container{ --train-duration:42s; position:fixed; bottom:60px; left:100vw; z-index:10000; animation:trainMoveLeft var(--train-duration) linear infinite }
   @keyframes trainMoveLeft{ 0%{ left:100vw } 100%{ left:-950px } }
-
   .train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3)); cursor:pointer}
-  .wagon, .engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
+  .wagon,.engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
   .wagon:nth-child(2){animation-delay:.05s} .wagon:nth-child(3){animation-delay:.1s}
   .wagon:nth-child(4){animation-delay:.15s} .wagon:nth-child(5){animation-delay:.2s}
   .wagon:nth-last-child(2){animation-delay:.25s} .wagon:nth-last-child(1){animation-delay:.3s}
   @keyframes wBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
-  /* Locomotora mirando a la izquierda (al frente) */
   .engine{transform:scaleX(-1); position:relative}
-  /* Faros en modo noche */
   body.night .engine::after{
     content:""; position:absolute; right:-18px; top:28px; width:80px; height:28px;
-    background:radial-gradient(ellipse at left, rgba(255,235,59,.75), rgba(255,235,59,0) 65%);
-    filter:blur(2px);
+    background:radial-gradient(ellipse at left, rgba(255,235,59,.75), rgba(255,235,59,0) 65%); filter:blur(2px);
   }
   body.night .wagon{ text-shadow:0 0 12px rgba(255,255,255,.25) }
 
@@ -68,58 +58,43 @@
   .smoke{position:absolute; top:-58px; right:46px; font-size:2.4rem; animation:smokeRise 1.8s ease-out infinite}
   @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.4); opacity:0}}
 
-  /* Santa Tracker redondos arriba de 4 vagones */
-  .tracker{
-    position:absolute; top:-30px; left:18px;
-    width:92px; height:92px; border-radius:50%;
-    background:radial-gradient(circle at 30% 25%,#fff 0 35%, #ffe9ec 36% 100%);
-    border:4px solid #c0392b; box-shadow:0 8px 18px rgba(231,76,60,.35);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    color:#b23a2e; font-weight:900; text-align:center; line-height:1;
-  }
-  .tracker .num{font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:1.05rem}
+  /* Santa Tracker */
+  .tracker{position:absolute; top:-30px; left:18px; width:92px; height:92px; border-radius:50%;
+    background:radial-gradient(circle at 30% 25%,#fff 0 35%, #ffe9ec 36% 100%); border:4px solid #c0392b; box-shadow:0 8px 18px rgba(231,76,60,.35);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; color:#b23a2e; font-weight:900; text-align:center; line-height:1 }
+  .tracker .num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:1.05rem}
   .tracker .lbl{font-size:.62rem; margin-top:2px; text-transform:uppercase}
   .tracker:before{content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px; box-shadow:0 2px 0 #922b21;}
 
   /* Header */
-  header{
-    position:sticky; top:0; z-index:1000; background:var(--header-bg); backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--header-border); box-shadow:var(--shadow-soft); transition:transform .25s ease;
-  }
+  header{position:sticky; top:0; z-index:1000; background:var(--header-bg); backdrop-filter:blur(16px); border-bottom:1px solid var(--header-border); box-shadow:var(--shadow-soft); transition:transform .25s ease}
   header.hide{ transform:translateY(-105%) }
   .header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto}
   .logo-link{display:block; line-height:0}
   .logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
   .logo-link:hover .logo-img{transform:scale(1.04)}
 
-  /* Frase del encabezado (misma familia que títulos, más gruesa) */
+  /* Frase */
   .header-phrase{
     position:relative; justify-self:center; text-align:center; line-height:1.03; letter-spacing:.4px;
     font-family:'Mountains of Christmas',cursive; font-weight:700; font-size:3.2rem; padding:.3rem .8rem; color:var(--text-dark);
-    text-shadow:
-      0 2px 0 rgba(255,255,255,.65),
-      0 3px 10px rgba(0,0,0,.08),
-      0 0 0.8px currentColor,
-      0 0 0.8px currentColor; /* “simula” grosor */
+    text-shadow:0 2px 0 rgba(255,255,255,.65), 0 3px 10px rgba(0,0,0,.08), 0 0 .8px currentColor, 0 0 .8px currentColor;
   }
 
-  /* Guirnalda de luces (SVG) sobre la frase */
-  .lights-wrap{position:absolute; inset: -26px -14px auto -14px; pointer-events:none}
-  .lights-svg{width:100%; height:70px}
+  /* Guirnalda sobre la frase */
+  .lights-wrap{position:absolute; left:-12px; right:-12px; top:-28px; height:90px; pointer-events:none}
+  .lights-svg{width:100%; height:100%}
   .cable{fill:none; stroke:var(--cable); stroke-width:6; stroke-linecap:round}
-  body.night .cable{ stroke:var(--cable-contrast) }
-  .bulb{stroke:#111; stroke-width:1.5}
-  .bulb.red{fill:#ff5252} .bulb.yellow{fill:#ffd54f} .bulb.blue{fill:#64b5f6} .bulb.green{fill:#66bb6a}
-  /* Glow estable */
-  .bulb{ filter: drop-shadow(0 0 6px rgba(255,255,255,.25)); }
-  .bulb.red{ filter: drop-shadow(0 0 10px rgba(255,82,82,.7)); }
-  .bulb.yellow{ filter: drop-shadow(0 0 10px rgba(255,213,79,.7)); }
-  .bulb.blue{ filter: drop-shadow(0 0 10px rgba(100,181,246,.7)); }
-  .bulb.green{ filter: drop-shadow(0 0 10px rgba(102,187,106,.7)); }
+  body.night .cable{stroke:var(--cable-contrast)}
+  .bulb{stroke:#111; stroke-width:1.5; filter:drop-shadow(0 0 6px rgba(255,255,255,.25))}
+  .bulb.red{fill:#ff5252; filter:drop-shadow(0 0 10px rgba(255,82,82,.7))}
+  .bulb.yellow{fill:#ffd54f; filter:drop-shadow(0 0 10px rgba(255,213,79,.7))}
+  .bulb.blue{fill:#64b5f6; filter:drop-shadow(0 0 10px rgba(100,181,246,.7))}
+  .bulb.green{fill:#66bb6a; filter:drop-shadow(0 0 10px rgba(102,187,106,.7))}
+  .bulb-socket{fill:#222}
 
   nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end}
-  .chip-btn{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
-    padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft); white-space:nowrap}
+  .chip-btn{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff; padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft); white-space:nowrap}
   .chip-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
   .btn-home{background:linear-gradient(135deg,#00C853,#69F0AE)}
   .btn-cards{background:linear-gradient(135deg,#FFB300,#FFD54F); color:#332300}
@@ -128,20 +103,24 @@
   .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
   .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
 
-  /* Enchufe debajo del botón de música */
-  .plug-zone{display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-right:20px; margin-top:6px}
-  .wall-outlet{
-    display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none;
-    background:linear-gradient(180deg,#f1f5fa,#e6ecf4); padding:6px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.08);
-    box-shadow:0 2px 6px rgba(0,0,0,.12);
-    color:#455a64; font-weight:800;
-  }
-  .outlet-svg{width:34px;height:34px}
-  .plug-led{width:10px;height:10px;border-radius:50%;background:#c62828;box-shadow:0 0 0 0 rgba(198,40,40,.0);transition:.2s}
-  body.lights-on .plug-led{background:#66bb6a; box-shadow:0 0 10px 2px rgba(102,187,106,.55)}
-  body.night .wall-outlet{background:linear-gradient(180deg,#0f1a26,#0b121b); color:#cfd8dc; border-color:rgba(255,255,255,.08)}
+  /* Área enchufe/plug */
+  .plug-zone{display:flex; justify-content:flex-end; align-items:center; gap:14px; margin-right:20px; margin-top:6px; position:relative}
+  .plug-cable-svg{position:absolute; left:0; right:0; top:-10px; height:110px; pointer-events:none}
+  .plug-cable{fill:none; stroke:var(--cable); stroke-width:6; stroke-linecap:round}
+  body.night .plug-cable{stroke:var(--cable-contrast)}
 
-  /* Franja decorativa superior */
+  .outlet{width:44px;height:44px; border-radius:10px; background:linear-gradient(180deg,#f1f5fa,#e6ecf4); border:1px solid rgba(0,0,0,.08); box-shadow:0 2px 6px rgba(0,0,0,.12); position:relative}
+  .outlet:before,.outlet:after{content:""; position:absolute; width:6px; height:10px; background:#455a64; top:14px; border-radius:2px}
+  .outlet:before{ left:13px } .outlet:after{ right:13px }
+  .outlet .led{position:absolute; width:8px; height:8px; border-radius:50%; bottom:8px; left:50%; transform:translateX(-50%); background:#c62828; box-shadow:0 0 0 0 rgba(198,40,40,0)}
+  body.lights-on .outlet .led{background:#66bb6a; box-shadow:0 0 10px 2px rgba(102,187,106,.55)}
+
+  .hand-plug{width:72px;height:48px; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:center; transition:transform .25s ease}
+  .hand-plug svg{width:100%; height:100%}
+  /* al conectar “se acerca” al tomacorriente */
+  body.lights-on .hand-plug{ transform:translateX(6px) }
+
+  /* Franja decorativa */
   .hero{position:relative; min-height:140px; padding:10px 0}
   .celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:.18; font-size:2.4rem; display:flex; justify-content:space-around; align-items:center}
   .celeste-icons span:nth-child(odd){transform:translateY(-8px)} .celeste-icons span:nth-child(even){transform:translateY(8px)}
@@ -155,8 +134,7 @@
   .cards-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
   .card{background:var(--panel-bg); border-radius:24px; overflow:hidden; border:3px solid transparent; box-shadow:var(--shadow-soft); transition:.3s; display:flex; flex-direction:column}
   .card:hover{transform:translateY(-8px); box-shadow:var(--shadow-hover); border-color:var(--primary-gold)}
-  .card-image{width:100%; aspect-ratio:4/3;
-    background:
+  .card-image{width:100%; aspect-ratio:4/3; background:
       radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
       repeating-linear-gradient(45deg,#f7f7f7 0 8px,#f2f2f2 8px 16px);
     display:flex; align-items:center; justify-content:center; position:relative}
@@ -170,7 +148,6 @@
   .price-badge{display:inline-flex; align-items:center; gap:.45rem; font-weight:800; background:linear-gradient(135deg,#FFB300,#FDD835); color:#332300; padding:.55rem .95rem; border-radius:999px; box-shadow:0 4px 12px rgba(251,188,4,.35)}
   .wa-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none; background:linear-gradient(135deg,#25D366,#1EBE57); color:#fff; padding:.6rem 1rem; border-radius:999px; box-shadow:var(--shadow-soft); transition:.25s}
   .wa-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
-
   .loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-light)}
 
   /* Lightbox */
@@ -180,7 +157,7 @@
   .lb-close{position:absolute; top:16px; right:16px; background:#000; color:#fff; border:0; border-radius:999px; width:42px; height:42px; font-size:1.2rem; cursor:pointer; box-shadow:0 0 0 2px #fff3}
   .lb-zoom{position:absolute; bottom:18px; right:18px; background:#000a; color:#fff; border:0; border-radius:999px; padding:10px 14px; font-weight:800; cursor:pointer}
 
-  /* ARTE PRINGLE (marcos) */
+  /* Arte Pringle (marcos) */
   .art-wrap{margin-top:3rem}
   .art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px}
   .frame{background:linear-gradient(135deg, var(--wood), var(--wood-dark)); border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25)}
@@ -226,56 +203,30 @@
   <!-- Nieve -->
   <div id="snowContainer" class="snow-container"></div>
 
-  <!-- Tren → izquierda | Locomotora al frente -->
+  <!-- Tren -->
   <div class="train-container" id="train" title="🚂 Tócalo para turbo 10s">
     <div class="train">
-      <!-- Locomotora -->
-      <div class="engine-wrap">
-        <div class="engine">🚂</div>
-        <div class="smoke">💨</div>
-      </div>
-
-      <!-- Vagones Tracker -->
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div>
-      </div>
-      <div class="wagon" style="position:relative">
-        🎁
-        <div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div>
-      </div>
-
-      <!-- Árbol y estrella al final -->
-      <div class="wagon">🎄</div>
-      <div class="wagon">⭐</div>
+      <div class="engine-wrap"><div class="engine">🚂</div><div class="smoke">💨</div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div></div>
+      <div class="wagon">🎄</div><div class="wagon">⭐</div>
     </div>
   </div>
 
   <!-- Header -->
   <header id="siteHeader">
     <div class="header-content">
-      <a href="#inicio" class="logo-link" aria-label="Inicio">
-        <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
-      </a>
+      <a href="#inicio" class="logo-link" aria-label="Inicio"><img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle"></a>
 
       <!-- Frase + luces -->
-      <div class="header-phrase" id="headerPhrase" aria-label="Lema navideño">
+      <div class="header-phrase" id="headerPhrase">
         Diversión festiva para toda la familia
         <div class="lights-wrap" aria-hidden="true">
-          <!-- Cable y bulbs (SVG) -->
           <svg class="lights-svg" viewBox="0 0 1000 120" preserveAspectRatio="none">
-            <!-- cable -->
-            <path id="cablePath" class="cable"
-              d="M 20 80 C 180 20, 340 140, 500 60 S 820 20, 980 80"/>
-            <!-- bulbs colocados a lo largo del path -->
+            <!-- Path ondulado se genera por JS para que quede “sobre” las letras -->
+            <path id="cablePath" class="cable" d="M10,60 Q250,20 500,60 T990,60"/>
             <g id="bulbs"></g>
           </svg>
         </div>
@@ -286,23 +237,35 @@
         <a class="chip-btn btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip-btn btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
-        <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
-          <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
-        </button>
+        <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música"><i class="fa-solid fa-music" style="font-size:1.1rem"></i></button>
       </nav>
     </div>
-    <!-- Enchufe / interruptor luces -->
-    <div class="plug-zone">
-      <div id="plugToggle" class="wall-outlet" title="Conectar/Desconectar luces">
-        <svg class="outlet-svg" viewBox="0 0 64 64" aria-hidden="true">
-          <rect x="8" y="6" width="48" height="52" rx="8" fill="#eceff1" stroke="#b0bec5" stroke-width="2"></rect>
-          <circle cx="24" cy="28" r="4" fill="#455a64"></circle>
-          <circle cx="40" cy="28" r="4" fill="#455a64"></circle>
-          <rect x="28" y="38" width="8" height="12" rx="2" fill="#78909c"></rect>
+
+    <!-- Cable “hacia el suelo” y enchufe con mano -->
+    <div class="plug-zone" id="plugZone">
+      <!-- SVG del tramo de cable que baja y llega al tomacorriente -->
+      <svg class="plug-cable-svg" viewBox="0 0 1000 110" preserveAspectRatio="none">
+        <path id="plugCable" class="plug-cable" d="M0,0 L1000,110"/>
+      </svg>
+
+      <!-- Mano con plug (click = conectar/desconectar) -->
+      <div class="hand-plug" id="plugToggle" title="Conectar / desconectar">
+        <svg viewBox="0 0 120 80">
+          <!-- mano -->
+          <path d="M20,45 q15,-10 30,0 q10,5 18,5 q8,0 12,-6 q3,-5 -3,-9 q-7,-4 -15,0 q-6,3 -10,1 q-6,-3 -12,-2 q-7,1 -10,4 q-6,6 -10,7 z" fill="#ffcc80" stroke="#e0a261" stroke-width="2"/>
+          <!-- plug -->
+          <rect x="72" y="33" width="18" height="12" rx="2" fill="#263238"/>
+          <rect x="90" y="35" width="14" height="8" rx="1" fill="#37474F"/>
+          <!-- patillas -->
+          <rect x="104" y="36" width="3" height="4" fill="#B0BEC5"/>
+          <rect x="108" y="36" width="3" height="4" fill="#B0BEC5"/>
+          <!-- cable que sale del plug hacia atrás (decorativo) -->
+          <path d="M72,39 q-16,8 -36,4" stroke="var(--cable)" stroke-width="6" fill="none" stroke-linecap="round"/>
         </svg>
-        <span>Enchufe</span>
-        <span class="plug-led"></span>
       </div>
+
+      <!-- Tomacorriente pared -->
+      <div class="outlet" id="outlet"><span class="led"></span></div>
     </div>
   </header>
 
@@ -319,10 +282,7 @@
     <section id="tarjetas">
       <h2 class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
       <div id="cardsGrid" class="cards-grid">
-        <div class="loading">
-          <i class="fas fa-spinner fa-spin" style="font-size:2.2rem;color:var(--primary-red)"></i>
-          <p>Cargando tarjetas...</p>
-        </div>
+        <div class="loading"><i class="fas fa-spinner fa-spin" style="font-size:2.2rem;color:var(--primary-red)"></i><p>Cargando tarjetas...</p></div>
       </div>
     </section>
 
@@ -330,44 +290,9 @@
     <section id="arte" class="art-wrap">
       <h2 class="section-title">🖼️ Colección Arte Pringle</h2>
       <div class="art-grid">
-        <!-- Tren de Navidad -->
-        <article class="frame">
-          <div class="frame-inner">
-            <div class="frame-image">
-              <img src="arte-tren.jpg" alt="Tren de Navidad en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3ETren de Navidad (cargue arte-tren.jpg)%3C/text%3E%3C/svg%3E'">
-            </div>
-            <div class="art-meta">
-              <div class="art-title">Tren de Navidad</div>
-              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Tren%20de%20Navidad%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Barco navideño -->
-        <article class="frame">
-          <div class="frame-inner">
-            <div class="frame-image">
-              <img src="arte-barco.jpg" alt="Barco navideño en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EBarco%20Navide%C3%B1o%20(cargue%20arte-barco.jpg)%3C/text%3E%3C/svg%3E'">
-            </div>
-            <div class="art-meta">
-              <div class="art-title">Barco Navideño</div>
-              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Pueblo navideño -->
-        <article class="frame">
-          <div class="frame-inner">
-            <div class="frame-image">
-              <img src="arte-pueblo.jpg" alt="Pueblo navideño de Estados Unidos en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EPueblo%20Navide%C3%B1o%20(cargue%20arte-pueblo.jpg)%3C/text%3E%3C/svg%3E'">
-            </div>
-            <div class="art-meta">
-              <div class="art-title">Pueblo Navideño</div>
-              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Pueblo%20Navide%C3%B1o%20(USA)%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
-            </div>
-          </div>
-        </article>
+        <article class="frame"><div class="frame-inner"><div class="frame-image"><img src="arte-tren.jpg" alt="Tren de Navidad en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3ETren de Navidad (cargue arte-tren.jpg)%3C/text%3E%3C/svg%3E'"></div><div class="art-meta"><div class="art-title">Tren de Navidad</div><a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Tren%20de%20Navidad%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a></div></div></article>
+        <article class="frame"><div class="frame-inner"><div class="frame-image"><img src="arte-barco.jpg" alt="Barco navideño en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EBarco%20Navide%C3%B1o%20(cargue%20arte-barco.jpg)%3C/text%3E%3C/svg%3E'"></div><div class="art-meta"><div class="art-title">Barco Navideño</div><a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Barco%20Navide%C3%B1o%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a></div></div></article>
+        <article class="frame"><div class="frame-inner"><div class="frame-image"><img src="arte-pueblo.jpg" alt="Pueblo navideño de Estados Unidos en acuarela" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23f5f5f5%22 width=%22800%22 height=%22600%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2230%22%3EPueblo%20Navide%C3%B1o%20(cargue%20arte-pueblo.jpg)%3C/text%3E%3C/svg%3E'"></div><div class="art-meta"><div class="art-title">Pueblo Navideño</div><a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20%F0%9F%91%8B%2C%20me%20interesa%20el%20cuadro%20%22Pueblo%20Navide%C3%B1o%20(USA)%22%20de%20Arte%20Pringle.%20%C2%BFMe%20ayudas%20con%20la%20compra%3F"><i class="fa-brands fa-whatsapp"></i> Comprar</a></div></div></article>
       </div>
     </section>
 
@@ -390,7 +315,7 @@
     <div class="site-version">v1.4 · 2025</div>
   </footer>
 
-  <!-- Lightbox (viewer) -->
+  <!-- Lightbox -->
   <div id="lightbox" class="lb" aria-modal="true" role="dialog">
     <button class="lb-close" aria-label="Cerrar (Esc)" id="lbClose"><i class="fa-solid fa-xmark"></i></button>
     <img id="lbImg" alt="">
@@ -428,7 +353,7 @@
     }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
   });
 
-  /* ===== Santa Tracker D/H/M/S ===== */
+  /* ===== Santa Tracker ===== */
   function targetChristmas(){
     const now=new Date();
     const y=(now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
@@ -441,25 +366,18 @@
           m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
     stDays.textContent=d; stHours.textContent=pad(h); stMins.textContent=pad(m); stSecs.textContent=pad(s);
   }
-  const stDays=document.getElementById('stDays'),
-        stHours=document.getElementById('stHours'),
-        stMins=document.getElementById('stMins'),
-        stSecs=document.getElementById('stSecs');
+  const stDays=document.getElementById('stDays'), stHours=document.getElementById('stHours'), stMins=document.getElementById('stMins'), stSecs=document.getElementById('stSecs');
   updateSanta(); setInterval(updateSanta,1000);
 
-  /* ===== Turbo tren 10s ===== */
+  /* ===== Turbo tren ===== */
   const train=document.getElementById('train');
   let turbo=false;
-  train.addEventListener('click', ()=>{
-    if(turbo) return; turbo=true;
-    train.style.setProperty('--train-duration','22s');
-    setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; },10000);
-  });
+  train.addEventListener('click', ()=>{ if(turbo) return; turbo=true; train.style.setProperty('--train-duration','22s'); setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; },10000); });
 
   /* ===== CRC ===== */
   const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
 
-  /* ===== Cargar tarjetas ===== */
+  /* ===== Cargar tarjetas + activar viewer ===== */
   async function loadCards(){
     const grid=document.getElementById('cardsGrid');
     try{
@@ -467,89 +385,103 @@
       const res=await fetch(`./cards.json?t=${ts}`,{cache:'no-store'});
       if(!res.ok) throw new Error(`HTTP ${res.status}`);
       const cards=await res.json();
-      if(!Array.isArray(cards)||!cards.length){
-        grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`;
-        return;
-      }
+      if(!Array.isArray(cards)||!cards.length){ grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`; return; }
       cards.sort((a,b)=>a.number-b.number);
       grid.innerHTML = cards.map(c=>{
         const img=`${encodeURI(c.image)}?t=${ts}`;
         const price=fmtCRC(c.price);
         const msg=`Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
         const wa=`https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
-        return `
-          <article class="card">
-            <div class="card-image">
-              <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
-                data-full="${img}">
-            </div>
-            <div class="card-content">
-              <h3>${c.title}</h3>
-              <p>${c.description}</p>
-              <div class="price-row">
-                <span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
-                <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
-              </div>
-            </div>
-          </article>`;
+        return `<article class="card">
+          <div class="card-image"><img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async" data-full="${img}"></div>
+          <div class="card-content"><h3>${c.title}</h3><p>${c.description}</p>
+            <div class="price-row"><span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
+              <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+            </div></div></article>`;
       }).join('');
-
-      // activar viewer
-      document.querySelectorAll('.card-photo').forEach(img=>{
-        img.addEventListener('click',()=>openLightbox(img.dataset.full || img.src));
-      });
-    }catch(e){
-      grid.innerHTML=`<div class="no-cards">❌ Error al cargar tarjetas. Intenta de nuevo más tarde.</div>`;
-      console.error(e);
-    }
+      document.querySelectorAll('.card-photo').forEach(img=>img.addEventListener('click',()=>openLightbox(img.dataset.full||img.src)));
+    }catch(e){ grid.innerHTML=`<div class="no-cards">❌ Error al cargar tarjetas. Intenta de nuevo más tarde.</div>`; console.error(e); }
   }
 
-  /* ===== Lightbox (viewer) ===== */
-  const lb=document.getElementById('lightbox');
-  const lbImg=document.getElementById('lbImg');
-  const lbClose=document.getElementById('lbClose');
-  const lbZoom=document.getElementById('lbZoom');
+  /* ===== Lightbox ===== */
+  const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbClose=document.getElementById('lbClose'), lbZoom=document.getElementById('lbZoom');
   let zoom=1;
-
-  function openLightbox(src){
-    lbImg.src=src; lb.classList.add('open'); zoom=1; lbImg.style.transform='scale(1)';
-  }
+  function openLightbox(src){ lbImg.src=src; lb.classList.add('open'); zoom=1; lbImg.style.transform='scale(1)'; }
   function closeLightbox(){ lb.classList.remove('open'); lbImg.src=''; }
   lbClose.addEventListener('click',closeLightbox);
   lb.addEventListener('click',(e)=>{ if(e.target===lb) closeLightbox(); });
   document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
-  lbZoom.addEventListener('click',()=>{ zoom = zoom>=2 ? 1 : (zoom+0.5); lbImg.style.transform=`scale(${zoom})`; });
+  lbZoom.addEventListener('click',()=>{ zoom=zoom>=2?1:(zoom+.5); lbImg.style.transform=`scale(${zoom})`; });
+  lb.addEventListener('wheel',(e)=>{ if(!lb.classList.contains('open')) return; e.preventDefault(); zoom=Math.min(3,Math.max(1,zoom+(e.deltaY<0?0.2:-0.2))); lbImg.style.transform=`scale(${zoom})`; },{passive:false});
 
-  // zoom con rueda
-  lb.addEventListener('wheel', (e)=>{ if(!lb.classList.contains('open')) return; e.preventDefault(); zoom=Math.min(3, Math.max(1, zoom + (e.deltaY<0?0.2:-0.2))); lbImg.style.transform=`scale(${zoom})`; }, {passive:false});
+  /* ===== Guirnalda sobre letras: genera un path ondulado “pegado” al texto y coloca bulbs */
+  function buildGarland(){
+    const phrase=document.getElementById('headerPhrase');
+    const svg=phrase.querySelector('.lights-svg');
+    const path=svg.querySelector('#cablePath');
+    const bulbsGroup=svg.querySelector('#bulbs');
+    // medidas de la frase
+    const bbox=phrase.getBoundingClientRect();
+    const w=bbox.width; const h=120; // altura fija del SVG
+    svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
 
-  /* ===== Guirnalda SVG: colocar bulbs redondos en el path ===== */
-  (function buildBulbs(){
-    const path=document.getElementById('cablePath');
-    const g=document.getElementById('bulbs');
-    const colors=['red','yellow','blue','green'];
-    const total=10; // cantidad de focos
-    const pathLen=path.getTotalLength();
-    for(let i=0;i<total;i++){
-      const p=path.getPointAtLength((i+1)/(total+1)*pathLen);
-      const color=colors[i%colors.length];
-      const bulb=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      bulb.setAttribute('class','bulb '+color);
-      bulb.setAttribute('cx',p.x);
-      bulb.setAttribute('cy',p.y);
-      bulb.setAttribute('r','10');
-      g.appendChild(bulb);
-
-      // casquillo
-      const base=document.createElementNS('http://www.w3.org/2000/svg','rect');
-      base.setAttribute('x',p.x-5); base.setAttribute('y',p.y+8);
-      base.setAttribute('width','10'); base.setAttribute('height','6');
-      base.setAttribute('fill','#222');
-      g.appendChild(base);
+    // genera una onda que pasa por encima de las letras (a ~35px de la parte superior de la frase)
+    const baseY=55;                  // línea base dentro del SVG
+    const amp=Math.max(10, Math.min(26, w/40)); // amplitud según ancho
+    const segs=6;                    // cantidad de curvas
+    let d=`M 10 ${baseY}`;
+    for(let i=1;i<=segs;i++){
+      const x1 = (w/segs)*(i-0.5);
+      const y1 = baseY + (i%2? -amp: amp);
+      const x2 = (w/segs)*i;
+      const y2 = baseY;
+      d += ` Q ${x1} ${y1} ${x2} ${y2}`;
     }
-  })();
+    d += ` L ${w-10} ${baseY}`;
+    path.setAttribute('d', d);
 
-  /* ===== Enchufe: luces ON/OFF + Night Mode ===== */
+    // limpia y vuelve a poner bombillos
+    bulbsGroup.innerHTML='';
+    const colors=['red','yellow','blue','green'];
+    const total=Math.max(8, Math.floor(w/110)); // densidad proporcional al ancho
+    const len=path.getTotalLength();
+    for(let i=0;i<total;i++){
+      const pt=path.getPointAtLength((i+1)/(total+1)*len);
+      const bulb=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      bulb.setAttribute('class','bulb '+colors[i%colors.length]);
+      bulb.setAttribute('cx',pt.x); bulb.setAttribute('cy',pt.y); bulb.setAttribute('r','10');
+      bulbsGroup.appendChild(bulb);
+
+      const socket=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      socket.setAttribute('class','bulb-socket');
+      socket.setAttribute('x',pt.x-5); socket.setAttribute('y',pt.y+8);
+      socket.setAttribute('width','10'); socket.setAttribute('height','6');
+      bulbsGroup.appendChild(socket);
+    }
+  }
+
+  /* ===== Cable que “cae al suelo” hacia el enchufe ===== */
+  function drawCableToOutlet(){
+    const phrase=document.getElementById('headerPhrase').querySelector('.lights-svg');
+    const plugCable=document.getElementById('plugCable');
+    const plugZone=document.getElementById('plugZone');
+    const outlet=document.getElementById('outlet');
+    // origen: extremo derecho del SVG de luces (punto final del path)
+    const src=phrase.getBoundingClientRect();
+    const startX=src.right - phrase.getBoundingClientRect().left; // ancho del svg (en su propio sistema no lo necesitamos)
+    // usamos coordenadas relativas dentro del plug-cable SVG (0..1000 ancho)
+    const w=1000, h=110;
+    // destino: centro del tomacorriente
+    const dstRect=outlet.getBoundingClientRect();
+    const zoneRect=plugZone.getBoundingClientRect();
+    const endX = w*0.86; // fijo hacia el lado derecho del SVG
+    const endY = 84;     // “suelo”
+    // curva con caída y un poco de ondulación
+    const d = `M ${w*0.1},10 C ${w*0.45},20 ${w*0.65},100 ${endX},${endY}`;
+    plugCable.setAttribute('d', d);
+  }
+
+  /* ===== Enchufe: ON/OFF + modo noche ===== */
   const plug=document.getElementById('plugToggle');
   function toggleLights(){
     const on=document.body.classList.toggle('lights-on');
@@ -565,9 +497,7 @@
     if (innerWidth<=800){
       if(dy>6 && scrollY>40) header.classList.add('hide');
       else if(dy<-6) header.classList.remove('hide');
-    }else{
-      header.classList.remove('hide');
-    }
+    }else header.classList.remove('hide');
     lastY=scrollY;
   });
 
@@ -581,9 +511,15 @@
   });
 
   /* ===== Init ===== */
+  function onResize(){
+    buildGarland();
+    drawCableToOutlet();
+  }
+  window.addEventListener('resize', onResize);
   window.addEventListener('load', ()=>{
     loadCards();
     for(let i=0;i<20;i++){ setTimeout(createSnowflake, i*200); }
+    onResize();
   });
 </script>
 </body>

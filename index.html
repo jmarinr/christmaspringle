@@ -583,6 +583,18 @@
             overflow: hidden;
         }
 
+        .card-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-photo {
+            transform: scale(1.1);
+        }
+
         .card:nth-child(1) .card-image { 
             background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
         }
@@ -605,29 +617,13 @@
         .card-image::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20%, 20%); }
-        }
-
-        .card-emoji {
-            animation: cardFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
-            position: relative;
-            z-index: 2;
-        }
-
-        @keyframes cardFloat {
-            0%, 100% { transform: translateY(0) rotate(-5deg) scale(1); }
-            50% { transform: translateY(-15px) rotate(5deg) scale(1.05); }
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .card-content {
@@ -1228,7 +1224,7 @@
             <div class="cards-grid">
                 <div class="card fade-in">
                     <div class="card-image">
-                        <div class="card-emoji" role="img" aria-label="Árbol de Navidad">🎄</div>
+                        <img src="1.png" alt="Árbol de Navidad - Tarjeta de Esperanza" class="card-photo">
                     </div>
                     <div class="card-content">
                         <h3>Árbol de Esperanza</h3>
@@ -1245,7 +1241,7 @@
 
                 <div class="card fade-in" style="animation-delay: 0.1s;">
                     <div class="card-image">
-                        <div class="card-emoji" role="img" aria-label="Santa Claus">🎅</div>
+                        <img src="2.png" alt="Santa Claus - Tarjeta Alegre" class="card-photo">
                     </div>
                     <div class="card-content">
                         <h3>Santa Claus Alegre</h3>
@@ -1262,7 +1258,7 @@
 
                 <div class="card fade-in" style="animation-delay: 0.2s;">
                     <div class="card-image">
-                        <div class="card-emoji" role="img" aria-label="Estrella de Navidad">⭐</div>
+                        <img src="3.png" alt="Estrella de Navidad - Tarjeta de Belén" class="card-photo">
                     </div>
                     <div class="card-content">
                         <h3>Estrella de Belén</h3>
@@ -1279,7 +1275,7 @@
 
                 <div class="card fade-in" style="animation-delay: 0.3s;">
                     <div class="card-image">
-                        <div class="card-emoji" role="img" aria-label="Velas navideñas">🕯️</div>
+                        <img src="4.png" alt="Velas navideñas - Tarjeta de Paz" class="card-photo">
                     </div>
                     <div class="card-content">
                         <h3>Velas de Paz</h3>
@@ -1296,7 +1292,7 @@
 
                 <div class="card fade-in" style="animation-delay: 0.4s;">
                     <div class="card-image">
-                        <div class="card-emoji" role="img" aria-label="Regalos navideños">🎁</div>
+                        <img src="5.png" alt="Regalos navideños - Tarjeta de Amor" class="card-photo">
                     </div>
                     <div class="card-content">
                         <h3>Regalos de Amor</h3>
@@ -1313,7 +1309,7 @@
 
                 <div class="card fade-in" style="animation-delay: 0.5s;">
                     <div class="card-image">
-                        <div class="card-emoji" role="img" aria-label="Copos de nieve">❄️</div>
+                        <img src="6.png" alt="Copos de nieve - Tarjeta de Invierno" class="card-photo">
                     </div>
                     <div class="card-content">
                         <h3>Copos de Nieve</h3>
@@ -1465,7 +1461,7 @@
     <!-- Hidden Audio Element -->
     <audio id="christmasMusic" loop>
         <!-- Tu música navideña - coloca el archivo MP3 en la misma carpeta que index.html -->
-        <source src="Christmas Rap.mp3" type="audio/mpeg">
+        <source src="navidad.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 

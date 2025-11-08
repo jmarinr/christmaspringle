@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Christmas Pringle - Tarjetas Navideñas Mágicas</title>
 <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -15,66 +15,77 @@
     --shadow-soft:0 4px 16px rgba(0,0,0,.08); --shadow-medium:0 8px 24px rgba(0,0,0,.12); --shadow-hover:0 12px 32px rgba(0,0,0,.16);
     --wood:#7a5236; --wood-dark:#5b3c28; --mat:#f7f6f2;
 
-    /* day theme */
-    --bg-grad-start:#4FC3F7; --bg-grad-mid:#81D4FA; --bg-grad-end:#B3E5FC;
-    --header-bg: rgba(255,255,255,.95);
-    --header-border: rgba(0,0,0,.06);
-    --hero-icons-opacity:.18;
-    --card-surface:#fff;
-    --footer-grad-start:#263238; --footer-grad-end:#37474F;
-    --cable:#111;               /* cable negro mate */
-    --bulb-off:#b0b0b0;
-  }
+    /* Guirnalda */
+    --bulb-red:#ff4b4b; --bulb-yellow:#ffd54f; --bulb-blue:#4fc3f7; --bulb-green:#69f0ae;
+    --bulb-off:#a7b0b5; --wire:#111; --wire-night:#d9d9d9;
 
-  /* night theme overrides */
-  body.night{
-    --bg-grad-start:#0f172a; --bg-grad-mid:#0b1225; --bg-grad-end:#0a0f1f;
-    --header-bg: rgba(10,14,24,.92);
-    --header-border: rgba(255,255,255,.08);
-    --hero-icons-opacity:.10;
-    --card-surface:#0f192d;
-    --footer-grad-start:#0b1225; --footer-grad-end:#0a0f1f;
-    --cable:#e6e6e6;            /* cable claro en modo oscuro */
-    --bulb-off:#666;
-    color-scheme: dark;
+    /* Modo noche */
+    --night-bg1:#0c1220; --night-bg2:#0f1a33; --night-card:#0f1a2c; --night-text:#e9f0ff; --night-soft:#18243d;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:'Google Sans',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-    background:linear-gradient(180deg,var(--bg-grad-start) 0%,var(--bg-grad-mid) 50%,var(--bg-grad-end) 100%);
-    color:var(--text-dark); min-height:100vh; overflow-x:hidden; transition:background .35s ease;
+    background:linear-gradient(180deg,#4FC3F7 0%,#81D4FA 50%,#B3E5FC 100%);
+    color:var(--text-dark); min-height:100vh; overflow-x:hidden;
   }
 
-  /* Nieve */
+  /* ===== Nieve ===== */
   .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
   .snowflake{position:absolute; top:-10px; color:#fff; font-size:1.5em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
   @keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
 
-  /* Tren (izquierda) */
+  /* ===== Tren (izquierda) ===== */
   .train-container{
     --train-duration: 42s;
-    position:fixed; bottom:60px; left:100vw; z-index:10000;
+    position:fixed; bottom:60px; left:100vw; z-index:1000;
     animation:trainMoveLeft var(--train-duration) linear infinite;
+    pointer-events:none;
   }
   @keyframes trainMoveLeft{ 0%{ left:100vw } 100%{ left:-950px } }
-  .train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3)); cursor:pointer}
+
+  .train{display:flex; align-items:flex-end; gap:6px; filter:drop-shadow(0 12px 24px rgba(0,0,0,.3))}
   .wagon, .engine{font-size:5.2em; line-height:1; animation:wBounce .6s ease-in-out infinite}
   .wagon:nth-child(2){animation-delay:.05s} .wagon:nth-child(3){animation-delay:.1s}
   .wagon:nth-child(4){animation-delay:.15s} .wagon:nth-child(5){animation-delay:.2s}
   .wagon:nth-last-child(2){animation-delay:.25s} .wagon:nth-last-child(1){animation-delay:.3s}
   @keyframes wBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  /* Locomotora mirando a la izquierda (al frente) y luces en modo noche */
+
+  /* Locomotora mirando a la izquierda (al frente) */
   .engine{transform:scaleX(-1)}
-  body.night .engine::after{
-    content:'✨'; position:absolute; font-size:.6em; transform:translate(-10px,-10px) rotate(12deg);
-    filter:drop-shadow(0 0 6px rgba(255,255,200,.9));
-  }
   .engine-wrap{position:relative; display:inline-block}
+
+  /* Humo */
   .smoke{position:absolute; top:-58px; right:46px; font-size:2.4rem; animation:smokeRise 1.8s ease-out infinite}
   @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.4); opacity:0}}
 
-  /* Santa Tracker redondos arriba de 4 vagones */
+  /* Faros de la locomotora en modo noche */
+  body.night .engine-wrap::before{
+    content:"";
+    position:absolute;
+    right:18px; top:18px;
+    width:360px; height:160px;
+    transform:translateX(100%) skewX(-12deg);
+    background: radial-gradient(ellipse at left,
+       rgba(255,255,210,.95) 0%,
+       rgba(255,255,210,.55) 25%,
+       rgba(255,255,170,.25) 45%,
+       rgba(255,255,150,.10) 65%,
+       rgba(255,255,150,0) 100%);
+    filter: blur(2px);
+    pointer-events:none;
+    z-index:-1;
+  }
+  body.night .train-container::after{
+    /* halo en el suelo bajo los faros */
+    content:"";
+    position:fixed; bottom:35px; left:0; right:0;
+    height:60px;
+    background: radial-gradient(ellipse at 60% 50%,
+      rgba(255,236,170,.18),rgba(255,236,170,0) 60%);
+    pointer-events:none;
+  }
+
+  /* ===== Santa Tracker redondos arriba de 4 vagones ===== */
   .tracker{
     position:absolute; top:-30px; left:18px;
     width:92px; height:92px; border-radius:50%;
@@ -87,34 +98,93 @@
   .tracker .lbl{font-size:.62rem; margin-top:2px; text-transform:uppercase}
   .tracker:before{content:''; position:absolute; top:-12px; left:38px; width:14px; height:11px; background:#c0392b; border-radius:3px; box-shadow:0 2px 0 #922b21;}
 
-  /* Header */
-  header{
-    position:sticky; top:0; z-index:1000;
-    background:var(--header-bg); backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--header-border); box-shadow:var(--shadow-soft);
-    transition:transform .25s ease, background .35s ease, border-color .35s ease;
-  }
-  header.hide{ transform:translateY(-110%) }
+  /* ===== Header ===== */
+  header{position:sticky; top:0; z-index:900; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft)}
   .header-content{max-width:1600px; margin:0 auto; padding:12px 20px; display:grid; align-items:center; gap:12px; grid-template-columns:auto 1fr auto}
   .logo-link{display:block; line-height:0}
   .logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
   .logo-link:hover .logo-img{transform:scale(1.04)}
 
-  /* Frase y guirnalda */
-  .header-center{position:relative; justify-self:center; text-align:center}
+  /* Frase central (sin bastones, tipografía navideña) */
+  .header-title-wrap{position:relative; justify-self:center; text-align:center}
   .header-title{
-    font-family:'Mountains of Christmas',cursive; font-weight:700; letter-spacing:.5px;
-    font-size:3.1rem; line-height:1.02; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.2);
+    font-family:'Mountains of Christmas',cursive;
+    font-weight:700; font-size:3.1rem; letter-spacing:.5px;
+    color:#123; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
+    line-height:1.02; padding:.15rem .4rem;
   }
-  body:not(.night) .header-title{ color:#1b3d1d; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08); }
-  .garland{position:absolute; left:50%; transform:translateX(-50%); top:-14px; width:min(640px,78vw); height:84px; pointer-events:none}
-  .garland .wire{fill:none; stroke:var(--cable); stroke-width:4; stroke-linecap:round; opacity:.9}
-  .bulb{transform-origin:center; filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
-  .bulb .glass{opacity:.85}
-  .bulb .glow{display:none}
-  body.lights-on .bulb .glow{display:block; animation:twinkle 1.8s ease-in-out infinite alternate}
-  @keyframes twinkle{0%{opacity:.25; filter:blur(6px)} 100%{opacity:.9; filter:blur(10px)}}
 
+  /* Guirnalda SVG colocada sobre las letras */
+  .garland{
+    position:absolute; left:50%; transform:translateX(-50%);
+    top:-10px; width:680px; height:120px; overflow:visible; pointer-events:none;
+  }
+  .wire{ stroke:var(--wire); stroke-width:3; fill:none; stroke-linecap:round; opacity:.9 }
+  body.night .wire{ stroke:var(--wire-night); }
+
+  .bulb .glass { transition:filter .2s, opacity .2s; }
+  .bulb .cap { fill:#333 }
+  body.night .bulb .cap { fill:#bbb }
+
+  /* Brillo base (twinkle) */
+  .glow{ opacity:.25; filter:blur(6px); transform-origin:center; }
+  .tw-r{ fill:var(--bulb-red) }
+  .tw-y{ fill:var(--bulb-yellow) }
+  .tw-b{ fill:var(--bulb-blue) }
+  .tw-g{ fill:var(--bulb-green) }
+
+  @keyframes twinkle {
+    0%,100%{ opacity:.22; filter: blur(6px) }
+    50%{ opacity:.9; filter: blur(12px) }
+  }
+  /* secuencia de parpadeo suave por color */
+  .tw-r{ animation: twinkle 2.6s ease-in-out infinite .0s }
+  .tw-y{ animation: twinkle 2.4s ease-in-out infinite .3s }
+  .tw-b{ animation: twinkle 2.8s ease-in-out infinite .6s }
+  .tw-g{ animation: twinkle 2.2s ease-in-out infinite .9s }
+
+  /* Estados ON/OFF para guirnalda */
+  body.lights-on .bulb .glass { filter: brightness(1.05) saturate(1.1) }
+  body:not(.lights-on) .bulb .glass { fill: var(--bulb-off) !important; filter: grayscale(.2) opacity(.6) }
+  body:not(.lights-on) .bulb .glow { display:none !important }
+
+  /* Encender: chase temporal; Apagar: fade */
+  body.lights-on.blink-on .bulb .glow { animation: chase 1.5s linear both; }
+  body.lights-on.blink-on .bulb .glass { animation: glassPop .28s ease-out both; animation-delay: calc(var(--i)*.12s) }
+  body.blink-off .bulb .glass { animation: offFade .6s ease both; }
+
+  /* Escalonamos por índice --i */
+  body.lights-on.blink-on .bulb .glow { animation-delay: calc(var(--i) * .12s); }
+
+  @keyframes chase {
+    0%{opacity:.15; filter:blur(4px)}
+    10%{opacity:.25}
+    20%{opacity:.45}
+    35%{opacity:.9; filter:blur(10px)}
+    55%{opacity:.35; filter:blur(6px)}
+    75%{opacity:.15}
+    100%{opacity:.25}
+  }
+  @keyframes glassPop { 0%{transform:scale(.94)} 70%{transform:scale(1.06)} 100%{transform:scale(1)} }
+  @keyframes offFade { from{filter:brightness(1) saturate(1);opacity:1} to{filter:brightness(.5) saturate(.6);opacity:.5} }
+
+  /* ===== Interruptor retro (modo luces/oscuro) ===== */
+  .switch-wrap{ display:flex; align-items:center; gap:.6rem; justify-content:flex-end; }
+  .switch-label{font-weight:800; color:#334}
+  .retro-switch{
+    position:relative; width:66px; height:34px; border-radius:20px; border:2px solid #bbb;
+    background:#f2f2f2; box-shadow:inset 0 3px 8px rgba(0,0,0,.12);
+    cursor:pointer; transition:.2s;
+  }
+  .retro-switch .knob{
+    position:absolute; top:2px; left:2px; width:30px; height:30px; border-radius:50%;
+    background:linear-gradient(180deg,#fff,#ddd); box-shadow:0 2px 6px rgba(0,0,0,.3); transition:.2s;
+  }
+  .retro-switch input{position:absolute; inset:0; opacity:0; cursor:pointer}
+  .retro-switch input:checked ~ .knob{ left:34px; background:linear-gradient(180deg,#fff,#e6ffe6) }
+  .retro-switch:has(input:checked){ background:#c8f7c5; border-color:#9be29a }
+
+  /* ===== Nav ===== */
   nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end}
   .chip-btn{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
     padding:.78rem 1.25rem; border-radius:999px; transition:.25s; box-shadow:var(--shadow-soft); white-space:nowrap}
@@ -125,39 +195,31 @@
   .btn-reviews{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
   .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
   .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
+  /* Efecto header ocultable en móvil */
+  @media (max-width: 800px){
+    header{ position:sticky; top:-1px; transition: transform .25s ease; }
+    header.hide{ transform: translateY(-100%); }
+  }
 
-  /* Interruptor retro Luces / Modo noche */
-  .switch-wrap{display:flex; align-items:center; gap:.5rem; margin-left:.4rem}
-  .switch-label{font-weight:800; color:#fff}
-  body:not(.night) .switch-label{color:#243b4a}
-  .retro-switch{position:relative; width:64px; height:34px; border-radius:999px; background:#222; border:2px solid #111; box-shadow:inset 0 2px 6px rgba(0,0,0,.5); cursor:pointer; display:inline-flex; align-items:center}
-  .retro-switch .lever{position:absolute; left:3px; width:28px; height:28px; background:#f5f5f5; border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,.4); transition:transform .2s ease}
-  .retro-switch .led{position:absolute; right:6px; width:10px; height:10px; border-radius:50%; background:#444; box-shadow:0 0 6px rgba(0,0,0,.2)}
-  .retro-switch input{display:none}
-  body.lights-on .retro-switch{background:#143016; border-color:#0f2412}
-  body.lights-on .retro-switch .lever{transform:translateX(30px)}
-  body.lights-on .retro-switch .led{background:#7CFC00; box-shadow:0 0 10px #7CFC00}
-
-  /* Franja decorativa superior */
+  /* Franja decorativa */
   .hero{position:relative; min-height:140px; padding:10px 0}
-  .celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:var(--hero-icons-opacity); font-size:2.4rem; display:flex; justify-content:space-around; align-items:center}
+  .celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:.18; font-size:2.4rem; display:flex; justify-content:space-around; align-items:center}
   .celeste-icons span:nth-child(odd){transform:translateY(-8px)} .celeste-icons span:nth-child(even){transform:translateY(8px)}
 
   /* Contenido principal */
-  .container{max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem; background:var(--card-surface); border-radius:32px 32px 0 0; margin-top:12px; box-shadow:0 -12px 48px rgba(0,0,0,.12); transition:background .35s}
-  .section-title{font-family:'Mountains of Christmas',cursive; font-size:2.6rem; text-align:center; margin-bottom:2rem; position:relative; display:inline-block; left:50%; transform:translateX(-50%); color:inherit}
+  .container{max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem; background:#fff; border-radius:32px 32px 0 0; margin-top:12px; box-shadow:0 -12px 48px rgba(0,0,0,.12)}
+  .section-title{font-family:'Mountains of Christmas',cursive; font-size:2.6rem; text-align:center; margin-bottom:2rem; position:relative; display:inline-block; left:50%; transform:translateX(-50%)}
   .section-title::after{content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-8px; width:120px; height:5px; border-radius:3px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold))}
 
   /* Tarjetas */
   .cards-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
-  .card{background:var(--card-surface); border-radius:24px; overflow:hidden; border:3px solid transparent; box-shadow:var(--shadow-soft); transition:.3s; display:flex; flex-direction:column}
+  .card{background:#fff; border-radius:24px; overflow:hidden; border:3px solid transparent; box-shadow:var(--shadow-soft); transition:.3s; display:flex; flex-direction:column}
   .card:hover{transform:translateY(-8px); box-shadow:var(--shadow-hover); border-color:var(--primary-gold)}
   .card-image{width:100%; aspect-ratio:4/3;
     background:
       radial-gradient(circle at 15% 20%, rgba(255,255,255,.7) 0 35%, transparent 36%),
       repeating-linear-gradient(45deg,#f7f7f7 0 8px,#f2f2f2 8px 16px);
     display:flex; align-items:center; justify-content:center; position:relative}
-  body.night .card-image{background:linear-gradient(180deg,#0e1a2c,#0b1525)}
   .card-photo{width:100%; height:100%; object-fit:contain; image-rendering:auto; transition:transform .5s ease; cursor:zoom-in}
   .card:hover .card-photo{transform:scale(1.03)}
   .card-content{padding:18px 18px 20px}
@@ -167,49 +229,59 @@
   .price-badge{display:inline-flex; align-items:center; gap:.45rem; font-weight:800; background:linear-gradient(135deg,#FFB300,#FDD835); color:#332300; padding:.55rem .95rem; border-radius:999px; box-shadow:0 4px 12px rgba(251,188,4,.35)}
   .wa-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; text-decoration:none; background:linear-gradient(135deg,#25D366,#1EBE57); color:#fff; padding:.6rem 1rem; border-radius:999px; box-shadow:var(--shadow-soft); transition:.25s}
   .wa-btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-medium)}
-
   .loading,.no-cards{text-align:center; padding:2rem 1rem; color:var(--text-light)}
 
-  /* Lightbox */
-  .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; align-items:center; justify-content:center; z-index:10001}
+  /* Lightbox viewer */
+  .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:2000}
   .lightbox.open{display:flex}
-  .lightbox-inner{max-width:92vw; max-height:88vh; border-radius:12px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.45); background:#000}
+  .lightbox-content{max-width:95vw; max-height:90vh; background:#000; border-radius:12px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.5); position:relative}
   .lightbox-img{display:block; width:100%; height:100%; object-fit:contain}
+  .lightbox-close{position:absolute; top:8px; right:8px; background:#fff; border:0; width:40px; height:40px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.2rem}
 
   /* ARTE PRINGLE (marcos) */
   .art-wrap{margin-top:3rem}
   .art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px}
-  .frame{
-    background:linear-gradient(135deg, var(--wood), var(--wood-dark));
-    border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25);
-  }
-  .frame-inner{
-    background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7;
-  }
-  .frame-image{
-    width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden;
-    display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12);
-  }
+  .frame{ background:linear-gradient(135deg, var(--wood), var(--wood-dark)); border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25) }
+  .frame-inner{ background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7 }
+  .frame-image{ width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12) }
   .frame-image img{width:100%; height:100%; object-fit:contain}
   .art-meta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px}
   .art-title{font-weight:800; font-size:1.05rem}
   .art-buy{white-space:nowrap}
 
   /* Footer */
-  footer{background:linear-gradient(135deg,var(--footer-grad-start),var(--footer-grad-end)); color:#fff; text-align:center; padding:3rem 1rem; transition:background .35s}
+  footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
   .footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
   .footer-social{margin-top:1rem; display:flex; justify-content:center; gap:1rem}
   .footer-social a{color:#fff; font-size:1.6rem; transition:.2s}
   .footer-social a:hover{color:#FDD835; transform:translateY(-3px)}
   .site-version{margin-top:10px; opacity:.85; font-weight:700}
 
+  /* ===== Modo noche global ===== */
+  body.night{
+    background: radial-gradient(1200px 600px at 50% -10%, #112042, var(--night-bg1) 30%, var(--night-bg2) 100%);
+    color: var(--night-text);
+  }
+  body.night header{
+    background: rgba(8,14,26,.92);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  body.night .container{ background: #0b1527; box-shadow: 0 -12px 48px rgba(0,0,0,.4) }
+  body.night .card{ background:#0f1a2c; border-color:transparent }
+  body.night .card p{ color:#a9b6d0 }
+  body.night .frame-inner{ background:#f0ede6 }
+  body.night .section-title{ color: #e9f0ff }
+  body.night .header-title{ color:#f4f7ff; text-shadow:0 2px 12px rgba(255,255,255,.07)}
+
   /* Responsive */
-  @media (max-width:1200px){ .logo-img{height:150px} .header-title{font-size:2.7rem} }
-  @media (max-width:992px){ .logo-img{height:128px} .header-title{font-size:2.35rem} .wagon,.engine{font-size:4.2em} }
+  @media (max-width:1200px){ .logo-img{height:150px} .header-title{font-size:2.7rem} .garland{width:560px} }
+  @media (max-width:992px){ .logo-img{height:128px} .header-title{font-size:2.35rem} .wagon,.engine{font-size:4.2em} .garland{width:520px} }
   @media (max-width:800px){
     .header-content{grid-template-columns:1fr; text-align:center}
-    nav{justify-content:center; flex-wrap:wrap}
-    .header-center{order:3}
+    nav{justify-content:center; gap:.5rem}
+    .header-title-wrap{order:2}
+    .switch-wrap{justify-content:center}
+    .garland{top:-8px; width:88vw; max-width:620px}
   }
   @media (max-width:640px){
     .logo-img{height:96px}
@@ -226,10 +298,10 @@
 </style>
 </head>
 <body>
-  <!-- Nieve -->
+  <!-- ===== Nieve ===== -->
   <div id="snowContainer" class="snow-container"></div>
 
-  <!-- Tren → izquierda | Locomotora al frente -->
+  <!-- ===== Tren → izquierda | Locomotora al frente ===== -->
   <div class="train-container" id="train" title="🚂 Tócalo para turbo 10s">
     <div class="train">
       <!-- Locomotora -->
@@ -237,6 +309,7 @@
         <div class="engine">🚂</div>
         <div class="smoke">💨</div>
       </div>
+
       <!-- Vagones Tracker -->
       <div class="wagon" style="position:relative">
         🎁
@@ -254,74 +327,70 @@
         🎁
         <div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div>
       </div>
+
       <!-- Árbol y estrella al final -->
       <div class="wagon">🎄</div>
       <div class="wagon">⭐</div>
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- ===== Header ===== -->
   <header id="siteHeader">
     <div class="header-content">
       <a href="#inicio" class="logo-link" aria-label="Inicio">
         <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
       </a>
 
-      <div class="header-center">
-        <h1 class="header-title">Diversión festiva para toda la familia</h1>
-        <!-- Guirnalda de luces SVG sobre el título -->
-        <svg class="garland" viewBox="0 0 800 120" aria-hidden="true">
-          <!-- Cable -->
-          <path class="wire" d="M10,50 C120,10 240,90 360,40 S600,80 790,55" />
-          <!-- Bombillos (rojo, amarillo, azul, verde) -->
-          <!-- Cada bombillo = casquillo + vidrio + halo -->
-          <!-- 1 -->
-          <g class="bulb" transform="translate(80,58)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#e53935"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(229,57,53,.55)"/>
+      <!-- Frase + Guirnalda -->
+      <div class="header-title-wrap">
+        <h1 id="candyTitle" class="header-title" aria-label="Lema navideño">
+          Diversión festiva para toda la familia
+        </h1>
+
+        <!-- Guirnalda SVG (bombillos redondos con índice --i) -->
+        <svg class="garland" viewBox="0 0 700 120" aria-hidden="true">
+          <path class="wire" d="M10,70 C120,10 220,120 330,60 C450,10 550,110 690,40" />
+          <!-- Bombillos posicionados a lo largo de la curva -->
+          <!-- grupo = bulb (glass + glow) con --i para la secuencia -->
+          <g class="bulb" style="--i:0" transform="translate(80,58)">
+            <ellipse class="glass" rx="10" ry="12" fill="#ff4b4b"/>
+            <circle class="glow tw-r" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 2 -->
-          <g class="bulb" transform="translate(170,42)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#fbc02d"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(251,192,45,.55)"/>
+          <g class="bulb" style="--i:1" transform="translate(150,42)">
+            <ellipse class="glass" rx="10" ry="12" fill="#ffd54f"/>
+            <circle class="glow tw-y" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 3 -->
-          <g class="bulb" transform="translate(260,70)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#1e88e5"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(30,136,229,.55)"/>
+          <g class="bulb" style="--i:2" transform="translate(220,72)">
+            <ellipse class="glass" rx="10" ry="12" fill="#4fc3f7"/>
+            <circle class="glow tw-b" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 4 -->
-          <g class="bulb" transform="translate(350,48)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#43a047"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(67,160,71,.55)"/>
+          <g class="bulb" style="--i:3" transform="translate(290,52)">
+            <ellipse class="glass" rx="10" ry="12" fill="#69f0ae"/>
+            <circle class="glow tw-g" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 5 -->
-          <g class="bulb" transform="translate(440,65)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#e53935"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(229,57,53,.55)"/>
+          <g class="bulb" style="--i:4" transform="translate(360,66)">
+            <ellipse class="glass" rx="10" ry="12" fill="#ff4b4b"/>
+            <circle class="glow tw-r" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 6 -->
-          <g class="bulb" transform="translate(530,40)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#fbc02d"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(251,192,45,.55)"/>
+          <g class="bulb" style="--i:5" transform="translate(430,40)">
+            <ellipse class="glass" rx="10" ry="12" fill="#ffd54f"/>
+            <circle class="glow tw-y" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 7 -->
-          <g class="bulb" transform="translate(620,72)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#1e88e5"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(30,136,229,.55)"/>
+          <g class="bulb" style="--i:6" transform="translate(520,76)">
+            <ellipse class="glass" rx="10" ry="12" fill="#4fc3f7"/>
+            <circle class="glow tw-b" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
-          <!-- 8 -->
-          <g class="bulb" transform="translate(710,50)">
-            <rect x="-6" y="-6" width="12" height="10" rx="2" fill="#333" />
-            <ellipse class="glass" cx="0" cy="12" rx="12" ry="16" fill="#43a047"/>
-            <ellipse class="glow" cx="0" cy="12" rx="22" ry="26" fill="rgba(67,160,71,.55)"/>
+          <g class="bulb" style="--i:7" transform="translate(610,52)">
+            <ellipse class="glass" rx="10" ry="12" fill="#69f0ae"/>
+            <circle class="glow tw-g" r="16"/>
+            <rect class="cap" x="-5" y="-14" width="10" height="6" rx="2"/>
           </g>
         </svg>
       </div>
@@ -335,14 +404,13 @@
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
         </button>
 
-        <!-- Interruptor retro ON/OFF (luces + modo noche) -->
-        <div class="switch-wrap" title="Luces & modo noche">
+        <!-- Interruptor retro -->
+        <div class="switch-wrap" title="Luces / Modo oscuro">
           <span class="switch-label">Luces</span>
-          <div class="retro-switch" id="lightsToggle" role="switch" aria-checked="false" tabindex="0" aria-label="Interruptor de luces">
-            <input id="lightsSwitch" type="checkbox" />
-            <span class="lever"></span>
-            <span class="led"></span>
-          </div>
+          <label class="retro-switch" id="lightsToggle" role="switch" aria-checked="false">
+            <input id="lightsSwitch" type="checkbox">
+            <div class="knob"></div>
+          </label>
         </div>
       </nav>
     </div>
@@ -355,7 +423,7 @@
     </div>
   </section>
 
-  <!-- Contenido -->
+  <!-- ===== Contenido ===== -->
   <main class="container">
     <!-- Tarjetas -->
     <section id="tarjetas">
@@ -420,7 +488,7 @@
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- ===== Footer ===== -->
   <footer>
     <img src="christmas-pringle-logo.png" class="footer-logo" alt="Christmas Pringle">
     <p style="margin-top:10px;opacity:.9">© 2025 ChristmasPringle.com — Pintando la magia de la Navidad ✨</p>
@@ -432,15 +500,16 @@
     <div class="site-version">v1.4 · 2025</div>
   </footer>
 
-  <!-- Audio -->
+  <!-- ===== Audio ===== -->
   <audio id="christmasMusic" loop>
     <source src="Christmas Rap.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Vista previa">
-    <div class="lightbox-inner">
-      <img id="lightboxImg" class="lightbox-img" alt="Vista previa de tarjeta">
+  <!-- ===== Lightbox ===== -->
+  <div id="lightbox" class="lightbox" aria-modal="true" role="dialog">
+    <div class="lightbox-content">
+      <img id="lightboxImg" class="lightbox-img" alt="Vista ampliada">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </div>
 
@@ -470,8 +539,10 @@
     }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
   });
 
-  /* ===== Carga y render de Tarjetas ===== */
+  /* ===== CRC ===== */
   const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
+
+  /* ===== Cargar tarjetas ===== */
   async function loadCards(){
     const grid=document.getElementById('cardsGrid');
     try{
@@ -493,7 +564,8 @@
           <article class="card">
             <div class="card-image">
               <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
-                onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
+                   data-full="${img}"
+                   onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
             </div>
             <div class="card-content">
               <h3>${c.title}</h3>
@@ -506,23 +578,27 @@
           </article>`;
       }).join('');
 
-      // Lightbox
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightboxImg');
-      grid.querySelectorAll('.card-photo').forEach(img=>{
-        img.addEventListener('click',()=>{
-          lightboxImg.src = img.src.replace(/(\?|$).*/, ''); // limpia cache-buster para mayor nitidez
-          lightbox.classList.add('open');
+      // Lightbox: click en imagen
+      document.querySelectorAll('.card-photo').forEach(img=>{
+        img.addEventListener('click', ()=>{
+          openLightbox(img.getAttribute('data-full'));
         });
       });
-      lightbox.addEventListener('click', ()=> lightbox.classList.remove('open'));
-      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') lightbox.classList.remove('open'); });
-
     }catch(e){
       grid.innerHTML=`<div class="no-cards">❌ Error al cargar tarjetas. Intenta de nuevo más tarde.</div>`;
       console.error(e);
     }
   }
+
+  /* ===== Lightbox ===== */
+  const lightbox=document.getElementById('lightbox');
+  const lightboxImg=document.getElementById('lightboxImg');
+  const lightboxClose=document.getElementById('lightboxClose');
+  function openLightbox(src){ lightboxImg.src=src; lightbox.classList.add('open'); }
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
 
   /* ===== Santa Tracker D/H/M/S ===== */
   function targetChristmas(){
@@ -546,7 +622,7 @@
   }
   updateSanta(); setInterval(updateSanta,1000);
 
-  /* ===== Turbo Tren 10s ===== */
+  /* ===== Turbo 10s ===== */
   const train=document.getElementById('train');
   let turbo=false;
   train.addEventListener('click', ()=>{
@@ -565,49 +641,54 @@
     });
   });
 
-  /* ===== Header hide on scroll (mobile) ===== */
-  (function(){
-    const header = document.getElementById('siteHeader');
-    let lastY = window.scrollY;
-    const mq = window.matchMedia('(max-width:800px)');
-    window.addEventListener('scroll', ()=>{
-      if(!mq.matches) return;
-      const y=window.scrollY;
-      if(y>lastY && y>20) header.classList.add('hide');
-      else header.classList.remove('hide');
-      lastY=y;
-    });
-  })();
-
-  /* ===== Interruptor ON/OFF: luces + modo noche ===== */
+  /* ===== Interruptor (Luces / Noche) con efectos ===== */
   const lightsSwitch = document.getElementById('lightsSwitch');
   const lightsToggle = document.getElementById('lightsToggle');
-  // Aplica preferencia guardada
-  const savedLights = localStorage.getItem('cp_lights_on') === '1';
-  if (savedLights) {
+
+  // Estado persistente
+  const wasOn = localStorage.getItem('cp_lights_on') === '1';
+  if (wasOn) {
     lightsSwitch.checked = true;
-    document.body.classList.add('lights-on', 'night');
-    lightsToggle.setAttribute('aria-checked', 'true');
+    document.body.classList.add('lights-on','night');
+    lightsToggle.setAttribute('aria-checked','true');
   }
-  // Reacciona al cambio real del checkbox
+
   lightsSwitch.addEventListener('change', () => {
     const on = lightsSwitch.checked;
+
+    // Aplica clases base
     document.body.classList.toggle('lights-on', on);
     document.body.classList.toggle('night', on);
     lightsToggle.setAttribute('aria-checked', on ? 'true' : 'false');
     localStorage.setItem('cp_lights_on', on ? '1' : '0');
+
+    // Efectos transitorios:
+    if (on) {
+      document.body.classList.remove('blink-off');
+      void document.body.offsetWidth;
+      document.body.classList.add('blink-on');
+      setTimeout(() => {
+        document.body.classList.remove('blink-on');
+      }, 1600);
+    } else {
+      document.body.classList.remove('blink-on');
+      void document.body.offsetWidth;
+      document.body.classList.add('blink-off');
+      setTimeout(() => {
+        document.body.classList.remove('blink-off');
+      }, 650);
+    }
   });
-  // Permite click en el contenedor (porque el input está oculto)
-  function toggleLights() {
-    lightsSwitch.checked = !lightsSwitch.checked;
-    lightsSwitch.dispatchEvent(new Event('change'));
-  }
-  lightsToggle.addEventListener('click', toggleLights);
-  // Teclado
-  lightsToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.code === 'Space' || e.key === ' ') {
-      e.preventDefault();
-      toggleLights();
+
+  /* ===== Header hide on scroll (móvil) ===== */
+  let lastY = window.scrollY;
+  const siteHeader = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth <= 800) {
+      const y = window.scrollY;
+      if (y > lastY && y > 40) siteHeader.classList.add('hide');
+      else siteHeader.classList.remove('hide');
+      lastY = y;
     }
   });
 

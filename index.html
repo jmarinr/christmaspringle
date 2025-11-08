@@ -64,7 +64,7 @@
   header{
     position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95);
     backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft);
-    transition:transform .25s ease; /* para auto-ocultar en móvil */
+    transition:transform .25s ease; /* auto-ocultar en móvil */
   }
   header.hide-on-mobile{ transform:translateY(-110%); }
 
@@ -76,27 +76,37 @@
   .logo-img{height:170px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
   .logo-link:hover .logo-img{transform:scale(1.04)}
 
-  /* Lema con misma tipografía + guirnalda */
+  /* Slogan + garlanda real (cable + bombillos) */
   .header-slogan{
     justify-self:center; position:relative; display:inline-block; text-align:center;
     font-family:'Mountains of Christmas',cursive; font-weight:700; line-height:1.02; letter-spacing:.5px;
     font-size:3.1rem; color:#154406; text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
+    padding-top:54px; /* espacio para la guirnalda sobre el texto */
   }
   .header-slogan .stroke{
-    -webkit-text-stroke:1.4px #2e7d32; color:transparent;
+    -webkit-text-stroke:1.5px #2e7d32; color:transparent;
     background:repeating-linear-gradient(45deg,#fff 0 10px,#d32f2f 10px 20px,#fff 20px 30px,#b71c1c 30px 40px);
     -webkit-background-clip:text; background-clip:text;
   }
-  .lights-wrap{position:absolute; left:50%; transform:translateX(-50%); top:-10px; width:105%; height:72px; pointer-events:none}
-  .lights-wrap svg{width:100%; height:100%}
-  .bulb{filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
-  .bulb use{opacity:.9}
-  @keyframes hueShift{ 0%{filter:hue-rotate(0deg)} 50%{filter:hue-rotate(140deg)} 100%{filter:hue-rotate(0deg)} }
-  .bulb use:nth-child(odd){ animation:hueShift 3s linear infinite }
-  .bulb use:nth-child(even){ animation:hueShift 3.6s linear infinite }
-  .cable{stroke:#2d2d2d; stroke-width:4; fill:none; stroke-linecap:round}
-  .music-plug{position:absolute; right:-24px; bottom:-28px; font-size:1.4rem; transform:rotate(12deg); filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
-  .music-plug .cable-down{position:absolute; left:-110px; bottom:14px; width:120px; height:1px; border-top:3px solid #2d2d2d;}
+  .garland{
+    position:absolute; left:50%; transform:translateX(-50%);
+    top:0; width:115%; height:64px; pointer-events:none;
+  }
+  .garland svg{width:100%; height:100%}
+  .garland .cable{stroke:#2b2b2b; stroke-width:5; fill:none; stroke-linecap:round}
+  .garland .drop{stroke:#2b2b2b; stroke-width:3; fill:none}
+  .bulb{transform-origin:center; filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+  .glass{
+    fill:rgba(255,255,255,.55);
+    mix-blend-mode:screen;
+    animation:bulbGlow 2.8s ease-in-out infinite var(--delay,0s);
+  }
+  .glass-inner{ fill:rgba(255,255,255,.88); mix-blend-mode:screen; opacity:.65; }
+  .cap{fill:#2b2b2b}
+  @keyframes bulbGlow{
+    0%,100%{ filter:hue-rotate(0deg) brightness(1); opacity:.8}
+    50%{ filter:hue-rotate(160deg) brightness(1.4); opacity:1}
+  }
 
   nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end; position:relative}
   .chip-btn{position:relative; display:inline-flex; align-items:center; gap:.55rem; font-weight:800; text-decoration:none; border:2px solid transparent; color:#fff;
@@ -107,7 +117,26 @@
   .btn-art{background:linear-gradient(135deg,#8E24AA,#BA68C8)}
   .btn-reviews{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
   .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
-  .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
+  .btn-music i{font-size:1.1rem}
+
+  /* Música: cable hacia tomacorriente */
+  .music-wrap{position:relative; display:inline-block}
+  .plug-cable{
+    position:absolute; left:50%; transform:translateX(-50%); top:100%;
+    width:180px; height:90px; overflow:visible; pointer-events:none;
+  }
+  .cable-stroke{stroke:#2b2b2b; stroke-width:4; fill:none; stroke-linecap:round}
+  .wall-outlet{
+    position:absolute; left:50%; transform:translateX(-50%); top:calc(100% + 78px);
+    width:54px; height:72px; background:#f1f1f1; border:2px solid #d0d0d0; border-radius:10px;
+    box-shadow:inset 0 0 0 3px #ffffff, 0 4px 10px rgba(0,0,0,.18);
+  }
+  .outlet-face{position:absolute; inset:10px; background:#fafafa; border:2px solid #e6e6e6; border-radius:8px}
+  .slot, .ground{position:absolute; background:#2b2b2b}
+  .slot{width:6px; height:16px; top:14px; border-radius:3px}
+  .slot:nth-child(1){left:12px}
+  .slot:nth-child(2){right:12px}
+  .ground{width:10px; height:10px; bottom:12px; left:50%; transform:translateX(-50%); border-radius:50%}
 
   /* Franja decorativa superior */
   .hero{position:relative; min-height:140px; padding:10px 0}
@@ -130,8 +159,7 @@
     display:flex; align-items:center; justify-content:center; position:relative}
   .card-photo{
     width:100%; height:100%;
-    object-fit:contain; /* imagen completa */
-    image-rendering:auto; transition:transform .5s ease; cursor:zoom-in;
+    object-fit:contain; image-rendering:auto; transition:transform .5s ease; cursor:zoom-in;
   }
   .card:hover .card-photo{transform:scale(1.03)}
   .card-content{padding:18px 18px 20px}
@@ -158,39 +186,22 @@
   .lb-row{margin-top:auto; display:flex; align-items:center; gap:10px; justify-content:space-between}
   .lb-close{position:absolute; top:14px; right:14px; background:#fff; border:0; border-radius:999px; width:40px; height:40px; display:grid; place-items:center; box-shadow:0 6px 18px rgba(0,0,0,.25); cursor:pointer}
   .lb-close:hover{transform:translateY(-1px)}
-
-  /* Botones navegación */
-  .lb-nav{
-    position:absolute; inset:0; pointer-events:none;
-  }
+  .lb-nav{position:absolute; inset:0; pointer-events:none}
   .lb-prev, .lb-next{
     pointer-events:auto; position:absolute; top:50%; transform:translateY(-50%);
     width:46px; height:46px; border-radius:999px; border:0; background:rgba(255,255,255,.95);
     box-shadow:0 8px 20px rgba(0,0,0,.35); cursor:pointer; display:grid; place-items:center;
   }
-  .lb-prev{ left:12px }
-  .lb-next{ right:12px }
+  .lb-prev{ left:12px } .lb-next{ right:12px }
   .lb-prev:hover, .lb-next:hover{ transform:translateY(-50%) scale(1.05) }
-
-  @media (max-width:960px){
-    .lb-inner{grid-template-columns:1fr}
-    .lb-media{max-height:60vh}
-  }
+  @media (max-width:960px){ .lb-inner{grid-template-columns:1fr} .lb-media{max-height:60vh} }
 
   /* ARTE PRINGLE (marcos) */
   .art-wrap{margin-top:3rem}
   .art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px}
-  .frame{
-    background:linear-gradient(135deg, var(--wood), var(--wood-dark));
-    border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25);
-  }
-  .frame-inner{
-    background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7;
-  }
-  .frame-image{
-    width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden;
-    display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12);
-  }
+  .frame{ background:linear-gradient(135deg, var(--wood), var(--wood-dark)); border-radius:18px; padding:12px; box-shadow:0 12px 30px rgba(0,0,0,.25) }
+  .frame-inner{ background:var(--mat); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 2px #e3dfd7 }
+  .frame-image{ width:100%; aspect-ratio:4/3; background:#fff; border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.12) }
   .frame-image img{width:100%; height:100%; object-fit:contain}
   .art-meta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px}
   .art-title{font-weight:800; font-size:1.05rem}
@@ -211,7 +222,9 @@
     .header-content{grid-template-columns:1fr; text-align:center}
     nav{justify-content:center}
     .header-slogan{order:3; margin-top:4px}
-    .lights-wrap{top:-6px; height:60px}
+    .garland{height:58px; width:118%}
+    .plug-cable{width:150px; height:78px}
+    .wall-outlet{top:calc(100% + 66px)}
   }
   @media (max-width:640px){
     .logo-img{height:96px}
@@ -220,6 +233,7 @@
     .card-image{aspect-ratio:3/2}
     .wagon,.engine{font-size:3.3em}
     .tracker{transform:scale(.9); left:10px; top:-26px}
+    .garland{height:54px}
   }
   @media (prefers-reduced-motion:reduce){
     .train-container{animation-duration:60s}
@@ -241,20 +255,16 @@
       </div>
 
       <!-- Vagones Tracker -->
-      <div class="wagon" style="position:relative">
-        🎁
+      <div class="wagon" style="position:relative">🎁
         <div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div>
       </div>
-      <div class="wagon" style="position:relative">
-        🎁
+      <div class="wagon" style="position:relative">🎁
         <div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div>
       </div>
-      <div class="wagon" style="position:relative">
-        🎁
+      <div class="wagon" style="position:relative">🎁
         <div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div>
       </div>
-      <div class="wagon" style="position:relative">
-        🎁
+      <div class="wagon" style="position:relative">🎁
         <div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div>
       </div>
 
@@ -271,32 +281,60 @@
         <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
       </a>
 
-      <!-- Slogan con guirnalda -->
+      <!-- Slogan con garlanda real encima -->
       <div class="header-slogan" aria-label="Lema navideño">
-        <span class="stroke">Diversión festiva para toda la familia</span>
-        <div class="lights-wrap" aria-hidden="true">
-          <!-- SVG de guirnalda con bombillos -->
-          <svg viewBox="0 0 1000 180" preserveAspectRatio="none">
-            <path class="cable" d="M 10 60 C 150 10, 300 110, 450 50 S 750 120, 990 60" />
-            <g class="bulb">
-              <use href="#bulb" x="80"  y="40"></use>
-              <use href="#bulb" x="200" y="90"></use>
-              <use href="#bulb" x="320" y="45"></use>
-              <use href="#bulb" x="440" y="95"></use>
-              <use href="#bulb" x="560" y="40"></use>
-              <use href="#bulb" x="680" y="100"></use>
-              <use href="#bulb" x="800" y="50"></use>
-              <use href="#bulb" x="920" y="90"></use>
+        <div class="garland" aria-hidden="true">
+          <svg viewBox="0 0 1000 140" preserveAspectRatio="none">
+            <!-- cable superior -->
+            <path class="cable" d="M 20 60 C 200 10, 380 110, 560 40 S 820 120, 980 60" />
+            <!-- colgantes (pequeños cables hacia abajo) -->
+            <path class="drop" d="M120 60 Q 120 88 120 96" />
+            <path class="drop" d="M240 60 Q 240 88 240 96" />
+            <path class="drop" d="M360 60 Q 360 88 360 96" />
+            <path class="drop" d="M480 60 Q 480 88 480 96" />
+            <path class="drop" d="M600 60 Q 600 88 600 96" />
+            <path class="drop" d="M720 60 Q 720 88 720 96" />
+            <path class="drop" d="M840 60 Q 840 88 840 96" />
+
+            <!-- bombillos de vidrio (luz cambia de color) -->
+            <g class="bulb" transform="translate(120,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:0s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
             </g>
-            <defs>
-              <g id="bulb">
-                <ellipse cx="0" cy="0" rx="14" ry="18" fill="rgba(255,255,255,.85)"></ellipse>
-                <ellipse cx="0" cy="0" rx="13" ry="17" fill="rgba(255,255,255,.65)" style="mix-blend-mode:screen"></ellipse>
-                <rect x="-6" y="-6" width="12" height="8" rx="2" fill="#2d2d2d"></rect>
-              </g>
-            </defs>
+            <g class="bulb" transform="translate(240,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:.2s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
+            </g>
+            <g class="bulb" transform="translate(360,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:.4s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
+            </g>
+            <g class="bulb" transform="translate(480,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:.6s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
+            </g>
+            <g class="bulb" transform="translate(600,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:.8s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
+            </g>
+            <g class="bulb" transform="translate(720,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:1s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
+            </g>
+            <g class="bulb" transform="translate(840,104)">
+              <ellipse class="glass" rx="14" ry="18" style="--delay:1.2s"></ellipse>
+              <ellipse class="glass-inner" rx="10" ry="12"></ellipse>
+              <rect class="cap" x="-6" y="-6" width="12" height="8" rx="2"></rect>
+            </g>
           </svg>
         </div>
+        <span class="stroke">Diversión festiva para toda la familia</span>
       </div>
 
       <nav>
@@ -304,12 +342,23 @@
         <a class="chip-btn btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip-btn btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
-        <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
-          <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
-          <span class="music-plug" aria-hidden="true">
-            <span class="cable-down"></span>🔌
-          </span>
-        </button>
+
+        <!-- Botón música con cable y tomacorriente -->
+        <div class="music-wrap">
+          <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
+            <i class="fa-solid fa-music"></i>
+          </button>
+          <svg class="plug-cable" viewBox="0 0 180 90" preserveAspectRatio="none" aria-hidden="true">
+            <path class="cable-stroke" d="M 150 8 C 168 26, 170 50, 140 62 S 70 80, 40 86" />
+          </svg>
+          <div class="wall-outlet" aria-hidden="true">
+            <div class="outlet-face">
+              <span class="slot"></span>
+              <span class="slot"></span>
+              <span class="ground"></span>
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -406,7 +455,6 @@
     <div class="lb-inner">
       <div class="lb-media" id="lbMedia">
         <img id="lbImg" alt="">
-        <!-- navegación -->
         <div class="lb-nav">
           <button class="lb-prev" id="lbPrev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
           <button class="lb-next" id="lbNext" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
@@ -477,11 +525,6 @@
                 <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
                      tabindex="0" role="button" aria-label="Ampliar ${c.title}"
                      data-index="${idx}"
-                     data-title="${encodeURIComponent(c.title)}"
-                     data-desc="${encodeURIComponent(c.description)}"
-                     data-price="${encodeURIComponent(price)}"
-                     data-wa="${encodeURIComponent(wa)}"
-                     data-src="${encodeURIComponent(img)}"
                      onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
               </div>
               <div class="card-content">
@@ -500,7 +543,7 @@
       }
     }
 
-    /* ===== Lightbox (visualizador) con navegación + zoom ===== */
+    /* ===== Lightbox ===== */
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lbImg');
     const lbTitle = document.getElementById('lbTitle');
@@ -511,7 +554,6 @@
     const lbPrev = document.getElementById('lbPrev');
     const lbNext = document.getElementById('lbNext');
     const lbMedia = document.getElementById('lbMedia');
-
     let currentIndex = -1;
 
     function fillLightboxByIndex(idx){
@@ -521,64 +563,45 @@
       const src = `${encodeURI(card.image)}?t=${ts}`;
       const title = card.title || '';
       const desc = card.description || '';
-      const price = fmtCRC(card.price);
+      const price = '₡'+Math.round(Number(card.price||0)).toLocaleString('es-CR');
       const msg=`Hola, vi la tarjeta "${title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
       const wa=`https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
 
-      lbImg.src = src;
-      lbImg.alt = title;
-      lbTitle.textContent = title;
-      lbDesc.textContent = desc;
+      lbImg.src = src; lbImg.alt = title;
+      lbTitle.textContent = title; lbDesc.textContent = desc;
       lbPrice.innerHTML = `<i class="fa-solid fa-tag"></i> ${price}`;
       lbWa.href = wa;
 
-      resetZoom(); // al cambiar de imagen, resetear zoom
+      resetZoom(); 
     }
-
     function openLightboxAt(idx){
-      currentIndex = idx;
-      fillLightboxByIndex(currentIndex);
-      lb.classList.add('open');
-      lb.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-      lbClose.focus();
+      currentIndex = idx; fillLightboxByIndex(currentIndex);
+      lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden'; lbClose.focus();
     }
     function closeLightbox(){
-      lb.classList.remove('open');
-      lb.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-      lbImg.src='';
-      currentIndex = -1;
-      resetZoom(true);
+      lb.classList.remove('open'); lb.setAttribute('aria-hidden','true');
+      document.body.style.overflow=''; lbImg.src=''; currentIndex = -1; resetZoom(true);
     }
-    function showPrev(){
-      if(currentIndex<0) return;
-      currentIndex = (currentIndex - 1 + CARDS_CACHE.length) % CARDS_CACHE.length;
-      fillLightboxByIndex(currentIndex);
-    }
-    function showNext(){
-      if(currentIndex<0) return;
-      currentIndex = (currentIndex + 1) % CARDS_CACHE.length;
-      fillLightboxByIndex(currentIndex);
-    }
+    function showPrev(){ if(currentIndex<0) return; currentIndex = (currentIndex - 1 + CARDS_CACHE.length) % CARDS_CACHE.length; fillLightboxByIndex(currentIndex); }
+    function showNext(){ if(currentIndex<0) return; currentIndex = (currentIndex + 1) % CARDS_CACHE.length; fillLightboxByIndex(currentIndex); }
 
     document.getElementById('cardsGrid').addEventListener('click',(e)=>{
-      const img = e.target.closest('.card-photo');
-      if(!img) return;
-      openLightboxAt(parseInt(img.dataset.index,10));
+      const img = e.target.closest('.card-photo'); if(!img) return;
+      const idx = Array.from(document.querySelectorAll('.card-photo')).indexOf(img);
+      openLightboxAt(idx);
     });
     document.getElementById('cardsGrid').addEventListener('keydown',(e)=>{
       if((e.key==='Enter' || e.key===' ') && e.target.classList.contains('card-photo')){
         e.preventDefault();
-        openLightboxAt(parseInt(e.target.dataset.index,10));
+        const idx = Array.from(document.querySelectorAll('.card-photo')).indexOf(e.target);
+        openLightboxAt(idx);
       }
     });
-
     lb.addEventListener('click',(e)=>{ if(e.target===lb) closeLightbox(); });
     lbClose.addEventListener('click', closeLightbox);
     lbPrev.addEventListener('click', showPrev);
     lbNext.addEventListener('click', showNext);
-
     window.addEventListener('keydown',(e)=>{
       if(!lb.classList.contains('open')) return;
       if(e.key==='Escape') closeLightbox();
@@ -586,122 +609,49 @@
       if(e.key==='ArrowRight') showNext();
     });
 
-    /* ---- Zoom & Pan ---- */
+    /* Zoom & Pan */
     let scale = 1, minScale = 1, maxScale = 4;
-    let originX = 0, originY = 0;   // esquina sup-izq de la imagen (para transform)
     let translateX = 0, translateY = 0;
     let isPanning = false, startX = 0, startY = 0;
 
-    function applyTransform(){
-      lbImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-    }
-    function resetZoom(hard){
-      scale = 1;
-      translateX = 0; translateY = 0;
-      if(hard){ lbImg.style.transform = ''; }
-      else { applyTransform(); }
-    }
-    // centra el zoom donde está el puntero
+    function applyTransform(){ lbImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`; }
+    function resetZoom(hard){ scale=1; translateX=0; translateY=0; if(hard){ lbImg.style.transform=''; } else { applyTransform(); } }
     function zoomAt(delta, clientX, clientY){
       const rect = lbMedia.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
+      const x = clientX - rect.left; const y = clientY - rect.top;
       const prevScale = scale;
       scale = Math.min(maxScale, Math.max(minScale, scale * (delta>0 ? 0.9 : 1.1)));
       const ratio = scale / prevScale;
-
-      // ajustar traslación para que el punto (x,y) permanezca estable
       translateX = x - (x - translateX) * ratio;
       translateY = y - (y - translateY) * ratio;
-
       applyTransform();
     }
+    lbMedia.addEventListener('wheel', (e)=>{ e.preventDefault(); zoomAt(e.deltaY, e.clientX, e.clientY); }, { passive:false });
+    lbMedia.addEventListener('mousedown', (e)=>{ e.preventDefault(); isPanning=true; startX=e.clientX-translateX; startY=e.clientY-translateY; lbMedia.style.cursor='grabbing'; });
+    window.addEventListener('mousemove', (e)=>{ if(!isPanning) return; translateX=e.clientX-startX; translateY=e.clientY-startY; applyTransform(); });
+    window.addEventListener('mouseup', ()=>{ isPanning=false; lbMedia.style.cursor=''; });
 
-    lbMedia.addEventListener('wheel', (e)=>{
-      e.preventDefault();
-      zoomAt(e.deltaY, e.clientX, e.clientY);
-    }, { passive:false });
-
-    lbMedia.addEventListener('mousedown', (e)=>{
-      e.preventDefault();
-      isPanning = true;
-      startX = e.clientX - translateX;
-      startY = e.clientY - translateY;
-      lbMedia.style.cursor = 'grabbing';
-    });
-    window.addEventListener('mousemove', (e)=>{
-      if(!isPanning) return;
-      translateX = e.clientX - startX;
-      translateY = e.clientY - startY;
-      applyTransform();
-    });
-    window.addEventListener('mouseup', ()=>{
-      isPanning = false;
-      lbMedia.style.cursor = '';
-    });
-
-    // Soporte táctil (pinch-to-zoom)
+    /* Touch pinch & pan */
     let touchMode = { active:false, startDist:0, startScale:1, startMid:{x:0,y:0}, lastMid:{x:0,y:0}, panning:false };
-
-    function distance(t1,t2){
-      const dx = t2.clientX - t1.clientX, dy = t2.clientY - t1.clientY;
-      return Math.hypot(dx,dy);
-    }
-    function midpoint(t1,t2){
-      return { x:(t1.clientX+t2.clientX)/2, y:(t1.clientY+t2.clientY)/2 };
-    }
-
+    function distance(t1,t2){ const dx=t2.clientX-t1.clientX, dy=t2.clientY-t1.clientY; return Math.hypot(dx,dy); }
+    function midpoint(t1,t2){ return { x:(t1.clientX+t2.clientX)/2, y:(t1.clientY+t2.clientY)/2 }; }
     lbMedia.addEventListener('touchstart', (e)=>{
-      if(e.touches.length===1){
-        touchMode.panning = true;
-        startX = e.touches[0].clientX - translateX;
-        startY = e.touches[0].clientY - translateY;
-      }else if(e.touches.length===2){
-        touchMode.active = true;
-        touchMode.startDist = distance(e.touches[0], e.touches[1]);
-        touchMode.startScale = scale;
-        touchMode.startMid = midpoint(e.touches[0], e.touches[1]);
-        touchMode.lastMid = touchMode.startMid;
-      }
+      if(e.touches.length===1){ touchMode.panning=true; startX=e.touches[0].clientX-translateX; startY=e.touches[0].clientY-translateY; }
+      else if(e.touches.length===2){ touchMode.active=true; touchMode.startDist=distance(e.touches[0],e.touches[1]); touchMode.startScale=scale; touchMode.startMid=midpoint(e.touches[0],e.touches[1]); touchMode.lastMid=touchMode.startMid; }
     }, {passive:true});
-
     lbMedia.addEventListener('touchmove', (e)=>{
-      if(e.touches.length===1 && touchMode.panning){
-        translateX = e.touches[0].clientX - startX;
-        translateY = e.touches[0].clientY - startY;
-        applyTransform();
-      }else if(e.touches.length===2 && touchMode.active){
-        e.preventDefault();
-        const newDist = distance(e.touches[0], e.touches[1]);
-        const mid = midpoint(e.touches[0], e.touches[1]);
-
-        // zoom relativo
-        const newScale = Math.min(maxScale, Math.max(minScale, touchMode.startScale * (newDist / touchMode.startDist)));
-        const rect = lbMedia.getBoundingClientRect();
-        const x = mid.x - rect.left, y = mid.y - rect.top;
-
-        const prevScale = scale;
-        scale = newScale;
-        const ratio = scale / prevScale;
-        translateX = x - (x - translateX) * ratio;
-        translateY = y - (y - translateY) * ratio;
-
-        // pan por movimiento del centro
-        translateX += (mid.x - touchMode.lastMid.x);
-        translateY += (mid.y - touchMode.lastMid.y);
-        touchMode.lastMid = mid;
-
-        applyTransform();
+      if(e.touches.length===1 && touchMode.panning){ translateX=e.touches[0].clientX-startX; translateY=e.touches[0].clientY-startY; applyTransform(); }
+      else if(e.touches.length===2 && touchMode.active){ e.preventDefault(); const newDist=distance(e.touches[0],e.touches[1]); const mid=midpoint(e.touches[0],e.touches[1]);
+        const newScale=Math.min(maxScale, Math.max(minScale, touchMode.startScale*(newDist/touchMode.startDist)));
+        const rect=lbMedia.getBoundingClientRect(); const x=mid.x-rect.left, y=mid.y-rect.top;
+        const prevScale=scale; scale=newScale; const ratio=scale/prevScale;
+        translateX = x - (x - translateX) * ratio; translateY = y - (y - translateY) * ratio;
+        translateX += (mid.x - touchMode.lastMid.x); translateY += (mid.y - touchMode.lastMid.y); touchMode.lastMid=mid; applyTransform();
       }
     }, {passive:false});
+    lbMedia.addEventListener('touchend', ()=>{ touchMode.active=false; touchMode.panning=false; });
 
-    lbMedia.addEventListener('touchend', ()=>{
-      touchMode.active = false;
-      touchMode.panning = false;
-    });
-
-    /* ===== Santa Tracker D/H/M/S ===== */
+    /* ===== Santa Tracker ===== */
     function targetChristmas(){
       const now=new Date();
       const y = (now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
@@ -726,12 +676,7 @@
     /* ===== Turbo 10s ===== */
     const train=document.getElementById('train');
     let turbo=false;
-    train.addEventListener('click', ()=>{
-      if(turbo) return;
-      turbo=true;
-      train.style.setProperty('--train-duration','22s');
-      setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; }, 10000);
-    });
+    train.addEventListener('click', ()=>{ if(turbo) return; turbo=true; train.style.setProperty('--train-duration','22s'); setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; }, 10000); });
 
     /* ===== Smooth scroll ===== */
     document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
@@ -749,11 +694,8 @@
       const isMobile = window.innerWidth <= 800;
       if(!isMobile){ header.classList.remove('hide-on-mobile'); return; }
       const y = window.scrollY;
-      if(y > lastY && y > 50){
-        header.classList.add('hide-on-mobile');  // ocultar al bajar
-      }else{
-        header.classList.remove('hide-on-mobile'); // mostrar al subir
-      }
+      if(y > lastY && y > 50){ header.classList.add('hide-on-mobile'); }
+      else{ header.classList.remove('hide-on-mobile'); }
       lastY = y;
     });
 

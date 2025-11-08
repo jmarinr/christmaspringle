@@ -1,744 +1,624 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Christmas Pringle - Admin Panel Pro</title>
-  <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Christmas Pringle - Admin Panel Pro</title>
+<link rel="icon" type="image/png" href="christmas-pringle-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --primary-red:#E74C3C;--primary-green:#00C853;--primary-blue:#039BE5;
-      --primary-gold:#FFB300;--text-dark:#263238;--text-light:#546E7A;--bg:#F5F9FC;
-      --ring:#6EC1E4;--danger:#C62828;--ok:#2E7D32;--card:#ffffff;
-    }
-    html,body{height:100%}
-    body{
-      font-family:'Google Sans',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-      min-height:100vh;padding:2rem;color:var(--text-dark)
-    }
+<style>
+  *{box-sizing:border-box} :root{
+    --primary-red:#E74C3C;--primary-green:#00C853;--primary-blue:#039BE5;--primary-gold:#FFB300;
+    --text-dark:#263238;--text-light:#546E7A;--bg:#F5F9FC;--border:#E0E0E0;
+  }
+  html,body{height:100%}
+  body{font-family:'Google Sans',system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
+    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);margin:0;padding:24px}
 
-    /* ---------- Shared ---------- */
-    .visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0}
-    .focus-ring:focus{outline:3px solid var(--ring);outline-offset:2px}
-    .shadow-soft{box-shadow:0 20px 60px rgba(0,0,0,.25)}
-    .rounded-xl{border-radius:20px}
-    .rounded-2xl{border-radius:24px}
-    .btn{
-      appearance:none;border:none;border-radius:999px;padding:.9rem 1.2rem;font-weight:800;cursor:pointer;
-      display:inline-flex;align-items:center;gap:.55rem;transition:transform .18s ease, box-shadow .18s ease
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn:active{transform:translateY(0)}
-    .btn-primary{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff}
-    .btn-green{background:linear-gradient(135deg,var(--primary-green),#00E676);color:#fff}
-    .btn-blue{background:linear-gradient(135deg,#1E88E5,#42A5F5);color:#fff}
-    .btn-ghost{background:#fff;color:var(--primary-blue);border:2px solid #E0E0E0}
-    .btn-danger{background:linear-gradient(135deg,#E53935,#C62828);color:#fff}
-    .chip{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .8rem;border-radius:999px;border:2px solid #E0E0E0;background:#fff}
+  /* ---------- Login Overlay ---------- */
+  .login-wrap{max-width:460px;margin:4rem auto;background:#fff;border-radius:20px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  .login-title{font-family:'Mountains of Christmas',cursive;color:var(--primary-red);font-size:2.2em;text-align:center;margin:0 0 .5rem}
+  .login-sub{color:var(--text-light);text-align:center;margin-bottom:1rem}
+  .login-row{display:flex;flex-direction:column;gap:.5rem;margin:.8rem 0}
+  .field{position:relative}
+  .field input{width:100%;padding:12px 44px 12px 14px;border:2px solid var(--border);border-radius:12px;font-size:16px}
+  .field input:focus{outline:none;border-color:var(--primary-blue)}
+  .toggle-pass{position:absolute;right:8px;top:8px;border:0;background:transparent;font-size:1.1rem;cursor:pointer;color:#607D8B}
+  .btn-primary{background:linear-gradient(135deg,var(--primary-red),#c0392b);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-weight:700;cursor:pointer}
+  .btn-ghost{background:#fff;border:2px solid var(--border);border-radius:999px;padding:10px 16px;font-weight:600;color:var(--text-dark);cursor:pointer}
+  .login-actions{display:flex;gap:.6rem;justify-content:center;margin-top:4px}
+  .login-error{display:none;margin-top:.6rem;background:#FFEBEE;color:#B71C1C;border-radius:12px;padding:.6rem .8rem;font-weight:600;text-align:center}
 
-    input[type="text"],input[type="password"],input[type="number"],textarea{
-      width:100%;padding:.9rem;border:2px solid #E0E0E0;border-radius:12px;font-size:1rem;background:#fff;
-      transition:border-color .2s ease, box-shadow .2s ease
-    }
-    input:focus,textarea:focus{border-color:#90CAF9;box-shadow:0 0 0 4px rgba(144,202,249,.25);outline:none}
+  /* ---------- App Container ---------- */
+  .container{max-width:1400px;margin:0 auto;background:#fff;border-radius:24px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.30);display:none}
+  .header{display:flex;flex-direction:column;align-items:center;gap:.75rem;margin-bottom:16px}
+  .header h1{font-family:'Mountains of Christmas',cursive;color:var(--primary-red);font-size:2.6em;margin:0}
+  .badge{display:inline-block;background:linear-gradient(135deg,var(--primary-gold),#FDD835);color:var(--text-dark);padding:.45rem 1.1rem;border-radius:999px;font-weight:700;font-size:.95em}
+  .sub{color:var(--text-light);text-align:center;margin:.4rem 0 1rem}
 
-    /* ---------- Login ---------- */
-    .login-wrap{max-width:460px;margin:4rem auto;background:#fff;border-radius:20px;overflow:hidden}
-    .login-header{background:linear-gradient(135deg,var(--primary-red),#C0392B);color:#fff;padding:1.6rem 1.4rem;display:flex;align-items:center;gap:.9rem}
-    .login-header img{height:56px;width:auto;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
-    .login-header h1{font-size:1.25rem;line-height:1.2}
-    .login-body{padding:1.6rem}
-    .form-row{margin-bottom:1rem}
-    .password-row{position:relative}
-    .toggle-pass{position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:transparent;border:none;cursor:pointer;color:#666;font-size:1.05rem}
-    .login-error{margin-top:.75rem;background:#FFEBEE;color:#B71C1C;padding:.75rem;border-radius:10px;display:none}
-    .remember{display:flex;align-items:center;gap:.5rem;color:var(--text-light);font-size:.95rem}
+  /* ---------- Topbar (PAT + acciones) ---------- */
+  .topbar{position:static;margin:.25rem 0 0;display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap}
+  .chip{display:flex;align-items:center;gap:.5rem;background:#F3F6FB;border:2px solid #dfe7f2;padding:.45rem .8rem;border-radius:999px;color:#2c3e50;font-weight:700;max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .chip i{opacity:.75}
+  .ok{color:#1B5E20}
+  .warn{color:#B71C1C}
+  #copyPatBtn,#logoutBtn{border-radius:999px;padding:.6rem .9rem;border:2px solid var(--border);background:#fff;font-weight:700;cursor:pointer}
+  #logoutBtn{border-color:#ffcdd2;color:#B71C1C}
 
-    /* ---------- Admin ---------- */
-    .container{max-width:1400px;margin:0 auto;background:#fff;border-radius:24px;padding:2rem 2rem 3rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-    .header{text-align:center;margin-bottom:1.2rem;position:relative}
-    .header h1{font-family:'Mountains of Christmas',cursive;font-size:2.6em;color:var(--primary-red);margin-bottom:.35rem}
-    .header .badge{display:inline-block;background:linear-gradient(135deg,var(--primary-gold),#FDD835);color:var(--text-dark);padding:.45rem 1.1rem;border-radius:50px;font-weight:700;font-size:.9em}
-    .header p{color:var(--text-light);font-size:1.02em;margin-top:.6rem}
-    .topbar{position:absolute;right:0;top:0;display:flex;gap:.5rem;align-items:center}
+  /* ---------- Grid de tarjetas ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+  .card{background:linear-gradient(180deg,#e3f2fd,#cfe8ff);border-radius:18px;padding:16px;border:2px solid #bbd8ff}
+  .card h3{margin:.2rem 0 .6rem;color:#0d47a1}
+  .upload-area{border:3px dashed var(--primary-blue);border-radius:16px;padding:18px;text-align:center;background:#fff;cursor:pointer;transition:.25s;margin-bottom:12px}
+  .upload-area:hover{border-color:var(--primary-red);background:#FFF5F5;transform:translateY(-2px)}
+  .upload-icon{font-size:2.2em;color:var(--primary-blue);margin-bottom:.3rem}
+  .preview-image{width:100%;height:190px;object-fit:cover;border-radius:12px;margin-top:.5rem;display:none}
+  .row{display:flex;flex-direction:column;gap:.35rem;margin:.55rem 0}
+  label{font-weight:700;color:#0d47a1}
+  input[type="text"],input[type="number"],textarea{width:100%;padding:.75rem;border:2px solid var(--border);border-radius:10px;font-size:15px}
+  input:focus,textarea:focus{outline:none;border-color:var(--primary-blue)}
+  textarea{min-height:100px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;border:0;border-radius:999px;padding:.9rem 1.2rem;font-weight:800;cursor:pointer}
+  .btn-red{background:linear-gradient(135deg,#d84315,#e53935);color:#fff}
+  .btn-blue{background:#fff;border:2px solid #d1e3ff;color:#0d47a1}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .actions{display:flex;gap:.6rem;flex-wrap:wrap}
 
-    .pat-banner{display:none;margin:0 0 16px 0;padding:12px;border-radius:12px;border:2px dashed #FFC107;background:#FFF9E6}
-    .pat-input{display:flex;gap:.5rem;margin-top:.5rem}
-    .pat-input input{flex:1}
+  /* ---------- Saved list ---------- */
+  .list{margin-top:22px;background:#F8F9FA;padding:16px;border-radius:16px}
+  .list h2{font-family:'Mountains of Christmas',cursive;margin:0 0 10px;color:#263238}
+  .saved-card{background:#fff;padding:12px;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:center}
+  .saved-card img{width:90px;height:90px;object-fit:cover;border-radius:8px}
+  .saved-card .price{color:var(--primary-gold);font-weight:800}
 
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:1.4rem;margin:1rem 0 2rem}
-    .card{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);padding:1.3rem;border-radius:16px;border-left:5px solid var(--primary-blue)}
-    .card h3{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;margin-bottom:.9rem;color:#0F172A}
+  /* ---------- Toasts ---------- */
+  .toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:9999}
+  .toast{background:#fff;border-left:6px solid var(--primary-blue);box-shadow:0 8px 24px rgba(0,0,0,.18);padding:.8rem 1rem;border-radius:12px;min-width:280px;font-weight:600;color:#2c3e50}
+  .toast.success{border-left-color:#00C853}
+  .toast.error{border-left-color:#E53935}
+  .toast.info{border-left-color:#039BE5}
 
-    .upload-area{border:3px dashed var(--primary-blue);border-radius:16px;padding:1.3rem;text-align:center;background:#fff;cursor:pointer;transition:.2s;margin-bottom:.8rem}
-    .upload-area:hover{border-color:var(--primary-red);background:#FFF5F5;transform:translateY(-2px)}
-    .upload-area.has-image{border-color:var(--primary-green);background:#F0FFF4}
-    .upload-icon{font-size:2.4em;color:var(--primary-blue);margin-bottom:.4rem}
-    .preview-image{width:100%;height:190px;object-fit:cover;border-radius:12px;margin-top:.6rem;display:none}
-    .preview-image.visible{display:block}
+  /* ---------- Modal ---------- */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9998}
+  .modal{background:#fff;border-radius:16px;max-width:520px;width:92vw;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .modal h4{margin:0 0 .6rem}
+  .modal .modal-actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:10px}
 
-    .row{display:grid;grid-template-columns:1fr;gap:.75rem;margin:.75rem 0}
-    .hint{color:var(--text-light);font-size:.88rem}
-    .status{margin-top:.6rem;font-weight:700;border-radius:10px;padding:.65rem;text-align:center}
-    .status.info{background:#E3F2FD;color:#0D47A1}
-    .status.success{background:#E8F5E9;color:#1B5E20}
-    .status.error{background:#FFEBEE;color:#B71C1C}
-
-    .list{margin-top:1.2rem;background:#F8F9FA;padding:1.2rem;border-radius:16px}
-    .list h2{font-family:'Mountains of Christmas',cursive;margin:0 0 .9rem;text-align:center}
-    .saved-card{background:#fff;padding:1rem;border-radius:12px;margin-bottom:.7rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:grid;grid-template-columns:90px 1fr auto;gap:.8rem;align-items:center}
-    .saved-card img{width:90px;height:90px;object-fit:cover;border-radius:10px}
-    .saved-card .meta h4{margin:.1rem 0 .25rem}
-    .skeleton{background:linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);background-size:400% 100%;animation:skeleton 1.4s ease infinite}
-    @keyframes skeleton{0%{background-position:100% 0}100%{background-position:0 0}}
-
-    /* ---------- Toasts ---------- */
-    .toasts{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:.6rem;z-index:9999}
-    .toast{min-width:280px;max-width:420px;background:#fff;border-left:6px solid var(--primary-blue);padding:.9rem 1rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);display:flex;gap:.6rem;align-items:flex-start;animation:pop .18s ease}
-    .toast.ok{border-color:var(--ok)}
-    .toast.warn{border-color:#F59E0B}
-    .toast.err{border-color:var(--danger)}
-    .toast .icon{font-size:1.2rem;margin-top:.1rem}
-    .toast .body{flex:1}
-    .toast .title{font-weight:800;margin-bottom:.2rem}
-    .toast .close{background:transparent;border:none;cursor:pointer;color:#64748B}
-    @keyframes pop{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-    /* ---------- Modal ---------- */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:9998}
-    .modal{width:min(560px,92vw);background:#fff;border-radius:18px;box-shadow:0 25px 60px rgba(0,0,0,.35);overflow:hidden}
-    .modal-hd{padding:1rem 1.2rem;border-bottom:1px solid #ECEFF1;font-weight:800;display:flex;align-items:center;gap:.6rem}
-    .modal-bd{padding:1.1rem}
-    .modal-ft{padding:1rem 1.2rem;display:flex;justify-content:flex-end;gap:.6rem;border-top:1px solid #ECEFF1}
-
-    /* ---------- Overlay (loader global) ---------- */
-    .overlay{position:fixed;inset:0;background:rgba(255,255,255,.55);backdrop-filter:blur(1px);display:none;align-items:center;justify-content:center;z-index:9997}
-    .spinner{width:54px;height:54px;border:6px solid #e5e7eb;border-top-color:#1E88E5;border-radius:50%;animation:spin .8s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    @media (max-width:768px){
-      .grid{grid-template-columns:1fr}
-      .saved-card{grid-template-columns:80px 1fr}
-      .saved-card img{width:80px;height:80px}
-    }
-  </style>
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1200px){
+    .container{padding:20px}
+    .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+    .header h1{font-size:2.2em}
+    .saved-card{grid-template-columns:80px 1fr auto}
+    .saved-card img{width:80px;height:80px}
+  }
+  @media (max-width:900px){
+    body{padding:16px}
+    .container{padding:16px;border-radius:18px}
+    .grid{grid-template-columns:1fr;gap:12px}
+    .preview-image{height:170px}
+    .btn{width:100%;justify-content:center}
+    .list{padding:12px}
+    .saved-card{grid-template-columns:70px 1fr}
+    .saved-card img{width:70px;height:70px}
+  }
+  @media (max-width:640px){
+    .header h1{font-size:1.9em}
+    .chip{max-width:240px}
+    input[type="text"],input[type="password"],input[type="number"],textarea{font-size:16px}
+    .preview-image{height:150px}
+    .toasts{left:0;right:0;align-items:center}
+    .toast{width:calc(100% - 24px);max-width:520px}
+  }
+  @media (min-width:1400px){
+    .topbar{justify-content:flex-end;align-self:stretch;padding:.25rem 0 0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  }
+</style>
 </head>
 <body>
 
-  <!-- Toasts / Modal / Overlay -->
-  <div id="toasts" class="toasts" aria-live="polite"></div>
-  <div id="overlay" class="overlay" aria-hidden="true"><div class="spinner" role="status" aria-label="Cargando"></div></div>
-  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal" role="document" aria-labelledby="modalTitle">
-      <div class="modal-hd"><i class="fa-solid fa-circle-question" style="color:#0EA5E9"></i><span id="modalTitle">Confirmar acción</span></div>
-      <div class="modal-bd" id="modalBody">¿Deseas continuar?</div>
-      <div class="modal-ft">
-        <button id="modalCancel" class="btn btn-ghost">Cancelar</button>
-        <button id="modalOk" class="btn btn-danger">Sí, continuar</button>
-      </div>
+<!-- ========== LOGIN ========== -->
+<div id="loginView" class="login-wrap">
+  <h1 class="login-title">Panel de Administración</h1>
+  <p class="login-sub">Acceso exclusivo</p>
+
+  <div class="login-row">
+    <label>Usuario</label>
+    <div class="field">
+      <input id="loginUser" type="text" placeholder="Usuario" autocomplete="username">
     </div>
   </div>
 
-  <!-- LOGIN VIEW -->
-  <div id="loginView" class="login-wrap shadow-soft rounded-xl" aria-live="polite">
-    <div class="login-header">
-      <img src="christmas-pringle-logo.png" alt="Christmas Pringle" />
-      <div>
-        <h1>Acceso de Administración</h1>
-        <div style="opacity:.9">Panel privado para gestionar tarjetas</div>
-      </div>
-    </div>
-    <div class="login-body">
-      <form id="loginForm">
-        <div class="form-row">
-          <label for="loginUser"><i class="fa-solid fa-user"></i> Usuario</label>
-          <input id="loginUser" class="focus-ring" type="text" autocomplete="username" required placeholder="Usuario"/>
-        </div>
-        <div class="form-row password-row">
-          <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
-          <input id="loginPass" class="focus-ring" type="password" autocomplete="current-password" required placeholder="Contraseña"/>
-          <button type="button" id="togglePass" class="toggle-pass focus-ring" aria-label="Mostrar u ocultar contraseña">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-        </div>
-        <label class="remember"><input id="rememberMe" type="checkbox"/> Recordarme</label>
-        <div style="display:flex;gap:.6rem;margin-top:.9rem">
-          <button class="btn btn-green focus-ring" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
-          <a class="btn btn-ghost focus-ring" href="index.html"><i class="fa-solid fa-arrow-left"></i> Ir al sitio</a>
-        </div>
-        <div id="loginError" class="login-error"></div>
-      </form>
+  <div class="login-row">
+    <label>Contraseña</label>
+    <div class="field">
+      <input id="loginPass" type="password" placeholder="Contraseña" autocomplete="current-password">
+      <button class="toggle-pass" type="button" id="togglePassBtn" aria-label="Ver contraseña"><i class="fa-regular fa-eye"></i></button>
     </div>
   </div>
 
-  <!-- ADMIN VIEW -->
-  <div id="adminView" style="display:none">
-    <div class="container rounded-2xl shadow-soft">
-      <div class="header">
-        <div class="topbar">
-          <span id="patStatus" class="chip" title="Estado del token de GitHub"></span>
-          <button id="copyPatBtn" class="btn btn-ghost focus-ring" title="Copiar PAT en portapapeles"><i class="fa-regular fa-copy"></i> Copiar</button>
-          <button id="logoutBtn" class="btn btn-ghost focus-ring" style="color:var(--danger)"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
-        </div>
-        <h1>🎨 Panel de Administración PRO</h1>
-        <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
-        <p>Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
-      </div>
-
-      <div id="patBanner" class="pat-banner">
-        <b><i class="fa-solid fa-key"></i> Necesitas un token (PAT) de GitHub con scope <code>repo</code> para subir archivos.</b>
-        <div class="pat-input">
-          <input id="patInput" class="focus-ring" type="password" placeholder="ghp_**********************" />
-          <button id="savePatBtn" class="btn btn-blue focus-ring" type="button"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-        </div>
-        <div class="hint" style="margin-top:.4rem">Tu PAT se guarda localmente en este navegador y no se comparte con el servidor.</div>
-      </div>
-
-      <div id="cardsContainer" class="grid"></div>
-
-      <div class="list">
-        <h2>📋 Tarjetas Guardadas</h2>
-        <div id="savedCardsList">
-          <!-- skeletons -->
-          <div class="saved-card">
-            <div class="skeleton" style="width:90px;height:90px;border-radius:10px"></div>
-            <div>
-              <div class="skeleton" style="height:16px;width:60%;border-radius:6px;margin-bottom:8px"></div>
-              <div class="skeleton" style="height:12px;width:80%;border-radius:6px;margin-bottom:6px"></div>
-              <div class="skeleton" style="height:12px;width:40%;border-radius:6px"></div>
-            </div>
-            <div class="skeleton" style="height:36px;width:110px;border-radius:999px"></div>
-          </div>
-          <div class="saved-card">
-            <div class="skeleton" style="width:90px;height:90px;border-radius:10px"></div>
-            <div>
-              <div class="skeleton" style="height:16px;width:50%;border-radius:6px;margin-bottom:8px"></div>
-              <div class="skeleton" style="height:12px;width:70%;border-radius:6px;margin-bottom:6px"></div>
-              <div class="skeleton" style="height:12px;width:35%;border-radius:6px"></div>
-            </div>
-            <div class="skeleton" style="height:36px;width:110px;border-radius:999px"></div>
-          </div>
-        </div>
-      </div>
+  <div class="login-row">
+    <label>GitHub PAT (token)</label>
+    <div class="field">
+      <input id="loginPAT" type="text" placeholder="ghp_..." autocomplete="off">
     </div>
   </div>
 
-  <script>
-    /************** Utilidades UI (Toast / Modal / Overlay) **************/
-    const $ = s => document.querySelector(s);
-    const $$ = s => document.querySelectorAll(s);
+  <div id="loginError" class="login-error">Credenciales inválidas o PAT vacío.</div>
 
-    const overlay = $('#overlay');
-    const toasts = $('#toasts');
-    const modalBackdrop = $('#modalBackdrop');
-    const modalTitle = $('#modalTitle');
-    const modalBody  = $('#modalBody');
-    const modalOk    = $('#modalOk');
-    const modalCancel= $('#modalCancel');
+  <div class="login-actions">
+    <button id="loginBtn" class="btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Ingresar</button>
+    <a href="index.html" class="btn-ghost"><i class="fa-solid fa-home"></i> Ir al sitio</a>
+  </div>
+</div>
 
-    const UI = {
-      busy(on=true){ overlay.style.display = on ? 'flex' : 'none'; overlay.setAttribute('aria-hidden', on?'false':'true'); },
-      toast(type, title, msg){
-        const wrap = document.createElement('div');
-        wrap.className = 'toast ' + (type||'');
-        wrap.innerHTML = `
-          <div class="icon">${type==='ok'?'✅':type==='warn'?'⚠️':type==='err'?'⛔':'ℹ️'}</div>
-          <div class="body">
-            <div class="title">${title||''}</div>
-            <div class="msg">${msg||''}</div>
-          </div>
-          <button class="close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
-        `;
-        wrap.querySelector('.close').onclick = ()=> wrap.remove();
-        toasts.appendChild(wrap);
-        setTimeout(()=>wrap.remove(), 5000);
-      },
-      confirm({title='Confirmar', body='¿Continuar?', okText='Sí, continuar', cancelText='Cancelar'}){
-        return new Promise(res=>{
-          modalTitle.textContent = title;
-          modalBody.innerHTML = body;
-          modalOk.textContent = okText;
-          modalCancel.textContent = cancelText;
-          modalBackdrop.style.display='flex';
-          const done = v=>{ modalBackdrop.style.display='none'; res(v); }
-          modalOk.onclick = ()=> done(true);
-          modalCancel.onclick = ()=> done(false);
-          modalBackdrop.onclick = (e)=>{ if(e.target===modalBackdrop) done(false); }
-        });
-      }
-    };
+<!-- ========== APP ========== -->
+<div id="app" class="container">
+  <div class="header">
+    <h1>🎨 Panel de Administración PRO</h1>
+    <span class="badge"><i class="fas fa-bolt"></i> Gestión de Tarjetas</span>
+    <div class="topbar">
+      <span id="patChip" class="chip"><i class="fa-solid fa-key"></i> PAT: <span id="patStatus" class="warn">faltante</span></span>
+      <button id="copyPatBtn" class="btn-ghost"><i class="fa-regular fa-copy"></i> Copiar</button>
+      <button id="logoutBtn" class="btn-ghost"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</button>
+    </div>
+    <p class="sub">Carga hasta 10 tarjetas navideñas con título, descripción y precio</p>
+  </div>
 
-    /******************** AUTH (Login) ********************/
-    const AUTH_STORAGE_KEY = 'cp_admin_auth';
-    const AUTH_TOKEN_PREFIX = 'ok:';
-    const USERNAME = 'patripringle';
-    // SHA-256("SoyPatri1978") en hex
-    const PASSWORD_HASH_HEX = 'bd6b0c1ce7ad786ca69c80302ff2f14296958630bf0de8b47ef12bcf45b58276';
+  <div id="cardsContainer" class="grid"></div>
 
-    async function sha256Hex(str){
-      const enc = new TextEncoder().encode(str);
-      const buf = await crypto.subtle.digest('SHA-256', enc);
-      const bytes = Array.from(new Uint8Array(buf));
-      return bytes.map(b=>b.toString(16).padStart(2,'0')).join('');
+  <div class="list">
+    <h2>📋 Tarjetas Guardadas</h2>
+    <div id="savedCardsList"></div>
+  </div>
+</div>
+
+<!-- Toasts & Modal -->
+<div class="toasts" id="toasts"></div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <h4 id="modalTitle">Confirmar</h4>
+    <div id="modalBody">¿Deseas continuar?</div>
+    <div class="modal-actions">
+      <button id="modalCancel" class="btn btn-blue"><i class="fa-regular fa-circle-xmark"></i> Cancelar</button>
+      <button id="modalOk" class="btn btn-red"><i class="fa-solid fa-check"></i> Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================
+   Estado / Config
+========================= */
+const GITHUB = {
+  username: 'jmarinr',
+  repo: 'christmaspringle',
+  branch: 'main'
+};
+const MAX_CARDS = 10;
+let cardsData = [];
+let pendingAction = null; // para modal
+
+/* =========================
+   Utilidades UI
+========================= */
+const $ = (q)=>document.querySelector(q);
+const toasts = $("#toasts");
+function toast(msg, type='info', timeout=3000){
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  toasts.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; setTimeout(()=>el.remove(),300); }, timeout);
+}
+function showModal(title, body, onOk){
+  $("#modalTitle").textContent = title;
+  $("#modalBody").textContent = body;
+  $("#modalBackdrop").style.display = 'flex';
+  pendingAction = onOk || null;
+}
+function hideModal(){
+  $("#modalBackdrop").style.display = 'none';
+  pendingAction = null;
+}
+$("#modalCancel").addEventListener('click', hideModal);
+$("#modalOk").addEventListener('click', ()=>{ if(pendingAction) pendingAction(); hideModal(); });
+
+/* =========================
+   Login
+========================= */
+const loginView = $("#loginView");
+const app = $("#app");
+const loginUser = $("#loginUser");
+const loginPass = $("#loginPass");
+const loginPAT  = $("#loginPAT");
+const loginError= $("#loginError");
+const togglePassBtn = $("#togglePassBtn");
+
+togglePassBtn.addEventListener('click',()=>{
+  const t = loginPass.type === 'password' ? 'text':'password';
+  loginPass.type = t;
+  togglePassBtn.innerHTML = (t==='password')
+    ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
+});
+
+function isLogged(){
+  return localStorage.getItem('cp_logged') === '1';
+}
+function getPAT(){
+  return localStorage.getItem('cp_pat') || '';
+}
+function setPAT(token){
+  localStorage.setItem('cp_pat', token||'');
+  updatePatChip();
+}
+function updatePatChip(){
+  const pat = getPAT();
+  const status = $("#patStatus");
+  const chip = $("#patChip");
+  if (pat && pat.startsWith('gh')){
+    status.textContent = 'ok';
+    status.classList.remove('warn'); status.classList.add('ok');
+    chip.title = pat;
+  }else{
+    status.textContent = 'faltante';
+    status.classList.add('warn'); status.classList.remove('ok');
+    chip.title = '';
+  }
+}
+function showApp(){
+  loginView.style.display = 'none';
+  app.style.display = 'block';
+  updatePatChip();
+  renderCardForms();
+  renderSavedCards();
+}
+function showLogin(){
+  app.style.display = 'none';
+  loginView.style.display = 'block';
+}
+
+$("#loginBtn").addEventListener('click', ()=>{
+  const u = (loginUser.value||'').trim();
+  const p = (loginPass.value||'').trim();
+  const t = (loginPAT.value||'').trim();
+  if (u==='patripringle' && p==='SoyPatri1978' && t){
+    localStorage.setItem('cp_logged','1');
+    setPAT(t);
+    loginError.style.display='none';
+    showApp();
+    toast('¡Bienvenido!', 'success');
+  } else {
+    loginError.style.display='block';
+  }
+});
+
+/* Sesión persistente */
+window.addEventListener('load', ()=>{
+  if(isLogged()){
+    const storedPAT = getPAT();
+    if(!storedPAT) showLogin(); else showApp();
+  }else{
+    showLogin();
+  }
+});
+
+/* Copy / Logout */
+$("#copyPatBtn").addEventListener('click', async ()=>{
+  const pat = getPAT();
+  if(!pat) return toast('No hay PAT guardado.','error');
+  try{ await navigator.clipboard.writeText(pat); toast('PAT copiado.','success'); }
+  catch{ toast('No se pudo copiar.','error'); }
+});
+$("#logoutBtn").addEventListener('click', ()=>{
+  showModal('Cerrar sesión','¿Seguro que deseas salir?', ()=>{
+    localStorage.removeItem('cp_logged');
+    localStorage.removeItem('cp_pat');
+    showLogin();
+  });
+});
+
+/* =========================
+   Render Tarjetas
+========================= */
+function renderCardForms(){
+  const container = $("#cardsContainer");
+  container.innerHTML = '';
+  for(let i=1;i<=MAX_CARDS;i++){
+    const existing = cardsData.find(c=>c.number===i);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>❄ Tarjeta #${i}</h3>
+      <div class="upload-area" id="uploadArea${i}">
+        <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <div>PNG, JPG, JPEG (Máx: 5MB)</div>
+        <input type="file" id="fileInput${i}" accept="image/png,image/jpeg,image/jpg" style="display:none">
+        <img id="preview${i}" class="preview-image" alt="Vista previa">
+      </div>
+
+      <div class="row">
+        <label for="title${i}">Título</label>
+        <input type="text" id="title${i}" placeholder="Ej: Árbol de Esperanza" value="${existing?escapeHtml(existing.title):''}">
+      </div>
+
+      <div class="row">
+        <label for="description${i}">Descripción</label>
+        <textarea id="description${i}" placeholder="Describe tu tarjeta navideña...">${existing?escapeHtml(existing.description):''}</textarea>
+      </div>
+
+      <div class="row">
+        <label for="price${i}">Precio (USD)</label>
+        <input type="number" id="price${i}" placeholder="15.00" step="0.01" min="0" value="${existing?existing.price:''}">
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-red" id="uploadBtn${i}"><i class="fa-solid fa-cloud-arrow-up"></i> Subir #${i}</button>
+        <button class="btn btn-blue" id="clearBtn${i}"><i class="fa-regular fa-broom"></i> Limpiar</button>
+      </div>
+      <div id="status${i}" class="status"></div>
+    `;
+    container.appendChild(card);
+    setupCardHandlers(i, existing);
+  }
+}
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));}
+function setupCardHandlers(n, existing){
+  const uploadArea = $(`#uploadArea${n}`);
+  const fileInput  = $(`#fileInput${n}`);
+  const preview    = $(`#preview${n}`);
+  const title      = $(`#title${n}`);
+  const desc       = $(`#description${n}`);
+  const price      = $(`#price${n}`);
+  const uploadBtn  = $(`#uploadBtn${n}`);
+  const clearBtn   = $(`#clearBtn${n}`);
+
+  if(existing){
+    preview.src = rawImageUrl(existing.image);
+    preview.style.display='block';
+  }
+
+  uploadArea.addEventListener('click', ()=>fileInput.click());
+  fileInput.addEventListener('change',(e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 5*1024*1024) return toast('La imagen debe ser menor a 5MB','error');
+    const rd = new FileReader();
+    rd.onload = (ev)=>{ preview.src = ev.target.result; preview.style.display='block'; };
+    rd.readAsDataURL(file);
+  });
+
+  clearBtn.addEventListener('click', ()=>{
+    fileInput.value=''; preview.style.display='none';
+    title.value=''; desc.value=''; price.value='';
+  });
+
+  uploadBtn.addEventListener('click', ()=>uploadCard(n));
+}
+
+/* =========================
+   GitHub API helpers
+========================= */
+function rawImageUrl(filename){
+  const t = Date.now();
+  return `https://raw.githubusercontent.com/${GITHUB.username}/${GITHUB.repo}/${GITHUB.branch}/${filename}?t=${t}`;
+}
+
+async function githubGet(url){
+  const pat = getPAT();
+  const res = await fetch(url,{ headers:{
+    'Authorization': `token ${pat}`,
+    'Accept':'application/vnd.github.v3+json'
+  }});
+  return res;
+}
+async function githubPut(url, body){
+  const pat = getPAT();
+  const res = await fetch(url,{ method:'PUT', headers:{
+    'Authorization': `token ${pat}`,
+    'Accept':'application/vnd.github.v3+json',
+    'Content-Type':'application/json'
+  }, body: JSON.stringify(body)});
+  return res;
+}
+async function githubDelete(url, body){
+  const pat = getPAT();
+  const res = await fetch(url,{ method:'DELETE', headers:{
+    'Authorization': `token ${pat}`,
+    'Accept':'application/vnd.github.v3+json',
+    'Content-Type':'application/json'
+  }, body: JSON.stringify(body)});
+  return res;
+}
+
+/* =========================
+   Carga inicial de cards.json (si existe en repo)
+========================= */
+async function fetchCardsJson(){
+  try{
+    const url = `https://raw.githubusercontent.com/${GITHUB.username}/${GITHUB.repo}/${GITHUB.branch}/cards.json?t=${Date.now()}`;
+    const res = await fetch(url,{cache:'no-store'});
+    if(!res.ok) return;
+    const text = await res.text();
+    const data = JSON.parse(text);
+    if(Array.isArray(data)){ cardsData = data; }
+  }catch(e){ /* ignora si no existe */ }
+}
+window.addEventListener('load', async ()=>{
+  await fetchCardsJson();
+});
+
+/* =========================
+   Subir tarjeta
+========================= */
+async function uploadCard(n){
+  const pat = getPAT();
+  if(!pat){ toast('Agrega el PAT en la sesión.','error'); return; }
+
+  const fileInput = $(`#fileInput${n}`);
+  const title = $(`#title${n}`).value.trim();
+  const description = $(`#description${n}`).value.trim();
+  const price = parseFloat($(`#price${n}`).value);
+  if(!fileInput.files[0] || !title || !description || !(price>0)){
+    return toast('Completa imagen, título, descripción y precio.','error');
+  }
+
+  try{
+    const file = fileInput.files[0];
+    const fileName = `${n}.png`;
+    const imageData = await convertToPNG(file);
+    const base64Data = await blobToBase64(imageData);
+
+    await uploadFileToGithub(fileName, base64Data);
+
+    const idx = cardsData.findIndex(c=>c.number===n);
+    const cardData = { number:n, title, description, price, image:fileName, uploadedAt:new Date().toISOString() };
+    if(idx>=0) cardsData[idx]=cardData; else cardsData.push(cardData);
+    cardsData.sort((a,b)=>a.number-b.number);
+    await updateCardsJSON();
+    toast(`Tarjeta #${n} subida.`, 'success');
+
+    // refresco preview
+    const preview = $(`#preview${n}`);
+    preview.src = rawImageUrl(fileName);
+    preview.style.display='block';
+    renderSavedCards();
+
+  }catch(err){
+    if(String(err.message||'').includes('Bad credentials')){
+      toast('Error de autenticación con GitHub (revisa PAT).','error');
+    }else{
+      toast(`Error: ${err.message||err}`, 'error', 5000);
     }
-    function setSession(remember=false){
-      const now = Date.now();
-      const ttl = remember ? 1000*60*60*24*7 : 1000*60*60*8;
-      const payload = { exp: now + ttl };
-      localStorage.setItem(AUTH_STORAGE_KEY, AUTH_TOKEN_PREFIX + btoa(JSON.stringify(payload)));
-    }
-    function clearSession(){ localStorage.removeItem(AUTH_STORAGE_KEY); }
-    function isSessionValid(){
-      const token = localStorage.getItem(AUTH_STORAGE_KEY);
-      if(!token || !token.startsWith(AUTH_TOKEN_PREFIX)) return false;
-      try{ const payload = JSON.parse(atob(token.slice(AUTH_TOKEN_PREFIX.length))); return payload.exp && Date.now() < payload.exp; }
-      catch{ return false; }
-    }
-    function showLogin(){ $('#loginView').style.display='block'; $('#adminView').style.display='none'; }
-    function showAdmin(){ $('#loginView').style.display='none'; $('#adminView').style.display='block'; }
+  }
+}
 
-    // Login UI
-    const passInput = $('#loginPass');
-    const toggleBtn = $('#togglePass');
-    toggleBtn.addEventListener('click', ()=>{
-      const isPwd = passInput.type === 'password';
-      passInput.type = isPwd ? 'text' : 'password';
-      toggleBtn.innerHTML = isPwd ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
-    });
+async function updateCardsJSON(){
+  const json = JSON.stringify(cardsData, null, 2);
+  const base64 = btoa(unescape(encodeURIComponent(json)));
+  const url = `https://api.github.com/repos/${GITHUB.username}/${GITHUB.repo}/contents/cards.json`;
 
-    $('#loginForm').addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const u = $('#loginUser').value.trim();
-      const p = $('#loginPass').value;
-      const remember = $('#rememberMe').checked;
-      const errBox = $('#loginError');
+  // obtener sha si existe
+  let sha=null;
+  const check = await githubGet(url);
+  if(check.ok){ const d = await check.json(); sha=d.sha; }
 
-      try{
-        const hash = await sha256Hex(p);
-        if (u === USERNAME && hash === PASSWORD_HASH_HEX){
-          setSession(remember);
-          errBox.style.display='none';
-          UI.toast('ok','Bienvenido','Acceso concedido');
-          initAdmin();
-        } else {
-          errBox.textContent = 'Usuario o contraseña inválidos.';
-          errBox.style.display = 'block';
-          UI.toast('err','Acceso denegado','Revisa tus credenciales');
-        }
-      }catch{
-        errBox.textContent = 'Error de autenticación.';
-        errBox.style.display = 'block';
-        UI.toast('err','Error','No fue posible autenticar');
-      }
-    });
+  const body = { message:`Update cards data - ${cardsData.length} cards`, content:base64, branch:GITHUB.branch };
+  if(sha) body.sha = sha;
 
-    $('#logoutBtn').addEventListener('click', async ()=>{
-      const ok = await UI.confirm({ title:'Cerrar sesión', body:'¿Seguro que deseas salir?', okText:'Sí, salir' });
-      if(!ok) return;
-      clearSession();
-      showLogin();
-      UI.toast('ok','Sesión cerrada','Hasta pronto');
-    });
+  const res = await githubPut(url, body);
+  if(!res.ok){
+    let e = await res.json().catch(()=>({message:'Error al actualizar cards.json'}));
+    throw new Error(e.message||'Error al actualizar cards.json');
+  }
+}
 
-    /******************** ADMIN (PAT + Cards) ********************/
-    const GITHUB_CONFIG = { token:null, username:'jmarinr', repo:'christmaspringle' };
-    const MAX_CARDS = 10;
-    let cardsData = [];
+async function uploadFileToGithub(fileName, base64Content){
+  const url = `https://api.github.com/repos/${GITHUB.username}/${GITHUB.repo}/contents/${fileName}`;
 
-    const patBanner = $('#patBanner');
-    const patStatus = $('#patStatus');
-    const patInput  = $('#patInput');
+  // sha si existe
+  let sha=null;
+  const check = await githubGet(url);
+  if(check.ok){ const d=await check.json(); sha=d.sha; }
 
-    function refreshPatUi(){
-      const pat = localStorage.getItem('cp_pat') || '';
-      if(!pat){
-        patBanner.style.display = 'block';
-        patStatus.innerHTML = `<i class="fa-solid fa-key"></i> PAT: <b style="color:#F59E0B">faltante</b>`;
-        patStatus.style.borderColor = '#F59E0B';
-        GITHUB_CONFIG.token = null;
-      }else{
-        GITHUB_CONFIG.token = pat;
-        patBanner.style.display = 'none';
-        const masked = pat.length>10 ? pat.slice(0,4)+'****'+pat.slice(-4) : '********';
-        patStatus.innerHTML = `<i class="fa-solid fa-key"></i> PAT: <b style="color:#2E7D32">ok</b> <span class="hint" style="margin-left:.35rem">(${masked})</span>`;
-        patStatus.style.borderColor = '#66bb6a';
-      }
-    }
-    $('#savePatBtn').addEventListener('click', ()=>{
-      const v = patInput.value.trim();
-      if(!v){ UI.toast('warn','Token vacío','Pega tu PAT'); patInput.focus(); return; }
-      localStorage.setItem('cp_pat', v);
-      patInput.value='';
-      refreshPatUi();
-      UI.toast('ok','Token guardado','Listo para subir a GitHub');
-    });
-    $('#copyPatBtn').addEventListener('click', async ()=>{
-      const pat = localStorage.getItem('cp_pat') || '';
-      if(!pat){ UI.toast('warn','No hay PAT','Guárdalo primero'); return; }
-      try{ await navigator.clipboard.writeText(pat); UI.toast('ok','Copiado','Token al portapapeles'); }
-      catch{ UI.toast('warn','No se pudo copiar','Permite el portapapeles'); }
-    });
+  const body = { message:`Upload ${fileName} via Admin`, content: base64Content.split(',')[1], branch:GITHUB.branch };
+  if(sha) body.sha = sha;
 
-    function loadCardsData(){
-      const saved = localStorage.getItem('christmasPringleCards');
-      if (saved) cardsData = JSON.parse(saved);
-      renderCardForms();
-      renderSavedCards();
-    }
-    function saveCardsData(){ localStorage.setItem('christmasPringleCards', JSON.stringify(cardsData)); renderSavedCards(); }
+  const res = await githubPut(url, body);
+  if(!res.ok){
+    let e = await res.json().catch(()=>({message:'Error al subir imagen'}));
+    throw new Error(e.message||'Error al subir imagen');
+  }
+}
 
-    function cardForm(n, existing){
-      return `
-        <div class="card">
-          <h3><i class="fas fa-snowflake"></i> Tarjeta #${n}</h3>
-          <div class="upload-area" id="uploadArea${n}" data-card="${n}" tabindex="0" role="button" aria-label="Seleccionar imagen para tarjeta ${n}">
-            <i class="fas fa-cloud-upload-alt upload-icon"></i>
-            <div>PNG, JPG, JPEG (Máx: 5MB)</div>
-            <input type="file" id="fileInput${n}" accept="image/png,image/jpeg,image/jpg" style="display:none;">
-            <img id="preview${n}" class="preview-image" alt="Vista previa">
-          </div>
-          <div class="row">
-            <label for="title${n}"><i class="fas fa-heading"></i> Título</label>
-            <input type="text" id="title${n}" placeholder="Ej: Árbol de Esperanza" value="${existing?escapeHtml(existing.title):''}">
-            <div class="hint" id="hintTitle${n}"></div>
-          </div>
-          <div class="row">
-            <label for="description${n}"><i class="fas fa-align-left"></i> Descripción</label>
-            <textarea id="description${n}" placeholder="Describe tu tarjeta navideña...">${existing?escapeHtml(existing.description):''}</textarea>
-            <div class="hint" id="hintDesc${n}"></div>
-          </div>
-          <div class="row">
-            <label for="price${n}"><i class="fas fa-dollar-sign"></i> Precio (USD)</label>
-            <input type="number" id="price${n}" placeholder="15.00" step="0.01" min="0" value="${existing?existing.price:''}">
-            <div class="hint" id="hintPrice${n}"></div>
-          </div>
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-            <button class="btn btn-primary" id="uploadBtn${n}" onclick="uploadCard(${n})" disabled><i class="fas fa-upload"></i> Subir #${n}</button>
-            <button class="btn btn-ghost" type="button" onclick="resetForm(${n})"><i class="fas fa-rotate"></i> Limpiar</button>
-          </div>
-          <div id="status${n}" aria-live="polite" style="min-height:44px"></div>
-        </div>
-      `;
-    }
-    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
-
-    function renderCardForms(){
-      const container = $('#cardsContainer');
-      container.innerHTML = '';
-      for(let i=0;i<MAX_CARDS;i++){
-        const n=i+1;
-        const existing = cardsData.find(c=>c.number===n);
-        const wrap = document.createElement('div');
-        wrap.innerHTML = cardForm(n, existing);
-        container.appendChild(wrap.firstElementChild);
-        setupCardUpload(n);
-        if(existing){
-          // precargar imagen si existe
-          const img = new Image();
-          img.onload = ()=>{
-            const pv = $(`#preview${n}`);
-            pv.src = `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${existing.image}`;
-            pv.classList.add('visible');
-            $(`#uploadArea${n}`).classList.add('has-image');
-          };
-          img.src = `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${existing.image}`;
-          $(`#uploadBtn${n}`).disabled = true; // hasta que elija nueva imagen
-        }
-      }
-    }
-
-    function setupCardUpload(n){
-      const uploadArea = $(`#uploadArea${n}`);
-      const fileInput  = $(`#fileInput${n}`);
-      const preview    = $(`#preview${n}`);
-      const uploadBtn  = $(`#uploadBtn${n}`);
-
-      const titleInput = $(`#title${n}`);
-      const descInput  = $(`#description${n}`);
-      const priceInput = $(`#price${n}`);
-
-      const hintT = $(`#hintTitle${n}`);
-      const hintD = $(`#hintDesc${n}`);
-      const hintP = $(`#hintPrice${n}`);
-
-      const validate = ()=>{
-        let ok = true;
-        const t = titleInput.value.trim();
-        const d = descInput.value.trim();
-        const p = Number(priceInput.value);
-        hintT.textContent = t ? '' : 'Requerido';
-        hintD.textContent = d ? '' : 'Requerido';
-        hintP.textContent = (p>0 && !Number.isNaN(p)) ? '' : 'Debe ser un número mayor que 0';
-        if(!t || !d || !(p>0)) ok=false;
-        if(fileInput.files.length===0) ok=false;
-        uploadBtn.disabled = !ok;
+/* Conversión y base64 */
+function convertToPNG(file){
+  return new Promise((resolve)=>{
+    const r = new FileReader();
+    r.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0);
+        canvas.toBlob((blob)=>resolve(blob),'image/png');
       };
+      img.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+function blobToBase64(blob){
+  return new Promise((resolve)=>{
+    const r = new FileReader();
+    r.onloadend = ()=>resolve(r.result);
+    r.readAsDataURL(blob);
+  });
+}
 
-      uploadArea.addEventListener('click', ()=>fileInput.click());
-      uploadArea.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); fileInput.click(); }});
-      fileInput.addEventListener('change', (e)=>{
-        const file = e.target.files[0];
-        if(file){
-          if(file.size > 5*1024*1024){
-            showCardStatus(n,'La imagen debe ser menor a 5MB','error'); fileInput.value=''; return;
-          }
-          const reader = new FileReader();
-          reader.onload = ev=>{
-            preview.src = ev.target.result;
-            preview.classList.add('visible');
-            uploadArea.classList.add('has-image');
-            validate();
-          };
-          reader.readAsDataURL(file);
-        } else { preview.classList.remove('visible'); uploadArea.classList.remove('has-image'); validate(); }
-      });
-      [titleInput,descInput,priceInput].forEach(inp=> inp.addEventListener('input', validate));
+/* =========================
+   Guardadas y eliminar
+========================= */
+function renderSavedCards(){
+  const container = $("#savedCardsList");
+  if(!cardsData.length){
+    container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:1rem">No hay tarjetas guardadas aún</p>';
+    return;
+  }
+  cardsData.sort((a,b)=>a.number-b.number);
+  container.innerHTML = cardsData.map(c=>`
+    <div class="saved-card">
+      <img src="${rawImageUrl(c.image)}" alt="${escapeHtml(c.title)}">
+      <div>
+        <div style="font-weight:800;color:#263238">#${c.number} - ${escapeHtml(c.title)}</div>
+        <div style="color:#546E7A">${escapeHtml(c.description)}</div>
+        <div class="price">$${Number(c.price).toFixed(2)}</div>
+        <div style="font-size:.85em;opacity:.7">Actualizado: ${new Date(c.uploadedAt).toLocaleString()}</div>
+      </div>
+      <button class="btn btn-red" onclick="confirmDelete(${c.number})"><i class="fa-regular fa-trash-can"></i></button>
+    </div>
+  `).join('');
+}
+
+function confirmDelete(n){
+  showModal('Eliminar tarjeta',`¿Eliminar la tarjeta #${n}?`, ()=>deleteCard(n));
+}
+
+async function deleteCard(n){
+  try{
+    const card = cardsData.find(c=>c.number===n);
+    if(!card) return;
+
+    // borrar imagen si existe
+    const url = `https://api.github.com/repos/${GITHUB.username}/${GITHUB.repo}/contents/${card.image}`;
+    const check = await githubGet(url);
+    if(check.ok){
+      const data = await check.json();
+      await githubDelete(url, { message:`Delete ${card.image}`, sha:data.sha, branch:GITHUB.branch });
     }
 
-    function showCardStatus(n,message,type){
-      const status = $(`#status${n}`);
-      status.innerHTML = `<div class="status ${type}">${message}</div>`;
-    }
-
-    function resetForm(n){
-      const fi = $(`#fileInput${n}`), pv = $(`#preview${n}`), ua = $(`#uploadArea${n}`);
-      const ti = $(`#title${n}`), di = $(`#description${n}`), pi = $(`#price${n}`);
-      if(fi) fi.value='';
-      if(pv) pv.classList.remove('visible');
-      if(ua) ua.classList.remove('has-image');
-      if(ti) ti.value='';
-      if(di) di.value='';
-      if(pi) pi.value='';
-      const ub = $(`#uploadBtn${n}`); if(ub) ub.disabled = true;
-      $(`#hintTitle${n}`).textContent='';
-      $(`#hintDesc${n}`).textContent='';
-      $(`#hintPrice${n}`).textContent='';
-      showCardStatus(n,'','info'); // limpia status
-      UI.toast('ok','Formulario limpio',`Tarjeta #${n}`);
-    }
-
-    async function convertToPNG(file){
-      return new Promise(resolve=>{
-        const reader = new FileReader();
-        reader.onload = e=>{
-          const img = new Image();
-          img.onload = ()=>{
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width; canvas.height = img.height;
-            const ctx = canvas.getContext('2d'); ctx.drawImage(img,0,0);
-            canvas.toBlob(blob=>resolve(blob),'image/png');
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-    function blobToBase64(blob){
-      return new Promise(resolve=>{
-        const r = new FileReader();
-        r.onloadend = ()=>resolve(r.result);
-        r.readAsDataURL(blob);
-      });
-    }
-
-    async function uploadCard(n){
-      if(!GITHUB_CONFIG.token){ UI.toast('warn','Falta PAT','Guárdalo para poder subir'); patInput.focus(); return; }
-      const fileInput = $(`#fileInput${n}`);
-      const title = $(`#title${n}`).value.trim();
-      const description = $(`#description${n}`).value.trim();
-      const price = parseFloat($(`#price${n}`).value);
-      const uploadBtn = $(`#uploadBtn${n}`);
-
-      if(!fileInput.files[0] || !title || !description || !(price>0)){
-        showCardStatus(n,'Completa todos los campos y selecciona una imagen','error'); return;
-      }
-      uploadBtn.disabled = true;
-      UI.busy(true);
-      showCardStatus(n,'Subiendo a GitHub...','info');
-
-      try{
-        const file = fileInput.files[0];
-        const fileName = `${n}.png`;
-        const imageData = await convertToPNG(file);
-        const base64Data = await blobToBase64(imageData);
-        await uploadFileToGithub(fileName, base64Data);
-
-        const idx = cardsData.findIndex(c=>c.number===n);
-        const cardData = { number:n, title, description, price, image:fileName, uploadedAt:new Date().toISOString() };
-        if(idx>=0) cardsData[idx]=cardData; else cardsData.push(cardData);
-        saveCardsData();
-        await updateCardsJSON();
-
-        // Limpieza visual lógica
-        fileInput.value='';
-        const pv = $(`#preview${n}`), ua=$(`#uploadArea${n}`);
-        if(pv) pv.classList.remove('visible');
-        if(ua) ua.classList.remove('has-image');
-        uploadBtn.disabled = true;
-        showCardStatus(n,'¡Tarjeta subida exitosamente! 🎉','success');
-        UI.toast('ok','Subida completa',`Tarjeta #${n} actualizada`);
-      }catch(error){
-        const msg = String(error?.message||'falló la subida');
-        if(msg.includes('Bad credentials')){ showCardStatus(n,'❌ Error de autenticación con GitHub. Verifica el PAT.','error'); UI.toast('err','Credenciales inválidas','Revisa el token'); }
-        else { showCardStatus(n,'Error: '+msg,'error'); UI.toast('err','Error al subir',msg); }
-        console.error(error);
-      }finally{
-        UI.busy(false);
-        uploadBtn.disabled=false;
-      }
-    }
-
-    async function updateCardsJSON(){
-      cardsData.sort((a,b)=>a.number-b.number);
-      const jsonContent = JSON.stringify(cardsData,null,2);
-      const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
-      const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/cards.json`;
-
-      // obtener sha si existe
-      let sha=null;
-      try{
-        const r = await fetch(url,{ headers:{'Authorization':`token ${GITHUB_CONFIG.token}`,'Accept':'application/vnd.github.v3+json'}});
-        if(r.ok){ const d = await r.json(); sha=d.sha; }
-      }catch{}
-
-      const body = { message:`Update cards data - ${cardsData.length} cards`, content:base64Content, branch:'main' };
-      if(sha) body.sha = sha;
-
-      const resp = await fetch(url,{
-        method:'PUT',
-        headers:{
-          'Authorization':`token ${GITHUB_CONFIG.token}`,
-          'Accept':'application/vnd.github.v3+json',
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify(body)
-      });
-      if(!resp.ok){
-        const err = await resp.json().catch(()=>({message:'Error al actualizar cards.json'}));
-        throw new Error(err.message||'Error al actualizar cards.json');
-      }
-      return resp.json();
-    }
-
-    async function uploadFileToGithub(fileName, base64Content){
-      const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${fileName}`;
-      // sha si existe
-      let sha=null;
-      try{
-        const r = await fetch(url,{ headers:{'Authorization':`token ${GITHUB_CONFIG.token}`,'Accept':'application/vnd.github.v3+json'}});
-        if(r.ok){ const d = await r.json(); sha=d.sha; }
-      }catch{}
-
-      const body = { message:`Upload ${fileName} via Admin Panel`, content:base64Content.split(',')[1], branch:'main' };
-      if(sha) body.sha = sha;
-
-      const resp = await fetch(url,{
-        method:'PUT',
-        headers:{
-          'Authorization':`token ${GITHUB_CONFIG.token}`,
-          'Accept':'application/vnd.github.v3+json',
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify(body)
-      });
-      if(!resp.ok){
-        const err = await resp.json().catch(()=>({message:'Error al subir a GitHub'}));
-        throw new Error(err.message||'Error al subir a GitHub');
-      }
-      return resp.json();
-    }
-
-    function renderSavedCards(){
-      const container = $('#savedCardsList');
-      if(!cardsData || cardsData.length===0){
-        container.innerHTML = `<div class="hint" style="text-align:center;padding:1.2rem">No hay tarjetas guardadas aún</div>`;
-        return;
-      }
-      container.innerHTML = cardsData
-        .sort((a,b)=>a.number-b.number)
-        .map(c=>`
-          <div class="saved-card">
-            <img src="https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/main/${c.image}" alt="${escapeHtml(c.title)}">
-            <div class="meta">
-              <h4>#${c.number} - ${escapeHtml(c.title)}</h4>
-              <div class="hint">${escapeHtml(c.description)}</div>
-              <div class="chip" style="margin-top:.35rem"><i class="fa-solid fa-tag"></i> $${Number(c.price).toFixed(2)}</div>
-              <div class="hint" style="margin-top:.25rem">Actualizado: ${new Date(c.uploadedAt).toLocaleString()}</div>
-            </div>
-            <div>
-              <button class="btn btn-danger" onclick="askDelete(${c.number})"><i class="fas fa-trash"></i> Eliminar</button>
-            </div>
-          </div>
-        `).join('');
-    }
-
-    async function askDelete(n){
-      const ok = await UI.confirm({
-        title:'Eliminar tarjeta',
-        body:`¿Eliminar la <b>Tarjeta #${n}</b>? Esta acción no se puede deshacer.`,
-        okText:'Sí, eliminar'
-      });
-      if(!ok) return;
-      deleteCard(n);
-    }
-
-    async function deleteCard(n){
-      if(!GITHUB_CONFIG.token){ UI.toast('warn','Falta PAT','Guárdalo primero'); return; }
-      UI.busy(true);
-      try{
-        const card = cardsData.find(c=>c.number===n);
-        if(!card) return;
-
-        const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${card.image}`;
-        const r = await fetch(url,{ headers:{'Authorization':`token ${GITHUB_CONFIG.token}`,'Accept':'application/vnd.github.v3+json'}});
-        if(r.ok){
-          const data = await r.json();
-          await fetch(url,{
-            method:'DELETE',
-            headers:{
-              'Authorization':`token ${GITHUB_CONFIG.token}`,
-              'Accept':'application/vnd.github.v3+json',
-              'Content-Type':'application/json'
-            },
-            body:JSON.stringify({ message:`Delete ${card.image}`, sha:data.sha, branch:'main' })
-          });
-        }
-        cardsData = cardsData.filter(c=>c.number!==n);
-        saveCardsData();
-        await updateCardsJSON();
-
-        // limpiar formulario visual si está en pantalla
-        resetForm(n);
-        UI.toast('ok','Eliminada','La tarjeta fue eliminada');
-      }catch(err){
-        UI.toast('err','No se pudo eliminar', String(err?.message||'Error'));
-        console.error(err);
-      }finally{
-        UI.busy(false);
-      }
-    }
-
-    async function initAdmin(){
-      if(!isSessionValid()){ showLogin(); return; }
-      showAdmin();
-      refreshPatUi();
-      loadCardsData();
-    }
-
-    // Arranque
-    (async ()=>{
-      if(isSessionValid()){ await initAdmin(); } else { showLogin(); }
-    })();
-
-    // Exponer funciones usadas en HTML inline
-    window.uploadCard = uploadCard;
-    window.deleteCard = deleteCard;
-    window.askDelete  = askDelete;
-    window.resetForm  = resetForm;
-  </script>
+    // quitar local y actualizar cards.json
+    cardsData = cardsData.filter(c=>c.number!==n);
+    await updateCardsJSON();
+    renderSavedCards();
+    // limpiar formulario visual
+    const fileInput = $(`#fileInput${n}`);
+    const preview = $(`#preview${n}`);
+    const title = $(`#title${n}`), desc=$(`#description${n}`), price=$(`#price${n}`);
+    if(fileInput){ fileInput.value=''; }
+    if(preview){ preview.style.display='none'; }
+    if(title) title.value=''; if(desc) desc.value=''; if(price) price.value='';
+    toast(`Tarjeta #${n} eliminada.`, 'success');
+  }catch(err){
+    toast(`Error al eliminar: ${err.message||err}`, 'error');
+  }
+}
+</script>
 </body>
 </html>

@@ -35,6 +35,24 @@
   .smoke{position:absolute; top:-60px; left:45px; font-size:2.5em; animation:smokeRise 1.8s ease-out infinite}
   @keyframes smokeRise{0%{transform:translateY(0) scale(.5); opacity:.8}100%{transform:translateY(-90px) scale(2.5); opacity:0}}
 
+  /* Santa Tracker badge que va sobre el segundo vagón */
+  .santa-tracker{
+    position:absolute; top:-26px; left:24px; /* relativo al segundo vagón */
+    width:64px; height:64px; border-radius:50%;
+    background:radial-gradient(circle at 30% 25%,#fff 0 35%, #ffe9ec 36% 100%);
+    border:4px solid #c0392b; box-shadow:0 8px 18px rgba(231,76,60,.35);
+    display:flex; align-items:center; justify-content:center; color:#c0392b; font-weight:900;
+    font-size:1rem; text-align:center; line-height:1; pointer-events:auto; cursor:default;
+  }
+  .santa-tracker:before{ /* botoncito del cronómetro */
+    content:''; position:absolute; top:-10px; left:26px; width:12px; height:10px; background:#c0392b; border-radius:3px;
+    box-shadow:0 2px 0 #922b21;
+  }
+  .santa-label{
+    position:absolute; top:44px; left:-10px; right:-10px;
+    font-size:.6rem; font-weight:800; color:#b23a2e; text-transform:uppercase;
+  }
+
   /* Header */
   header{position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.95); backdrop-filter:blur(16px); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow-soft)}
   .header-content{
@@ -42,22 +60,22 @@
     display:grid; align-items:center; gap:12px;
     grid-template-columns:auto 1fr auto;
   }
-  .logo-wrap{display:flex; align-items:center; gap:12px}
   .logo-link{display:block; line-height:0}
   .logo-img{height:160px; width:auto; border-radius:14px; object-fit:contain; display:block; filter:drop-shadow(0 2px 8px rgba(231,76,60,.22)); transition:transform .3s}
   .logo-link:hover .logo-img{transform:scale(1.04)}
-  .version-chip{align-self:flex-start; margin-top:6px; font-weight:800; font-size:.85rem; color:#2d3436; background:#f2f5f7; border:2px solid #e1e6ec; border-radius:999px; padding:.25rem .6rem}
 
-  /* Candy-cane headline (mejorado) */
+  /* Candy-cane headline (más grande + tilt) */
   .header-candy{
-    text-align:center; line-height:1.05; letter-spacing:.5px;
+    justify-self:center; text-align:center; line-height:1.02; letter-spacing:.5px;
     font-family:'Mountains of Christmas',cursive; font-weight:700;
-    font-size:2.25rem; padding:0 .5rem;
+    font-size:3rem; padding:.2rem .7rem; will-change:transform;
     background:
       repeating-linear-gradient(45deg,#fff 0 10px,#d32f2f 10px 20px,#fff 20px 30px,#b71c1c 30px 40px);
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    -webkit-text-stroke:1.2px #2e7d32; /* contorno verde para nitidez */
+    -webkit-text-stroke:1.4px #2e7d32;
     text-shadow:0 2px 0 rgba(255,255,255,.8), 0 3px 10px rgba(0,0,0,.08);
+    transition:transform .15s ease-out;
+    transform-style:preserve-3d; perspective:700px;
   }
 
   nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content:flex-end}
@@ -68,22 +86,13 @@
   .btn-cards{background:linear-gradient(135deg,#FFB300,#FFD54F); color:#332300}
   .btn-reviews{background:linear-gradient(135deg,#039BE5,#4FC3F7)}
   .btn-music{background:linear-gradient(135deg,#E74C3C,#C0392B)}
-  /* Sombrero navideño en la esquina del botón de música */
-  .btn-music::after{
-    content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem;
-    filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));
-    transform:rotate(12deg);
-  }
+  .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
 
-  /* Hero (titular grande) */
-  .hero{text-align:center; padding:2.2rem 1rem 0}
-  .hero-title{font-family:'Mountains of Christmas',cursive; color:#fff; font-size:3.6rem; text-shadow:0 2px 8px rgba(0,0,0,.25)}
-
-  /* Figuras flotantes */
-  .floating-character{position:absolute; font-size:4em; filter:drop-shadow(0 8px 16px rgba(0,0,0,.3)); z-index:6; cursor:pointer; animation:charFloat 5s ease-in-out infinite}
-  .floating-character:hover{transform:scale(1.3) rotate(12deg) !important}
-  @keyframes charFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(5deg)}}
-  .char1{top:15%; left:8%} .char2{top:25%; right:10%} .char3{top:35%; left:15%} .char4{top:40%; right:15%}
+  /* Hero/figuras del área celeste */
+  .hero{position:relative; min-height:140px; padding:10px 0}
+  .celeste-icons{position:absolute; inset:0; pointer-events:none; opacity:.18; font-size:2.4rem; display:flex; justify-content:space-around; align-items:center}
+  .celeste-icons span{filter:drop-shadow(0 2px 6px rgba(0,0,0,.15))}
+  .celeste-icons span:nth-child(odd){transform:translateY(-8px)} .celeste-icons span:nth-child(even){transform:translateY(8px)}
 
   /* Contenedor principal */
   .container{max-width:1400px; margin:0 auto; padding:2.5rem 1.25rem 4rem; background:#fff; border-radius:32px 32px 0 0; margin-top:12px; box-shadow:0 -12px 48px rgba(0,0,0,.12)}
@@ -117,25 +126,23 @@
   .footer-social{margin-top:1rem; display:flex; justify-content:center; gap:1rem}
   .footer-social a{color:#fff; font-size:1.6rem; transition:.2s}
   .footer-social a:hover{color:#FDD835; transform:translateY(-3px)}
+  .site-version{margin-top:10px; opacity:.85; font-weight:700}
 
   /* Responsive */
-  @media (max-width:1200px){ .logo-img{height:140px} .header-candy{font-size:2rem} }
-  @media (max-width:992px){ .logo-img{height:120px} .train-part{font-size:4em} }
+  @media (max-width:1200px){ .logo-img{height:140px} .header-candy{font-size:2.5rem} }
+  @media (max-width:992px){ .logo-img{height:120px} .train-part{font-size:4em} .header-candy{font-size:2.2rem} }
   @media (max-width:800px){
     .header-content{grid-template-columns:1fr; text-align:center}
     nav{justify-content:center}
-    .logo-wrap{justify-content:center}
-    .version-chip{margin:0 auto}
-    .header-candy{order:3; font-size:1.7rem}
+    .header-candy{order:3}
   }
   @media (max-width:640px){
     .logo-img{height:88px}
     .chip-btn{padding:.6rem .9rem; font-size:.92rem}
-    .hero-title{font-size:2.2rem}
     .cards-grid{gap:18px}
     .card-image{aspect-ratio:3/2}
-    .floating-character{font-size:2.6em}
     .train-part{font-size:3.2em}
+    .santa-tracker{transform:scale(.9); left:12px; top:-22px}
   }
 </style>
 </head>
@@ -143,13 +150,20 @@
   <!-- Nieve -->
   <div id="snowContainer" class="snow-container"></div>
 
-  <!-- Tren -->
+  <!-- Tren + Santa Tracker -->
   <div class="train-container" aria-hidden="true">
     <div class="train">
       <div class="train-part" style="position:relative">
         🚂 <div class="smoke">💨</div>
       </div>
-      <div class="train-part">🎁</div>
+      <div class="train-part" style="position:relative">
+        🎁
+        <!-- Cronómetro de juguete -->
+        <div class="santa-tracker" title="Santa Tracker">
+          <div id="daysLeft">--</div>
+          <div class="santa-label">Santa</div>
+        </div>
+      </div>
       <div class="train-part">🎄</div>
       <div class="train-part">⭐</div>
     </div>
@@ -158,14 +172,11 @@
   <!-- Header -->
   <header>
     <div class="header-content">
-      <div class="logo-wrap">
-        <a href="#inicio" class="logo-link" aria-label="Inicio">
-          <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
-        </a>
-        <span class="version-chip">v1.4 · 2025</span>
-      </div>
+      <a href="#inicio" class="logo-link" aria-label="Inicio">
+        <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
+      </a>
 
-      <div class="header-candy" aria-label="Lema navideño">
+      <div id="candyTitle" class="header-candy" aria-label="Lema navideño">
         Diversión festiva para toda la familia
       </div>
 
@@ -173,7 +184,6 @@
         <a class="chip-btn btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
         <a class="chip-btn btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip-btn btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
-        <!-- Botón música: solo ícono -->
         <button id="musicBtn" class="chip-btn btn-music" aria-label="Reproducir/Pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
         </button>
@@ -181,15 +191,11 @@
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- Franja celeste con iconos decorativos tenues -->
   <section id="inicio" class="hero" aria-label="Presentación">
-    <h1 class="hero-title">Diversión festiva para toda la familia</h1>
-
-    <!-- Figuras flotantes -->
-    <div class="floating-character char1" role="img" aria-label="Elfo navideño">🧝</div>
-    <div class="floating-character char2" role="img" aria-label="Santa Claus">🎅</div>
-    <div class="floating-character char3" role="img" aria-label="Señora Claus">🤶</div>
-    <div class="floating-character char4" role="img" aria-label="Reno Rudolf">🦌</div>
+    <div class="celeste-icons">
+      <span>🧝</span><span>🎁</span><span>❄️</span><span>🎄</span><span>🔔</span><span>⛄</span><span>✨</span>
+    </div>
   </section>
 
   <!-- Contenido -->
@@ -219,6 +225,7 @@
       <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
       <a href="https://wa.me/50670757592?text=Hola%20👋%2C%20vi%20las%20tarjetas%20de%20Christmas%20Pringle%20y%20me%20gustar%C3%ADa%20comprar.%20%C2%BFMe%20puedes%20ayudar%3F" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
+    <div class="site-version">v1.4 · 2025</div>
   </footer>
 
   <!-- Audio -->
@@ -227,7 +234,7 @@
   </audio>
 
   <script>
-    // Nieve
+    /* ===== Nieve ===== */
     function createSnowflake(){
       const s=document.createElement('div');
       s.className='snowflake';
@@ -241,7 +248,7 @@
     }
     setInterval(createSnowflake,300);
 
-    // Música (icon-only)
+    /* ===== Música ===== */
     const musicBtn=document.getElementById('musicBtn');
     const audio=document.getElementById('christmasMusic');
     let playing=false;
@@ -252,10 +259,25 @@
       }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
     });
 
-    // Formato ₡ CRC
+    /* ===== Candy-cane tilt (parallax) ===== */
+    const candy=document.getElementById('candyTitle');
+    function tilt(e){
+      const r=candy.getBoundingClientRect();
+      const cx=r.left+r.width/2, cy=r.top+r.height/2;
+      const x=(e.clientX||cx)-cx, y=(e.clientY||cy)-cy;
+      const rx=(y/r.height)*-6, ry=(x/r.width)*6; // ángulos suaves
+      candy.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
+    function resetTilt(){ candy.style.transform='rotateX(0) rotateY(0)'; }
+    window.addEventListener('mousemove', tilt);
+    window.addEventListener('mouseleave', resetTilt);
+    window.addEventListener('touchmove', (e)=>{ if(e.touches[0]) tilt(e.touches[0]); }, {passive:true});
+    window.addEventListener('touchend', resetTilt);
+
+    /* ===== Formato ₡ CRC ===== */
     const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
 
-    // Cargar tarjetas
+    /* ===== Cargar tarjetas ===== */
     async function loadCards(){
       const grid=document.getElementById('cardsGrid');
       try{
@@ -295,7 +317,23 @@
       }
     }
 
-    // Smooth scroll
+    /* ===== Santa Tracker (días hasta Navidad) ===== */
+    function daysUntilChristmas(){
+      const now=new Date();
+      const year = (now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
+      const xmas=new Date(year,11,25,0,0,0,0);
+      const diff=xmas-now;
+      const days=Math.max(0, Math.ceil(diff/86400000));
+      return {days, year};
+    }
+    function updateSanta(){
+      const t=daysUntilChristmas();
+      document.getElementById('daysLeft').textContent=t.days;
+    }
+    updateSanta();
+    setInterval(updateSanta, 60*1000);
+
+    /* ===== Smooth scroll ===== */
     document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
       a.addEventListener('click',e=>{
         e.preventDefault();
@@ -304,12 +342,13 @@
       });
     });
 
+    /* ===== Init ===== */
     window.addEventListener('load', ()=>{
       loadCards();
       for(let i=0;i<20;i++){ setTimeout(createSnowflake, i*200); }
     });
 
-    // Skip link accesibilidad
+    /* ===== Skip link accesibilidad ===== */
     document.addEventListener('DOMContentLoaded', ()=>{
       const skip=document.createElement('a');
       skip.href='#tarjetas'; skip.textContent='Saltar al contenido principal';

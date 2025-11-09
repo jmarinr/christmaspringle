@@ -67,10 +67,22 @@ body{
   color:var(--text-dark); overflow-x:hidden;
 }
 
-/* ===== Nieve ===== */
+/* ===== Nieve (más sutil) ===== */
 .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
-.snowflake{position:absolute; top:-10px; color:#fff; font-size:1.3em; opacity:.85; text-shadow:0 0 10px rgba(255,255,255,.8); animation:snowfall linear infinite}
-@keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
+.snowflake{
+  position:absolute; top:-10px; color:#fff;
+  font-size:1em;                /* más pequeña */
+  opacity:.45;                  /* menos visible */
+  text-shadow:0 0 6px rgba(255,255,255,.45);
+  filter:blur(.2px);            /* toque suave */
+  animation:snowfall linear infinite;
+}
+@keyframes snowfall{
+  0%   { transform: translateY(0) translateX(0) rotate(0deg);   opacity:0 }
+  10%  { opacity:.6 }
+  90%  { opacity:.6 }
+  100% { transform: translateY(100vh) translateX(-60px) rotate(-180deg); opacity:0 }
+}
 
 /* ===== Tren hacia la izquierda con Santa Tracker ===== */
 .train-container{--train-duration:42s; position:fixed; bottom:60px; left:100vw; z-index:10000; animation:trainMoveLeft var(--train-duration) linear infinite}
@@ -398,19 +410,22 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
 /* ===== Utiles ===== */
 const qs = sel => document.querySelector(sel);
 
-/* ===== Nieve (lazy) ===== */
+/* ===== Nieve (más sutil) ===== */
 function createSnowflake(){
   const s=document.createElement('div');
   s.className='snowflake';
   s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
-  s.style.left=Math.random()*100+'%';
-  s.style.animationDuration=(Math.random()*3+4)+'s';
-  s.style.opacity=Math.random()*.6+.4;
-  s.style.fontSize=(Math.random()*1+1)+'em';
+  s.style.left = Math.random()*100 + '%';
+  s.style.animationDuration = (Math.random()*4 + 8) + 's';  // 8–12s
+  s.style.opacity = (Math.random()*0.25 + 0.35).toFixed(2); // 0.35–0.60
+  s.style.fontSize = (Math.random()*0.4 + 0.8) + 'em';      // 0.8–1.2em
   document.getElementById('snowContainer').appendChild(s);
-  setTimeout(()=>s.remove(),7000);
+  setTimeout(()=>s.remove(), 13000);
 }
-function startSnow(){ for(let i=0;i<18;i++) setTimeout(createSnowflake, i*180); return setInterval(createSnowflake, 300); }
+function startSnow(){
+  for(let i=0;i<10;i++) setTimeout(createSnowflake, i*220);
+  return setInterval(createSnowflake, 650);
+}
 let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 900);
 
 /* ===== Música ===== */

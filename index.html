@@ -67,22 +67,10 @@ body{
   color:var(--text-dark); overflow-x:hidden;
 }
 
-/* ===== Nieve (más sutil) ===== */
+/* ===== Nieve ===== */
 .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
-.snowflake{
-  position:absolute; top:-10px; color:#fff;
-  font-size:1em;                /* más pequeña */
-  opacity:.45;                  /* menos visible */
-  text-shadow:0 0 6px rgba(255,255,255,.45);
-  filter:blur(.2px);            /* toque suave */
-  animation:snowfall linear infinite;
-}
-@keyframes snowfall{
-  0%   { transform: translateY(0) translateX(0) rotate(0deg);   opacity:0 }
-  10%  { opacity:.6 }
-  90%  { opacity:.6 }
-  100% { transform: translateY(100vh) translateX(-60px) rotate(-180deg); opacity:0 }
-}
+.snowflake{position:absolute; top:-10px; color:#fff; font-size:1.1em; opacity:.75; text-shadow:0 0 8px rgba(255,255,255,.7); animation:snowfall linear infinite}
+@keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
 
 /* ===== Tren hacia la izquierda con Santa Tracker ===== */
 .train-container{--train-duration:42s; position:fixed; bottom:60px; left:100vw; z-index:10000; animation:trainMoveLeft var(--train-duration) linear infinite}
@@ -151,6 +139,8 @@ nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content
 .btn-reviews{background:linear-gradient(135deg,var(--chip-blue-from),var(--chip-blue-to))}
 .btn-music{background:linear-gradient(135deg,var(--chip-red-from),var(--chip-red-to))}
 .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
+/* Botón Jugar */
+.btn-play{background:linear-gradient(135deg,#00BCD4,#26C6DA); color:#08323a}
 
 /* Switch luces (modo) */
 .switch{display:inline-flex; align-items:center; gap:.5rem; color:var(--text-dark)}
@@ -293,6 +283,9 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
         <a class="chip btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
         <a class="chip btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
+        <a class="chip btn-play" href="https://santatracker.google.com" target="_blank" rel="noopener">
+          <i class="fa-solid fa-gamepad"></i> Jugar
+        </a>
         <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
         </button>
@@ -410,23 +403,20 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
 /* ===== Utiles ===== */
 const qs = sel => document.querySelector(sel);
 
-/* ===== Nieve (más sutil) ===== */
+/* ===== Nieve (sutil) ===== */
 function createSnowflake(){
   const s=document.createElement('div');
   s.className='snowflake';
   s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
-  s.style.left = Math.random()*100 + '%';
-  s.style.animationDuration = (Math.random()*4 + 8) + 's';  // 8–12s
-  s.style.opacity = (Math.random()*0.25 + 0.35).toFixed(2); // 0.35–0.60
-  s.style.fontSize = (Math.random()*0.4 + 0.8) + 'em';      // 0.8–1.2em
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDuration=(Math.random()*3+4)+'s';
+  s.style.opacity=Math.random()*.55+.45;
+  s.style.fontSize=(Math.random()*.8+0.9)+'em';
   document.getElementById('snowContainer').appendChild(s);
-  setTimeout(()=>s.remove(), 13000);
+  setTimeout(()=>s.remove(),7000);
 }
-function startSnow(){
-  for(let i=0;i<10;i++) setTimeout(createSnowflake, i*220);
-  return setInterval(createSnowflake, 650);
-}
-let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 900);
+function startSnow(){ for(let i=0;i<12;i++) setTimeout(createSnowflake, i*200); return setInterval(createSnowflake, 450); }
+let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 700);
 
 /* ===== Música ===== */
 const musicBtn=qs('#musicBtn'); const audio=qs('#christmasMusic');
@@ -471,7 +461,7 @@ function setMode(on){
   toggle.classList.toggle('on', on);
   toggle.setAttribute('aria-checked', on ? 'true' : 'false');
   body.classList.toggle('dark', on);
-  // Pequeño parpadeo de bombillos al encender
+  // Parpadeo suave de bombillos
   const bulbs = document.querySelectorAll('.bulb');
   bulbs.forEach((b,i)=>{
     b.style.opacity = on ? '1' : '.55';

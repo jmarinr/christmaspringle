@@ -1,10 +1,10 @@
 [
   {
     "number": 1,
-    "title": "Vintage Memory",
-    "description": "Esta tarjeta nos recuerda aquella hermosa dinÃÂÃÂ¡mica de compartir tarjetas con familiares y amigos durante la dÃÂÃÂ©cada de los 80s.\n\nAcuarela,  sobre papel 100% algodÃÂÃÂ³n.  Una secciÃÂÃÂ³n de reproducciÃÂÃÂ³n\n\nTamaÃÂÃÂ±o:  .",
-    "price": 2850,
+    "title": "1",
+    "description": "1",
+    "price": 1,
     "image": "1.png",
-    "image_inside": ""
+    "image_inside": "https://raw.githubusercontent.com/jmarinr/christmaspringle/main/images/cards/card-1-inside.jpg"
   }
 ]

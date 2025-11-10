@@ -3,623 +3,732 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Administración · Christmas Pringle</title>
+<title>Christmas Pringle · Admin</title>
 <link rel="icon" type="image/png" href="christmas-pringle-logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 :root{
-  --bg:#0f172a; --panel:#111827; --panel-2:#0b1220; --text:#e5e7eb; --muted:#9ca3af;
-  --acc:#22c55e; --danger:#ef4444; --warn:#f59e0b; --info:#38bdf8;
-  --gold:#fbbf24; --border:#1f2937; --chip:#1f2937;
-  --green-grad:linear-gradient(135deg,#00C853,#69F0AE);
+  --bg:#0f1720; --panel:#111a27; --panel-2:#0b1320;
+  --text:#e8eef7; --muted:#9fb0c7;
+  --green:#22c55e; --red:#ef4444; --gold:#ffd54f; --blue:#38bdf8; --violet:#c084fc;
+  --border:rgba(255,255,255,.08);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  font-family:'Google Sans',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
-  background:linear-gradient(180deg,#0b1220,#0e1526 60%,#0b1220);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  background: radial-gradient(1200px 800px at 10% -10%, #10233a 0 30%, #0b1829 60%, #08111f 100%);
   color:var(--text);
 }
 
 /* Topbar */
-.topbar{position:sticky; top:0; z-index:10; background:#0c1424cc; backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);}
-.topbar-inner{max-width:1200px; margin:0 auto; padding:12px 16px; display:flex; gap:12px; align-items:center; justify-content:space-between}
-.brand{display:flex; align-items:center; gap:10px}
-.brand img{height:36px; width:auto; border-radius:8px}
-.badge{background:#122038; color:#d1d5db; padding:6px 10px; border-radius:999px; font-size:.85rem; border:1px solid var(--border)}
-.actions{display:flex; gap:8px}
-.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem; border-radius:10px; border:1px solid var(--border); background:#0f1a2b; color:#e5e7eb; cursor:pointer; transition:.2s}
-.btn:hover{filter:brightness(1.08)}
-.btn-green{background:#0f2a1a; border-color:#174a2a}
-.btn-red{background:#2a0f13; border-color:#4a1720}
-.btn-gold{background:#2a230f; border-color:#4a3a17}
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(7,12,22,.85); backdrop-filter: blur(14px);
+  border-bottom:1px solid var(--border);
+  box-shadow: 0 2px 14px rgba(0,0,0,.25);
+}
+.topbar .inner{
+  max-width:1200px; margin:0 auto; padding:14px 16px;
+  display:flex; align-items:center; gap:12px; justify-content:space-between;
+}
+.brand{display:flex; align-items:center; gap:12px; font-weight:800}
+.brand img{height:38px; width:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.tag{font-size:.82rem; padding:.25rem .55rem; border-radius:999px; background:#12243a; color:#9ecbff; border:1px solid var(--border)}
+.pat-chip{display:flex; align-items:center; gap:8px; background:var(--panel); border:1px solid var(--border); padding:8px 10px; border-radius:999px; box-shadow:var(--shadow)}
+.pat-chip code{letter-spacing:.2px}
+.icon-btn{background:#12243a; color:#cfe6ff; border:1px solid var(--border); border-radius:10px; padding:8px 10px; cursor:pointer}
+.icon-btn:hover{filter:brightness(1.08)}
+.danger{background:#2a1316; color:#ffb0b8}
 
 /* Layout */
-.wrap{max-width:1200px; margin:20px auto; padding:0 16px}
-.panel{background:var(--panel); border:1px solid var(--border); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.panel-header{display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom:1px solid var(--border)}
-.panel-body{padding:16px}
+.container{max-width:1200px; margin:18px auto; padding:0 16px; display:grid; grid-template-columns: 360px 1fr; gap:18px}
+@media (max-width: 980px){ .container{grid-template-columns:1fr} }
 
-/* Login */
-.login{max-width:420px; margin:10vh auto; padding:24px; background:var(--panel); border:1px solid var(--border); border-radius:16px}
-.login h1{font-size:1.4rem; margin-bottom:12px}
-.field{display:grid; gap:6px; margin-bottom:12px}
-label{color:#cbd5e1; font-weight:600}
-input[type="text"], input[type="password"], input[type="number"], textarea{
-  background:#0b1220; border:1px solid #1f2937; color:#e5e7eb; border-radius:10px; padding:.75rem .85rem;
+.card{
+  background:linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+  border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow);
 }
-textarea{min-height:100px; resize:vertical}
-.helper{font-size:.85rem; color:#94a3b8}
 
-/* Grid formulario + lista */
-.grid{display:grid; grid-template-columns:1.1fr .9fr; gap:18px}
-@media (max-width:980px){ .grid{grid-template-columns:1fr} }
+/* Formulario */
+.form{padding:16px}
+.form h2{font-size:1.2rem; margin-bottom:10px}
+.row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+.row-3{display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px}
+.row-1{display:grid; grid-template-columns: 1fr; gap:10px}
+label{font-size:.88rem; opacity:.9}
+input[type="text"], input[type="number"], textarea{
+  width:100%; padding:10px 12px; color:var(--text);
+  background: #0b1422; border:1px solid var(--border); border-radius:10px; outline:none;
+}
+textarea{min-height:88px; resize:vertical}
+.small{font-size:.82rem; color:var(--muted)}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#17344f; color:#bfe0ff; border:1px solid var(--border);
+  padding:10px 14px; border-radius:10px; cursor:pointer; text-decoration:none;
+}
+.btn.primary{background:#123a28; color:#9bf7c2}
+.btn.warn{background:#3a2a12; color:#ffd79b}
+.btn:hover{filter:brightness(1.08)}
 
-/* Uploader doble */
-.uploader{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-.up-card{background:var(--panel-2); border:1px solid var(--border); border-radius:12px; padding:12px}
-.up-card h4{margin-bottom:8px}
-.drop{position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:8px; min-height:180px; border:2px dashed #334155; border-radius:12px; padding:10px; cursor:pointer; text-align:center}
-.drop input{position:absolute; inset:0; opacity:0; cursor:pointer}
-.preview{width:100%; aspect-ratio:4/3; border-radius:8px; overflow:hidden; background:#0b1220; display:flex; align-items:center; justify-content:center}
+/* Uploader */
+.uploader{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+.uploader-item .drop{
+  border:1px dashed rgba(255,255,255,.2); border-radius:12px; padding:10px; background:#0b1422;
+}
+.preview{
+  width:100%; aspect-ratio:4/3; background: repeating-linear-gradient(45deg,#0f1b2b 0 10px,#0d1625 10px 20px);
+  border-radius:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;
+}
 .preview img{width:100%; height:100%; object-fit:contain}
-.meta{font-size:.82rem; color:#94a3b8}
+.meta{margin-top:8px; color:var(--muted); font-size:.85rem}
 
 /* Lista tarjetas */
-.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px}
-.card{background:#0b1220; border:1px solid var(--border); border-radius:14px; overflow:hidden; display:flex; flex-direction:column}
-.card .thumbs{display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#050a14}
-.card .thumbs img{width:100%; height:140px; object-fit:cover}
-.card .content{padding:12px; display:grid; gap:6px}
-.tag{display:inline-flex; align-items:center; gap:.4rem; font-weight:700; font-size:.85rem; background:#172036; padding:.35rem .6rem; border-radius:999px}
-.card .row{display:flex; align-items:center; justify-content:space-between; gap:8px}
-.card .title{font-weight:700}
-.card .actions{margin-top:6px; display:flex; gap:8px}
-.small{font-size:.9rem}
+.list{padding:16px}
+.tools{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px}
+.grid{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.item{
+  border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#0b1422;
+}
+.thumb-row{display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:6px; background:#0d1728}
+.thumb-row img{width:100%; aspect-ratio:4/3; object-fit:cover; background:#09121f; border-radius:8px}
+.item .body{padding:10px 12px}
+.item h4{font-size:1rem}
+.badges{display:flex; gap:8px; align-items:center; margin:6px 0}
+.badge{font-size:.78rem; padding:.2rem .5rem; border-radius:999px; background:#10233a; color:#9ecbff; border:1px solid var(--border)}
+.row-actions{display:flex; gap:8px; margin-top:8px}
 
-/* Toasts */
-.toast{position:fixed; right:16px; bottom:16px; display:grid; gap:8px; z-index:99}
-.toast .t{background:#0f1a2b; border:1px solid var(--border); color:#e5e7eb; padding:.7rem .9rem; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.35)}
-.toast .ok{border-left:4px solid #22c55e}
-.toast .err{border-left:4px solid #ef4444}
-.toast .inf{border-left:4px solid #38bdf8}
+/* Toast */
+.toast{
+  position:fixed; right:16px; bottom:16px; z-index:60;
+  background:#0b1d31; color:#d9ecff; border:1px solid var(--border); box-shadow:var(--shadow);
+  padding:12px 14px; border-radius:12px; display:none; min-width:220px;
+}
+.toast.show{display:block; animation:slideUp .25s ease-out}
+@keyframes slideUp{from{transform:translateY(10px); opacity:.2}to{transform:translateY(0); opacity:1}}
 
-/* Modal confirm */
-.modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:50}
-.modal.open{display:flex}
-.modal .box{background:#0f1a2b; border:1px solid var(--border); color:#e5e7eb; width:min(520px,92vw); border-radius:14px; padding:16px}
+/* Modal */
+.modal{position:fixed; inset:0; background:rgba(2,6,14,.75); display:none; align-items:center; justify-content:center; z-index:55}
+.modal.show{display:flex}
+.modal .box{background:#0b1422; border:1px solid var(--border); border-radius:12px; padding:16px; width:min(480px,92vw); box-shadow:var(--shadow)}
 .modal .box h3{margin-bottom:8px}
-.modal .box .row{display:flex; gap:10px; justify-content:flex-end; margin-top:10px}
-.code{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.9rem; color:#93c5fd}
+.modal .box .actions{display:flex; gap:8px; justify-content:flex-end; margin-top:12px}
+
+/* Spinner navideño */
+.spinner{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:80;
+  background:rgba(2,6,14,.55); backdrop-filter: blur(2px);
+}
+.spinner.show{display:flex}
+.tree{
+  width:94px; height:94px; position:relative;
+  animation:spin 1.1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tree:before{
+  content:"🎄"; font-size:70px; position:absolute; inset:0; display:grid; place-items:center; filter:drop-shadow(0 6px 16px rgba(0,0,0,.5));
+}
+.tree:after{
+  content:""; position:absolute; left:50%; top:0; transform:translateX(-50%);
+  width:10px; height:10px; border-radius:50%; background:#ffd54f; box-shadow:
+    0 16px 0 #ff5858, 0 32px 0 #31d67b, 0 48px 0 #3bb6ff, 0 64px 0 #ffd15a;
+}
+
+/* Login */
+.login-wrap{
+  max-width:420px; margin:8vh auto; padding:20px; border:1px solid var(--border);
+  border-radius:16px; background:linear-gradient(180deg,#101b2b 0%, #0a1422 100%); box-shadow:var(--shadow);
+}
+.login-wrap h1{font-size:1.35rem; margin-bottom:8px}
+.login-wrap .row-1{margin-top:10px}
+.helper{font-size:.83rem; color:var(--muted); margin-top:6px}
+.toggle-eye{position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; opacity:.8}
+
+/* Chips estados */
+.state-ok{color:#86efac}
+.state-bad{color:#fda4af}
 </style>
 </head>
 <body>
 
 <!-- Topbar -->
-<div class="topbar">
-  <div class="topbar-inner">
+<div class="topbar" id="topbar" style="display:none">
+  <div class="inner">
     <div class="brand">
       <img src="christmas-pringle-logo.png" alt="Logo">
-      <span class="badge">Admin · Christmas Pringle</span>
-    </div>
-    <div class="actions">
-      <button id="copyPatBtn" class="btn"><i class="fa-regular fa-copy"></i> Copiar PAT</button>
-      <button id="logoutBtn" class="btn btn-red"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
-    </div>
-  </div>
-</div>
-
-<div class="wrap">
-  <!-- Login -->
-  <div id="loginBox" class="login" style="display:none">
-    <h1>Iniciar sesión</h1>
-    <div class="field">
-      <label for="user">Usuario</label>
-      <input id="user" type="text" autocomplete="username" placeholder="Usuario" value="">
-    </div>
-    <div class="field">
-      <label for="pass">Contraseña</label>
-      <input id="pass" type="password" autocomplete="current-password" placeholder="Contraseña">
-    </div>
-    <div class="field">
-      <label for="pat">Token de GitHub (PAT)</label>
-      <input id="pat" type="text" placeholder="ghp_..." />
-      <div class="helper">Se guarda de forma local segura como <code>cp_pat</code>. Permisos: <b>repo</b> (contenido).</div>
-    </div>
-    <button id="loginBtn" class="btn btn-green" style="width:100%;justify-content:center"><i class="fa-solid fa-unlock"></i> Entrar</button>
-  </div>
-
-  <!-- Panel -->
-  <div id="adminPanel" class="panel" style="display:none">
-    <div class="panel-header">
       <div>
-        <strong>Nueva / Editar Tarjeta</strong>
-        <div class="helper">Sube <b>dos fotos</b> por tarjeta: <u>frente</u> y <u>adentro</u>. Se guardan en GitHub y se actualiza <code>cards.json</code>.</div>
+        <div style="font-weight:900">Christmas Pringle · Admin</div>
+        <div class="tag">cards.json · main</div>
       </div>
-      <div id="patChip" class="badge">PAT: <span id="patShort">—</span></div>
     </div>
-
-    <div class="panel-body">
-      <div class="grid">
-        <!-- Formulario -->
-        <div>
-          <div class="field">
-            <label for="number">Número (único)</label>
-            <input id="number" type="number" min="1" step="1" placeholder="Ej. 1">
-          </div>
-          <div class="field">
-            <label for="title">Título</label>
-            <input id="title" type="text" placeholder="Ej. Copo de nieve en acuarela">
-          </div>
-          <div class="field">
-            <label for="desc">Descripción</label>
-            <textarea id="desc" placeholder="Detalle breve de la tarjeta"></textarea>
-          </div>
-          <div class="field">
-            <label for="price">Precio (₡ colones)</label>
-            <input id="price" type="number" min="0" step="1" placeholder="Ej. 3500">
-          </div>
-
-          <div class="uploader">
-            <!-- Frente -->
-            <div class="up-card">
-              <h4>Foto Frente</h4>
-              <div class="drop" id="dropFront">
-                <input type="file" id="fileFront" accept="image/*">
-                <div class="preview" id="prevFront"><span class="meta">Arrastra o haz click para cargar</span></div>
-                <div class="meta small" id="metaFront">Sin archivo</div>
-              </div>
-            </div>
-            <!-- Adentro -->
-            <div class="up-card">
-              <h4>Foto Adentro</h4>
-              <div class="drop" id="dropInside">
-                <input type="file" id="fileInside" accept="image/*">
-                <div class="preview" id="prevInside"><span class="meta">Arrastra o haz click para cargar</span></div>
-                <div class="meta small" id="metaInside">Sin archivo</div>
-              </div>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:10px; margin-top:14px">
-            <button id="saveBtn" class="btn btn-green"><i class="fa-solid fa-floppy-disk"></i> Guardar / Actualizar</button>
-            <button id="resetBtn" class="btn"><i class="fa-solid fa-rotate-left"></i> Limpiar</button>
-          </div>
-        </div>
-
-        <!-- Lista -->
-        <div>
-          <div class="row" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px">
-            <strong>Tarjetas guardadas</strong>
-            <button id="refreshBtn" class="btn"><i class="fa-solid fa-rotate"></i> Actualizar</button>
-          </div>
-          <div id="cardsList" class="cards"></div>
-        </div>
+    <div style="display:flex; align-items:center; gap:8px">
+      <div class="pat-chip">
+        <i class="fa-solid fa-key"></i>
+        <code id="patMasked">••••••••••</code>
+        <button class="icon-btn" id="copyPat" title="Copiar PAT"><i class="fa-regular fa-copy"></i></button>
       </div>
+      <button class="icon-btn danger" id="logout"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
     </div>
   </div>
 </div>
 
-<!-- Modal eliminar -->
-<div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="Confirmar acción">
+<!-- Login -->
+<section id="loginView" class="login-wrap">
+  <h1>Acceso a administración</h1>
+  <p class="helper">Ingresa con tu usuario y PAT de GitHub para publicar tarjetas.</p>
+
+  <div class="row-1" style="position:relative">
+    <label>Usuario</label>
+    <input type="text" id="user" placeholder="Usuario" autocomplete="username">
+  </div>
+  <div class="row-1" style="position:relative">
+    <label>Contraseña</label>
+    <input type="password" id="pass" placeholder="Contraseña" autocomplete="current-password">
+    <span class="toggle-eye" id="togglePass"><i class="fa-regular fa-eye"></i></span>
+  </div>
+
+  <div class="row-1" style="margin-top:6px">
+    <label>GitHub Personal Access Token (PAT)</label>
+    <input type="text" id="pat" placeholder="ghp_xxx..." autocomplete="off">
+    <p class="helper">Se guarda localmente (clave: <code>cp_pat</code>). Necesita permiso <b>repo</b>.</p>
+  </div>
+
+  <div class="row-1" style="margin-top:10px">
+    <button class="btn primary" id="loginBtn"><i class="fa-solid fa-unlock-keyhole"></i> Ingresar</button>
+  </div>
+</section>
+
+<!-- App -->
+<main id="app" style="display:none">
+  <section class="container">
+    <!-- Formulario -->
+    <div class="card form">
+      <h2>Crear / Editar tarjeta</h2>
+      <div class="row">
+        <div>
+          <label>Número</label>
+          <input type="number" id="number" min="1" placeholder="Ej: 1">
+        </div>
+        <div>
+          <label>Precio (₡ CRC)</label>
+          <input type="number" id="price" min="0" step="1" placeholder="Ej: 3500">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Título</label>
+          <input type="text" id="title" placeholder="Ej: Árbol de Navidad">
+        </div>
+        <div>
+          <label>Descripción</label>
+          <input type="text" id="desc" placeholder="Breve descripción">
+        </div>
+      </div>
+
+      <div class="uploader" style="margin-top:6px">
+        <!-- Frente -->
+        <div class="uploader-item">
+          <label style="font-weight:700;display:block;margin-bottom:.35rem">Foto frente</label>
+          <div class="drop" id="dropFront">
+            <input type="file" id="fileFront" accept="image/*">
+            <div class="preview" id="prevFront">
+              <span class="meta">Arrastra o haz click para cargar</span>
+            </div>
+            <div class="meta small" id="metaFront">Sin archivo</div>
+          </div>
+        </div>
+
+        <!-- Adentro (NUEVO) -->
+        <div class="uploader-item">
+          <label style="font-weight:700;display:block;margin-bottom:.35rem">Foto adentro</label>
+          <div class="drop" id="dropInside">
+            <input type="file" id="fileInside" accept="image/*">
+            <div class="preview" id="prevInside">
+              <span class="meta">Arrastra o haz click para cargar</span>
+            </div>
+            <div class="meta small" id="metaInside">Sin archivo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tools" style="margin-top:10px">
+        <button class="btn primary" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Guardar/Actualizar</button>
+        <button class="btn warn" id="clearBtn"><i class="fa-regular fa-trash-can"></i> Limpiar</button>
+      </div>
+
+      <div class="small" id="statusLine">Listo.</div>
+    </div>
+
+    <!-- Lista -->
+    <div class="card list">
+      <div class="tools">
+        <button class="btn" id="reloadBtn"><i class="fa-solid fa-rotate-right"></i> Recargar</button>
+        <span class="small">Estado: <span id="syncState" class="state-ok">sin cambios</span></span>
+      </div>
+      <div id="grid" class="grid"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Modal confirm -->
+<div class="modal" id="confirmModal" aria-hidden="true">
   <div class="box">
     <h3>¿Eliminar tarjeta?</h3>
-    <div class="helper">Esta acción eliminará la tarjeta del <code>cards.json</code> y también intentará borrar ambas imágenes (frente y adentro) del repositorio.</div>
-    <div id="modalInfo" class="code" style="margin-top:8px"></div>
-    <div class="row">
-      <button id="cancelDel" class="btn">Cancelar</button>
-      <button id="confirmDel" class="btn btn-red"><i class="fa-solid fa-trash"></i> Eliminar</button>
+    <p>Esto borrará el registro y sus imágenes (si están en el repo).</p>
+    <div class="actions">
+      <button class="btn" id="cancelDel">Cancelar</button>
+      <button class="btn danger" id="acceptDel"><i class="fa-solid fa-trash"></i> Eliminar</button>
     </div>
   </div>
 </div>
 
-<!-- Toasts -->
-<div id="toast" class="toast" aria-live="polite"></div>
+<!-- Spinner -->
+<div class="spinner" id="spinner">
+  <div class="tree"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span id="toastMsg">Listo</span></div>
 
 <script>
-/* ====== Config GitHub ====== */
+/* =========================
+   CONFIG
+========================= */
 const GH = {
   owner: 'jmarinr',
-  repo: 'christmaspringle',
-  branch: 'main',
-  cardsJsonPath: 'cards.json',
-  imagesDir: 'images/cards'
+  repo:  'christmaspringle',
+  branch:'main',
+  cardsPath: 'cards.json',
+  imagesDir: 'n.png'.includes('/') ? 'images/cards' : 'images/cards' // usa tu carpeta real si difiere
 };
 
-/* ====== Utils ====== */
-const $ = (s, p=document) => p.querySelector(s);
-const $$ = (s, p=document) => Array.from(p.querySelectorAll(s));
-const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
-const fmtCRC = n => '₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
-
-function toast(msg, type='inf'){
-  const box = $('#toast');
-  const t = document.createElement('div');
-  t.className = 't '+(type==='ok'?'ok':type==='err'?'err':'inf');
-  t.textContent = msg;
-  box.appendChild(t);
-  setTimeout(()=>{ t.style.opacity='.0'; t.style.transform='translateY(6px)';}, 2500);
-  setTimeout(()=>{ t.remove(); }, 3000);
-}
-
-function shortPat(token){
-  if(!token) return '—';
-  const head = token.slice(0,4);
-  const tail = token.slice(-4);
-  return head+'…'+tail;
-}
-
+/* =========================
+   UTILIDADES
+========================= */
+const $ = sel => document.querySelector(sel);
+function show(el, v){ el.style.display = v ? '' : 'none'; }
+function toast(msg){ const t=$('#toast'), m=$('#toastMsg'); m.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2000); }
+function spin(v){ $('#spinner').classList.toggle('show', v); }
 function fileExt(file){
   const name = (file?.name||'').toLowerCase();
-  const fromName = name.includes('.') ? name.split('.').pop() : '';
-  const fromType = (file?.type||'').split('/').pop();
-  const ext = fromName || fromType || 'jpg';
-  return ext.replace(/[^a-z0-9]/g,'') || 'jpg';
+  const ext = name.includes('.') ? name.split('.').pop() : (file?.type||'image/jpeg').split('/').pop();
+  return (ext||'jpg').replace(/[^a-z0-9]/g,'') || 'jpg';
 }
-
 function readAsDataURL(file){
-  return new Promise((res,rej)=>{
-    const fr=new FileReader();
-    fr.onload=()=>res(fr.result);
-    fr.onerror=rej;
-    fr.readAsDataURL(file);
-  });
+  return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); });
+}
+function dataURLtoBase64(dataURL){ return dataURL.split(',')[1]; }
+function maskPat(p){ if(!p) return '—'; return p.length>10 ? p.slice(0,4)+'••••••'+p.slice(-3) : '••••••••'; }
+
+/* =========================
+   AUTH
+========================= */
+const LOGIN = { user:'patripringle', pass:'SoyPatri1978' };
+function isLogged(){ return localStorage.getItem('cp_logged')==='1'; }
+function setLogged(v){ localStorage.setItem('cp_logged', v?'1':'0'); }
+function getPAT(){ return localStorage.getItem('cp_pat')||''; }
+function setPAT(p){ localStorage.setItem('cp_pat', p||''); updatePatChip(); }
+
+function updatePatChip(){
+  $('#patMasked').textContent = maskPat( getPAT() );
 }
 
-function dataURLtoBase64(dataURL){
-  return dataURL.split(',')[1]; // quitar "data:image/...;base64,"
-}
-
-/* ====== Estado sesión ====== */
-const loginBox = $('#loginBox');
-const adminPanel = $('#adminPanel');
-const patChip = $('#patChip');
-const patShort = $('#patShort');
-
-function showLogin(){ loginBox.style.display='block'; adminPanel.style.display='none'; }
-function showAdmin(){ loginBox.style.display='none'; adminPanel.style.display='block'; }
-
-function checkSession(){
-  const ok = localStorage.getItem('cp_logged')==='1';
-  const pat = localStorage.getItem('cp_pat')||'';
-  if(ok){ showAdmin(); patShort.textContent = shortPat(pat); }
-  else { showLogin(); }
-}
-checkSession();
-
-/* ====== Login ====== */
-$('#loginBtn')?.addEventListener('click', ()=>{
-  const u = $('#user').value.trim();
-  const p = $('#pass').value.trim();
-  const t = $('#pat').value.trim();
-  if(u!=='patripringle' || p!=='SoyPatri1978'){ toast('Usuario o contraseña incorrectos','err'); return; }
-  if(!t){ toast('Ingresa tu token de GitHub (PAT)','err'); return; }
-  localStorage.setItem('cp_logged','1');
-  localStorage.setItem('cp_pat', t);
-  toast('Bienvenida, Patri ✨','ok');
-  showAdmin();
-  patShort.textContent = shortPat(t);
-});
-
-$('#logoutBtn').addEventListener('click', ()=>{
-  localStorage.removeItem('cp_logged');
-  // Mantengo PAT para no volver a pegarlo cada vez; si prefieres borrarlo, descomenta:
-  // localStorage.removeItem('cp_pat');
-  toast('Sesión cerrada','ok');
-  showLogin();
-});
-
-$('#copyPatBtn').addEventListener('click', async ()=>{
-  const pat = localStorage.getItem('cp_pat')||'';
-  if(!pat){ toast('No hay PAT guardado','err'); return; }
-  await navigator.clipboard.writeText(pat);
-  toast('PAT copiado','ok');
-});
-
-/* ====== GitHub API wrappers ====== */
-function ghHeaders(){
-  const pat = localStorage.getItem('cp_pat')||'';
-  return { 'Authorization':'Bearer '+pat, 'Accept':'application/vnd.github+json' };
-}
-
-async function ghGet(path){
-  const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${encodeURIComponent(path)}?ref=${GH.branch}`;
-  const r = await fetch(url, {headers: ghHeaders()});
-  if(r.status===404) return null;
-  if(!r.ok) throw new Error('GET '+path+' -> '+r.status);
-  return r.json();
-}
-
-async function ghPut(path, base64Content, message, sha){
-  const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${encodeURIComponent(path)}`;
-  const body = {
-    message, content: base64Content, branch: GH.branch
+/* =========================
+   GITHUB API
+========================= */
+async function ghReq(path, method='GET', body=null, etag=null){
+  const token = getPAT();
+  const headers = {
+    'Accept': 'application/vnd.github+json',
+    'Authorization': `Bearer ${token}`
   };
-  if(sha) body.sha = sha;
-  const r = await fetch(url, {method:'PUT', headers: {...ghHeaders(),'Content-Type':'application/json'}, body: JSON.stringify(body)});
-  if(!r.ok) throw new Error('PUT '+path+' -> '+r.status+' '+(await r.text()));
-  return r.json();
-}
+  if(body) headers['Content-Type'] = 'application/json';
+  if(etag) headers['If-None-Match'] = etag;
 
-async function ghDelete(path, message, sha){
   const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${encodeURIComponent(path)}`;
+  const res = await fetch(url, { method, headers, body: body?JSON.stringify(body):undefined });
+  return res;
+}
+async function ghGet(path, etag=null){
+  const res = await ghReq(path, 'GET', null, etag);
+  if(res.status===304) return { notModified:true, etag: res.headers.get('ETag') };
+  if(!res.ok) return null;
+  const json = await res.json();
+  json.etag = res.headers.get('ETag');
+  return json;
+}
+async function ghPut(path, b64, message, sha){
+  const body = { message, content:b64, branch: GH.branch };
+  if(sha) body.sha = sha;
+  const res = await ghReq(path, 'PUT', body);
+  if(!res.ok) throw new Error('GH PUT '+res.status);
+  return res.json();
+}
+async function ghDelete(path, message, sha){
   const body = { message, sha, branch: GH.branch };
-  const r = await fetch(url, {method:'DELETE', headers: {...ghHeaders(),'Content-Type':'application/json'}, body: JSON.stringify(body)});
-  if(!r.ok) throw new Error('DELETE '+path+' -> '+r.status+' '+(await r.text()));
-  return r.json();
+  const res = await ghReq(path, 'DELETE', body);
+  if(!res.ok) throw new Error('GH DELETE '+res.status);
+  return res.json();
 }
 
-/* ====== Cargar y renderizar cards.json ====== */
-let CARDS = []; // estado en memoria
-let cardsJsonSha = null;
+/* =========================
+   ESTADO / SYNC
+========================= */
+let CARDS = [];
+let CARDS_SHA = null;
+let CARDS_ETAG = null;
 
-async function loadCardsJson(){
-  const f = await ghGet(GH.cardsJsonPath);
-  if(!f){ CARDS = []; cardsJsonSha = null; return; }
-  cardsJsonSha = f.sha;
-  const content = atob(f.content.replace(/\n/g,''));
+const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('cp-admin-sync') : null;
+bc?.addEventListener('message', ev=>{
+  if(ev?.data==='refresh'){ loadCards(true/*silent*/); }
+});
+
+async function loadCards(silent=false){
   try{
-    const raw = JSON.parse(content);
-    CARDS = Array.isArray(raw) ? raw : [];
+    if(!silent) spin(true);
+    const meta = await ghGet(GH.cardsPath, CARDS_ETAG);
+    if(meta?.notModified){
+      $('#syncState').textContent = 'sin cambios (304)';
+      $('#syncState').className = 'state-ok';
+      return;
+    }
+    if(!meta){
+      // podría no existir cards.json aún
+      CARDS = [];
+      CARDS_SHA = null;
+      CARDS_ETAG = null;
+      renderList();
+      return;
+    }
+    const content = atob(meta.content || '');
+    CARDS = JSON.parse(content || '[]');
+    CARDS_SHA = meta.sha || null;
+    CARDS_ETAG = meta.etag || null;
+    renderList();
+    $('#syncState').textContent = 'actualizado';
+    $('#syncState').className = 'state-ok';
   }catch(e){
-    CARDS = [];
+    console.error(e);
+    $('#syncState').textContent = 'error';
+    $('#syncState').className = 'state-bad';
+  }finally{
+    if(!silent) spin(false);
   }
-  // Back-compat: asegurar campos
-  CARDS = CARDS.map(c=>({
-    number: c.number,
-    title: c.title || '',
-    description: c.description || '',
-    price: c.price ?? 0,
-    image: c.image || '',               // frente (compat index actual)
-    image_inside: c.image_inside || ''  // NUEVO
-  })).sort((a,b)=> (a.number||0)-(b.number||0));
 }
 
-function renderCards(){
-  const list = $('#cardsList');
-  if(!CARDS.length){
-    list.innerHTML = `<div class="helper">No hay tarjetas aún.</div>`;
+// Polling por ETag
+setInterval(async ()=>{
+  if(!isLogged()) return;
+  try{
+    const head = await ghGet(GH.cardsPath, CARDS_ETAG);
+    if(head && !head.notModified){
+      // hubo cambio: recargar por completo
+      await loadCards(true);
+    }
+  }catch(e){}
+}, 8000);
+
+/* =========================
+   RENDER LISTA
+========================= */
+function renderList(){
+  const grid = $('#grid');
+  if(!Array.isArray(CARDS) || !CARDS.length){
+    grid.innerHTML = `<div class="small" style="opacity:.8">No hay tarjetas aún.</div>`;
     return;
   }
-  list.innerHTML = CARDS.map(c=>{
-    const f1 = c.image || '';
-    const f2 = c.image_inside || '';
+  const sorted = [...CARDS].sort((a,b)=> (a.number||0)-(b.number||0));
+  grid.innerHTML = sorted.map(c=>{
+    const f1 = c.image || 'n.png';
+    const f2 = c.image_inside || 'n.png';
     return `
-      <div class="card" data-num="${c.number}">
-        <div class="thumbs">
-          <img src="${f1}" alt="Frente ${c.title}" onerror="this.src='n.png'">
-          <img src="${f2||'n.png'}" alt="Adentro ${c.title}" onerror="this.src='n.png'">
+      <div class="item" data-num="${c.number}">
+        <div class="thumb-row">
+          <img src="${f1}" alt="Frente ${c.title}" loading="lazy">
+          <img src="${f2}" alt="Adentro ${c.title}" loading="lazy">
         </div>
-        <div class="content">
-          <div class="row">
-            <span class="tag">#${c.number}</span>
-            <span class="small">${fmtCRC(c.price||0)}</span>
+        <div class="body">
+          <h4>#${c.number} · ${c.title||''}</h4>
+          <div class="badges">
+            <span class="badge">₡${Math.round(c.price||0).toLocaleString('es-CR')}</span>
+            ${c.image_inside ? '<span class="badge">con interior</span>' : '<span class="badge" style="opacity:.6">sin interior</span>'}
           </div>
-          <div class="title">${c.title||'(sin título)'}</div>
-          <div class="small" style="color:#93a3b8">${(c.description||'').slice(0,90)}</div>
-          <div class="actions">
-            <button class="btn" data-action="edit"><i class="fa-regular fa-pen-to-square"></i> Editar</button>
-            <button class="btn btn-red" data-action="delete"><i class="fa-regular fa-trash-can"></i> Eliminar</button>
+          <div class="row-actions">
+            <button class="btn" onclick="fillForm(${c.number})"><i class="fa-regular fa-pen-to-square"></i> Editar</button>
+            <button class="btn danger" onclick="askDelete(${c.number})"><i class="fa-regular fa-trash-can"></i> Eliminar</button>
           </div>
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
 }
 
-/* ====== Previews ====== */
-const fileFront = $('#fileFront');
+/* =========================
+   FORM HELPERS
+========================= */
+function clearForm(){
+  $('#number').value = '';
+  $('#price').value = '';
+  $('#title').value = '';
+  $('#desc').value = '';
+  $('#fileFront').value = '';
+  $('#fileInside').value = '';
+  // previews
+  $('#prevFront').innerHTML = '<span class="meta">Arrastra o haz click para cargar</span>';
+  $('#metaFront').textContent = 'Sin archivo';
+  $('#prevInside').innerHTML = '<span class="meta">Arrastra o haz click para cargar</span>';
+  $('#metaInside').textContent = 'Sin archivo';
+  $('#statusLine').textContent = 'Listo.';
+}
+function fillForm(n){
+  const c = CARDS.find(x=> Number(x.number)===Number(n));
+  if(!c) return;
+  $('#number').value = c.number||'';
+  $('#price').value = c.price||'';
+  $('#title').value = c.title||'';
+  $('#desc').value = c.description||'';
+  // previews (URLs existentes)
+  if(c.image){
+    $('#prevFront').innerHTML = `<img src="${c.image}" alt="Frente">`;
+    $('#metaFront').textContent = c.image.split('/').pop();
+  }else{
+    $('#prevFront').innerHTML = '<span class="meta">Arrastra o haz click para cargar</span>';
+    $('#metaFront').textContent = 'Sin archivo';
+  }
+  if(c.image_inside){
+    $('#prevInside').innerHTML = `<img src="${c.image_inside}" alt="Adentro">`;
+    $('#metaInside').textContent = c.image_inside.split('/').pop();
+  }else{
+    $('#prevInside').innerHTML = '<span class="meta">Arrastra o haz click para cargar</span>';
+    $('#metaInside').textContent = 'Sin archivo';
+  }
+  $('#statusLine').textContent = 'Editando #'+c.number;
+}
+
+/* previews archivos */
+const fileFront  = $('#fileFront');
 const fileInside = $('#fileInside');
-const prevFront = $('#prevFront');
-const prevInside = $('#prevInside');
-const metaFront = $('#metaFront');
-const metaInside = $('#metaInside');
 
-function setPreview(elPreview, elMeta, file){
-  if(!file){ elPreview.innerHTML = '<span class="meta">Arrastra o haz click para cargar</span>'; elMeta.textContent = 'Sin archivo'; return; }
-  const url = URL.createObjectURL(file);
-  elPreview.innerHTML = `<img src="${url}" alt="preview">`;
-  elMeta.textContent = `${file.name} · ${(file.size/1024/1024).toFixed(2)} MB`;
+fileFront?.addEventListener('change', ()=>{
+  const f=fileFront.files[0];
+  if(!f){ $('#prevFront').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaFront').textContent='Sin archivo'; return; }
+  const url=URL.createObjectURL(f);
+  $('#prevFront').innerHTML = `<img src="${url}" alt="Frente">`;
+  $('#metaFront').textContent = `${f.name} · ${(f.size/1024/1024).toFixed(2)} MB`;
+});
+fileInside?.addEventListener('change', ()=>{
+  const f=fileInside.files[0];
+  if(!f){ $('#prevInside').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaInside').textContent='Sin archivo'; return; }
+  const url=URL.createObjectURL(f);
+  $('#prevInside').innerHTML = `<img src="${url}" alt="Adentro">`;
+  $('#metaInside').textContent = `${f.name} · ${(f.size/1024/1024).toFixed(2)} MB`;
+});
+
+/* =========================
+   SAVE / UPDATE
+========================= */
+async function uploadImageIfNeeded(file, cardNumber, kind){
+  // kind: 'front' | 'inside'
+  if(!file) return null;
+  const ext  = fileExt(file);
+  const path = `${GH.imagesDir}/card-${cardNumber}-${kind}.${ext}`;
+  const dataURL = await readAsDataURL(file);
+  const b64     = dataURLtoBase64(dataURL);
+  await ghPut(path, b64, `admin: upload ${kind} for card #${cardNumber}`, undefined);
+  return `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${path}`;
 }
 
-fileFront.addEventListener('change', ()=> setPreview(prevFront, metaFront, fileFront.files[0]));
-fileInside.addEventListener('change', ()=> setPreview(prevInside, metaInside, fileInside.files[0]));
-
-/* ====== Crear/Actualizar tarjeta ====== */
-const inputNumber = $('#number');
-const inputTitle = $('#title');
-const inputDesc = $('#desc');
-const inputPrice = $('#price');
-
-function resetForm(){
-  inputNumber.value = '';
-  inputTitle.value = '';
-  inputDesc.value = '';
-  inputPrice.value = '';
-  fileFront.value = '';
-  fileInside.value = '';
-  setPreview(prevFront, metaFront, null);
-  setPreview(prevInside, metaInside, null);
+function rawPrefix(){ return `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/`; }
+async function tryDeleteByRawUrl(url){
+  if(!url) return;
+  const prefix = rawPrefix();
+  if(!url.startsWith(prefix)) return; // no borrar si no está en el repo
+  const path = decodeURIComponent(url.replace(prefix,''));
+  const meta = await ghGet(path);
+  if(meta?.sha) await ghDelete(path, 'admin: delete image', meta.sha);
 }
 
-$('#resetBtn').addEventListener('click', resetForm);
-$('#refreshBtn').addEventListener('click', async ()=>{ await loadCardsJson(); renderCards(); toast('Lista actualizada','ok'); });
+async function saveCard(){
+  const num = Number($('#number').value);
+  const price = Number($('#price').value||0);
+  const title = ($('#title').value||'').trim();
+  const desc  = ($('#desc').value||'').trim();
 
-/* Guardar / Actualizar flujo */
-$('#saveBtn').addEventListener('click', async ()=>{
+  if(!num || !title){ toast('Completa número y título'); return; }
+
+  const existing = CARDS.find(c=> Number(c.number)===num) || null;
+  const frontFile  = fileFront?.files?.[0] || null;
+  const insideFile = fileInside?.files?.[0] || null;
+
   try{
-    const num = Number(inputNumber.value);
-    if(!num || num<1) { toast('Número inválido','err'); return; }
-    const title = inputTitle.value.trim();
-    const description = inputDesc.value.trim();
-    const price = Number(inputPrice.value||0);
+    spin(true);
+    $('#statusLine').textContent = 'Subiendo…';
 
-    // Buscar si existe
-    const idx = CARDS.findIndex(c=> Number(c.number)===num);
-    const existing = idx>=0 ? CARDS[idx] : null;
-
-    // Reglas de imágenes:
-    // - Si es NUEVO: ambas imágenes requeridas
-    // - Si es EDITAR: puedes omitir una/both para conservar las actuales
-    const frontFile = fileFront.files[0] || null;
-    const insideFile = fileInside.files[0] || null;
-
-    if(!existing && (!frontFile || !insideFile)){
-      toast('Para una tarjeta nueva, sube frente y adentro','err'); return;
-    }
-
-    // Cargar cards.json actual por si cambió
-    await loadCardsJson();
-
-    // Subir imágenes si corresponden
-    let imageFrontUrl = existing?.image || '';
+    // Subidas selectivas
+    let imageFrontUrl  = existing?.image || '';
     let imageInsideUrl = existing?.image_inside || '';
-    let shaFront = null, shaInside = null;
 
-    // infiere rutas destino
-    async function maybeUpload(file, kind){
-      if(!file) return {url: (kind==='front'?imageFrontUrl:imageInsideUrl), sha: (kind==='front'?shaFront:shaInside)};
-      const ext = fileExt(file);
-      const path = `${GH.imagesDir}/card-${num}-${kind}.${ext}`;
-
-      // ¿Existe? get sha
-      const prev = await ghGet(path); const prevSha = prev?.sha || undefined;
-
-      const dataURL = await readAsDataURL(file);
-      const b64 = dataURLtoBase64(dataURL);
-      await ghPut(path, b64, `admin: upload ${kind} for card #${num}`, prevSha);
-      const rawUrl = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/${path}`;
-      return {url: rawUrl, sha: prevSha||null};
+    if(frontFile){
+      // si reemplaza, opcionalmente eliminar la anterior (si era del repo)
+      if(existing?.image && existing.image!=='' && existing.image!==undefined){
+        await tryDeleteByRawUrl(existing.image);
+      }
+      imageFrontUrl = await uploadImageIfNeeded(frontFile, num, 'front');
+    }
+    if(insideFile){
+      if(existing?.image_inside && existing.image_inside!==''){
+        await tryDeleteByRawUrl(existing.image_inside);
+      }
+      imageInsideUrl = await uploadImageIfNeeded(insideFile, num, 'inside');
     }
 
-    const upFront = await maybeUpload(frontFile, 'front');
-    imageFrontUrl = upFront.url; shaFront = upFront.sha;
-
-    const upInside = await maybeUpload(insideFile, 'inside');
-    imageInsideUrl = upInside.url; shaInside = upInside.sha;
-
-    // Construir objeto tarjeta
-    const card = {
+    const newCard = {
       number: num,
       title,
-      description,
+      description: desc,
       price,
-      image: imageFrontUrl,        // frente (compat con index actual)
-      image_inside: imageInsideUrl // NUEVO
+      image: imageFrontUrl || existing?.image || '',
+      image_inside: imageInsideUrl || existing?.image_inside || ''
     };
 
-    // Actualizar array
-    if(existing) CARDS[idx] = card;
-    else CARDS.push(card);
+    // Upsert
+    let next = Array.isArray(CARDS)? [...CARDS] : [];
+    const i = next.findIndex(c=> Number(c.number)===num);
+    if(i>=0) next[i] = newCard; else next.push(newCard);
 
-    CARDS.sort((a,b)=> (a.number||0)-(b.number||0));
+    // Guardar cards.json
+    const content = btoa(JSON.stringify(next, null, 2));
+    const put = await ghPut(GH.cardsPath, content, `admin: save card #${num}`, CARDS_SHA||undefined);
+    CARDS = next;
+    CARDS_SHA = put?.content?.sha || CARDS_SHA;
+    CARDS_ETAG = null; // forzar próxima lectura
+    renderList();
+    clearForm();
+    $('#statusLine').textContent = 'Guardado';
+    toast('Tarjeta guardada ✅');
 
-    // Subir cards.json
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(CARDS,null,2))));
-    await ghPut(GH.cardsJsonPath, content, `admin: update cards.json (#${num})`, cardsJsonSha||undefined);
-    toast(existing ? 'Tarjeta actualizada' : 'Tarjeta creada','ok');
-
-    // refrescar sha y lista
-    await loadCardsJson();
-    renderCards();
-    // mantener formulario para seguir cargando más si quieres, o limpiar:
-    // resetForm();
-
-  }catch(err){
-    console.error(err);
-    toast('Error al guardar: '+err.message, 'err');
+    // avisar a otras pestañas/dispositivos
+    bc?.postMessage('refresh');
+  }catch(e){
+    console.error(e);
+    toast('Error al guardar');
+    $('#statusLine').textContent = 'Error';
+  }finally{
+    spin(false);
   }
-});
+}
 
-/* ====== Editar / Eliminar en la lista ====== */
-let deleteTarget = null;
-const modal = $('#modal');
-const modalInfo = $('#modalInfo');
-$('#cancelDel').addEventListener('click', ()=>{ deleteTarget=null; modal.classList.remove('open'); });
+/* =========================
+   DELETE
+========================= */
+let pendingDelete = null;
+function askDelete(num){
+  pendingDelete = Number(num);
+  $('#confirmModal').classList.add('show');
+}
+$('#cancelDel').addEventListener('click', ()=> { pendingDelete=null; $('#confirmModal').classList.remove('show'); });
 
-$('#confirmDel').addEventListener('click', async ()=>{
-  if(!deleteTarget) return;
-  const num = deleteTarget.number;
+$('#acceptDel').addEventListener('click', async ()=>{
+  if(!pendingDelete){ $('#confirmModal').classList.remove('show'); return; }
   try{
-    // Intentar borrar imágenes si están bajo nuestro directorio
-    async function tryDeleteByUrl(url){
-      if(!url) return;
-      // Esperamos estructura raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}
-      const rawPrefix = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/`;
-      if(!url.startsWith(rawPrefix)) return; // no sabemos el sha de una ruta fuera
-      const path = url.replace(rawPrefix,'');
-      const meta = await ghGet(path);
-      if(meta?.sha){
-        await ghDelete(path, `admin: delete image for card #${num}`, meta.sha);
-      }
-    }
-    await tryDeleteByUrl(deleteTarget.image);
-    await tryDeleteByUrl(deleteTarget.image_inside);
+    spin(true);
+    const num = pendingDelete;
+    const card = CARDS.find(c=> Number(c.number)===num);
+    if(!card){ throw new Error('No existe'); }
+    // borrar imágenes si son del repo
+    await tryDeleteByRawUrl(card.image);
+    await tryDeleteByRawUrl(card.image_inside);
 
-    // Eliminar del array y subir JSON
-    CARDS = CARDS.filter(c=> Number(c.number)!==Number(num));
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(CARDS,null,2))));
-    await ghPut(GH.cardsJsonPath, content, `admin: remove card #${num}`, cardsJsonSha||undefined);
-
-    toast(`Tarjeta #${num} eliminada`,'ok');
-    modal.classList.remove('open');
-    deleteTarget=null;
-    await loadCardsJson();
-    renderCards();
-  }catch(err){
-    console.error(err);
-    toast('Error al eliminar: '+err.message,'err');
+    const next = CARDS.filter(c=> Number(c.number)!==num);
+    const content = btoa(JSON.stringify(next, null, 2));
+    const put = await ghPut(GH.cardsPath, content, `admin: delete card #${num}`, CARDS_SHA||undefined);
+    CARDS = next;
+    CARDS_SHA = put?.content?.sha || CARDS_SHA;
+    CARDS_ETAG = null;
+    renderList();
+    toast('Tarjeta eliminada 🗑️');
+    bc?.postMessage('refresh');
+  }catch(e){
+    console.error(e); toast('Error al eliminar');
+  }finally{
+    spin(false);
+    pendingDelete=null; $('#confirmModal').classList.remove('show');
   }
 });
 
-$('#cardsList').addEventListener('click', (ev)=>{
-  const cardEl = ev.target.closest('.card');
-  if(!cardEl) return;
-  const num = Number(cardEl.dataset.num);
-  const card = CARDS.find(c=> Number(c.number)===num);
-  if(!card) return;
-
-  const act = ev.target.closest('button')?.dataset.action;
-  if(act==='edit'){
-    inputNumber.value = card.number;
-    inputTitle.value = card.title||'';
-    inputDesc.value = card.description||'';
-    inputPrice.value = card.price||0;
-
-    // clear file inputs; mostramos previews con URLs existentes
-    fileFront.value = ''; fileInside.value = '';
-    prevFront.innerHTML = card.image ? `<img src="${card.image}" alt="Frente">` : '<span class="meta">Sin frente</span>';
-    metaFront.textContent = card.image ? card.image.split('/').pop() : 'Sin archivo';
-
-    prevInside.innerHTML = card.image_inside ? `<img src="${card.image_inside}" alt="Adentro">` : '<span class="meta">Sin adentro</span>';
-    metaInside.textContent = card.image_inside ? card.image_inside.split('/').pop() : 'Sin archivo';
-
-    toast('Cargado en el formulario para editar','inf');
+/* =========================
+   LOGIN FLOW
+========================= */
+function updateUI(){
+  if(isLogged()){
+    show($('#loginView'), false);
+    show($('#topbar'), true);
+    show($('#app'), true);
+    updatePatChip();
+    loadCards();
+  }else{
+    show($('#loginView'), true);
+    show($('#topbar'), false);
+    show($('#app'), false);
   }
-  if(act==='delete'){
-    deleteTarget = card;
-    modalInfo.textContent = `#${card.number} · ${card.title}`;
-    modal.classList.add('open');
+}
+$('#togglePass').addEventListener('click', ()=>{
+  const p=$('#pass'); p.type = (p.type==='password'?'text':'password');
+  $('#togglePass').innerHTML = `<i class="fa-regular fa-${p.type==='password'?'eye':'eye-slash'}"></i>`;
+});
+$('#loginBtn').addEventListener('click', ()=>{
+  const u=$('#user').value.trim();
+  const p=$('#pass').value.trim();
+  const pat=$('#pat').value.trim();
+  if(u===LOGIN.user && p===LOGIN.pass){
+    setLogged(true);
+    if(pat) setPAT(pat);
+    updateUI();
+    toast('Bienvenido 👋');
+  }else{
+    toast('Credenciales inválidas');
   }
 });
+$('#copyPat').addEventListener('click', async ()=>{
+  try{ await navigator.clipboard.writeText(getPAT()); toast('PAT copiado'); }catch(e){ toast('No se pudo copiar');}
+});
+$('#logout').addEventListener('click', ()=>{
+  setLogged(false); setPAT('');
+  CARDS=[]; CARDS_SHA=null; CARDS_ETAG=null;
+  updateUI();
+});
 
-/* ====== Init ====== */
-(async function init(){
-  if(localStorage.getItem('cp_logged')==='1'){
-    try{
-      await loadCardsJson();
-      renderCards();
-      toast('cards.json cargado','ok');
-    }catch(e){
-      console.error(e);
-      toast('No pude cargar cards.json (¿PAT correcto?)','err');
-    }
-  }
-})();
+/* =========================
+   BINDINGS
+========================= */
+$('#saveBtn').addEventListener('click', saveCard);
+$('#clearBtn').addEventListener('click', clearForm);
+$('#reloadBtn').addEventListener('click', ()=> loadCards());
+
+/* Drag & Drop simple (opcional) — usa el input oculto igualmente */
+;['dropFront','dropInside'].forEach(id=>{
+  const box = $('#'+id);
+  const input = box.querySelector('input[type="file"]');
+  box.addEventListener('click', ()=> input.click());
+  ;['dragenter','dragover'].forEach(evt=> box.addEventListener(evt, e=>{ e.preventDefault(); box.style.borderColor='#38bdf8'; }));
+  ;['dragleave','drop'].forEach(evt=> box.addEventListener(evt, e=>{ e.preventDefault(); box.style.borderColor='rgba(255,255,255,.2)'; }));
+  box.addEventListener('drop', e=>{
+    const f = e.dataTransfer.files?.[0]; if(!f) return;
+    input.files = e.dataTransfer.files;
+    input.dispatchEvent(new Event('change'));
+  });
+});
+
+/* =========================
+   INIT
+========================= */
+updateUI();
 </script>
 </body>
 </html>

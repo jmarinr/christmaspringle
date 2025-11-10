@@ -54,6 +54,7 @@
   .upload-area{position:relative;border:3px dashed var(--primary-blue);border-radius:16px;padding:18px;text-align:center;background:#fff;cursor:pointer;transition:.25s;margin-bottom:12px}
   .upload-area:hover{border-color:var(--primary-red);background:#FFF5F5;transform:translateY(-2px)}
   .upload-icon{font-size:2.2em;color:var(--primary-blue);margin-bottom:.3rem}
+  .upload-sub{font-size:.92em;color:#455A64;margin-top:.1rem}
   .preview-image{width:100%;height:190px;object-fit:cover;border-radius:12px;margin-top:.5rem;display:none}
   .row{display:flex;flex-direction:column;gap:.35rem;margin:.55rem 0}
   label{font-weight:700;color:#0d47a1}
@@ -67,7 +68,7 @@
   .actions{display:flex;gap:.6rem;flex-wrap:wrap}
 
   /* ---------- Xmas Spinner (por tarjeta) ---------- */
-  .spinner-wrap{position:absolute;inset:16px 16px auto 16px; /* sobre upload-area */ display:none;align-items:center;justify-content:center;pointer-events:none}
+  .spinner-wrap{position:absolute;inset:16px 16px auto 16px;display:none;align-items:center;justify-content:center;pointer-events:none}
   .spinner-xmas{display:flex;flex-direction:column;align-items:center;gap:6px;background:rgba(255,255,255,.9);backdrop-filter:blur(3px);border-radius:14px;padding:10px 14px;border:2px solid #ffe082;box-shadow:0 6px 18px rgba(0,0,0,.15)}
   .tree{font-size:32px;display:inline-block;animation:spinTree 1s linear infinite}
   .spin-text{font-weight:800;color:#6d4c41}
@@ -321,7 +322,7 @@ window.addEventListener('load', async ()=>{
   }else{
     showLogin();
   }
-  await fetchCardsJson(); // primer fetch (por si abre en login y luego entra)
+  await fetchCardsJson(); // primer fetch
 });
 
 /* Copy / Logout */
@@ -352,11 +353,14 @@ function renderCardForms(){
     card.className = 'card';
     card.innerHTML = `
       <h3>❄ Tarjeta #${i}</h3>
+
+      <!-- Foto principal (frente) -->
       <div class="upload-area" id="uploadArea${i}">
         <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
         <div>PNG, JPG, JPEG (Máx: 5MB)</div>
+        <div class="upload-sub">Frente (obligatorio)</div>
         <input type="file" id="fileInput${i}" accept="image/png,image/jpeg,image/jpg" style="display:none">
-        <img id="preview${i}" class="preview-image" alt="Vista previa">
+        <img id="preview${i}" class="preview-image" alt="Vista previa - frente">
         <!-- Spinner navideño -->
         <div id="spin${i}" class="spinner-wrap">
           <div class="spinner-xmas">
@@ -364,6 +368,15 @@ function renderCardForms(){
             <div class="spin-text">Subiendo...</div>
           </div>
         </div>
+      </div>
+
+      <!-- Foto interior (opcional) -->
+      <div class="upload-area" id="uploadArea2_${i}">
+        <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <div>PNG, JPG, JPEG (Máx: 5MB)</div>
+        <div class="upload-sub">Interior (opcional)</div>
+        <input type="file" id="fileInput2_${i}" accept="image/png,image/jpeg,image/jpg" style="display:none">
+        <img id="preview2_${i}" class="preview-image" alt="Vista previa - interior">
       </div>
 
       <div class="row">
@@ -392,9 +405,15 @@ function renderCardForms(){
 }
 function escapeHtml(s){return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));}
 function setupCardHandlers(n, existing){
+  // Frente
   const uploadArea = $(`#uploadArea${n}`);
   const fileInput  = $(`#fileInput${n}`);
   const preview    = $(`#preview${n}`);
+  // Interior
+  const uploadArea2 = $(`#uploadArea2_${n}`);
+  const fileInput2  = $(`#fileInput2_${n}`);
+  const preview2    = $(`#preview2_${n}`);
+
   const title      = $(`#title${n}`);
   const desc       = $(`#description${n}`);
   const price      = $(`#price${n}`);
@@ -402,22 +421,32 @@ function setupCardHandlers(n, existing){
   const clearBtn   = $(`#clearBtn${n}`);
 
   if(existing){
-    preview.src = rawImageUrl(existing.image);
-    preview.style.display='block';
+    if(existing.image){ preview.src = rawImageUrl(existing.image); preview.style.display='block'; }
+    if(existing.image2){ preview2.src = rawImageUrl(existing.image2); preview2.style.display='block'; }
   }
 
   uploadArea.addEventListener('click', ()=>fileInput.click());
+  uploadArea2.addEventListener('click', ()=>fileInput2.click());
+
   fileInput.addEventListener('change',(e)=>{
-    const file = e.target.files[0];
-    if(!file) return;
+    const file = e.target.files[0]; if(!file) return;
     if(file.size > 5*1024*1024) return toast('La imagen debe ser menor a 5MB','error');
     const rd = new FileReader();
     rd.onload = (ev)=>{ preview.src = ev.target.result; preview.style.display='block'; };
     rd.readAsDataURL(file);
   });
 
+  fileInput2.addEventListener('change',(e)=>{
+    const file = e.target.files[0]; if(!file) return;
+    if(file.size > 5*1024*1024) return toast('La imagen debe ser menor a 5MB','error');
+    const rd = new FileReader();
+    rd.onload = (ev)=>{ preview2.src = ev.target.result; preview2.style.display='block'; };
+    rd.readAsDataURL(file);
+  });
+
   clearBtn.addEventListener('click', ()=>{
     fileInput.value=''; preview.style.display='none';
+    fileInput2.value=''; preview2.style.display='none';
     title.value=''; desc.value=''; price.value='';
   });
 
@@ -434,12 +463,9 @@ function rawImageUrl(filename){
 
 async function githubGet(url){
   const pat = getPAT();
-  const headers = {
-    'Accept':'application/vnd.github.v3+json'
-  };
+  const headers = { 'Accept':'application/vnd.github.v3+json' };
   if (pat) headers['Authorization'] = `token ${pat}`;
-  const res = await fetch(url,{ headers });
-  return res;
+  return fetch(url,{ headers });
 }
 async function githubPut(url, body){
   const pat = getPAT();
@@ -495,35 +521,65 @@ async function uploadCard(n){
   const pat = getPAT();
   if(!pat){ toast('Agrega el PAT en la sesión.','error'); return; }
 
-  const fileInput = $(`#fileInput${n}`);
-  const title = $(`#title${n}`).value.trim();
-  const description = $(`#description${n}`).value.trim();
-  const price = parseFloat($(`#price${n}`).value);
+  const fileInput = document.getElementById(`fileInput${n}`);
+  const fileInput2= document.getElementById(`fileInput2_${n}`);
+
+  const title = document.getElementById(`title${n}`).value.trim();
+  const description = document.getElementById(`description${n}`).value.trim();
+  const price = parseFloat(document.getElementById(`price${n}`).value);
+
   if(!fileInput.files[0] || !title || !description || !(price>0)){
-    return toast('Completa imagen, título, descripción y precio.','error');
+    return toast('Completa imagen (frente), título, descripción y precio.','error');
   }
 
   setUploading(n,true);
   try{
-    const file = fileInput.files[0];
-    const fileName = `${n}.png`;
-    const imageData = await convertToPNG(file);
-    const base64Data = await blobToBase64(imageData);
+    const dir = 'images/cards';
+    const fileName1 = `${dir}/${n}-1.png`;
+    const fileName2 = `${dir}/${n}-2.png`;
 
-    await uploadFileToGithub(fileName, base64Data);
+    // Convertir y subir frente
+    const file1 = fileInput.files[0];
+    const png1  = await convertToPNG(file1);
+    const b641  = await blobToBase64(png1);
+    await uploadFileToGithub(fileName1, b641);
 
+    // Interior (opcional)
+    let savedImage2 = null;
+    if(fileInput2 && fileInput2.files[0]){
+      const file2 = fileInput2.files[0];
+      const png2  = await convertToPNG(file2);
+      const b642  = await blobToBase64(png2);
+      await uploadFileToGithub(fileName2, b642);
+      savedImage2 = fileName2;
+    }
+
+    // Actualizar cardsData
     const idx = cardsData.findIndex(c=>c.number===n);
-    const cardData = { number:n, title, description, price, image:fileName, uploadedAt:new Date().toISOString() };
-    if(idx>=0) cardsData[idx]=cardData; else cardsData.push(cardData);
+    const cardData = {
+      number:n, title, description, price,
+      image:fileName1,
+      ...(savedImage2 ? {image2:savedImage2} : {}),
+      uploadedAt:new Date().toISOString()
+    };
+    if(idx>=0){
+      // Si antes tenía image2 y ahora no se subió nueva, preservar la existente
+      if(!savedImage2 && cardsData[idx].image2){ cardData.image2 = cardsData[idx].image2; }
+      cardsData[idx]=cardData;
+    } else {
+      cardsData.push(cardData);
+    }
     cardsData.sort((a,b)=>a.number-b.number);
 
-    const result = await updateCardsJSON(); // actualiza SYNC.lastSha
+    await updateCardsJSON(); // ajusta SYNC.lastSha
     toast(`Tarjeta #${n} subida.`, 'success');
 
-    // refresco preview
-    const preview = $(`#preview${n}`);
-    preview.src = rawImageUrl(fileName);
-    preview.style.display='block';
+    // Refrescar previews
+    const preview1 = document.getElementById(`preview${n}`);
+    preview1.src = rawImageUrl(fileName1); preview1.style.display='block';
+    const preview2 = document.getElementById(`preview2_${n}`);
+    if(cardData.image2 && preview2){ preview2.src = rawImageUrl(cardData.image2); preview2.style.display='block'; }
+
     renderSavedCards();
 
   }catch(err){
@@ -556,7 +612,6 @@ async function updateCardsJSON(){
     throw new Error(e.message||'Error al actualizar cards.json');
   }
   const result = await res.json();
-  // guardar sha para evitar rebote en el poll
   if (result && result.content && result.content.sha) {
     SYNC.lastSha = result.content.sha;
   }
@@ -641,12 +696,23 @@ async function deleteCard(n){
     const card = cardsData.find(c=>c.number===n);
     if(!card) return;
 
-    // borrar imagen si existe
-    const url = `https://api.github.com/repos/${GITHUB.username}/${GITHUB.repo}/contents/${card.image}`;
-    const check = await githubGet(url);
-    if(check.ok){
-      const data = await check.json();
-      await githubDelete(url, { message:`Delete ${card.image}`, sha:data.sha, branch:GITHUB.branch });
+    // borrar imagen principal si existe
+    if(card.image){
+      const url1 = `https://api.github.com/repos/${GITHUB.username}/${GITHUB.repo}/contents/${card.image}`;
+      const check1 = await githubGet(url1);
+      if(check1.ok){
+        const data1 = await check1.json();
+        await githubDelete(url1, { message:`Delete ${card.image}`, sha:data1.sha, branch:GITHUB.branch });
+      }
+    }
+    // borrar imagen interior si existe
+    if(card.image2){
+      const url2 = `https://api.github.com/repos/${GITHUB.username}/${GITHUB.repo}/contents/${card.image2}`;
+      const check2 = await githubGet(url2);
+      if(check2.ok){
+        const data2 = await check2.json();
+        await githubDelete(url2, { message:`Delete ${card.image2}`, sha:data2.sha, branch:GITHUB.branch });
+      }
     }
 
     // quitar local y actualizar cards.json
@@ -655,11 +721,17 @@ async function deleteCard(n){
     renderSavedCards();
 
     // limpiar formulario visual
-    const fileInput = $(`#fileInput${n}`);
-    const preview = $(`#preview${n}`);
-    const title = $(`#title${n}`), desc=$(`#description${n}`), price=$(`#price${n}`);
+    const fileInput = document.getElementById(`fileInput${n}`);
+    const preview = document.getElementById(`preview${n}`);
+    const fileInput2 = document.getElementById(`fileInput2_${n}`);
+    const preview2 = document.getElementById(`preview2_${n}`);
+    const title = document.getElementById(`title${n}`);
+    const desc = document.getElementById(`description${n}`);
+    const price = document.getElementById(`price${n}`);
     if(fileInput){ fileInput.value=''; }
     if(preview){ preview.style.display='none'; }
+    if(fileInput2){ fileInput2.value=''; }
+    if(preview2){ preview2.style.display='none'; }
     if(title) title.value=''; if(desc) desc.value=''; if(price) price.value='';
     toast(`Tarjeta #${n} eliminada.`, 'success');
   }catch(err){
@@ -704,16 +776,23 @@ async function refreshCardsFromRepoIfChanged(force=false) {
         const card = cardsData.find(c => c.number === i);
         const fileInput = document.getElementById(`fileInput${i}`);
         const preview = document.getElementById(`preview${i}`);
+        const fileInput2 = document.getElementById(`fileInput2_${i}`);
+        const preview2 = document.getElementById(`preview2_${i}`);
+
         if (card && preview && (!fileInput || fileInput.files.length === 0)) {
           preview.src = rawImageUrl(card.image);
           preview.style.display = 'block';
+        }
+        if (card && card.image2 && preview2 && (!fileInput2 || fileInput2.files.length === 0)) {
+          preview2.src = rawImageUrl(card.image2);
+          preview2.style.display = 'block';
         }
       }
 
       if (!force) toast('Contenido actualizado desde otro dispositivo.', 'info');
     }
   } catch (e) {
-    // silencioso para evitar ruido (rate limit / red)
+    // silencioso
   }
 }
 

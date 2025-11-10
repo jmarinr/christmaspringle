@@ -1,11 +1,11 @@
 [
   {
     "number": 1,
-    "title": "dfasd",
-    "description": "dsafsa",
-    "price": 2,
+    "title": "1",
+    "description": "1",
+    "price": 1,
     "image": "images/cards/1-1.png",
-    "image2": "images/cards/1-2.png",
-    "uploadedAt": "2025-11-10T03:28:13.217Z"
+    "uploadedAt": "2025-11-10T03:46:44.259Z",
+    "image2": "images/cards/1-2.png"
   }
 ]

@@ -30,6 +30,7 @@
   --chip-blue-from:#039BE5; --chip-blue-to:#4FC3F7;
   --chip-violet-from:#8E24AA; --chip-violet-to:#BA68C8;
   --chip-red-from:#E74C3C; --chip-red-to:#C0392B;
+  --chip-teal-from:#009688; --chip-teal-to:#26A69A;
 
   --panel:#ffffff; --panel-contrast:#0d1522;
   --panel-subtle:#f4f6f8;
@@ -67,10 +68,19 @@ body{
   color:var(--text-dark); overflow-x:hidden;
 }
 
-/* ===== Nieve ===== */
+/* ===== Nieve (más sutil y lenta) ===== */
 .snow-container{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
-.snowflake{position:absolute; top:-10px; color:#fff; font-size:1.1em; opacity:.75; text-shadow:0 0 8px rgba(255,255,255,.7); animation:snowfall linear infinite}
-@keyframes snowfall{0%{transform:translateY(0) translateX(0) rotate(0); opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}}
+.snowflake{
+  position:absolute; top:-10px; color:#fff; font-size:1.05em; opacity:.55;
+  text-shadow:0 0 6px rgba(255,255,255,.6);
+  animation:snowfall linear infinite;
+  will-change:transform, opacity;
+}
+@keyframes snowfall{
+  0%{transform:translateY(-2vh) translateX(0) rotate(0); opacity:0}
+  10%{opacity:.55} 90%{opacity:.55}
+  100%{transform:translateY(102vh) translateX(-140px) rotate(-360deg); opacity:0}
+}
 
 /* ===== Tren hacia la izquierda con Santa Tracker ===== */
 .train-container{--train-duration:42s; position:fixed; bottom:60px; left:100vw; z-index:10000; animation:trainMoveLeft var(--train-duration) linear infinite}
@@ -139,8 +149,8 @@ nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content
 .btn-reviews{background:linear-gradient(135deg,var(--chip-blue-from),var(--chip-blue-to))}
 .btn-music{background:linear-gradient(135deg,var(--chip-red-from),var(--chip-red-to))}
 .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
-/* Botón Jugar */
-.btn-play{background:linear-gradient(135deg,#00BCD4,#26C6DA); color:#08323a}
+/* Nuevo botón Jugar */
+.btn-play{background:linear-gradient(135deg,var(--chip-teal-from),var(--chip-teal-to))}
 
 /* Switch luces (modo) */
 .switch{display:inline-flex; align-items:center; gap:.5rem; color:var(--text-dark)}
@@ -283,12 +293,13 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
         <a class="chip btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
         <a class="chip btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
-        <a class="chip btn-play" href="https://santatracker.google.com" target="_blank" rel="noopener">
-          <i class="fa-solid fa-gamepad"></i> Jugar
-        </a>
         <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
         </button>
+        <!-- NUEVO: botón Jugar en el NAV -->
+        <a class="chip btn-play" href="https://santatracker.google.com" target="_blank" rel="noopener" aria-label="Jugar Santa Tracker">
+          <i class="fa-solid fa-gamepad"></i> Jugar
+        </a>
         <div class="switch" aria-label="Luces y modo de color">
           <span>🎄 Luces</span>
           <div id="modeToggle" class="toggle" role="switch" aria-checked="false" tabindex="0"></div>
@@ -400,23 +411,29 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
   </script>
 
 <script>
-/* ===== Utiles ===== */
+/* ===== Utils ===== */
 const qs = sel => document.querySelector(sel);
 
-/* ===== Nieve (sutil) ===== */
+/* ===== Nieve (más sutil y lenta) ===== */
 function createSnowflake(){
   const s=document.createElement('div');
   s.className='snowflake';
   s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
-  s.style.left=Math.random()*100+'%';
-  s.style.animationDuration=(Math.random()*3+4)+'s';
-  s.style.opacity=Math.random()*.55+.45;
-  s.style.fontSize=(Math.random()*.8+0.9)+'em';
+  s.style.left = (Math.random()*100) + '%';
+  /* duraciones más largas (8 a 14s) para caída lenta */
+  s.style.animationDuration = (Math.random()*6 + 8) + 's';
+  /* tamaños más pequeños (0.8 a 1.2em) */
+  s.style.fontSize = (Math.random()*0.4 + 0.8) + 'em';
+  /* opacidad baja */
+  s.style.opacity = (Math.random()*0.25 + 0.4).toFixed(2);
   document.getElementById('snowContainer').appendChild(s);
-  setTimeout(()=>s.remove(),7000);
+  setTimeout(()=>s.remove(), 16000);
 }
-function startSnow(){ for(let i=0;i<12;i++) setTimeout(createSnowflake, i*200); return setInterval(createSnowflake, 450); }
-let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 700);
+function startSnow(){
+  for(let i=0;i<14;i++) setTimeout(createSnowflake, i*250);
+  return setInterval(createSnowflake, 450);
+}
+let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 900);
 
 /* ===== Música ===== */
 const musicBtn=qs('#musicBtn'); const audio=qs('#christmasMusic');
@@ -461,7 +478,7 @@ function setMode(on){
   toggle.classList.toggle('on', on);
   toggle.setAttribute('aria-checked', on ? 'true' : 'false');
   body.classList.toggle('dark', on);
-  // Parpadeo suave de bombillos
+  // Parpadeo de bombillos al encender
   const bulbs = document.querySelectorAll('.bulb');
   bulbs.forEach((b,i)=>{
     b.style.opacity = on ? '1' : '.55';

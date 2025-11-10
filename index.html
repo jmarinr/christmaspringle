@@ -73,8 +73,7 @@ body{
 .snowflake{
   position:absolute; top:-10px; color:#fff; font-size:1.05em; opacity:.55;
   text-shadow:0 0 6px rgba(255,255,255,.6);
-  animation:snowfall linear infinite;
-  will-change:transform, opacity;
+  animation:snowfall linear infinite; will-change:transform, opacity;
 }
 @keyframes snowfall{
   0%{transform:translateY(-2vh) translateX(0) rotate(0); opacity:0}
@@ -296,7 +295,6 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
         <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
         </button>
-        <!-- NUEVO: botón Jugar en el NAV -->
         <a class="chip btn-play" href="https://santatracker.google.com" target="_blank" rel="noopener" aria-label="Jugar Santa Tracker">
           <i class="fa-solid fa-gamepad"></i> Jugar
         </a>
@@ -420,19 +418,13 @@ function createSnowflake(){
   s.className='snowflake';
   s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
   s.style.left = (Math.random()*100) + '%';
-  /* duraciones más largas (8 a 14s) para caída lenta */
   s.style.animationDuration = (Math.random()*6 + 8) + 's';
-  /* tamaños más pequeños (0.8 a 1.2em) */
   s.style.fontSize = (Math.random()*0.4 + 0.8) + 'em';
-  /* opacidad baja */
   s.style.opacity = (Math.random()*0.25 + 0.4).toFixed(2);
   document.getElementById('snowContainer').appendChild(s);
   setTimeout(()=>s.remove(), 16000);
 }
-function startSnow(){
-  for(let i=0;i<14;i++) setTimeout(createSnowflake, i*250);
-  return setInterval(createSnowflake, 450);
-}
+function startSnow(){ for(let i=0;i<14;i++) setTimeout(createSnowflake, i*250); return setInterval(createSnowflake, 450); }
 let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 900);
 
 /* ===== Música ===== */
@@ -478,14 +470,11 @@ function setMode(on){
   toggle.classList.toggle('on', on);
   toggle.setAttribute('aria-checked', on ? 'true' : 'false');
   body.classList.toggle('dark', on);
-  // Parpadeo de bombillos al encender
   const bulbs = document.querySelectorAll('.bulb');
   bulbs.forEach((b,i)=>{
     b.style.opacity = on ? '1' : '.55';
     b.style.filter = on ? 'drop-shadow(0 0 10px rgba(255,255,255,.55))' : 'drop-shadow(0 2px 6px rgba(0,0,0,.25))';
-    if(on){
-      b.animate([{opacity:.4},{opacity:1}],{duration:350+ i*60,fill:'forwards'});
-    }
+    if(on){ b.animate([{opacity:.4},{opacity:1}],{duration:350+ i*60,fill:'forwards'}); }
   });
   localStorage.setItem('cp_dark', on?'1':'0');
 }
@@ -515,6 +504,36 @@ function openLightbox(src,alt){ lightboxImg.src=src; lightboxImg.alt=alt||''; li
 lightbox.addEventListener('click', ()=> lightbox.classList.remove('open'));
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') lightbox.classList.remove('open'); });
 
+/* ===== Helpers imágenes (images/cards) ===== */
+const stripPath = (p)=> (p||'').split('/').pop();
+function buildCandidates(c){
+  const arr=[];
+  // campos nuevos preferidos
+  if (c.image1) arr.push('images/cards/'+stripPath(c.image1));
+  if (c.imageFront) arr.push('images/cards/'+stripPath(c.imageFront));
+  if (c.image) {
+    // intenta dentro de images/cards primero
+    arr.push('images/cards/'+stripPath(c.image));
+  }
+  // nombre estándar nuevo por número
+  if (typeof c.number==='number') arr.push(`images/cards/${c.number}-1.png`);
+  // último recurso: valor original tal cual
+  if (c.image) arr.push(c.image);
+  // elimina duplicados manteniendo orden
+  return [...new Set(arr)];
+}
+function fallbackImg(el){
+  const list = (el.dataset.candidates||'').split('|').filter(Boolean);
+  let idx = parseInt(el.dataset.idx||'0',10);
+  if (idx+1 < list.length){
+    el.dataset.idx = String(idx+1);
+    el.src = list[idx+1] + el.dataset.ts;
+  }else{
+    el.style.opacity=0;
+    el.parentElement.style.background='#f0f0f0';
+  }
+}
+
 /* ===== Carga de tarjetas ===== */
 async function loadCards(){
   const grid=qs('#cardsGrid');
@@ -528,16 +547,23 @@ async function loadCards(){
     }
     cards.sort((a,b)=>a.number-b.number);
     grid.innerHTML = cards.map(c=>{
-      const img = `${encodeURI(c.image)}?t=${ts}`;
+      const cand = buildCandidates(c);
+      const tsq = `?t=${ts}`;
       const price = fmtCRC(c.price);
       const msg = `Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
       const wa  = `https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
       return `
       <article class="card">
         <div class="card-image">
-          <img class="card-photo" src="${img}" alt="${c.title}" loading="lazy" decoding="async"
+          <img class="card-photo"
+               src="${(cand[0]||'n.png')+tsq}"
+               alt="${c.title}"
+               loading="lazy" decoding="async"
+               data-candidates="${cand.join('|')}"
+               data-idx="0"
+               data-ts="${tsq}"
                sizes="(max-width:640px) 92vw, (max-width:1200px) 44vw, 31vw"
-               onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
+               onerror="fallbackImg(this)">
         </div>
         <div class="card-content">
           <h3>${c.title}</h3>
@@ -558,7 +584,6 @@ async function loadCards(){
 
   }catch(e){
     console.error(e);
-    // Fallback de 3 tarjetas estáticas
     const fallback = [
       {title:'Tarjeta en acuarela', description:'Edición especial', price:2500, image:'n.png'},
       {title:'Acuarela copo de nieve', description:'Hecha a mano', price:2500, image:'n.png'},
@@ -591,9 +616,7 @@ document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
 });
 
 /* ===== Init ===== */
-window.addEventListener('load', ()=>{
-  loadCards();
-});
+window.addEventListener('load', ()=>{ loadCards(); });
 </script>
 </body>
 </html>

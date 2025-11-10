@@ -9,46 +9,22 @@
 
 <style>
 :root{
-  /* Tema claro original */
-  --bg:#f5f7fb;
-  --panel:#ffffff;
-  --panel-2:#fafbff;
-  --text:#1f2a37;
-  --muted:#6b7280;
-  --border:#e5e7eb;
+  --bg:#f5f7fb; --panel:#ffffff; --panel-2:#fafbff;
+  --text:#0f172a; --muted:#6b7280; --border:#e5e7eb;
   --green:#16a34a; --red:#dc2626; --blue:#2563eb; --gold:#f59e0b; --teal:#0ea5e9;
   --shadow:0 8px 24px rgba(17,24,39,.08);
   --shadow-lg:0 16px 40px rgba(17,24,39,.12);
 }
 
+/* Base */
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  background: linear-gradient(180deg,#e9f5ff 0%, #f6fbff 50%, #ffffff 100%);
-  color:var(--text);
-}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  background:linear-gradient(180deg,#e9f5ff 0%,#f6fbff 50%,#ffffff 100%); color:var(--text)}
 
-/* ===== Nieve sutil (ya la tenías) ===== */
-.snow{position:fixed; inset:0; pointer-events:none; z-index:9999; overflow:hidden}
-.flake{position:absolute; top:-10px; color:#fff; font-size:1.05em; opacity:.75;
-  text-shadow:0 0 10px rgba(255,255,255,.7); animation:snowfall linear infinite}
-@keyframes snowfall{
-  0%{transform:translateY(-10vh) translateX(0) rotate(0); opacity:.0}
-  12%{opacity:.9}
-  90%{opacity:.9}
-  100%{transform:translateY(100vh) translateX(-120px) rotate(-360deg); opacity:0}
-}
-
-/* ===== Topbar original ===== */
-.topbar{
-  position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,.92); backdrop-filter: blur(12px);
-  border-bottom:1px solid var(--border); box-shadow:0 6px 16px rgba(0,0,0,.04);
-}
-.topbar .inner{
-  max-width:1200px; margin:0 auto; padding:14px 16px;
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-}
+/* Topbar */
+.topbar{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--border); box-shadow:0 6px 16px rgba(0,0,0,.04)}
+.topbar .inner{max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px}
 .brand{display:flex; align-items:center; gap:12px; font-weight:900}
 .brand img{height:38px; width:auto; border-radius:10px; box-shadow:0 4px 10px rgba(231,76,60,.18)}
 .env{font-size:.8rem; padding:.25rem .55rem; border-radius:999px; background:#eef2ff; color:#1e40af; border:1px solid #e0e7ff}
@@ -58,69 +34,51 @@ body{
 .icon-btn:hover{filter:brightness(1.05)}
 .danger{background:#fef2f2; color:#991b1b}
 
-/* ===== Layout ===== */
-.container{max-width:1200px; margin:20px auto; padding:0 16px; display:grid; grid-template-columns: 360px 1fr; gap:18px}
-@media (max-width: 980px){ .container{grid-template-columns:1fr} }
+/* Layout */
+.container{max-width:1200px; margin:20px auto; padding:0 16px; display:grid; grid-template-columns:360px 1fr; gap:18px}
+@media (max-width:980px){.container{grid-template-columns:1fr}}
 
-.card{
-  background:linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
-  border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow);
-}
-
-/* Títulos */
+/* Cards */
+.card{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow)}
 .h-title{font-weight:900; font-size:1.05rem; margin-bottom:10px; display:flex; align-items:center; gap:8px}
 .h-title .xmas{color:#b91c1c}
 
-/* ===== Formulario ===== */
+/* Formulario */
 .form{padding:16px}
-.row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+.row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
 .row-1{display:grid; grid-template-columns:1fr; gap:10px}
 label{font-size:.88rem; opacity:.95}
-input[type="text"], input[type="number"], textarea{
-  width:100%; padding:10px 12px; color:var(--text);
-  background:#fff; border:1px solid var(--border); border-radius:10px; outline:none;
-}
+input[type="text"],input[type="number"],textarea{width:100%; padding:10px 12px; color:var(--text); background:#fff; border:1px solid var(--border); border-radius:10px; outline:none}
 textarea{min-height:88px; resize:vertical}
 .small{font-size:.82rem; color:var(--muted)}
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  background:#eef6ff; color:#0f172a; border:1px solid var(--border);
-  padding:10px 14px; border-radius:10px; cursor:pointer; text-decoration:none;
-}
+.btn{display:inline-flex; align-items:center; gap:8px; background:#eef6ff; color:#0f172a; border:1px solid var(--border); padding:10px 14px; border-radius:10px; cursor:pointer; text-decoration:none}
 .btn.primary{background:#ecfdf5; color:#065f46}
 .btn.warn{background:#fff7ed; color:#9a3412}
 .btn:hover{filter:brightness(1.05)}
 
-/* ===== Uploader (frente + adentro) ===== */
-.uploader{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
-.up .drop{border:1px dashed #d1d5db; border-radius:12px; padding:10px; background:#fff}
-.preview{
-  width:100%; aspect-ratio:4/3;
-  background: repeating-linear-gradient(45deg,#f7fafc 0 10px,#f3f4f6 10px 20px);
-  border-radius:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;
-}
+/* Uploader (1 imagen) */
+.drop{border:1px dashed #d1d5db; border-radius:12px; padding:10px; background:#fff}
+.preview{width:100%; aspect-ratio:4/3; background:repeating-linear-gradient(45deg,#f7fafc 0 10px,#f3f4f6 10px 20px); border-radius:10px;
+  display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative}
 .preview img{width:100%; height:100%; object-fit:contain}
 .meta{margin-top:8px; color:var(--muted); font-size:.85rem}
 
-/* ===== Lista tarjetas ===== */
+/* Lista de tarjetas */
 .list{padding:16px}
 .tools{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px}
-.grid{display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));}
+.grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
 .item{border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff}
-.thumbs{display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:6px; background:#f9fafb}
-.thumbs img{width:100%; aspect-ratio:4/3; object-fit:cover; background:#f3f4f6; border-radius:8px}
+.thumb{padding:6px; background:#f9fafb}
+.thumb img{width:100%; aspect-ratio:4/3; object-fit:cover; background:#f3f4f6; border-radius:8px}
 .item .body{padding:10px 12px}
 .item h4{font-size:1rem}
 .badges{display:flex; gap:8px; align-items:center; margin:6px 0}
 .badge{font-size:.78rem; padding:.2rem .5rem; border-radius:999px; background:#eef2ff; color:#1e40af; border:1px solid #e0e7ff}
 .row-actions{display:flex; gap:8px; margin-top:8px}
 
-/* ===== Toast & Modal & Spinner (original) ===== */
-.toast{
-  position:fixed; right:16px; bottom:16px; z-index:60;
-  background:#0f172a; color:#e5edff; border:1px solid #24314a; box-shadow:var(--shadow-lg);
-  padding:12px 14px; border-radius:12px; display:none; min-width:220px;
-}
+/* Toast / Modal / Spinner */
+.toast{position:fixed; right:16px; bottom:16px; z-index:60; background:#0f172a; color:#e5edff; border:1px solid #24314a; box-shadow:var(--shadow-lg);
+  padding:12px 14px; border-radius:12px; display:none; min-width:220px}
 .toast.show{display:block; animation:slideUp .25s ease-out}
 @keyframes slideUp{from{transform:translateY(10px); opacity:.2}to{transform:translateY(0); opacity:1}}
 
@@ -135,11 +93,8 @@ textarea{min-height:88px; resize:vertical}
 .spinner .spin{width:64px; height:64px; border-radius:50%; border:6px solid #dbeafe; border-top-color:#2563eb; animation:rot 1s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
 
-/* ===== Login original (tema claro) ===== */
-.login{
-  max-width:480px; margin:10vh auto; padding:22px; border:1px solid var(--border);
-  border-radius:16px; background:#fff; box-shadow:var(--shadow);
-}
+/* Login */
+.login{max-width:480px; margin:10vh auto; padding:22px; border:1px solid var(--border); border-radius:16px; background:#fff; box-shadow:var(--shadow)}
 .login h1{font-size:1.25rem; display:flex; align-items:center; gap:8px; margin-bottom:8px}
 .helper{font-size:.83rem; color:var(--muted); margin-top:6px}
 .toggle-eye{position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; opacity:.7}
@@ -148,9 +103,6 @@ textarea{min-height:88px; resize:vertical}
 </style>
 </head>
 <body>
-  <!-- Nieve -->
-  <div class="snow" id="snow" aria-hidden="true"></div>
-
   <!-- Topbar -->
   <div class="topbar" id="topbar" style="display:none">
     <div class="inner">
@@ -172,7 +124,7 @@ textarea{min-height:88px; resize:vertical}
     </div>
   </div>
 
-  <!-- Login (tema claro) -->
+  <!-- Login -->
   <section id="loginView" class="login">
     <h1>Acceso a administración <span>🎄</span></h1>
     <p class="helper">Ingresa usuario y PAT para publicar/editar tarjetas.</p>
@@ -227,23 +179,13 @@ textarea{min-height:88px; resize:vertical}
           </div>
         </div>
 
-        <!-- Uploader: frente + adentro (NUEVO campo) -->
-        <div class="uploader up" style="margin-top:6px">
-          <div>
-            <label style="font-weight:700;display:block;margin-bottom:.35rem">Foto frente</label>
-            <div class="drop" id="dropFront">
-              <input type="file" id="fileFront" accept="image/*">
-              <div class="preview" id="prevFront"><span class="meta">Arrastra o haz click para cargar</span></div>
-              <div class="meta" id="metaFront">Sin archivo</div>
-            </div>
-          </div>
-          <div>
-            <label style="font-weight:700;display:block;margin-bottom:.35rem">Foto adentro</label>
-            <div class="drop" id="dropInside">
-              <input type="file" id="fileInside" accept="image/*">
-              <div class="preview" id="prevInside"><span class="meta">Arrastra o haz click para cargar</span></div>
-              <div class="meta" id="metaInside">Sin archivo</div>
-            </div>
+        <!-- Uploader: SOLO foto frontal (versión de ayer) -->
+        <div style="margin-top:6px">
+          <label style="font-weight:700;display:block;margin-bottom:.35rem">Foto (frente)</label>
+          <div class="drop" id="dropFront">
+            <input type="file" id="fileFront" accept="image/*">
+            <div class="preview" id="prevFront"><span class="meta">Arrastra o haz click para cargar</span></div>
+            <div class="meta" id="metaFront">Sin archivo</div>
           </div>
         </div>
 
@@ -270,7 +212,7 @@ textarea{min-height:88px; resize:vertical}
   <div class="modal" id="confirmModal" aria-hidden="true">
     <div class="box">
       <h3>¿Eliminar tarjeta?</h3>
-      <p>Esto borrará el registro y sus imágenes (si están en el repo).</p>
+      <p>Esto borrará el registro y su imagen (si está en el repo).</p>
       <div class="actions">
         <button class="btn" id="cancelDel">Cancelar</button>
         <button class="btn danger" id="acceptDel"><i class="fa-solid fa-trash"></i> Eliminar</button>
@@ -285,36 +227,21 @@ textarea{min-height:88px; resize:vertical}
   <div class="toast" id="toast"><span id="toastMsg">Listo</span></div>
 
 <script>
-/* ===== Nieve (sutil) ===== */
-const snowEl = document.getElementById('snow');
-function flake(){
-  const f=document.createElement('div'); f.className='flake';
-  f.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
-  f.style.left=(Math.random()*100)+'%';
-  f.style.animationDuration=(Math.random()*4+7)+'s';
-  f.style.opacity=(Math.random()*.35+.45).toFixed(2);
-  f.style.fontSize=(Math.random()*.6+0.9).toFixed(2)+'em';
-  snowEl.appendChild(f);
-  setTimeout(()=>f.remove(),10000);
-}
-let snowTimer=setInterval(flake,420);
-for(let i=0;i<14;i++) setTimeout(flake, i*180);
-
 /* ===== Utils ===== */
 const $ = s => document.querySelector(s);
 function show(el, v){ el.style.display = v ? '' : 'none'; }
 function toast(msg){ const t=$('#toast'), m=$('#toastMsg'); m.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2000); }
 function spin(v){ $('#spinner').classList.toggle('show', v); }
 function fileExt(file){
-  const name = (file?.name||'').toLowerCase();
-  const ext = name.includes('.') ? name.split('.').pop() : (file?.type||'image/jpeg').split('/').pop();
+  const name=(file?.name||'').toLowerCase();
+  const ext=name.includes('.')?name.split('.').pop():(file?.type||'image/jpeg').split('/').pop();
   return (ext||'jpg').replace(/[^a-z0-9]/g,'') || 'jpg';
 }
 function readAsDataURL(file){return new Promise((res,rej)=>{const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file);});}
 function dataURLtoBase64(dataURL){ return dataURL.split(',')[1]; }
 function maskPat(p){ if(!p) return '—'; return p.length>10 ? p.slice(0,4)+'••••••'+p.slice(-3) : '••••••••'; }
 
-/* ===== Auth (igual que antes) ===== */
+/* ===== Auth (versión de ayer) ===== */
 const LOGIN = { user:'patripringle', pass:'SoyPatri1978' };
 function isLogged(){ return localStorage.getItem('cp_logged')==='1'; }
 function setLogged(v){ localStorage.setItem('cp_logged', v?'1':'0'); }
@@ -322,11 +249,8 @@ function getPAT(){ return localStorage.getItem('cp_pat')||''; }
 function setPAT(p){ localStorage.setItem('cp_pat', p||''); updatePatChip(); }
 function updatePatChip(){ $('#patMasked').textContent = maskPat( getPAT() ); }
 
-/* ===== GitHub API (igual) ===== */
-const GH = {
-  owner:'jmarinr', repo:'christmaspringle', branch:'main',
-  cardsPath:'cards.json', imagesDir:'images/cards'
-};
+/* ===== GitHub API ===== */
+const GH = { owner:'jmarinr', repo:'christmaspringle', branch:'main', cardsPath:'cards.json', imagesDir:'images/cards' };
 async function ghReq(path, method='GET', body=null, etag=null){
   const headers={ 'Accept':'application/vnd.github+json', 'Authorization':`Bearer ${getPAT()}` };
   if(body) headers['Content-Type']='application/json';
@@ -351,17 +275,17 @@ async function ghDelete(path,message,sha){
 
 /* ===== Estado / Sync ===== */
 let CARDS=[], CARDS_SHA=null, CARDS_ETAG=null;
-const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('cp-admin-sync') : null;
+const bc=('BroadcastChannel' in window)?new BroadcastChannel('cp-admin-sync'):null;
 bc?.addEventListener('message', ev=>{ if(ev?.data==='refresh'){ loadCards(true); } });
 
 async function loadCards(silent=false){
   try{
     if(!silent) spin(true);
-    const meta = await ghGet(GH.cardsPath, CARDS_ETAG);
+    const meta=await ghGet(GH.cardsPath, CARDS_ETAG);
     if(meta?.notModified){ setSync('sin cambios (304)', true); return; }
     if(!meta){ CARDS=[]; CARDS_SHA=null; CARDS_ETAG=null; renderList(); return; }
-    const content = atob(meta.content||'');
-    CARDS = JSON.parse(content||'[]'); CARDS_SHA=meta.sha||null; CARDS_ETAG=meta.etag||null;
+    const content=atob(meta.content||''); CARDS=JSON.parse(content||'[]');
+    CARDS_SHA=meta.sha||null; CARDS_ETAG=meta.etag||null;
     renderList(); setSync('actualizado', true);
   }catch(e){ console.error(e); setSync('error', false);
   }finally{ if(!silent) spin(false); }
@@ -369,8 +293,7 @@ async function loadCards(silent=false){
 function setSync(msg, ok){ const el=$('#syncState'); el.textContent=msg; el.className= ok?'state-ok':'state-bad'; }
 
 /* Poll ETag */
-setInterval(async ()=>{
-  if(!isLogged()) return;
+setInterval(async ()=>{ if(!isLogged()) return;
   try{ const head=await ghGet(GH.cardsPath, CARDS_ETAG); if(head && !head.notModified){ await loadCards(true); } }catch(e){}
 },8000);
 
@@ -380,19 +303,14 @@ function renderList(){
   if(!Array.isArray(CARDS)||!CARDS.length){ grid.innerHTML='<div class="small" style="opacity:.8">No hay tarjetas aún.</div>'; return; }
   const sorted=[...CARDS].sort((a,b)=>(a.number||0)-(b.number||0));
   grid.innerHTML = sorted.map(c=>{
-    const f1=c.image||'n.png', f2=c.image_inside||'n.png';
-    const hasInside=!!c.image_inside;
+    const f=c.image||'n.png';
     return `
       <div class="item" data-num="${c.number}">
-        <div class="thumbs">
-          <img src="${f1}" alt="Frente ${c.title}" loading="lazy">
-          <img src="${f2}" alt="Adentro ${c.title}" loading="lazy">
-        </div>
+        <div class="thumb"><img src="${f}" alt="Frente ${c.title}" loading="lazy"></div>
         <div class="body">
           <h4>#${c.number} · ${c.title||''}</h4>
           <div class="badges">
             <span class="badge">₡${Math.round(c.price||0).toLocaleString('es-CR')}</span>
-            ${hasInside?'<span class="badge" style="background:#ecfdf5;color:#065f46;border-color:#bbf7d0">con interior</span>':'<span class="badge" style="opacity:.6">sin interior</span>'}
           </div>
           <div class="row-actions">
             <button class="btn" onclick="fillForm(${c.number})"><i class="fa-regular fa-pen-to-square"></i> Editar</button>
@@ -406,9 +324,7 @@ function renderList(){
 /* ===== Form Helpers ===== */
 function clearForm(){
   $('#number').value=''; $('#price').value=''; $('#title').value=''; $('#desc').value='';
-  $('#fileFront').value=''; $('#fileInside').value='';
-  $('#prevFront').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaFront').textContent='Sin archivo';
-  $('#prevInside').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaInside').textContent='Sin archivo';
+  $('#fileFront').value=''; $('#prevFront').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaFront').textContent='Sin archivo';
   $('#statusLine').textContent='Listo.';
 }
 function fillForm(n){
@@ -416,35 +332,28 @@ function fillForm(n){
   $('#number').value=c.number||''; $('#price').value=c.price||''; $('#title').value=c.title||''; $('#desc').value=c.description||'';
   if(c.image){ $('#prevFront').innerHTML=`<img src="${c.image}" alt="Frente">`; $('#metaFront').textContent=c.image.split('/').pop(); }
   else{ $('#prevFront').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaFront').textContent='Sin archivo'; }
-  if(c.image_inside){ $('#prevInside').innerHTML=`<img src="${c.image_inside}" alt="Adentro">`; $('#metaInside').textContent=c.image_inside.split('/').pop(); }
-  else{ $('#prevInside').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaInside').textContent='Sin archivo'; }
   $('#statusLine').textContent='Editando #'+c.number;
 }
 
-/* Previews (frente/adentro) */
-const fileFront=$('#fileFront'), fileInside=$('#fileInside');
+/* Preview */
+const fileFront=$('#fileFront');
 fileFront?.addEventListener('change', ()=>{
   const f=fileFront.files[0];
   if(!f){ $('#prevFront').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaFront').textContent='Sin archivo'; return; }
   const url=URL.createObjectURL(f); $('#prevFront').innerHTML=`<img src="${url}" alt="Frente">`; $('#metaFront').textContent=`${f.name} · ${(f.size/1024/1024).toFixed(2)} MB`;
 });
-fileInside?.addEventListener('change', ()=>{
-  const f=fileInside.files[0];
-  if(!f){ $('#prevInside').innerHTML='<span class="meta">Arrastra o haz click para cargar</span>'; $('#metaInside').textContent='Sin archivo'; return; }
-  const url=URL.createObjectURL(f); $('#prevInside').innerHTML=`<img src="${url}" alt="Adentro">`; $('#metaInside').textContent=`${f.name} · ${(f.size/1024/1024).toFixed(2)} MB`;
-});
 
-/* ===== Guardar / Actualizar (con segunda foto) ===== */
+/* ===== Guardar / Actualizar ===== */
 function rawPrefix(){ return `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch}/`; }
 async function tryDeleteByRawUrl(url){
   if(!url) return; const prefix=rawPrefix(); if(!url.startsWith(prefix)) return;
   const path=decodeURIComponent(url.replace(prefix,'')); const meta=await ghGet(path); if(meta?.sha) await ghDelete(path,'admin: delete image',meta.sha);
 }
-async function uploadImageIfNeeded(file, cardNumber, kind){
+async function uploadImageIfNeeded(file, cardNumber){
   if(!file) return null;
-  const ext=fileExt(file), path=`${GH.imagesDir}/card-${cardNumber}-${kind}.${ext}`;
+  const ext=fileExt(file), path=`${GH.imagesDir}/card-${cardNumber}.`+ext;
   const dataURL=await readAsDataURL(file); const b64=dataURLtoBase64(dataURL);
-  await ghPut(path,b64,`admin: upload ${kind} for card #${cardNumber}`,undefined);
+  await ghPut(path,b64,`admin: upload front for card #${cardNumber}`,undefined);
   return `${rawPrefix()}${path}`;
 }
 async function saveCard(){
@@ -453,15 +362,14 @@ async function saveCard(){
   if(!num || !title){ toast('Completa número y título'); return; }
 
   const existing=CARDS.find(c=>Number(c.number)===num)||null;
-  const frontFile=fileFront?.files?.[0]||null, insideFile=fileInside?.files?.[0]||null;
+  const frontFile=fileFront?.files?.[0]||null;
 
   try{
     spin(true); $('#statusLine').textContent='Subiendo…';
-    let imageFrontUrl=existing?.image||'', imageInsideUrl=existing?.image_inside||'';
-    if(frontFile){ if(existing?.image) await tryDeleteByRawUrl(existing.image); imageFrontUrl=await uploadImageIfNeeded(frontFile,num,'front'); }
-    if(insideFile){ if(existing?.image_inside) await tryDeleteByRawUrl(existing.image_inside); imageInsideUrl=await uploadImageIfNeeded(insideFile,num,'inside'); }
+    let imageFrontUrl=existing?.image||'';
+    if(frontFile){ if(existing?.image) await tryDeleteByRawUrl(existing.image); imageFrontUrl=await uploadImageIfNeeded(frontFile,num); }
 
-    const newCard={ number:num, title, description:desc, price, image:imageFrontUrl||existing?.image||'', image_inside:imageInsideUrl||existing?.image_inside||'' };
+    const newCard={ number:num, title, description:desc, price, image:imageFrontUrl||existing?.image||'' };
 
     let next=Array.isArray(CARDS)?[...CARDS]:[]; const i=next.findIndex(c=>Number(c.number)===num);
     if(i>=0) next[i]=newCard; else next.push(newCard);
@@ -485,7 +393,7 @@ $('#acceptDel').addEventListener('click', async ()=>{
   try{
     spin(true);
     const num=pendingDelete; const card=CARDS.find(c=>Number(c.number)===num); if(!card) throw new Error('No existe');
-    await tryDeleteByRawUrl(card.image); await tryDeleteByRawUrl(card.image_inside);
+    await tryDeleteByRawUrl(card.image);
 
     const next=CARDS.filter(c=>Number(c.number)!==num);
     const content=btoa(JSON.stringify(next,null,2));
@@ -496,7 +404,7 @@ $('#acceptDel').addEventListener('click', async ()=>{
   }finally{ spin(false); pendingDelete=null; $('#confirmModal').classList.remove('show'); }
 });
 
-/* ===== Login flow (igual) ===== */
+/* ===== Login flow ===== */
 function updateUI(){
   if(isLogged()){
     show($('#loginView'),false); show($('#topbar'),true); show($('#app'),true);
@@ -518,20 +426,17 @@ $('#loginBtn').addEventListener('click', ()=>{
 $('#copyPat').addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText(getPAT()); toast('PAT copiado'); }catch(e){ toast('No se pudo copiar'); }});
 $('#logout').addEventListener('click', ()=>{ setLogged(false); setPAT(''); CARDS=[]; CARDS_SHA=null; CARDS_ETAG=null; updateUI(); });
 
-/* ===== Bindings ===== */
+/* Bindings */
 $('#saveBtn').addEventListener('click', saveCard);
 $('#clearBtn').addEventListener('click', clearForm);
 $('#reloadBtn').addEventListener('click', ()=> loadCards());
+const dropFront=$('#dropFront'); const inputFront=dropFront.querySelector('input[type="file"]');
+dropFront.addEventListener('click', ()=> inputFront.click());
+;['dragenter','dragover'].forEach(evt=> dropFront.addEventListener(evt, e=>{ e.preventDefault(); dropFront.style.borderColor='#93c5fd'; }));
+;['dragleave','drop'].forEach(evt=> dropFront.addEventListener(evt, e=>{ e.preventDefault(); dropFront.style.borderColor='#d1d5db'; }));
+dropFront.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(!f) return; inputFront.files=e.dataTransfer.files; inputFront.dispatchEvent(new Event('change')); });
 
-;['dropFront','dropInside'].forEach(id=>{
-  const box=$('#'+id); const input=box.querySelector('input[type="file"]');
-  box.addEventListener('click', ()=> input.click());
-  ;['dragenter','dragover'].forEach(evt=> box.addEventListener(evt, e=>{ e.preventDefault(); box.style.borderColor='#93c5fd'; }));
-  ;['dragleave','drop'].forEach(evt=> box.addEventListener(evt, e=>{ e.preventDefault(); box.style.borderColor='#d1d5db'; }));
-  box.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(!f) return; input.files=e.dataTransfer.files; input.dispatchEvent(new Event('change')); });
-});
-
-/* ===== Init ===== */
+/* Init */
 updateUI();
 </script>
 </body>

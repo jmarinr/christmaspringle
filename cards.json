@@ -1,11 +1,11 @@
 [
   {
-    "number": 5,
-    "title": "Vyvubu",
-    "description": "Hbububi",
-    "price": 3,
-    "image": "images/cards/5-1.png",
-    "image2": "images/cards/5-2.png",
-    "uploadedAt": "2025-11-10T03:50:18.658Z"
+    "number": 1,
+    "title": "Vintage Memory",
+    "description": "Esta tarjeta evoca aquellas que veíamos en nuestra infancia decorando el árbol o las repisas en la casa de nuestros abuelos.  \nAntes era costumbre recibir y enviar tarjetas como una muestra de cariño y buenos deseos para el año por empezar.  \nPapel 100% algodón, técnica acuarela.  \nMedidas: 13, 2 cm  x 18,2 cm\nArtesanal.",
+    "price": 2950,
+    "image": "images/cards/1-1.png",
+    "image2": "images/cards/1-2.png",
+    "uploadedAt": "2025-11-10T03:55:39.728Z"
   }
 ]

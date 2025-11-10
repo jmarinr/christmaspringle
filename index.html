@@ -618,7 +618,17 @@ function normalizePath(p, ts){
   return `${encodeURI(src)}?t=${ts}`;
 }
 
-function escapeHtml(s){return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]);}
+// FIX: cierra correctamente la llamada a replace
+function escapeHtml(s){
+  return (s||'').replace(/[&<>"']/g, m => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#039;'
+  }[m]));
+}
+
 
 /* ===== Enlaces suavizados ===== */
 document.querySelectorAll('nav a[href^="#"]').forEach(a=>{

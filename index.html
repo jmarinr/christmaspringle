@@ -445,4 +445,528 @@ body.dark .artist-social a{background:rgba(255,255,255,.1); color:var(--dark-tex
   }
   .artist-info h3{justify-content:center}
   .artist-tagline{justify-content:center}
-  .artist-highlights, .a
+  .artist-highlights, .artist-social{justify-content:center}
+  .artist-quote{text-align:left}
+  .artist-card::after{top:10px; right:15px; font-size:2rem}
+}
+
+/* ===== Sección Reseñas ===== */
+.reviews-section{margin-top:3.5rem; scroll-margin-top:100px}
+.reviews-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
+.review-card{
+  background:var(--panel);
+  border-radius:20px;
+  padding:1.8rem;
+  box-shadow:var(--card-shadow);
+  border:2px solid transparent;
+  transition:.3s;
+  position:relative;
+}
+body.dark .review-card{background:#0b1726}
+.review-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--card-shadow-lg);
+  border-color:var(--primary-gold);
+}
+.review-card::before{
+  content:'"';
+  position:absolute;
+  top:10px;
+  left:18px;
+  font-size:4rem;
+  color:var(--primary-gold);
+  opacity:.2;
+  font-family:Georgia,serif;
+  line-height:1;
+}
+.review-stars{color:var(--primary-gold); font-size:1.1rem; margin-bottom:.8rem}
+.review-text{
+  font-style:italic;
+  line-height:1.7;
+  color:var(--text-dark);
+  margin-bottom:1rem;
+  position:relative;
+  z-index:1;
+}
+body.dark .review-text{color:var(--dark-text)}
+.review-author{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+}
+.review-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--chip-green-from),var(--chip-green-to));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:800;
+  font-size:1.1rem;
+}
+.review-name{font-weight:700}
+.review-date{font-size:.85rem; color:var(--text-muted)}
+body.dark .review-date{color:var(--dark-muted)}
+
+/* Footer */
+footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
+.footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.footer-social{margin-top:1rem; display:flex; justify-content:center; gap:1rem}
+.footer-social a{color:#fff; font-size:1.6rem; transition:.2s}
+.footer-social a:hover{color:#FDD835; transform:translateY(-3px)}
+.site-version{margin-top:10px; opacity:.85; font-weight:700}
+
+/* Responsive */
+@media (max-width:1200px){ .logo-img{height:150px} .header-title{font-size:2.7rem}}
+@media (max-width:992px){ .logo-img{height:128px} .header-title{font-size:2.35rem} .wagon,.engine{font-size:4.2em}}
+@media (max-width:800px){
+  .header-content{grid-template-columns:1fr; text-align:center}
+  nav{justify-content:center}
+}
+@media (max-width:640px){
+  .logo-img{height:96px}
+  .chip{padding:.6rem .9rem; font-size:.92rem}
+  .cards-grid{gap:18px}
+  .card-image{aspect-ratio:3/2}
+  .wagon,.engine{font-size:3.3em}
+  .tracker{transform:scale(.9); left:10px; top:-26px}
+  .section-title{font-size:2.2rem}
+}
+
+/* Prefiere menos movimiento */
+@media (prefers-reduced-motion:reduce){
+  .train-container{animation-duration:60s}
+  .wagon,.engine,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
+  .artist-card::before, .artist-photo-frame, .artist-card::after, .artist-decor{animation:none}
+}
+</style>
+</head>
+<body>
+  <!-- Nieve -->
+  <div id="snowContainer" class="snow-container" aria-hidden="true"></div>
+
+  <!-- Tren (izquierda) + Santa Tracker -->
+  <div class="train-container" id="train" title="🚂 Tócalo para turbo 10s">
+    <div class="train">
+      <div class="engine-wrap"><div class="engine">🚂</div><div class="smoke">💨</div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stDays">--</div><div class="lbl">días</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stHours">--</div><div class="lbl">horas</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stMins">--</div><div class="lbl">min</div></div></div>
+      <div class="wagon" style="position:relative">🎁<div class="tracker"><div class="num" id="stSecs">--</div><div class="lbl">seg</div></div></div>
+      <div class="wagon">🎄</div><div class="wagon">⭐</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="siteHeader">
+    <div class="header-content">
+      <a href="#inicio" class="logo-link" aria-label="Inicio">
+        <img src="christmas-pringle-logo.png" class="logo-img" alt="Christmas Pringle">
+      </a>
+
+      <!-- Título + luces SVG -->
+      <div class="header-title" id="headerTitle">
+        Diversión festiva para toda la familia
+        <div class="lights-wrap" aria-hidden="true">
+          <svg id="garland" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path class="wire" d="M10,70 C200,30 350,110 500,60 S800,30 990,80" />
+            <!-- Bombillos (red, green, blue, yellow) -->
+            <g>
+              <circle class="bulb glow-red"    cx="120" cy="60" r="10"/>
+              <circle class="bulb glow-green"  cx="220" cy="48" r="10"/>
+              <circle class="bulb glow-blue"   cx="320" cy="78" r="10"/>
+              <circle class="bulb glow-yellow" cx="420" cy="58" r="10"/>
+              <circle class="bulb glow-red"    cx="520" cy="50" r="10"/>
+              <circle class="bulb glow-green"  cx="620" cy="72" r="10"/>
+              <circle class="bulb glow-blue"   cx="720" cy="52" r="10"/>
+              <circle class="bulb glow-yellow" cx="820" cy="82" r="10"/>
+              <circle class="bulb glow-red"    cx="920" cy="66" r="10"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Nav + switch -->
+      <nav>
+        <a class="chip btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a class="chip btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
+        <a class="chip btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
+        <a class="chip btn-artist" href="#artista"><i class="fa-solid fa-paintbrush"></i> La Artista</a>
+        <a class="chip btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
+        <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
+          <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
+        </button>
+        <a class="chip btn-play" href="https://santatracker.google.com" target="_blank" rel="noopener" aria-label="Jugar Santa Tracker">
+          <i class="fa-solid fa-gamepad"></i> Jugar
+        </a>
+        <div class="switch" aria-label="Luces y modo de color">
+          <span>🎄 Luces</span>
+          <div id="modeToggle" class="toggle" role="switch" aria-checked="false" tabindex="0"></div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Franja decorativa -->
+  <section id="inicio" class="hero" aria-label="Presentación">
+    <div class="celeste-icons">
+      <span>🧝</span><span>🎁</span><span>❄️</span><span>🎄</span><span>🔔</span><span>⛄</span><span>✨</span>
+    </div>
+  </section>
+
+  <!-- Contenido -->
+  <main class="container">
+    <!-- Tarjetas -->
+    <section id="tarjetas" aria-labelledby="cardsTitle">
+      <h2 id="cardsTitle" class="section-title">🎨 Nuestras Tarjetas Mágicas</h2>
+      <div id="cardsGrid" class="cards-grid">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin" style="font-size:2.1rem;color:var(--primary-red)"></i>
+          <p>Cargando tarjetas...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTE PRINGLE -->
+    <section id="arte" class="art-wrap" aria-labelledby="artTitle">
+      <h2 id="artTitle" class="section-title">🖼️ Colección Arte Pringle</h2>
+      <div class="art-grid">
+        <article class="frame">
+          <div class="frame-inner">
+            <div class="frame-image">
+              <img src="arte-santa.jpeg" alt="Santa" loading="lazy" decoding="async">
+            </div>
+            <div class="art-meta">
+              <div class="art-title">Santa</div>
+              <a href="https://wa.me/50612345678?text=Hola!%20Me%20interesa%20el%20arte%20Santa" class="wa-btn art-buy" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Consultar
+              </a>
+            </div>
+          </div>
+        </article>
+        <article class="frame">
+          <div class="frame-inner">
+            <div class="frame-image">
+              <img src="arte-pueblo.jpeg" alt="Pueblo Navideño" loading="lazy" decoding="async">
+            </div>
+            <div class="art-meta">
+              <div class="art-title">Pueblo Navideño</div>
+              <a href="https://wa.me/50612345678?text=Hola!%20Me%20interesa%20el%20arte%20Pueblo%20Navideño" class="wa-btn art-buy" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Consultar
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BIOGRAFÍA ARTISTA -->
+    <section id="artista" class="artist-section" aria-labelledby="artistTitle">
+      <h2 id="artistTitle" class="section-title">✨ Conoce a la Artista</h2>
+      <div class="artist-card">
+        <!-- Decoraciones flotantes -->
+        <span class="artist-decor d1">🎨</span>
+        <span class="artist-decor d2">🖌️</span>
+        <span class="artist-decor d3">🌟</span>
+        
+        <div class="artist-photo-wrap">
+          <div class="artist-photo-frame"></div>
+          <img src="artista-foto.jpg" alt="Nombre de la Artista - Creadora de Christmas Pringle" class="artist-photo" loading="lazy">
+          <div class="artist-badge">
+            <i class="fa-solid fa-certificate"></i> Artista Verificada
+          </div>
+        </div>
+        
+        <div class="artist-info">
+          <h3>🎨 Nombre de la Artista</h3>
+          <div class="artist-tagline">
+            <i class="fa-solid fa-heart"></i> Creadora de magia navideña desde Costa Rica
+          </div>
+          
+          <div class="artist-bio">
+            <p>
+              Con más de <strong>10 años</strong> dedicada al arte de la acuarela, [Nombre] ha convertido su pasión 
+              por la Navidad en hermosas tarjetas que llevan alegría a hogares de toda Costa Rica y más allá.
+            </p>
+            <p>
+              Cada tarjeta es pintada a mano con amor y dedicación, utilizando técnicas tradicionales 
+              de acuarela que dan vida a escenas navideñas únicas e irrepetibles. Su estilo combina 
+              la calidez del arte tradicional con toques modernos que capturan la esencia mágica de 
+              las fiestas decembrinas.
+            </p>
+            
+            <div class="artist-quote">
+              Mi misión es que cada tarjeta cuente una historia y lleve un pedacito de magia 
+              navideña a quien la recibe. Cada pincelada lleva un poco de mi corazón.
+              <br><strong>— [Nombre]</strong>
+            </div>
+            
+            <p>
+              Desde su pequeño estudio en Costa Rica, crea piezas que han llegado a manos de 
+              cientos de familias, convirtiendo cada Navidad en un momento más especial y memorable.
+            </p>
+          </div>
+          
+          <div class="artist-highlights">
+            <span class="highlight-tag"><i class="fa-solid fa-palette"></i> Acuarela Artesanal</span>
+            <span class="highlight-tag gold"><i class="fa-solid fa-award"></i> +10 Años Experiencia</span>
+            <span class="highlight-tag red"><i class="fa-solid fa-heart"></i> Hecho en Costa Rica</span>
+            <span class="highlight-tag blue"><i class="fa-solid fa-snowflake"></i> Arte Único</span>
+            <span class="highlight-tag violet"><i class="fa-solid fa-truck-fast"></i> Envíos a Todo CR</span>
+          </div>
+          
+          <div class="artist-social">
+            <a href="https://instagram.com/christmaspringle" target="_blank" rel="noopener" class="ig" aria-label="Síguenos en Instagram" title="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com/christmaspringle" target="_blank" rel="noopener" class="fb" aria-label="Síguenos en Facebook" title="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/50612345678" target="_blank" rel="noopener" class="wa" aria-label="Contáctanos por WhatsApp" title="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="https://tiktok.com/@christmaspringle" target="_blank" rel="noopener" class="tt" aria-label="Síguenos en TikTok" title="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEÑAS -->
+    <section id="resenas" class="reviews-section" aria-labelledby="reviewsTitle">
+      <h2 id="reviewsTitle" class="section-title">⭐ Lo Que Dicen Nuestros Clientes</h2>
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">
+            Las tarjetas son absolutamente hermosas. Mi familia quedó encantada con el detalle 
+            y la calidad de la acuarela. ¡Ya pedí más para este año!
+          </p>
+          <div class="review-author">
+            <div class="review-avatar">MC</div>
+            <div>
+              <div class="review-name">María Castro</div>
+              <div class="review-date">Diciembre 2024</div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="review-card">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">
+            El arte de las tarjetas es único. Se nota que están hechas con mucho amor y dedicación. 
+            El servicio por WhatsApp fue súper rápido.
+          </p>
+          <div class="review-author">
+            <div class="review-avatar">JR</div>
+            <div>
+              <div class="review-name">José Rodríguez</div>
+              <div class="review-date">Noviembre 2024</div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="review-card">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">
+            ¡Increíble trabajo! Las tarjetas llegaron perfectamente empacadas y son aún más 
+            lindas en persona. 100% recomendado.
+          </p>
+          <div class="review-author">
+            <div class="review-avatar">AS</div>
+            <div>
+              <div class="review-name">Ana Solano</div>
+              <div class="review-date">Diciembre 2024</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <img src="christmas-pringle-logo.png" alt="Christmas Pringle" class="footer-logo">
+    <div class="footer-social">
+      <a href="https://instagram.com/christmaspringle" target="_blank" rel="noopener" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://facebook.com/christmaspringle" target="_blank" rel="noopener" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://wa.me/50612345678" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+      <a href="https://tiktok.com/@christmaspringle" target="_blank" rel="noopener" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+    </div>
+    <p class="site-version">Christmas Pringle © 2024 | Hecho con ❤️ en Costa Rica</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+    <img id="lbImg" src="" alt="Vista ampliada">
+    <div class="lb-nav">
+      <button class="lb-btn" id="lbPrev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="lb-btn" id="lbNext" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="Christmas Rap.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+  // ========== NIEVE ==========
+  (function createSnow(){
+    const c=document.getElementById('snowContainer');
+    const flakes=['❄','❅','❆','✻','✼'];
+    for(let i=0;i<55;i++){
+      const s=document.createElement('span');
+      s.className='snowflake';
+      s.textContent=flakes[Math.floor(Math.random()*flakes.length)];
+      s.style.left=Math.random()*100+'vw';
+      s.style.animationDuration=(12+Math.random()*18)+'s';
+      s.style.animationDelay=Math.random()*15+'s';
+      s.style.fontSize=(.7+Math.random()*.9)+'em';
+      c.appendChild(s);
+    }
+  })();
+
+  // ========== SANTA TRACKER ==========
+  (function santaTracker(){
+    const xmas=new Date(new Date().getFullYear(),11,25);
+    if(new Date()>xmas) xmas.setFullYear(xmas.getFullYear()+1);
+    function upd(){
+      const diff=xmas-new Date();
+      if(diff<=0){document.getElementById('stDays').textContent='🎄';return;}
+      const d=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),m=Math.floor(diff%36e5/6e4),sec=Math.floor(diff%6e4/1e3);
+      document.getElementById('stDays').textContent=String(d).padStart(2,'0');
+      document.getElementById('stHours').textContent=String(h).padStart(2,'0');
+      document.getElementById('stMins').textContent=String(m).padStart(2,'0');
+      document.getElementById('stSecs').textContent=String(sec).padStart(2,'0');
+    }
+    upd();setInterval(upd,1000);
+  })();
+
+  // ========== TURBO TREN ==========
+  document.getElementById('train').addEventListener('click',function(){
+    this.style.setProperty('--train-duration','4s');
+    setTimeout(()=>this.style.setProperty('--train-duration','42s'),10000);
+  });
+
+  // ========== MODO OSCURO ==========
+  const toggle=document.getElementById('modeToggle');
+  function setDark(on){
+    document.body.classList.toggle('dark',on);
+    toggle.classList.toggle('on',on);
+    toggle.setAttribute('aria-checked',on);
+    localStorage.setItem('darkMode',on?'1':'0');
+  }
+  toggle.addEventListener('click',()=>setDark(!document.body.classList.contains('dark')));
+  toggle.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle.click();}});
+  if(localStorage.getItem('darkMode')==='1') setDark(true);
+
+  // ========== MÚSICA ==========
+  const audio=document.getElementById('bgMusic'),musicBtn=document.getElementById('musicBtn');
+  let playing=false;
+  musicBtn.addEventListener('click',()=>{
+    if(playing){audio.pause();musicBtn.innerHTML='<i class="fa-solid fa-music"></i>';}
+    else{audio.play();musicBtn.innerHTML='<i class="fa-solid fa-pause"></i>';}
+    playing=!playing;
+  });
+
+  // ========== TARJETAS DESDE JSON ==========
+  const WA_NUM='50612345678';
+  async function loadCards(){
+    const grid=document.getElementById('cardsGrid');
+    try{
+      const res=await fetch('cards.json');
+      if(!res.ok) throw new Error('No cards.json');
+      const cards=await res.json();
+      if(!cards.length){grid.innerHTML='<p class="no-cards">No hay tarjetas disponibles.</p>';return;}
+      grid.innerHTML='';
+      cards.forEach(c=>{
+        const art=document.createElement('article');
+        art.className='card';
+        const msg=encodeURIComponent(`Hola! Me interesa la tarjeta "${c.name}"`);
+        art.innerHTML=`
+          <div class="card-image">
+            <img src="${c.image}" alt="${c.name}" class="card-photo" loading="lazy" decoding="async">
+            ${c.image2?`<img src="${c.image2}" alt="${c.name} interior" class="card-thumb2" style="display:block">`:''}
+          </div>
+          <div class="card-content">
+            <h3>${c.name}</h3>
+            <p>${c.description||''}</p>
+            <div class="price-row">
+              <span class="price-badge"><i class="fa-solid fa-tag"></i> ₡${c.price.toLocaleString()}</span>
+              <a href="https://wa.me/${WA_NUM}?text=${msg}" class="wa-btn" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Comprar
+              </a>
+            </div>
+          </div>`;
+        grid.appendChild(art);
+      });
+
+      // Lightbox
+      const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
+      let imgs=[],idx=0;
+      grid.querySelectorAll('.card-photo, .card-thumb2').forEach(img=>{
+        img.style.cursor='zoom-in';
+        img.addEventListener('click',()=>{
+          imgs=Array.from(img.closest('.card').querySelectorAll('img'));
+          idx=imgs.indexOf(img);
+          lbImg.src=imgs[idx].src;
+          lb.classList.add('open');
+        });
+      });
+      document.getElementById('lbPrev').onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;lbImg.src=imgs[idx].src;};
+      document.getElementById('lbNext').onclick=()=>{idx=(idx+1)%imgs.length;lbImg.src=imgs[idx].src;};
+      lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open');});
+      document.addEventListener('keydown',e=>{
+        if(!lb.classList.contains('open'))return;
+        if(e.key==='Escape')lb.classList.remove('open');
+        if(e.key==='ArrowLeft')document.getElementById('lbPrev').click();
+        if(e.key==='ArrowRight')document.getElementById('lbNext').click();
+      });
+    }catch(err){
+      console.error(err);
+      grid.innerHTML='<p class="no-cards">Error cargando tarjetas. Intenta recargar la página.</p>';
+    }
+  }
+  loadCards();
+
+  // ========== SMOOTH SCROLL ==========
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    });
+  });
+  </script>
+</body>
+</html>

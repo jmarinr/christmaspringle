@@ -31,7 +31,6 @@
   --chip-violet-from:#8E24AA; --chip-violet-to:#BA68C8;
   --chip-red-from:#E74C3C; --chip-red-to:#C0392B;
   --chip-teal-from:#009688; --chip-teal-to:#26A69A;
-  --chip-pink-from:#E91E63; --chip-pink-to:#F48FB1;
 
   --panel:#ffffff; --panel-contrast:#0d1522;
   --panel-subtle:#f4f6f8;
@@ -152,8 +151,6 @@ nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content
 .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
 /* Nuevo botón Jugar */
 .btn-play{background:linear-gradient(135deg,var(--chip-teal-from),var(--chip-teal-to))}
-/* Nuevo botón La Artista */
-.btn-artist{background:linear-gradient(135deg,var(--chip-pink-from),var(--chip-pink-to))}
 
 /* Switch luces (modo) */
 .switch{display:inline-flex; align-items:center; gap:.5rem; color:var(--text-dark)}
@@ -223,293 +220,6 @@ body.dark .loading, body.dark .no-cards{color:var(--dark-muted)}
 .art-title{font-weight:800; font-size:1.05rem}
 .art-buy{white-space:nowrap}
 
-/* ===== Sección Biografía Artista ===== */
-.artist-section{margin-top:3.5rem; scroll-margin-top:100px}
-.artist-card{
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:2.5rem;
-  background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,248,240,.95));
-  border-radius:32px;
-  padding:2.5rem;
-  box-shadow:var(--card-shadow-lg);
-  position:relative;
-  overflow:hidden;
-  border:4px solid transparent;
-  background-clip:padding-box;
-}
-.artist-card::before{
-  content:'';
-  position:absolute;
-  inset:-4px;
-  background:linear-gradient(135deg,var(--primary-red),var(--primary-gold),var(--primary-green),var(--primary-blue));
-  border-radius:36px;
-  z-index:-1;
-  animation:borderGlow 4s ease-in-out infinite;
-}
-@keyframes borderGlow{
-  0%,100%{opacity:.7}
-  50%{opacity:1}
-}
-body.dark .artist-card{
-  background:linear-gradient(135deg,rgba(15,26,43,.98),rgba(20,32,50,.95));
-}
-.artist-card::after{
-  content:'✨';
-  position:absolute;
-  top:20px;
-  right:30px;
-  font-size:2.5rem;
-  animation:sparkle 2s ease-in-out infinite;
-}
-@keyframes sparkle{
-  0%,100%{transform:scale(1) rotate(0deg); opacity:.8}
-  50%{transform:scale(1.2) rotate(15deg); opacity:1}
-}
-.artist-photo-wrap{
-  position:relative;
-}
-.artist-photo{
-  width:100%;
-  aspect-ratio:3/4;
-  object-fit:cover;
-  border-radius:24px;
-  box-shadow:0 16px 40px rgba(0,0,0,.25);
-  border:5px solid var(--white);
-  transition:transform .4s ease;
-}
-.artist-photo:hover{
-  transform:scale(1.02) rotate(-1deg);
-}
-.artist-photo-frame{
-  position:absolute;
-  inset:-14px;
-  border:3px dashed var(--primary-gold);
-  border-radius:32px;
-  opacity:.6;
-  animation:framePulse 3s ease-in-out infinite;
-}
-@keyframes framePulse{
-  0%,100%{opacity:.4; transform:scale(1)}
-  50%{opacity:.7; transform:scale(1.01)}
-}
-.artist-badge{
-  position:absolute;
-  bottom:-12px;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(135deg,var(--primary-red),#c0392b);
-  color:#fff;
-  padding:.6rem 1.2rem;
-  border-radius:999px;
-  font-weight:800;
-  font-size:.9rem;
-  box-shadow:0 6px 20px rgba(231,76,60,.4);
-  white-space:nowrap;
-  display:flex;
-  align-items:center;
-  gap:.4rem;
-}
-.artist-info h3{
-  font-family:'Mountains of Christmas',cursive;
-  font-size:2.4rem;
-  color:var(--primary-red);
-  margin-bottom:.6rem;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-}
-body.dark .artist-info h3{color:#ff8a80}
-.artist-tagline{
-  font-size:1.2rem;
-  color:var(--primary-green);
-  font-weight:700;
-  margin-bottom:1.5rem;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-}
-body.dark .artist-tagline{color:#69F0AE}
-.artist-bio{
-  line-height:1.85;
-  color:var(--text-dark);
-  font-size:1.08rem;
-}
-body.dark .artist-bio{color:var(--dark-text)}
-.artist-bio p{margin-bottom:1.1rem}
-.artist-quote{
-  background:linear-gradient(135deg,rgba(255,179,0,.12),rgba(255,215,0,.08));
-  border-left:4px solid var(--primary-gold);
-  padding:1.2rem 1.5rem;
-  border-radius:0 16px 16px 0;
-  margin:1.5rem 0;
-  font-style:italic;
-  color:var(--text-dark);
-  position:relative;
-}
-body.dark .artist-quote{
-  background:linear-gradient(135deg,rgba(255,179,0,.08),rgba(255,215,0,.04));
-  color:var(--dark-text);
-}
-.artist-quote::before{
-  content:'"';
-  position:absolute;
-  top:-10px;
-  left:10px;
-  font-size:3.5rem;
-  color:var(--primary-gold);
-  opacity:.4;
-  font-family:Georgia,serif;
-}
-.artist-highlights{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.8rem;
-  margin-top:1.8rem;
-}
-.highlight-tag{
-  display:inline-flex;
-  align-items:center;
-  gap:.45rem;
-  background:linear-gradient(135deg,var(--chip-green-from),var(--chip-green-to));
-  color:#fff;
-  padding:.55rem 1.1rem;
-  border-radius:999px;
-  font-weight:700;
-  font-size:.92rem;
-  box-shadow:var(--shadow-soft);
-  transition:transform .2s, box-shadow .2s;
-}
-.highlight-tag:hover{
-  transform:translateY(-2px);
-  box-shadow:var(--shadow-medium);
-}
-.highlight-tag.gold{background:linear-gradient(135deg,var(--chip-yellow-from),var(--chip-yellow-to)); color:var(--chip-yellow-text)}
-.highlight-tag.red{background:linear-gradient(135deg,var(--chip-red-from),var(--chip-red-to))}
-.highlight-tag.blue{background:linear-gradient(135deg,var(--chip-blue-from),var(--chip-blue-to))}
-.highlight-tag.violet{background:linear-gradient(135deg,var(--chip-violet-from),var(--chip-violet-to))}
-
-.artist-social{
-  display:flex;
-  gap:1rem;
-  margin-top:2rem;
-}
-.artist-social a{
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  background:var(--panel-subtle);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--text-dark);
-  font-size:1.4rem;
-  transition:.3s;
-  box-shadow:var(--shadow-soft);
-}
-body.dark .artist-social a{background:rgba(255,255,255,.1); color:var(--dark-text)}
-.artist-social a:hover{
-  transform:translateY(-5px) scale(1.08);
-  box-shadow:var(--shadow-medium);
-}
-.artist-social a.ig:hover{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:#fff}
-.artist-social a.fb:hover{background:#1877f2; color:#fff}
-.artist-social a.wa:hover{background:#25D366; color:#fff}
-.artist-social a.tt:hover{background:#000; color:#fff}
-
-/* Decoración flotante artista */
-.artist-decor{
-  position:absolute;
-  font-size:1.8rem;
-  opacity:.15;
-  pointer-events:none;
-}
-.artist-decor.d1{top:15%; right:5%; animation:float 4s ease-in-out infinite}
-.artist-decor.d2{bottom:20%; right:15%; animation:float 5s ease-in-out infinite .5s}
-.artist-decor.d3{top:40%; right:8%; animation:float 4.5s ease-in-out infinite 1s}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
-}
-
-@media (max-width:900px){
-  .artist-card{
-    grid-template-columns:1fr;
-    text-align:center;
-    padding:2rem 1.5rem;
-    gap:2rem;
-  }
-  .artist-photo-wrap{
-    max-width:280px;
-    margin:0 auto;
-  }
-  .artist-info h3{justify-content:center}
-  .artist-tagline{justify-content:center}
-  .artist-highlights, .artist-social{justify-content:center}
-  .artist-quote{text-align:left}
-  .artist-card::after{top:10px; right:15px; font-size:2rem}
-}
-
-/* ===== Sección Reseñas ===== */
-.reviews-section{margin-top:3.5rem; scroll-margin-top:100px}
-.reviews-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px}
-.review-card{
-  background:var(--panel);
-  border-radius:20px;
-  padding:1.8rem;
-  box-shadow:var(--card-shadow);
-  border:2px solid transparent;
-  transition:.3s;
-  position:relative;
-}
-body.dark .review-card{background:#0b1726}
-.review-card:hover{
-  transform:translateY(-4px);
-  box-shadow:var(--card-shadow-lg);
-  border-color:var(--primary-gold);
-}
-.review-card::before{
-  content:'"';
-  position:absolute;
-  top:10px;
-  left:18px;
-  font-size:4rem;
-  color:var(--primary-gold);
-  opacity:.2;
-  font-family:Georgia,serif;
-  line-height:1;
-}
-.review-stars{color:var(--primary-gold); font-size:1.1rem; margin-bottom:.8rem}
-.review-text{
-  font-style:italic;
-  line-height:1.7;
-  color:var(--text-dark);
-  margin-bottom:1rem;
-  position:relative;
-  z-index:1;
-}
-body.dark .review-text{color:var(--dark-text)}
-.review-author{
-  display:flex;
-  align-items:center;
-  gap:.8rem;
-}
-.review-avatar{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--chip-green-from),var(--chip-green-to));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-weight:800;
-  font-size:1.1rem;
-}
-.review-name{font-weight:700}
-.review-date{font-size:.85rem; color:var(--text-muted)}
-body.dark .review-date{color:var(--dark-muted)}
-
 /* Footer */
 footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
 .footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
@@ -532,14 +242,12 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
   .card-image{aspect-ratio:3/2}
   .wagon,.engine{font-size:3.3em}
   .tracker{transform:scale(.9); left:10px; top:-26px}
-  .section-title{font-size:2.2rem}
 }
 
 /* Prefiere menos movimiento */
 @media (prefers-reduced-motion:reduce){
   .train-container{animation-duration:60s}
   .wagon,.engine,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
-  .artist-card::before, .artist-photo-frame, .artist-card::after, .artist-decor{animation:none}
 }
 </style>
 </head>
@@ -593,7 +301,6 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
         <a class="chip btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
         <a class="chip btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
-        <a class="chip btn-artist" href="#artista"><i class="fa-solid fa-paintbrush"></i> La Artista</a>
         <a class="chip btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
         <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
@@ -640,333 +347,299 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
             </div>
             <div class="art-meta">
               <div class="art-title">Santa</div>
-              <a href="https://wa.me/50612345678?text=Hola!%20Me%20interesa%20el%20arte%20Santa" class="wa-btn art-buy" target="_blank" rel="noopener">
-                <i class="fa-brands fa-whatsapp"></i> Consultar
-              </a>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20👋%2C%20vi%20la%20pintura%20de%20Christmas%20Pringle%20Santa."><i class="fa-brands fa-whatsapp"></i> Comprar</a>
             </div>
           </div>
         </article>
+
         <article class="frame">
           <div class="frame-inner">
             <div class="frame-image">
-              <img src="arte-pueblo.jpeg" alt="Pueblo Navideño" loading="lazy" decoding="async">
+              <img src="arte-pueblo.jpeg" alt="Pueblo navideño" loading="lazy" decoding="async">
             </div>
             <div class="art-meta">
-              <div class="art-title">Pueblo Navideño</div>
-              <a href="https://wa.me/50612345678?text=Hola!%20Me%20interesa%20el%20arte%20Pueblo%20Navideño" class="wa-btn art-buy" target="_blank" rel="noopener">
-                <i class="fa-brands fa-whatsapp"></i> Consultar
-              </a>
+              <div class="art-title">Pueblo navideño</div>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola%20👋%2C%20vi%20la%20pintura%20de%20Christmas%20Pringle%20Pueblo."><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="frame">
+          <div class="frame-inner">
+            <div class="frame-image">
+              <img src="arte-pueblo.jpg" alt="No image" loading="lazy" decoding="async">
+            </div>
+            <div class="art-meta">
+              <div class="art-title">No image</div>
+              <a class="wa-btn art-buy" target="_blank" rel="noopener" href="https://wa.me/50670757592?text=Hola"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
             </div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- BIOGRAFÍA ARTISTA -->
-    <section id="artista" class="artist-section" aria-labelledby="artistTitle">
-      <h2 id="artistTitle" class="section-title">✨ Conoce a la Artista</h2>
-      <div class="artist-card">
-        <!-- Decoraciones flotantes -->
-        <span class="artist-decor d1">🎨</span>
-        <span class="artist-decor d2">🖌️</span>
-        <span class="artist-decor d3">🌟</span>
-        
-        <div class="artist-photo-wrap">
-          <div class="artist-photo-frame"></div>
-          <img src="artista-foto.jpg" alt="Nombre de la Artista - Creadora de Christmas Pringle" class="artist-photo" loading="lazy">
-          <div class="artist-badge">
-            <i class="fa-solid fa-certificate"></i> Artista Verificada
-          </div>
-        </div>
-        
-        <div class="artist-info">
-          <h3>🎨 Nombre de la Artista</h3>
-          <div class="artist-tagline">
-            <i class="fa-solid fa-heart"></i> Creadora de magia navideña desde Costa Rica
-          </div>
-          
-          <div class="artist-bio">
-            <p>
-              Con más de <strong>10 años</strong> dedicada al arte de la acuarela, [Nombre] ha convertido su pasión 
-              por la Navidad en hermosas tarjetas que llevan alegría a hogares de toda Costa Rica y más allá.
-            </p>
-            <p>
-              Cada tarjeta es pintada a mano con amor y dedicación, utilizando técnicas tradicionales 
-              de acuarela que dan vida a escenas navideñas únicas e irrepetibles. Su estilo combina 
-              la calidez del arte tradicional con toques modernos que capturan la esencia mágica de 
-              las fiestas decembrinas.
-            </p>
-            
-            <div class="artist-quote">
-              Mi misión es que cada tarjeta cuente una historia y lleve un pedacito de magia 
-              navideña a quien la recibe. Cada pincelada lleva un poco de mi corazón.
-              <br><strong>— [Nombre]</strong>
-            </div>
-            
-            <p>
-              Desde su pequeño estudio en Costa Rica, crea piezas que han llegado a manos de 
-              cientos de familias, convirtiendo cada Navidad en un momento más especial y memorable.
-            </p>
-          </div>
-          
-          <div class="artist-highlights">
-            <span class="highlight-tag"><i class="fa-solid fa-palette"></i> Acuarela Artesanal</span>
-            <span class="highlight-tag gold"><i class="fa-solid fa-award"></i> +10 Años Experiencia</span>
-            <span class="highlight-tag red"><i class="fa-solid fa-heart"></i> Hecho en Costa Rica</span>
-            <span class="highlight-tag blue"><i class="fa-solid fa-snowflake"></i> Arte Único</span>
-            <span class="highlight-tag violet"><i class="fa-solid fa-truck-fast"></i> Envíos a Todo CR</span>
-          </div>
-          
-          <div class="artist-social">
-            <a href="https://instagram.com/christmaspringle" target="_blank" rel="noopener" class="ig" aria-label="Síguenos en Instagram" title="Instagram">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://facebook.com/christmaspringle" target="_blank" rel="noopener" class="fb" aria-label="Síguenos en Facebook" title="Facebook">
-              <i class="fa-brands fa-facebook-f"></i>
-            </a>
-            <a href="https://wa.me/50612345678" target="_blank" rel="noopener" class="wa" aria-label="Contáctanos por WhatsApp" title="WhatsApp">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
-            <a href="https://tiktok.com/@christmaspringle" target="_blank" rel="noopener" class="tt" aria-label="Síguenos en TikTok" title="TikTok">
-              <i class="fa-brands fa-tiktok"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+    <!-- Reseñas -->
+    <section id="resenas" style="margin-top:3rem">
+      <h2 class="section-title">⭐ Lo que dicen nuestros clientes</h2>
+      <div class="no-cards">Muy pronto compartiremos reseñas reales de nuestros compradores ✨</div>
     </section>
-
-    <!-- RESEÑAS -->
-    <section id="resenas" class="reviews-section" aria-labelledby="reviewsTitle">
-      <h2 id="reviewsTitle" class="section-title">⭐ Lo Que Dicen Nuestros Clientes</h2>
-      <div class="reviews-grid">
-        <article class="review-card">
-          <div class="review-stars">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <p class="review-text">
-            Las tarjetas son absolutamente hermosas. Mi familia quedó encantada con el detalle 
-            y la calidad de la acuarela. ¡Ya pedí más para este año!
-          </p>
-          <div class="review-author">
-            <div class="review-avatar">MC</div>
-            <div>
-              <div class="review-name">María Castro</div>
-              <div class="review-date">Diciembre 2024</div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="review-card">
-          <div class="review-stars">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <p class="review-text">
-            El arte de las tarjetas es único. Se nota que están hechas con mucho amor y dedicación. 
-            El servicio por WhatsApp fue súper rápido.
-          </p>
-          <div class="review-author">
-            <div class="review-avatar">JR</div>
-            <div>
-              <div class="review-name">José Rodríguez</div>
-              <div class="review-date">Noviembre 2024</div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="review-card">
-          <div class="review-stars">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <p class="review-text">
-            ¡Increíble trabajo! Las tarjetas llegaron perfectamente empacadas y son aún más 
-            lindas en persona. 100% recomendado.
-          </p>
-          <div class="review-author">
-            <div class="review-avatar">AS</div>
-            <div>
-              <div class="review-name">Ana Solano</div>
-              <div class="review-date">Diciembre 2024</div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
   </main>
 
   <!-- Footer -->
   <footer>
-    <img src="christmas-pringle-logo.png" alt="Christmas Pringle" class="footer-logo">
+    <img src="christmas-pringle-logo.png" class="footer-logo" alt="Christmas Pringle">
+    <p style="margin-top:10px;opacity:.9">© 2025 ChristmasPringle.com — Pintando la magia de la Navidad ✨</p>
     <div class="footer-social">
-      <a href="https://instagram.com/christmaspringle" target="_blank" rel="noopener" aria-label="Instagram">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
-      <a href="https://facebook.com/christmaspringle" target="_blank" rel="noopener" aria-label="Facebook">
-        <i class="fa-brands fa-facebook-f"></i>
-      </a>
-      <a href="https://wa.me/50612345678" target="_blank" rel="noopener" aria-label="WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-      </a>
-      <a href="https://tiktok.com/@christmaspringle" target="_blank" rel="noopener" aria-label="TikTok">
-        <i class="fa-brands fa-tiktok"></i>
-      </a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://wa.me/50670757592?text=Hola%20👋%2C%20vi%20las%20tarjetas%20de%20Christmas%20Pringle%20y%20me%20gustar%C3%ADa%20comprar.%20%C2%BFMe%20puedes%20ayudar%3F" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
-    <p class="site-version">Christmas Pringle © 2024 | Hecho con ❤️ en Costa Rica</p>
+    <div class="site-version">v1.4 · 2025</div>
   </footer>
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
-    <img id="lbImg" src="" alt="Vista ampliada">
-    <div class="lb-nav">
-      <button class="lb-btn" id="lbPrev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="lb-btn" id="lbNext" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+  <!-- Lightbox (visor) -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de la tarjeta">
+    <img id="lightboxImg" alt="">
+    <div class="lb-nav" aria-hidden="true">
+      <button id="lbPrev" class="lb-btn" title="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+      <button id="lbNext" class="lb-btn" title="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
   </div>
 
   <!-- Audio -->
-  <audio id="bgMusic" loop preload="auto">
+  <audio id="christmasMusic" loop>
     <source src="Christmas Rap.mp3" type="audio/mpeg">
   </audio>
 
-  <script>
-  // ========== NIEVE ==========
-  (function createSnow(){
-    const c=document.getElementById('snowContainer');
-    const flakes=['❄','❅','❆','✻','✼'];
-    for(let i=0;i<55;i++){
-      const s=document.createElement('span');
-      s.className='snowflake';
-      s.textContent=flakes[Math.floor(Math.random()*flakes.length)];
-      s.style.left=Math.random()*100+'vw';
-      s.style.animationDuration=(12+Math.random()*18)+'s';
-      s.style.animationDelay=Math.random()*15+'s';
-      s.style.fontSize=(.7+Math.random()*.9)+'em';
-      c.appendChild(s);
-    }
-  })();
-
-  // ========== SANTA TRACKER ==========
-  (function santaTracker(){
-    const xmas=new Date(new Date().getFullYear(),11,25);
-    if(new Date()>xmas) xmas.setFullYear(xmas.getFullYear()+1);
-    function upd(){
-      const diff=xmas-new Date();
-      if(diff<=0){document.getElementById('stDays').textContent='🎄';return;}
-      const d=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),m=Math.floor(diff%36e5/6e4),sec=Math.floor(diff%6e4/1e3);
-      document.getElementById('stDays').textContent=String(d).padStart(2,'0');
-      document.getElementById('stHours').textContent=String(h).padStart(2,'0');
-      document.getElementById('stMins').textContent=String(m).padStart(2,'0');
-      document.getElementById('stSecs').textContent=String(sec).padStart(2,'0');
-    }
-    upd();setInterval(upd,1000);
-  })();
-
-  // ========== TURBO TREN ==========
-  document.getElementById('train').addEventListener('click',function(){
-    this.style.setProperty('--train-duration','4s');
-    setTimeout(()=>this.style.setProperty('--train-duration','42s'),10000);
-  });
-
-  // ========== MODO OSCURO ==========
-  const toggle=document.getElementById('modeToggle');
-  function setDark(on){
-    document.body.classList.toggle('dark',on);
-    toggle.classList.toggle('on',on);
-    toggle.setAttribute('aria-checked',on);
-    localStorage.setItem('darkMode',on?'1':'0');
+  <!-- JSON-LD básicos -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Christmas Pringle",
+    "url": "https://christmaspringle.com",
+    "logo": "https://christmaspringle.com/christmas-pringle-logo.png"
   }
-  toggle.addEventListener('click',()=>setDark(!document.body.classList.contains('dark')));
-  toggle.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle.click();}});
-  if(localStorage.getItem('darkMode')==='1') setDark(true);
+  </script>
 
-  // ========== MÚSICA ==========
-  const audio=document.getElementById('bgMusic'),musicBtn=document.getElementById('musicBtn');
-  let playing=false;
-  musicBtn.addEventListener('click',()=>{
-    if(playing){audio.pause();musicBtn.innerHTML='<i class="fa-solid fa-music"></i>';}
-    else{audio.play();musicBtn.innerHTML='<i class="fa-solid fa-pause"></i>';}
-    playing=!playing;
+<script>
+/* ===== Utils ===== */
+const qs = sel => document.querySelector(sel);
+
+/* ===== Nieve (más sutil y lenta) ===== */
+function createSnowflake(){
+  const s=document.createElement('div');
+  s.className='snowflake';
+  s.textContent=['❄','❅','❆'][Math.floor(Math.random()*3)];
+  s.style.left = (Math.random()*100) + '%';
+  s.style.animationDuration = (Math.random()*6 + 8) + 's'; // 8-14s
+  s.style.fontSize = (Math.random()*0.4 + 0.8) + 'em';      // 0.8-1.2em
+  s.style.opacity = (Math.random()*0.25 + 0.4).toFixed(2);  // 0.40-0.65
+  document.getElementById('snowContainer').appendChild(s);
+  setTimeout(()=>s.remove(), 16000);
+}
+function startSnow(){ for(let i=0;i<14;i++) setTimeout(createSnowflake, i*250); return setInterval(createSnowflake, 450); }
+let snowTimer; setTimeout(()=>{ snowTimer=startSnow(); }, 900);
+
+/* ===== Música ===== */
+const musicBtn=qs('#musicBtn'); const audio=qs('#christmasMusic');
+let playing=false;
+musicBtn.addEventListener('click', async ()=>{
+  try{
+    if(!playing){ await audio.play(); playing=true; musicBtn.style.filter='brightness(1.05) drop-shadow(0 2px 8px rgba(0,0,0,.2))'; }
+    else{ audio.pause(); playing=false; musicBtn.style.filter=''; }
+  }catch(e){ alert('Tu navegador bloqueó el autoplay. Toca nuevamente para reproducir 🎵'); }
+});
+
+/* ===== Santa Tracker ===== */
+function targetChristmas(){
+  const now=new Date();
+  const y = (now.getMonth()>11 || (now.getMonth()===11 && now.getDate()>25)) ? now.getFullYear()+1 : now.getFullYear();
+  return new Date(y,11,25,0,0,0,0);
+}
+function pad(n){return String(n).padStart(2,'0')}
+function updateSanta(){
+  const now=new Date(); const end=targetChristmas();
+  let diff=end-now; if(diff<0) diff=0;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  qs('#stDays').textContent=d; qs('#stHours').textContent=pad(h);
+  qs('#stMins').textContent=pad(m); qs('#stSecs').textContent=pad(s);
+}
+updateSanta(); setInterval(updateSanta,1000);
+
+/* ===== Tren turbo 10s ===== */
+const train=qs('#train'); let turbo=false;
+train.addEventListener('click', ()=>{
+  if(turbo) return; turbo=true;
+  train.style.setProperty('--train-duration','22s');
+  setTimeout(()=>{ train.style.setProperty('--train-duration','42s'); turbo=false; }, 10000);
+});
+
+/* ===== Modo claro/oscuro + luces ===== */
+const toggle=qs('#modeToggle'); const body=document.body;
+function setMode(on){
+  toggle.classList.toggle('on', on);
+  toggle.setAttribute('aria-checked', on ? 'true' : 'false');
+  body.classList.toggle('dark', on);
+  // Parpadeo de bombillos al encender
+  const bulbs = document.querySelectorAll('.bulb');
+  bulbs.forEach((b,i)=>{
+    b.style.opacity = on ? '1' : '.55';
+    b.style.filter = on ? 'drop-shadow(0 0 10px rgba(255,255,255,.55))' : 'drop-shadow(0 2px 6px rgba(0,0,0,.25))';
+    if(on){ b.animate([{opacity:.4},{opacity:1}],{duration:350+ i*60,fill:'forwards'}); }
   });
+  localStorage.setItem('cp_dark', on?'1':'0');
+}
+toggle.addEventListener('click', ()=> setMode(!toggle.classList.contains('on')));
+toggle.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setMode(!toggle.classList.contains('on')); }});
+setMode(localStorage.getItem('cp_dark')==='1');
 
-  // ========== TARJETAS DESDE JSON ==========
-  const WA_NUM='50612345678';
-  async function loadCards(){
-    const grid=document.getElementById('cardsGrid');
-    try{
-      const res=await fetch('cards.json');
-      if(!res.ok) throw new Error('No cards.json');
-      const cards=await res.json();
-      if(!cards.length){grid.innerHTML='<p class="no-cards">No hay tarjetas disponibles.</p>';return;}
-      grid.innerHTML='';
-      cards.forEach(c=>{
-        const art=document.createElement('article');
-        art.className='card';
-        const msg=encodeURIComponent(`Hola! Me interesa la tarjeta "${c.name}"`);
-        art.innerHTML=`
+/* ===== Sticky header auto-hide en móvil ===== */
+let lastY=window.scrollY;
+window.addEventListener('scroll', ()=>{
+  const h = document.getElementById('siteHeader');
+  const y = window.scrollY;
+  if(window.innerWidth<820){
+    h.style.transform = (y>lastY && y>20) ? 'translateY(-110%)' : 'translateY(0)';
+  } else {
+    h.style.transform = 'translateY(0)';
+  }
+  lastY=y;
+});
+
+/* ===== Formato CRC ===== */
+const fmtCRC=(n)=>'₡'+Math.round(Number(n||0)).toLocaleString('es-CR');
+
+/* ===== Lightbox con 2 fotos ===== */
+const lightbox=qs('#lightbox'), lightboxImg=qs('#lightboxImg');
+const lbPrev=qs('#lbPrev'), lbNext=qs('#lbNext');
+let lbSources=[], lbIndex=0;
+function showLb(){
+  if(!lbSources.length) return;
+  lightboxImg.src = lbSources[lbIndex];
+  lightbox.classList.add('open');
+}
+function openLightboxWith(sources,start=0){ lbSources=sources.filter(Boolean); lbIndex=start||0; showLb(); }
+function lbClose(){ lightbox.classList.remove('open'); lbSources=[]; }
+function lbNav(dir){ if(!lbSources.length) return; lbIndex=(lbIndex+dir+lbSources.length)%lbSources.length; showLb(); }
+lightbox.addEventListener('click', e=>{ if(e.target===lightbox) lbClose(); });
+lbPrev.addEventListener('click', ()=>lbNav(-1));
+lbNext.addEventListener('click', ()=>lbNav(1));
+document.addEventListener('keydown', e=>{ if(!lightbox.classList.contains('open')) return;
+  if(e.key==='Escape') lbClose();
+  if(e.key==='ArrowLeft') lbNav(-1);
+  if(e.key==='ArrowRight') lbNav(1);
+});
+
+/* ===== Carga de tarjetas ===== */
+function imgIfExists(el){ el.onerror=()=>{ el.style.display='none'; }; }
+async function loadCards(){
+  const grid=qs('#cardsGrid');
+  try{
+    const ts=Date.now();
+    const res=await fetch(`./cards.json?t=${ts}`,{cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const cards=await res.json();
+    if(!Array.isArray(cards)||!cards.length){
+      grid.innerHTML=`<div class="no-cards"><h3>🎨 Pronto habrá tarjetas disponibles</h3></div>`; return;
+    }
+    cards.sort((a,b)=>a.number-b.number);
+    grid.innerHTML = cards.map(c=>{
+      // Compatibilidad: si existen image1/image2 se usan; si no, se deduce por número
+      const img1 = c.image1 || (c.image?.includes('images/cards') ? c.image : `images/cards/${c.number}-1.png`);
+      const img2 = c.image2 || `images/cards/${c.number}-2.png`;
+      const price = fmtCRC(c.price);
+      const msg = `Hola, vi la tarjeta "${c.title}" (${price}) en ChristmasPringle.com y quiero comprarla`;
+      const wa  = `https://wa.me/50670757592?text=${encodeURIComponent(msg)}`;
+
+      return `
+      <article class="card" data-img1="${encodeURI(img1)}?t=${ts}" data-img2="${encodeURI(img2)}?t=${ts}">
+        <div class="card-image">
+          <img class="card-photo" src="${encodeURI(img1)}?t=${ts}" alt="${c.title}" loading="lazy" decoding="async"
+               sizes="(max-width:640px) 92vw, (max-width:1200px) 44vw, 31vw"
+               onerror="this.style.opacity=0; this.parentElement.style.background='#f0f0f0'">
+          <img class="card-thumb2" src="${encodeURI(img2)}?t=${ts}" alt="${c.title} - interior" onerror="this.style.display='none'">
+        </div>
+        <div class="card-content">
+          <h3>${c.title}</h3>
+          <p>${c.description}</p>
+          <div class="price-row">
+            <span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
+            <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+
+    // Interacciones: abrir visor con 2 fotos
+    grid.querySelectorAll('.card').forEach(card=>{
+      const img1 = card.getAttribute('data-img1');
+      const img2 = card.getAttribute('data-img2');
+      const main = card.querySelector('.card-photo');
+      const thumb= card.querySelector('.card-thumb2');
+
+      // Si la mini carga bien, se muestra (onerror en markup ya la oculta si falla)
+      thumb.addEventListener('load', ()=>{ thumb.style.display='block'; });
+
+      main.style.cursor='zoom-in';
+      main.addEventListener('click',()=> openLightboxWith([img1, img2].filter(Boolean), 0));
+      if(thumb){
+        thumb.addEventListener('click',()=> openLightboxWith([img1, img2].filter(Boolean), 1));
+      }
+    });
+
+  }catch(e){
+    console.error(e);
+    // Fallback de 3 tarjetas estáticas
+    const fallback = [
+      {number:1, title:'Tarjeta en acuarela', description:'Edición especial', price:2500},
+      {number:2, title:'Acuarela copo de nieve', description:'Hecha a mano', price:2500},
+      {number:3, title:'Acuarela campanas', description:'Listas para regalar', price:2500}
+    ];
+    qs('#cardsGrid').innerHTML = fallback.map(c=>{
+      const img1=`images/cards/${c.number}-1.png`, img2=`images/cards/${c.number}-2.png`;
+      const price=fmtCRC(c.price);
+      const wa=`https://wa.me/50670757592?text=${encodeURIComponent('Hola, me interesa '+c.title+' ('+price+')')}`;
+      return `
+        <article class="card" data-img1="${img1}" data-img2="${img2}">
           <div class="card-image">
-            <img src="${c.image}" alt="${c.name}" class="card-photo" loading="lazy" decoding="async">
-            ${c.image2?`<img src="${c.image2}" alt="${c.name} interior" class="card-thumb2" style="display:block">`:''}
+            <img class="card-photo" src="${img1}" alt="${c.title}" loading="lazy" decoding="async">
+            <img class="card-thumb2" src="${img2}" alt="${c.title} - interior" onerror="this.style.display='none'">
           </div>
           <div class="card-content">
-            <h3>${c.name}</h3>
-            <p>${c.description||''}</p>
-            <div class="price-row">
-              <span class="price-badge"><i class="fa-solid fa-tag"></i> ₡${c.price.toLocaleString()}</span>
-              <a href="https://wa.me/${WA_NUM}?text=${msg}" class="wa-btn" target="_blank" rel="noopener">
-                <i class="fa-brands fa-whatsapp"></i> Comprar
-              </a>
+            <h3>${c.title}</h3><p>${c.description}</p>
+            <div class="price-row"><span class="price-badge"><i class="fa-solid fa-tag"></i> ${price}</span>
+              <a class="wa-btn" href="${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Comprar</a>
             </div>
-          </div>`;
-        grid.appendChild(art);
-      });
+          </div>
+        </article>`;
+    }).join('');
 
-      // Lightbox
-      const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
-      let imgs=[],idx=0;
-      grid.querySelectorAll('.card-photo, .card-thumb2').forEach(img=>{
-        img.style.cursor='zoom-in';
-        img.addEventListener('click',()=>{
-          imgs=Array.from(img.closest('.card').querySelectorAll('img'));
-          idx=imgs.indexOf(img);
-          lbImg.src=imgs[idx].src;
-          lb.classList.add('open');
-        });
-      });
-      document.getElementById('lbPrev').onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;lbImg.src=imgs[idx].src;};
-      document.getElementById('lbNext').onclick=()=>{idx=(idx+1)%imgs.length;lbImg.src=imgs[idx].src;};
-      lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open');});
-      document.addEventListener('keydown',e=>{
-        if(!lb.classList.contains('open'))return;
-        if(e.key==='Escape')lb.classList.remove('open');
-        if(e.key==='ArrowLeft')document.getElementById('lbPrev').click();
-        if(e.key==='ArrowRight')document.getElementById('lbNext').click();
-      });
-    }catch(err){
-      console.error(err);
-      grid.innerHTML='<p class="no-cards">Error cargando tarjetas. Intenta recargar la página.</p>';
-    }
-  }
-  loadCards();
-
-  // ========== SMOOTH SCROLL ==========
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      const t=document.querySelector(a.getAttribute('href'));
-      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    // Bind fallback visor
+    document.querySelectorAll('.card').forEach(card=>{
+      const img1=card.getAttribute('data-img1'), img2=card.getAttribute('data-img2');
+      card.querySelector('.card-photo').addEventListener('click',()=> openLightboxWith([img1,img2],0));
+      const t=card.querySelector('.card-thumb2'); if(t) t.addEventListener('click',()=> openLightboxWith([img1,img2],1));
     });
+  }
+}
+
+/* ===== Enlaces suavizados ===== */
+document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
   });
-  </script>
+});
+
+/* ===== Init ===== */
+window.addEventListener('load', ()=>{
+  loadCards();
+});
+</script>
 </body>
 </html>

@@ -31,6 +31,7 @@
   --chip-violet-from:#8E24AA; --chip-violet-to:#BA68C8;
   --chip-red-from:#E74C3C; --chip-red-to:#C0392B;
   --chip-teal-from:#009688; --chip-teal-to:#26A69A;
+  --chip-pink-from:#E91E63; --chip-pink-to:#F48FB1;
 
   --panel:#ffffff; --panel-contrast:#0d1522;
   --panel-subtle:#f4f6f8;
@@ -146,6 +147,7 @@ nav{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; justify-content
 .btn-home{background:linear-gradient(135deg,var(--chip-green-from),var(--chip-green-to))}
 .btn-cards{background:linear-gradient(135deg,var(--chip-yellow-from),var(--chip-yellow-to)); color:var(--chip-yellow-text)}
 .btn-art{background:linear-gradient(135deg,var(--chip-violet-from),var(--chip-violet-to))}
+.btn-artist{background:linear-gradient(135deg,var(--chip-pink-from),var(--chip-pink-to))}
 .btn-reviews{background:linear-gradient(135deg,var(--chip-blue-from),var(--chip-blue-to))}
 .btn-music{background:linear-gradient(135deg,var(--chip-red-from),var(--chip-red-to))}
 .btn-music::after{content:'🎅'; position:absolute; top:-12px; right:-10px; font-size:1.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.2)); transform:rotate(12deg)}
@@ -220,6 +222,165 @@ body.dark .loading, body.dark .no-cards{color:var(--dark-muted)}
 .art-title{font-weight:800; font-size:1.05rem}
 .art-buy{white-space:nowrap}
 
+/* ===== Sección Biografía Artista ===== */
+.artist-section{margin-top:3rem; scroll-margin-top:100px}
+.artist-card{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:2.5rem;
+  background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,248,240,.95));
+  border-radius:28px;
+  padding:2.5rem;
+  box-shadow:var(--card-shadow-lg);
+  position:relative;
+  overflow:hidden;
+  border:4px solid var(--primary-gold);
+}
+body.dark .artist-card{
+  background:linear-gradient(135deg,rgba(15,26,43,.98),rgba(20,32,50,.95));
+  border-color:var(--primary-gold);
+}
+.artist-card::after{
+  content:'✨';
+  position:absolute;
+  top:20px;
+  right:30px;
+  font-size:2rem;
+  animation:sparkle 2s ease-in-out infinite;
+}
+@keyframes sparkle{
+  0%,100%{transform:scale(1) rotate(0deg); opacity:.7}
+  50%{transform:scale(1.15) rotate(10deg); opacity:1}
+}
+.artist-photo-wrap{position:relative}
+.artist-photo{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.2);
+  border:4px solid var(--white);
+  transition:transform .3s ease;
+}
+.artist-photo:hover{transform:scale(1.02)}
+.artist-badge{
+  position:absolute;
+  bottom:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--primary-red),#c0392b);
+  color:#fff;
+  padding:.5rem 1rem;
+  border-radius:999px;
+  font-weight:800;
+  font-size:.85rem;
+  box-shadow:0 4px 16px rgba(231,76,60,.35);
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+}
+.artist-info h3{
+  font-family:'Mountains of Christmas',cursive;
+  font-size:2.2rem;
+  color:var(--primary-red);
+  margin-bottom:.5rem;
+}
+body.dark .artist-info h3{color:#ff8a80}
+.artist-tagline{
+  font-size:1.1rem;
+  color:var(--primary-green);
+  font-weight:700;
+  margin-bottom:1.2rem;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+body.dark .artist-tagline{color:#69F0AE}
+.artist-bio{
+  line-height:1.75;
+  color:var(--text-dark);
+  font-size:1.02rem;
+}
+body.dark .artist-bio{color:var(--dark-text)}
+.artist-bio p{margin-bottom:1rem}
+.artist-quote{
+  background:linear-gradient(135deg,rgba(255,179,0,.1),rgba(255,215,0,.05));
+  border-left:4px solid var(--primary-gold);
+  padding:1rem 1.2rem;
+  border-radius:0 14px 14px 0;
+  margin:1.2rem 0;
+  font-style:italic;
+  color:var(--text-dark);
+}
+body.dark .artist-quote{
+  background:linear-gradient(135deg,rgba(255,179,0,.08),rgba(255,215,0,.03));
+  color:var(--dark-text);
+}
+.artist-highlights{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.7rem;
+  margin-top:1.5rem;
+}
+.highlight-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  background:linear-gradient(135deg,var(--chip-green-from),var(--chip-green-to));
+  color:#fff;
+  padding:.5rem 1rem;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.88rem;
+  box-shadow:var(--shadow-soft);
+  transition:transform .2s;
+}
+.highlight-tag:hover{transform:translateY(-2px)}
+.highlight-tag.gold{background:linear-gradient(135deg,var(--chip-yellow-from),var(--chip-yellow-to)); color:var(--chip-yellow-text)}
+.highlight-tag.red{background:linear-gradient(135deg,var(--chip-red-from),var(--chip-red-to))}
+.highlight-tag.blue{background:linear-gradient(135deg,var(--chip-blue-from),var(--chip-blue-to))}
+.highlight-tag.violet{background:linear-gradient(135deg,var(--chip-violet-from),var(--chip-violet-to))}
+.artist-social{
+  display:flex;
+  gap:.8rem;
+  margin-top:1.5rem;
+}
+.artist-social a{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:var(--panel-subtle);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text-dark);
+  font-size:1.25rem;
+  transition:.25s;
+  box-shadow:var(--shadow-soft);
+}
+body.dark .artist-social a{background:rgba(255,255,255,.1); color:var(--dark-text)}
+.artist-social a:hover{transform:translateY(-4px); box-shadow:var(--shadow-medium)}
+.artist-social a.ig:hover{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:#fff}
+.artist-social a.fb:hover{background:#1877f2; color:#fff}
+.artist-social a.wa:hover{background:#25D366; color:#fff}
+.artist-social a.tt:hover{background:#000; color:#fff}
+
+@media (max-width:900px){
+  .artist-card{
+    grid-template-columns:1fr;
+    text-align:center;
+    padding:1.8rem;
+    gap:1.8rem;
+  }
+  .artist-photo-wrap{max-width:250px; margin:0 auto}
+  .artist-info h3{justify-content:center; font-size:1.9rem}
+  .artist-tagline{justify-content:center}
+  .artist-highlights, .artist-social{justify-content:center}
+  .artist-quote{text-align:left}
+  .artist-card::after{top:12px; right:15px; font-size:1.6rem}
+}
+
 /* Footer */
 footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-align:center; padding:3rem 1rem}
 .footer-logo{height:160px; width:auto; border-radius:12px; object-fit:contain; box-shadow:0 4px 16px rgba(0,0,0,.25)}
@@ -248,6 +409,7 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
 @media (prefers-reduced-motion:reduce){
   .train-container{animation-duration:60s}
   .wagon,.engine,.smoke,.snowflake{animation-duration:.01ms !important; animation-iteration-count:1 !important}
+  .artist-card::after{animation:none}
 }
 </style>
 </head>
@@ -301,6 +463,7 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
         <a class="chip btn-home" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
         <a class="chip btn-cards" href="#tarjetas"><i class="fa-solid fa-gifts"></i> Tarjetas</a>
         <a class="chip btn-art" href="#arte"><i class="fa-solid fa-palette"></i> Arte Pringle</a>
+        <a class="chip btn-artist" href="#artista"><i class="fa-solid fa-paintbrush"></i> La Artista</a>
         <a class="chip btn-reviews" href="#resenas"><i class="fa-solid fa-star"></i> Reseñas</a>
         <button id="musicBtn" class="chip btn-music" aria-label="Reproducir o pausar música">
           <i class="fa-solid fa-music" style="font-size:1.1rem"></i>
@@ -378,6 +541,62 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
       </div>
     </section>
 
+    <!-- BIOGRAFÍA ARTISTA -->
+    <section id="artista" class="artist-section" aria-labelledby="artistTitle">
+      <h2 id="artistTitle" class="section-title">✨ Conoce a la Artista</h2>
+      <div class="artist-card">
+        <div class="artist-photo-wrap">
+          <img src="artista-foto.jpg" alt="Nombre de la Artista - Creadora de Christmas Pringle" class="artist-photo" loading="lazy">
+          <div class="artist-badge">
+            <i class="fa-solid fa-certificate"></i> Artista Verificada
+          </div>
+        </div>
+        
+        <div class="artist-info">
+          <h3>🎨 Nombre de la Artista</h3>
+          <div class="artist-tagline">
+            <i class="fa-solid fa-heart"></i> Creadora de magia navideña desde Costa Rica
+          </div>
+          
+          <div class="artist-bio">
+            <p>
+              Con más de <strong>10 años</strong> dedicada al arte de la acuarela, ha convertido su pasión 
+              por la Navidad en hermosas tarjetas que llevan alegría a hogares de toda Costa Rica.
+            </p>
+            
+            <div class="artist-quote">
+              "Mi misión es que cada tarjeta cuente una historia y lleve un pedacito de magia 
+              navideña a quien la recibe. Cada pincelada lleva un poco de mi corazón."
+            </div>
+            
+            <p>
+              Cada tarjeta es pintada a mano con amor y dedicación, utilizando técnicas tradicionales 
+              de acuarela que dan vida a escenas navideñas únicas e irrepetibles.
+            </p>
+          </div>
+          
+          <div class="artist-highlights">
+            <span class="highlight-tag"><i class="fa-solid fa-palette"></i> Acuarela Artesanal</span>
+            <span class="highlight-tag gold"><i class="fa-solid fa-award"></i> +10 Años</span>
+            <span class="highlight-tag red"><i class="fa-solid fa-heart"></i> Hecho en CR</span>
+            <span class="highlight-tag blue"><i class="fa-solid fa-truck-fast"></i> Envíos</span>
+          </div>
+          
+          <div class="artist-social">
+            <a href="https://instagram.com/" target="_blank" rel="noopener" class="ig" aria-label="Instagram" title="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com/" target="_blank" rel="noopener" class="fb" aria-label="Facebook" title="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/50670757592" target="_blank" rel="noopener" class="wa" aria-label="WhatsApp" title="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Reseñas -->
     <section id="resenas" style="margin-top:3rem">
       <h2 class="section-title">⭐ Lo que dicen nuestros clientes</h2>
@@ -394,7 +613,7 @@ footer{background:linear-gradient(135deg,#263238,#37474F); color:#fff; text-alig
       <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
       <a href="https://wa.me/50670757592?text=Hola%20👋%2C%20vi%20las%20tarjetas%20de%20Christmas%20Pringle%20y%20me%20gustar%C3%ADa%20comprar.%20%C2%BFMe%20puedes%20ayudar%3F" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
-    <div class="site-version">v1.4 · 2025</div>
+    <div class="site-version">v1.5 · 2025</div>
   </footer>
 
   <!-- Lightbox (visor) -->
